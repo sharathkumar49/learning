@@ -1,7 +1,8 @@
-
-
 To Learn:
 ---------
+
+learn env, venv, pipenv
+
 Jinja templating, django default templating
 
 Django data models
@@ -12,7 +13,6 @@ https://www.geeksforgeeks.org/django-model-data-types-and-fields-list/
 date time field (auto_now_add, auto_now)
 
 in field option --> choice field
-
 
 one-to-one relationship --> in the child class --> the column value key field from parent class should be set 'primary_key = True'
 
@@ -170,43 +170,456 @@ from rest_framework.pagination import PageNumberPagination
 
 
 
-
+ 
 from django.contrib.auth.models import AbstractUser
 
 
+======================================================================================================================================================================================
 
-
-Django Commands:
-----------------
+Django :
+---------
 
 pip install django / pipenv install django(if you want to use pipenv)
+
 django-admin startproject my_proj   / django-admin startproject my_proj . (tells django to use current directory as project Directory)
 cd my_proj
 
+manage.py --> wrapper of Django-admin
 
+python manage.py runserver 9000 (optionally, we can supply the port number, by default it will take port 8000)
 
 pipenv --venv ( to check python interpreter in the local venv)
 
 
-python manage.py startapp app_name ( to create an app)
-Note : register the app in the 'INSTALLED_APPS' in the project settings folder
 
 
 
-apps --> urls.py	
+
+
+
+To create a new app:
+-------------------
+python manage.py startapp app_name
+
+Note : Once you created a new app, you have to register the app in the 'INSTALLED_APPS' in the project settings folder
+
+for example:
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'app_name'
+]
+
+
+
+
+
+
+
+views.py and urls.py:
+-------------------
+HTTP is a request response protocol. So, every data exchange involves a request and a response. Every app has view.py and this is where we define our views or view functions. A view function is a function that takes a request and returns a response. So more accurately, it's a request handler. In some frameworks, it's called an action. In Django, it's called a view. But I don't agree with this name because from an architectural point of view, a view is often associated with something that the user sees. That part in Django is called a template. 
+
+
+
+from django.http import HttpResponse
+
+def say_hello(request):
+	return HttpResponse('Hello World')
+
+
+
+Now in this function, we can do anything we want. In a real-world scenario we can pull data from a database, we can transform data, we can send emails and so on. Learn the functionalities of views.py.
+
+Now we need to map this view to url, so when we get a request at that url, this function will be called.
+
+apps --> urls.py:	
 	
+from django.urls import path
+from . import views
+
+#URLConf
 urlpatterns = [
     path('hello/', views.say_hello)
  ]	
 	
+
+Note: we have 'urlpatterns' variable(all in lower case), which is an array of url pattern objects, we use path() function to create a url patter object
+
+The parameters of path function --> (route: str, view: (*args: Any, **kwargs: Any) -> HttpResponse, kwargs: Dict[str, Any] = ...) -> URLPattern
+
+Now, what we have here is URLConf module, which basically means URL Configuration. So, every app can have its own URL Configuration. But now we need to import this URL Configuration into the main URL Configuration for this project
 	
-projects --> urls.py
+projects --> urls.py:
+
+use the include function from django.urls
+
+from django.contrib import admin
+from django.urls import path, include
 
 urlpatterns = [
    path('admin/', admin.site.urls),
    path('playground/', include('playground.urls'))
   ]
+
+So, if the user sends the request to playground/hello, Django knows that all requests that start with playground should be handled by the playground app. So it's going to chop off the first part of this URL 'playground/' and Pass the rest 'hello' to the URL configuration module in the playground app. 
+
+
+
+
+Using Templates:
+----------------
+So I told you that views in Django are not really views. They're more like request handlers or actions. What we often call a view in other frameworks is called a template in Django.
+
+Add templates folder in any app and then html file inside (say templates/hello.html)
+
+Then in views.py:
+
+from django.shortcuts import render
+
+def say_hello(request):
+	return render(request, 'hello.html') 
 	
+
+or we can also dynamically render the content, just we need to add another parameter which provides the context 
+return render(request, 'hello.html', {'name': 'Mosh'})  --> now you have name parameter in the html content. For more details learn jinja template engine or django template engine
+
+
+
+
+Django Debug toolbar:
+---------------------
+https://django-debug-toolbar.readthedocs.io/en/latest/
+
+Follow the instruction in the Installation page:
+
+python -m pip install django-debug-toolbar 
+
+of if you're inside virtual env --> pipenv install django-debug-toolbar
+
+Then as said follow the instructions in the Installation page
+
+
+
+
+
+
+
+
+
+Data Model: 
+-----------
+The first step in every Django project is figuring out the pieces of data we want to store. So, what entities or concepts do we have in an application? we need analyze and have a separate chart for that.
+
+eg: product, collection, cart, etc
+
+learn to how to organize models in apps (monolith, self contained, each individual)
+
+
+models.py:
+---------
+
+django field types: https://docs.djangoproject.com/en/5.1/ref/models/fields/ --> Field types, Field Options
+
+from django.db import models
+
+class Product(models.Model):
+	title = models.charField(max_length=255) #varchar(255)
+	description = models.TextField() 
+	price = models.DecimalField(max_digits=6, decimal_places=2) # floatfield has round issues, so for monetary values always use decimal field  #9999.99
+	inventory = models.IntegerField()
+	last_update = models.DateTimeField(auto_now=True)
+	
+Now when we finished writing models for each entities, we need to migrate, then you will see that we can generate our database tables based on the definition of this model. So then we're going to have a table called 'product' and in that table we're going to have a column called 'title' and the type of that column is going to be varchar of 255. 
+
+
+we want some random field to be primary key instead of one generated by django itself,
+sku = models.CharField(max_length=10, primary_key=True)
+With this Django is not going to create an ID field and make it the primary key. So, 'sku' is going to be our primary key. 
+
+
+Choices in Field Options:  
+-------------------------
+
+https://docs.djangoproject.com/en/5.1/ref/models/fields/ --> Field Options --> Choices
+
+
+class Customer(models.Model):
+	MEMBERSHIP_BRONZE = 'B'
+	MEMBERSHIP_SILVER = 'S'
+	MEMBERSHIP_GOLD = 'G'
+	
+	MEMBERSHIP_CHOICES = [
+		(MEMBERSHIP_BRONZE, 'Bronze'), 
+		(MEMBERSHIP_SILVER, 'Silver'), 
+		(MEMBERSHIP_GOLD, 'Gold'),
+	]
+	first_name = models.CharField(max_length=255)
+	last_name = models.CharField(max_length=255)
+	email = models.EmailField(unique=True)
+	phone = models.CharField(max_length=255)
+	birth_date = models.DateField(null=True)
+	membership = models.CharField(max_length=1, choices=MEMBERSHIP_CHOICES, default=MEMBERSHIP_BRONZE)
+	
+
+class Order(models.Model):
+    PAYMENT_STATUS_PENDING = 'P'
+    PAYMENT_STATUS_COMPLETE = 'C'
+    PAYMENT_STATUS_FAILED = 'F'
+    PAYMENT_STATUS_CHOICES = [
+        (PAYMENT_STATUS_PENDING, 'Pending'),
+        (PAYMENT_STATUS_COMPLETE, 'Complete'),
+        (PAYMENT_STATUS_FAILED, 'Failed')
+    ]
+
+    placed_at = models.DateTimeField(auto_now_add=True)
+    payment_status = models.CharField(
+        max_length=1, choices=PAYMENT_STATUS_CHOICES, default=PAYMENT_STATUS_PENDING)
+
+
+
+
+Defining relationships between models:
+-------------------------------------
+
+Defining one-to-one Relationships:
+---------------------------------
+Assume that every customer should have one and only one address, and each address should belong to one and only one customer. So here we have a one-to-one relationship between customers and addresses.
+
+As you probably know, a database relationship has two ends, a parent and a child. The parent should exist before we can store the child, So, we need to define cutomer model first and then address model and then we can create relationship between these two in the child model. 
+
+
+class Address(models.Model):
+    street = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    customer = models.OnetoOneField(Customer, on_delete=models.CASCADE, primary_key=True)
+
+
+
+
+The argument 'on_delete' specifies the delete behavior. What should happen when we delete a customer or a parent field. So, if we put on_delete to 'models.CASCADE', when we delete a customer the associated address will also be deleted. 
+This is called the cascade behavior. Alternatively if this field accepts null values we can use set null(models.SET_NULL). So, when we delete a customer or the parent record, the child record(or the address in this case) is not going to get deleted. It's going to stay in the database and the customer field or the customer column is going to get set to null. Alternatively, we can use 'models.SET_DEFAULT;. So this field will be set to its default value. And one other option we have is models.PROTECT. And with this, we can prevent the deletion. So, if there is a child associated with this parent, we cannot delete that parent, we have to delete the child first.
+
+Now, which value we use really depends on the requirements. There is no one size fits all. In this case, I believe we should use cascade. Because if we delete a customer, the associated address should also be deleted.
+
+Now there is one more argument we need to set is 'primary_key=True'. If we don't set this, Django will create another field here called ID. So, every address is going to have an ID. And that means we're going to end up with a one-to-many relationship between customers and addresses, because we can have many addresses with the same customer. But if we make the customer field as a primary key, we can only have one address for each customer, because primary keys don't allow duplicate values, right? 
+So this is how we can implement a one-to-one relationship between two models. Now, you might be wondering if we should define the reverse relationship in the customer class. In other words, do we have to go to the customer class and add a new field called 'address' for the reverse relationship. No, we don't have to do that because Django will automatically creates this for us. 
+
+
+
+
+Defining a one-to-many Relationship:
+-----------------------------------
+
+Now let's assume that a customer can have multiple addresses. So we want to change this one-to-one relationship to one-to-many relationship. How can we do this? Really easy. First we need to change the type of the field to foreign key. So we're telling Django that customer is a foreign key in the address table. Okay? Next we need to remove field option 'primary_key=true'. Because we want to have multiple addresses for the same customer. So, we want to allow duplicate values in the customer column. This is how we can define a one-to-many relationship between two models. 
+
+class Address(models.Model):
+    street = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    customer = models.ForeignKey(
+        Customer, on_delete=models.CASCADE)
+
+
+Other examples as follows:
+Collection - Product
+Customer - Order
+Order - Item
+Cart - Item
+
+
+class Collection(models.Model):
+    title = models.CharField(max_length=255)
+	
+class Product(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    inventory = models.IntegerField()
+    last_update = models.DateTimeField(auto_now=True)
+    collection = models.ForeignKey(Collection, on_delete=models.PROTECT)
+
+class Order(models.Model):
+    PAYMENT_STATUS_PENDING = 'P'
+    PAYMENT_STATUS_COMPLETE = 'C'
+    PAYMENT_STATUS_FAILED = 'F'
+    PAYMENT_STATUS_CHOICES = [
+        (PAYMENT_STATUS_PENDING, 'Pending'),
+        (PAYMENT_STATUS_COMPLETE, 'Complete'),
+        (PAYMENT_STATUS_FAILED, 'Failed')
+    ]
+
+    placed_at = models.DateTimeField(auto_now_add=True)
+    payment_status = models.CharField(
+        max_length=1, choices=PAYMENT_STATUS_CHOICES, default=PAYMENT_STATUS_PENDING)
+    customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.PROTECT)
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)
+    quantity = models.PositiveSmallIntegerField()
+    unit_price = models.DecimalField(max_digits=6, decimal_places=2)
+	
+class Cart(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveSmallIntegerField()
+	
+	
+	
+
+Defining Many-to-Many Relationships:
+-----------------------------------
+
+Let's talk about many-to-many relationships. So, I'm going to introduce a new class called Promotion and define a many-to-many relationship between promotions and products.
+
+class Promotion(models.Model):
+    description = models.CharField(max_length=255)
+    discount = models.FloatField()
+
+
+Now we can define the relationship in either of these classes. And as i said earlier, Django will automatically create the reverse relationship. Now in this particular case, it makes more sense to define the relationship in the product class because we might have a product that we're showing to the user. And at the same time, we want to show all the promotions that apply to that product.
+	
+class Product(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    inventory = models.IntegerField()
+    last_update = models.DateTimeField(auto_now=True)
+    collection = models.ForeignKey(Collection, on_delete=models.PROTECT)
+	promotions = models.ManyToManyField(Promotion)
+
+Now with this implementation, Django is going to create the reverse relationship in the Promotion class. So, in the Promotion class, we're going to have a field called 'Product_set' that returns all the products that a particular promotion is applied to if you don't like this name You can always change it. So, in our product class, we can supply a keyword argument related_name='products'. Django will use this name as the name of the field in the promotion class. So instead of 'product_set' we're gonna have a 'products'. 
+
+Just remember, if you change the default convention in Django, it's best to change it consistently everywhere, otherwise in some classes you're going to have a field 'products', and in some other classes you're going to have a field 'product_set', and this makes your code really ugly.
+
+
+
+
+
+Resolving Circular Relationships:
+--------------------------------
+
+I told you that sometimes we can have multiple relationships between two models. So, here we have two relationships between collection and product (relationship between Collection and product - one to many, collection and featured_product - zero to one) 
+
+Now, out of the two, You have only implemented the one-to-many relationship. Now, as part of implementing the other relationship, we're going to face a situation called a circular dependency, which is something we should avoid. A Circular dependency happens when two classes depend on each other at the same time. So the product class is going to be dependent on the collection class and And at the same time, the collection class is gonna be dependent on the product class.
+
+Before in the product class, we have a field called 'collection', which is a foreign key to the collection class. So, we had a dependency from the product class towards the collection class(product -> collection). Now, to implement the other relationship, we have to go to the collection class and add a new field featured_product. But while mentioning the 'Product' class name, it will throw an error. We are seeing this error, because the product class is defined after the collection class. 
+Now this is where we have a circular dependency. So, in the Product class, we have a dependency to the Collection class. And that's why we define the Collection class before the product class. However, because of the circular dependency, now the Collection class also needs to be dependent on the Product class, which is not possible. To solve this problem, We need to wrap the 'Product' class argument in quotes. However, this introduces a new kind of problem. If tomorrow we decide to rename this Product class to something else, the string that we passed is not going to get updated.
+
+One more error, we might get is reverse query name for featured_product clashes with field name 'collection'. So, in the Collection class we have a field called featured_product, right? Now as you know Django is going to automatically create the reverse relationship for us. So that means, in the product class, we're going to have a field called collection, which represents the other end of the relationship. And this is exactly where the problem happens. Because in the product class, we already have a field called collection. 
+So, Django cannot create the reverse relationship because of the name clash. So here we have two choices. One solution is to set related name to something other than collection, or if we don't care about the reverse relationship, we can simply pass a plus sign '+'. This tells Django not to create that reverse relationship.
+
+Also, we're going to set on_delete=models.SET_NULL, because if we delete a product and that product happens to be the featured product for a collection, we want to set the field to null. And that means we can make this field nullable. Also, we can pass another keyword argument 'null=True'. 
+
+class Collection(models.Model):
+    title = models.CharField(max_length=255)
+    featured_product = models.ForeignKey(
+        'Product', on_delete=models.SET_NULL, null=True, related_name='+')
+
+
+class Product(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    inventory = models.IntegerField()
+    last_update = models.DateTimeField(auto_now=True)
+    collection = models.ForeignKey(Collection, on_delete=models.PROTECT)
+    promotions = models.ManyToManyField(Promotion)
+
+
+
+
+
+
+Generic Relationships:
+----------------------
+
+So, I told you that we want to design the tags app such that we can reuse it in any projects. Anywhere we want to have the ability to tag items. That's why we have two models(entities) in this app. Tag, which represents an actual tag, and TaggedItem, which represents a tag applied to a particular item, which can be a product, a video, an article, literally anything. So let's see how we can implement these models. 
+
+from django.db import models
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
+
+
+class Tag(models.Model):
+    label = models.CharField(max_length=255)
+
+
+class TaggedItem(models.Model):
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey()
+
+
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'app_name'
+]
+
+
+
+
+The first model is Tag, we simply do it as usual, nothing special about it. The second model, is bit tricky, first we can have the attribute tag and it's a foreign key to the Tag class. Again, nothing new so far. Now, the interesting part is identifying the object that a particular tag is applied to. The poor way of implementing is adding a field called product, then settingit to a foreign key to the Product class. Now with this implementation, we have to import the Product class on the top and that means the tags app is going to be dependent on the store app. What if tomorrow we want to tag articles or videos? These are completely different apps. So, the tags app should know nothing about these models. 
+
+What we need here is a generic way to identify an object. To do that, we need two pieces of information. The first one is the type of an object, which can be product, video, article, whatever. The second attribute is the id of that object. Using these two pieces of information, we can identify the objects in our application, or in Database terms, we can identify any record in any tables. 
+
+Because using the type, we can find the table, and using the ID, we can find the record, right? So instead of using a concrete model like product, we should use an abstract model called ContentType, which comes with Django.
+So earlier, we talked about the list of installed apps in the settings module. There we have an app called Contenttypes. Using this Contenttypes, we can create generic relationships within our models. So ContentType is a model that represents the type of an object in our application. Now, we need to import this on the top --> 'from django.contrib.contenttypes.models import ContentType'  So, this is a model just like any model that we have in our application. But this model is specifically made for allowing generic relationships. Also setting the on_delete to cascade because if that object type is removed we want to remove all the associated tags. 
+
+
+Now, the second attribute we need here is the id of the target object. So, we can set the field object_id. And this has to be a positive integer field. Because we're assuming that every table is going to have a primary key. And all primary keys are positive integers. Now what if in a particular table, our primary key is not an integer, let's say it's a GUID. Well, in that particular case, this solution is not going to work. So this is the limitation of this solution. So now, with these two pieces of information, we can identify any object in our application. 
+
+
+Now, one last thing. When querying data, We might want to get the actual object that this tag is applied to, like the actual product. To do that We're gonna add another field called content_object and set this to a particular type of field called GenericForeignKey (imported on the top). Now, using this field, content object, we can read the actual object that a particular tag is applied to. So, let's quickly recap. To define a generic relationship, there are three fields we need to define. content_type, object_id, and content_object.
+
+exercise:
+
+I want you to create an app called likes for tracking the objects that a user likes. So in this app, we're going to have a model called LikedItem. And using an instance of this model, we can tell what user likes what object. So here we need a field called user, which is going to be a foreign key to the user class defined in the model django.contrib.auth.models. So auth is another app that is automatically installed in every Django project. And using this app, we can authenticate and authorize users. 
+
+
+App: Likes
+
+LikedItem
+ -what user likes what object
+ -user: ForeignKey to User(django.contrib.auth.models)
+
+
+likes/model.py:
+
+from django.db import models
+from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
+
+
+class LikedItem(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey()
+
+
+So, We have created a new app called likes. And in this app, we have a new model called LikedItem. Now here we have four fields. We have user, which is a foreign key to the User class defined in django.contrib.auth.models. Now here for on_delete, I've used cascade. so if a user is deleted, we want all the objects that the user has liked to be deleted as well. Then we have three fields exactly like before, no changes. We have content_type for identifying the type of an object that the user likes, we have object_id for referencing that particular object, and content_object for reading an actual object. 
+
+
+
+
+
+
+
 
 
 
