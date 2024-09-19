@@ -618,16 +618,27 @@ So, We have created a new app called likes. And in this app, we have a new model
 
 
 
+Setting up the database and Django Migrations:
+----------------------------------------------
+Django supports many database management systems. The most basic one that is set up by default is SQLite, which is a very basic, lightweight database engine. You should use it only for development or for low-traffic websites, nothing serious than that. For any serious projects, you should use PostgreSQL, MySQL, MariaDB, or Oracle. These database engines are officially supported by Django, but they're also third-party libraries for other database engines like Microsoft SQL Server. Now, out of all these options, Postgres and MySQL are the two most common database backends used in the Django community. In this section, we'll start off by having a quick look at SQLite, and then shortly after, we'll switch to MySQL for the rest of the course. Now, don't worry if you have never worked with MySQL, we're not going to use any fancy MySQL features. 
+All you have to do is install MySQL. Now, if you don't want to use MySQL and prefer a different database engine like Postgres, that's totally fine with me. But I'm not going to cover connecting the project to Postgres. You need to research it on your own. So next, we're going to talk about creating migrations.
 
 
+In Django, we use migrations to create or update our database tables based off of the models we have in our project. So, in django projects, we're not going to manually create or modify our database tables. We're going to let django take care of that.
 
+Once you run, 
 
+python manage.py makemigrations 
 
-python manage.py makemigrations   ---> generates migrations py file 
+Django looked at all the installed apps in our project, and for each app, it created a new migration file.
 
-   --> makemigrations basically generates the SQL commands for preinstalled apps (which can be viewed in installed apps in settings.py) and your newly created app’s model which you add in installed apps 
+makemigrations basically generates the SQL commands for preinstalled apps (which can be viewed in INSTALLED_APPS in settings.py) and the newly created apps which you add in INSTALLED_APPS
    
- Note: remember to add all apps to 'INSTALLED_APPS', or else django wouldn't detect any changes 
+Note: remember to add all apps to 'INSTALLED_APPS', or else django wouldn't detect any changes 
+
+Note: slug --> slug is when you go to the stack overflow and if you search for a question in the address bar you can see the id of the question and the actual question itself(https://stackoverflow.com/questions/4492979/error-git-is-not-recognized-as-an-internal-or-external-command), what you see there is called a slug.  Slug can only contain letters, numbers, underscores and hyphens. So, any other characters other than these is going to be replaced by any special character like hypens or even removed. Now the whole point of adding a slug here is to make it easier for search engines to find our content. So this is a search engine optimization technique. 
+ 
+ 
  
 python manage.py migrate  ----> run those migration.py file and create table in database
 
