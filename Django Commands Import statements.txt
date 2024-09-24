@@ -1,6 +1,9 @@
 To Learn:
 ---------
 
+
+Learn what is schema
+
 learn env, venv, pipenv
 
 Jinja templating, django default templating
@@ -640,18 +643,88 @@ Note: slug --> slug is when you go to the stack overflow and if you search for a
  
  
  
-python manage.py migrate  ----> run those migration.py file and create table in database
+ 
+ 
+ 
+we have a bunch of migrations at this point where each migration describes a set of changes. So each migration is like a commit in a version control system like GIT, right? Now we're going to run these migrations to generate our database schema. 
 
-    -->migrate executes those SQL commands in the database file. 
+So, in the terminal, 
+python manage.py migrate  ----> Django will go through all the installed apps and executed all the pending migrations. 
+
+
+Now, where is our database? Well, if you look at the Explorer panel, you can see a file called db.sqlite3. So, this is our SQLite database, which is a very lightweight database you should only use for development or very small websites. Now, in thevVS Code, we have an extension called SQLite, which we can use. for opening a SQLite database. 
+ 
+There are also other tools like there is a tool called DB Browser for SQLite which you get it from sqlitebrowser.org. It's a free but crappy application, but it gets the job done.  
+ 
+Shift + ctrl + P --> SQLite: Open Database --> you can select the database in the list --> open the explorer panel --> SQLITE EXPLORER 
+ 
+For betterment, switch to mysql
+ 
+Now here you can see our database as well as all the tables we have in the database. So, we have a bunch of tables that belong to the auth app. These tables are used for authenticating and authorizing users. We'll talk about them later in the course. Then we have three tables that are used by Django to do its job. 
+
+django_migrations -->  This table keeps track of the migrations that have been applied to this database.
+
+
+
+
+
+
+Customizing Database Schema:
+----------------------------
+
+Sometimes you need more control over the database schema. For example, you may want to overwrite the name of a table or you may want to add an index to a couple of columns and so on. For that you need to add meta class inside the model class and information about the these meta class you can go search for 
+django model metadata --> https://docs.djangoproject.com/en/5.1/ref/models/options/
+
+
+class Customer(models.Model):
+    MEMBERSHIP_BRONZE = 'B'
+    MEMBERSHIP_SILVER = 'S'
+    MEMBERSHIP_GOLD = 'G'
+
+    MEMBERSHIP_CHOICES = [
+        (MEMBERSHIP_BRONZE, 'Bronze'),
+        (MEMBERSHIP_SILVER, 'Silver'),
+        (MEMBERSHIP_GOLD, 'Gold'),
+    ]
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    email = models.EmailField(unique=True)
+    phone = models.CharField(max_length=255)
+    birth_date = models.DateField(null=True)
+    membership = models.CharField(
+        max_length=1, choices=MEMBERSHIP_CHOICES, default=MEMBERSHIP_BRONZE)
+		
 	
-	
+	class Meta: 
+		db_table = 'store_customer'
+		indexes = [
+				models.Index(fields=['last_name', 'first_name'])
+		]
+		
+
+once after you have done some changes in model classes, you have to do migrations. 
+
+For better naming to come up in migrations file, write a bit of code to solve a specific problem, create a migration, and then move on to the next problem. Or else you would get some random name. 
+
+
+
+
+Reverting Migrations:
+---------------------
+
 python manage.py migrate store 003 (migrate to a specific migration)
-  but the proper way is to delete the unwanted migration file and erase all respective changes in the code 	
-	
-	
-python manage.py makemigrations store --empty
 
-python manage.py sqlmigrate store 0003  --> to see the actual sql code that is sent to our database at runtime.
+Once you done this step, the changes would be reflected in both django_migrations table and in the database. But the changes are still in the code and migration file specific to that changes will be still available in the migrations folder. so, the next time you run python manage.py migrate, these changes will be applied. So, the proper way is to delete the unwanted migration file and erase all respective changes in the code 	
+
+Hence this is where we use version control systems like git. Undoing code using a version control system like git is a lot easier than manually removing code from different places.  
+  
+git log --oneline  --> This shows the list of commits you've made so far
+
+git reset --hard HEAD~1   --> to move the head pointer one step back i.e. to the previous commit
+	
+
+
+
 
 
 
@@ -659,10 +732,27 @@ install mysql
 
 install any mysql clients and connect with it 
 
+mysql clients:
+Mysql workbench(free)
+TablePlus
+DataGrip
+
+We have to create the database first before we can connect with it using Django. So even if you're not using DataGrip, let's say if you're using MySQL Workbench, you need to create a database called storefront or whatever you want to call it.
+
+to check mysql connection is proper:
+mysql -u root -p
+
+if you you get an error:
+it might be due to MySQL not installed properly
+MySQL is not in the path
+
 The next step is to connect our Django project to MySQL --> to do that we need to install a package --> pipenv install mysqlclient
 
 
-change in the settings:
+
+The next is to change the database settings:
+go to the settings.py in the project directory , shift + ctrl + o (Go to symbol in the current working file, type 'DATABASES')
+
 DATABASES = {
  'default' : 'django.db.backends.mqsql',
  'NAME' : 'storefront',
@@ -673,7 +763,36 @@ DATABASES = {
  }
 
 
+
+You should not get any errors at this point. So your server should be still up and running. If you get any errors, then you have to stop and troubleshoot. Otherwise, you should run the migrations. So, all the tables are created in our MySQL database. So let's open a new terminal window and run Python manage.py migrate.
+
+
+	
+python manage.py makemigrations store --empty
+
+class Migration(migrations.Migration):
+
+	dependencies = [
+		('store', '003_add_slug_to_product'),
+	]
+		
+	operations = [
+		migrations.RunSQL('''
+			INSERT INTO store_collection (title)
+			VALUES('collection1')
+        ''', '''DELETE FROM store_collection
+				WHERE title='collection1'
+		'''
+	]
+
+The first one is for upgrading our database. The second one is for downgrading. 
+
+python manage.py sqlmigrate store 0003  --> to see the actual sql code that is sent to our database at runtime.
+
+
 Generating Dummy Data --> mockaroo.com
+
+
 
 
 
@@ -684,80 +803,412 @@ Generating Dummy Data --> mockaroo.com
 Django ORM:
 -----------
 
-product = Product.objects.filter(pk =0).first() #if the product doesn't exist, we would get None, we are not gonna get exception
-exists = Product.objects.filter(pk =0).exists() # we get a boolean value
+We can query and manipulate data using Django ORM or Object Relational Mapper. we can also filter, sort and group data and much much more. 
+
+Let's start off this section by a quick overview of object relational mappers and the problem they try to solve. So, you know that in relational databases, data is stored as rows in tables. So when pulling up data from a relational database, we need to map these rows into objects. In the past, we used to do this by hand and this was pretty repetitive and time consuming. So, we would have to write a SQL query, send it to the database, read the result, and map it to a bunch of objects. So for each record, you'll have to create a new object and set its attributes. This is where an object relational mapper comes into the picture. An object relational mapper, as the name implies, maps objects to relational records, and that frees us from writing a lot of repetitive code. 
+
+So, using an object relational mapper, we don't have to write SQL code to query or manipulate data. We can code in an object-oriented programming language like Python. The URL will then translate our Python code into SQL code at runtime. So, does it mean we never need to write SQL? No. When dealing with complex problems, ORMs can't produce efficient SQL queries. So that's when we need to jump in and write optimized SQL queries by hand. But overall, ORMs help us reduce complexity in our code, make it more understandable, and get more done in less time. A good example of that is Django migrations. Using these migrations, we generate our database tables almost instantly. We don't have to write any sequel code or use a tool like data grip to create our tables add relationships indexes and so, Django migrations take care of all of that for us. 
+
+So, migrations are part of Django ORM. Also all the model classes we have created so far inherit from the model class in Django. This model class is also part of Django ORM. So, as you will see in this section all our model classes inherit the functionality to query or manipulate data from the base model.Model class. Now, once in a while, you see someone like our popular John Smith, who hates ORMs and prefers to write every bit of code by hand because he believes ORMs are slow. What John is missing here is that he doesn't understand that the more code he writes, the more bugs he or someone else has to fix in the future. There is an old saying that says, the best code is no code. 
+
+Writing and maintaining all that extra code costs time and money. Someone is paying for it, your employer or your client. If you were that person, you wouldn't want someone else wasting your money writing code that was unnecessary, right? Throughout my career, I've seen so many projects over-engineered by people like John that never made it into production. In my opinion, a good software engineer is one who delivers working software in time. Building the best, most optimized solution that will never make it to production is not something to be proud of. So use the right tool for the job. As I said, ORMs don't perform well when dealing with complex queries, but that doesn't mean we should never use our apps We can use them in a lot of cases, perhaps for the most part. 
+Remember the old saying, premature optimization is the root of all evils. So don't optimize your code unless you have proof that is slow. So that's it for the Django. Orm. Let's move on to the next lesson.
 
 
-Learning filtering objects in Django orm 
-Also learn keyword arguments
 
+
+Managers and Querysets:
+-----------------------
+
+Alright, the first thing you need to understand about Django ORM is the concept of managers and query sets. Every model in django has an attribute called objects. And this returns a manager object. A manager is an interface to the database. It's like a remote control with a bunch of buttons that we can use to talk to our database. 
+
+product.objects.
+
+So here we have a bunch of methods for querying or updating data. For example, we have 'all' for pulling out all the objects in the products table. We also have 'get' for getting a single object. We have filter for filtering data and so on. Now, most of these methods, like the 'all' method, returns a query set. So when we call this method, we don't get a list of products. We get a query set object. A query set is an object that encapsulates a query. So at some point, Django is going to evaluate this query set and this is when Django will generate the right SQL statement to send to our database. But when will this happen? Well, under a few scenarios. One scenario is when we iterate over a query set.
+
+query_set = Product.objects.all()
+
+for product in query_set:
+	print(product)
+	
+	
+	
+list(query_set)
+
+query_set[0]/ query_set[0:5]
+
+
+query_set = Product.objects.all()
+query_set.filter().filter().order_by()
+
+
+query_set = Product.objects.count()
+ 
+So if you write 'for product in query set', at this moment, Django will evaluate this query set and get the result from the database. So, one scenario where a query set is evaluated is when we iterate over it. Another scenario is when we convert it to a list. So if we call the list function and give it a query set, the query set will be evaluated. Another scenario is when we access individual element, like the first element or when we use slice operation, so if you use the slice operator and pick the first five elements, then the query set will be evaluated. So, because all of this, we say query sets are lazy, which means they're evaluated at a later point. 
+
+Now you might be wondering why query sets are lazy. Why doesn't Django simply call the database the moment we call the 'all' method?  Well, the reason for this is that we can use query set methods to build a complex queries. So over here, we can call query_set along with filter() to filter the result. And this will return a new query set. So once again, the query is not going to get evaluated at this point. So we get a new query set. And then right away, we can call the another filter method to apply a second filter. Similarly, we can call the order by method after that to sort the result. So by chaining all these methods, we will build a complex query, and at some point, when we iterate over that query or convert it to a list, that query will be evaluated. 
+Now imagine if query sets were not lazy. The moment we call the all method, the query would be evaluated, and this would result in thousands or even millions of objects returned from the database. But what if you were only interested in a subset of these products? Then calling the filter method would filter the objects in memory. So we would get thousands or millions of objects will store them in memory and throw most of them out. So to recap, every model has an attribute called objects, which returns a manager, which is an interface to the database. Now, the manager has a bunch of methods for querying and updating data. Most of these methods, like the 'all' method returns a query set. In contrast, we have some other methods that return result immediately.
+ 
+For example, we have the count() method, which returns the number of records in the product table. Now, why don't we get a query set here? Well, because this method returns a number, so it doesn't really make sense to do something extra with that number. We're not going to apply a filter to it, we're not going to sort the result or build a complex query around it. So this was the basics of managers and query sets. As we go through the section, you will learn more about these query sets. Next, we're going to talk about retrieving objects in detail.
+
+
+
+
+
+
+
+Retrieving objects:
+-------------------
+
+Alright, in this lesson, we're going to talk about a few different methods for retrieving objects. The first method is the 'all' method that we briefly talked about in the previous lesson. This method returns a query set, and when this query set gets evaluated, we get all the objects in a given table, like the product table. Now, sometimes we want to get a single object, like the product with the id 1. To do that, we use the 'get' method, and we pass a lookup parameter like 'id=1'. Then we could also use 'pk'.  That's a special argument. So when we use pk, Django will automatically translate this to the name of the primary key field. So our primary key field might be id, it might be code, whatever. 
+We don't have to remember. This is the benefit of using the pk argument. Now unlike the all method, the get method returns an actual object, not a query set. The reason for this is because once we get an object, it doesn't really make sense to do anything extra with it. We're not going to sort the result. We're not going to apply additional filters and so on. 
+
+
+
+product = Product.object.get(pk=1)  //So, here we get a product and that means we should rename the variable to product. 
+
+
+
+So always pay great attention to the name of your variables and functions. I cannot emphasize this enough because this is one of the main issues I see in a lot of people's code. They have a function like get airplane. So you see that function and you think you're going to get an airplane. 
+But when debugging the application, you realize that this function actually returns an orange And that orange ends up getting stored in an object called book. Don't do this. So always pay great attention to the name of your variables. 
+
+Now, one thing you need to know about the get method is that if it cannot find this object, it will throw an exception. So, if we set  pk=0, we get an exception of 'type does not exist'. So, to handle this, we have to wrap our code inside a try-catch block. 
+
+from django.core.exceptions import ObjectDoesNotExist
+
+try:
+	product = Product.object.get(pk=0)
+
+except ObjectDoesNotExist:
+	pass
+	
+	
+
+
+
+Now this try catch block looks a little bit ugly. We don't want to repeat this pattern over and over in our code. So, let me show you a better way. Now instead of the get method, we can use the filter method. Now this method returns a query set. So right away we can call the first() method of the query set. Now if the query set is empty, the first() method returns None. So in this case, product is going to be None. We're not going to get an exception. 
+
+product = Product.object.filter(pk=0).first()
+
+Now sometimes we want to check the existence of an object. So over here, right after the filter method, instead of the first method we can call another method called exists. So first we apply a filter and then we check to see if there is an object in our query set with this criteria. So in this case we're not going to get a product object, we get a Boolean value. 
+
+exists = Product.object.filter(pk=0).exists()
+
+
+
+
+
+
+Filtering Objects:
+------------------
+
+Alright, let's talk about filtering data. So let's say we want to find all the products that are $20. So here we pass a keyword argument and say unit_price equals 20. 
+
+queryset = Product.objects.filter(unit_price=20)
+
+
+queryset = Product.objects.filter(unit_price>20) # shows error
+	
 queryset = Product.objects.filter(unit_price__gt=20)
 
+Pretty straightforward. Now, what if you want to find all the products that are more expensive than $20? We cannot use our logical operators here. we would get an error. Because the expression (unit_price>20) is a Boolean expression and returns a Boolean value which can be true or false. But when calling the filter method, We need to pass a keyword argument. So we need to pass a keyword followed by a value(keyword=value), right? So to solve this problem, after the field name, we type two underscores followed by a lookup type. So in Django, we have 'gt', which is short for greater than. 
+We also have greater than or equal to. We have less than, less than or equal to. 
 
 
-queryset = Product.objects.filters(collection_id__range=(1, 2, 3))
+Now to find all these lookup types, we can search for queryset api --> https://docs.djangoproject.com/en/5.1/ref/models/querysets/ --> Field lookups
 
-queryset = Product.objects.filters(title__icontains='coffee')
+
+Another useful lookup type is range. With this we can find the products whose price is in a given range. So over here, we cannot pass a single value. 
+We need to pass two values a minimum and a maximum So we need to pass a tuple with two values. Let's say 20 and 30.
+
+queryset = Product.objects.filter(unit_price__range=(20, 30))
+
+
+ 
+Great. Now we can also filter across relationships. Let's say we want to find all the products in collection number 1. So, we type 'collection', followed by two underscores, so we navigate the relationship, and over here we can type the name of any of the attributes or fields of the collection class. There we can say id equals 1. We can also use our lookup types. So we can add two underscores followed by a lookup type, like greater than or range. And then we can set this to a tuple of, let's say, three values (1, 2, 3). So with this, we get all the products in any of these collections. 
+
+queryset = Product.objects.filters(collection_id=1) 
+queryset = Product.objects.filters(collection_id__gt=1)
+queryset = Product.objects.filters(collection_id__range=(1, 2, 3))  
+
+
+
+
+
+So, these were the lookup types for dealing with numbers. Now let's look at an example involving a string. Let's say we want to find the products that contain coffee in their title. we can type two underscores and use the 'contains' lookup type. We set this to coffee and with this we don't get anything because this lookup type is case sensitive. So to perform a case insensitive search we have to use 'icontains'.  
+
+queryset = Product.objects.filters(title__contains='coffee')
+queryset = Product.objects.filters(title__icontains='coffee') # case insensitive
+
+
+
+
+Okay. Now, for dates, we have a bunch of lookup types. So let's say we want to find all the products that were updated in 2021. 
+Now take a look. So this is what we get. So we can extract individual components and dates like year, month, Second and so on. We can also compare this with a date value. Not something we use that often. 
 
 queryset = Product.objects.filters(last_update__year=2021)
 
+
+
+
+And the last lookup type I'm gonna cover here is checking for null. So, to get all the products without a description, we can say description double underscore is null equals true. 
+
+queryset = Product.objects.filter(description__isnull=True)
+
+
+Some more examples:
+
+# Customers with .com accounts
+querset = Customer.objects.filter(email__icontains='.com')
+
+# Collections that don’t have a featured product
+queryset = Collection.objects.filter(featured_product__isnull=True)
+
+# Products with low inventory (less than 10)
+queryset = Product.objects.filter(inventory__lt=10)
+
+# Orders placed by customer with id = 1
+queryset = Order.objects.filter(customer__id=1)
+
+# Order items for products in collection 3
+queryset = OrderItem.objects.filter(product__collection__id=3)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Complex Lookups Using Q Objects:
+--------------------------------
+
+Alright, let's see how we can apply multiple filters. So, let's say we want to find all the products with inventory less than 10 and unit price less than 20. There are a couple of different ways to implement this query. One way is to pass multiple keyword arguments.  
+
+# inventory < 10 and price < 20
+
+queryset = Product.objects.filter(inventory__lt=10, unit_price__lt=20)
+
+
+Okay. Now, there is another way to write the same query. Instead of passing multiple keyword arguments, we can chain the call to filter method. 
+queryset = Product.objects.filter(inventory__lt=10).filter(unit_price__lt=20)
+
+
+So, let's take a look at our query. So, exactly like before, where we have two conditions combined using the 'and' operator. Now, how can we combine these conditions using the or operator? Well, to do that, we have to use Q objects. First, we need to import the Q class from Django. So from Django.db.models import Q. So Q is short for query. And using this class, we can represent a query expression or a piece of code that produces a value. Okay, So using this queue class, we can encapsulate a keyword argument. which means each Q object encapsulates a keyword argument or a query expression. 
+we can combine a Q object with another Q object using the bitwise operators. So, if we use the bitwise 'OR' operator, this will translate to a logical 'OR' in a sql query. So here we pass a second Q object and add the second condition. 
+
+
+from django.db.models import Q
 	
 queryset = Product.objects.filters(Q(inventory__lt=10) | Q(unit_price__lt=20))	
+
+
+we can also use the Bitwise'AND' operator, but this syntax is a little bit too verbose. If you want to combine multiple conditions using the AND operator, we don't really need Q objects. We can simply pass multiple keyword arguments to the filter method.
+
+queryset = Product.objects.filters(Q(inventory__lt=10) & Q(unit_price__lt=20))  # verbose
+
+
+Okay, we can also negate a Q object. So, this will translate to the not operator in sequel. So, when we execute this, we'll get all the products whose inventory is less than 10. And their unit price is not less than 20. Okay, so this is how we can build complex lookups using queue objects. Next, we're going to talk about referencing fields using F objects.
+
+queryset = Product.objects.filters(Q(inventory__lt=10) & ~Q(unit_price__lt=20))	
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+Referencing Fields using F Objects:
+-----------------------------------
+
+#in products where inventory = price 
+
+queryset = Product.objects.filters(inventory = unit_price)  # error
+queryset = Product.objects.filters(inventory = 'unit_price')
+
+Sometimes when filtering data, we need to reference a particular field. For example, let's say we want to find all the products where their inventory equals their unit_price. Now, I know this doesn't really make sense in terms of a business rule, but let's just imagine that we want to compare two fields. So here in the filter method, if we mention inventory equals unit_price, we get an error because unit_price is not a valid value for this keyword argument. And also Where is unit_price defined? we don't know, right? Now, if we convert 'unit_price' to a string, that's not going to work either because the inventory field is a number and we cannot compare a number with a string. So to solve this problem, we need to use an F object. 
+
+
+from django.db.models import Q, F
 
 queryset = Product.objects.filters(inventory = F('unit_price'))
 
 queryset = Product.objects.filters(inventory = F('collection__id'))
 
+Now using this class, we can reference a particular field. That's why it's called F. So, we're going to create an F object and in the constructor, we're going to pass the name of a field, okay?  
+
+Now, using F objects, we can also reference a field in a related table. For example, here we can say, collection__id, and with this we'll compare the inventory of a product with the id of its collection.
 
 
-queryset = Product.objects.order_by('title')  des -> '-title'
+
+
+
+
+
+
+
+Sorting:
+--------
+
+Alright, let's talk about sorting data. So, we have this 'order_by' method that I briefly mentioned before. Using this method, we can sort the result by one or more fields. For example, here we can get all the products and sort them by their title in ascending order. If you want to change the sort direction, We simply add a negative sign here. 
+
+queryset = Product.objects.order_by('title')  descending order -> '-title'
+
+
+we can also sort by multiple fields. For example, We can sort by unit price in ascending order, and then by title in descending order.
+So, with this implementation, we're going to sort our products from the cheapest to most expensive ones, and if we have multiple products with the exact same price, within that group, our products are going to be sorted by their title in descending order, okay? Now, the order by method returns a queryset object, and one of the methods of query set is reverse. So if we call the reverse method there, this will reverse the direction of the sort. So with this implementation, we're going to sort the products by unit price in descending order and then by title in ascending order.
+
 
 queryset = Product.objects.order_by('unit_price', '-title')
 
-check queryset api reference 
+queryset = Product.objects.order_by('unit_price', '-title').reverse()  # does the sorting by unit_price in descending order and title in ascending order
+
+
+
+Now we can also call the order by method after filtering data because the filter method returns a query set object and order by is one of the methods of query set objects.
+
+
+queryset = Product.objects.filter(collection__id=1).order_by('unit_price')
+
+check queryset api reference --> https://docs.djangoproject.com/en/5.1/ref/models/querysets/ --> QuerySet API
+
+Now, sometimes we want to sort the result and pick only the first object. So let's remove the filter method here. We're simply sorting our products by their unit price and then we're going to pick the first product. So with this implementation, we're not going to get a query set because we're accessing the an individual element. So up to this point, when we call the order by method --> Product.objects.order_by('unit_price')--> we get a query set object. But the moment we access an individual element in this query set, the query set gets evaluated, and then we get an actual object. So we should rename this variable to product. 
+
 
 product = Product.objects.order_by('unit_price')[0]
+
+
+
+So another way to rewrite the same query is by using the earliest method to sort the result by unit price and get the first object. Note that the earliest method returns an object. In contrast, order by returns a query set. Now similarly, we have another method called latest, which sorts the products by unit price in descending order, and then it will return the first object. 
+
 product = Product.objects.earliest('unit_price')
 product = Product.objects.latest('unit_price')
 
 
 
-queryset = Product.objects.all()[:5]
 
-see this sql statement:
+
+
+
+
+Limiting Results:
+-----------------
+
+So, our product table has a thousand products. Now quite often, we don't want to show all these products to the user in one list. We want to show pages of products. So let's say our page size is five and we want to show the products on the first page. To do that, we use Python's array slicing syntax.
+
+queryset = Product.objects.all()[:5]  # 0, 1, 2, 3, 4
+
+sql statement:
+select * from store.product limit 5
+
+
+
+Now to get the products on the second page, we can start from five and finish before 10. 
+
+queryset = Product.objects.all()[5:10]  # 5, 6, 7, 8, 9
+
+sql statement:
 select * from store.product limit 5 offset 5
 
 
 
-queryset = Product.objects.values('id', 'title')
-queryset = Product.objects.values('id', 'title', 'collection_title')  -->
-Note: in this case we don't get product instances/ object . we do get dictionaries
 
-queryset = Product.objects.values_list ('id', 'title', 'collection_title') -->
- Here we get tuples instead of dictionary
 
-select store_product.id, store_product.title, store_collection.title from store_product inner join store_collection on 
-(store_product.collection_id = store_collection.id) 
 
+
+
+Selecting Fields to Query:
+--------------------------
+So, you have seen that when we query objects, by default, all of their fields are read from the database. But what if you're only interested in a subset of these fields? For example, if you look at the product table. Our product table has a bunch of fields or columns. Some of these columns, like the description column, contain a lot of text. What if we don't care about the values in this column? What if we only want to return the ID and the title of each product to the user. This is where we use the values method. So we call the values method and specify the fields we want to query. 
+
+queryset = Product.objects.values('id', 'title')  # sql: SELECT store_product.id, store_product.title FROM store_product
+ 
+
+
+With this implementation, we're only reading the ID and the title of each product. Now, we can also read related fields. For example, we can go to the collection and read the title field. So using the double underscore notation we we can access the related fields. With this implementation, now we have an inner join between the product and the collection tables because we are reading a related field. So this is how we can use the values method. Now, one thing you need to know about this method is that with this method, instead of getting a bunch of product instances, we get a bunch of dictionary objects. 
+
+queryset = Product.objects.values('id', 'title', 'collection__title')  # return value is dictionary
+# sql: SELECT store_product.id, store_product.title, store_collection.title FROM store_product INNER_JOIN store_collection ON (store_product.collection_id = store_collection.id)
+
+
+
+Now, we have another method called 'values_list'. And with this method, we get a bunch of tuples instead of dictionaries. 
+
+queryset = Product.objects.values_list ('id', 'title', 'collection_title') # return value is tuple
+
+
+
+Now, here's your exercise. I want you to write a query to select products that have been ordered and Sort them by their title. 
+So, in our database, We have this product table that contains all the products in our system, but not all products have been ordered. So, to find the products that have been ordered, you need to go to the order_item table. Here we have a column called product_id. You need to select all these values, all these product IDs, and use them as an argument when filtering products. 
+
+queryset = OrderItem.object.values('product_id') # we can also give 'product__id', but django will create the reverse relationship 'product_id' during runtime.
 	
+queryset =  Product.objects.filter(id__in = OrderItem.object.values('product_id').distinct()).order_by('title')  --> we get Product instance
 
-queryset = OrderItem.object.values('product_id') --> we can give this instead of (product__id) because django will create the reverse relationship during runtime
-	
-queryset =  Product.objects.filter(id__in = OrderItem.object.values('product_id').distinct())  --> we get Product instance
 
+
+
+
+
+
+
+
+Deferring Fields: 
+-----------------
+In the last lesson, you learn how we can optimize our queries by specifying the fields that we want to query. Now, We have another technique called deferring fields. So we have a method called 'only'and with this method, we can specify the fields that we want to read from the database. Let's say 'id' and 'title'. Now, you might be wondering how this method is different from the 'values' method. Well, with the 'only' method, will get instances of the product class, whereas with the values method, will get dictionary objects. When using the 'only' method, the same query only has been sent as in previous lesson. 
 
 queryset = Product.objects.only('id', 'title')  --> we get instance of Product, whereas with 'values' we get dictionary 
 
+sql: SELECT store_product.id, store_product.title FROM store_product
+
+Great. Now, you've got to be very careful with this method. If you don't know what you're doing, you'll end up with a lot of queries sent to the database under the hood. What I mean, if anywhere in your template, if you want to render its price. Our application will be freezed for some time.
+
+And when the sql queries sent to the database: 
+main query: SELECT store_product.id, store_product.title FROM store_product 
+next query : SELECT store_product.id, store_product.unit_price FROM store_product WHERE store_product.id = 1 LIMIT 21 
+1000 similar queries
+
+So, after the main query, for each product, it has sent a separate query to read its price. So, because we have a thousand products in this list, we have a thousand extra queries for reading the price for all these products. This is what I was talking about. So you have to be careful when using the 'only' method. If you don't know what you're doing, you'll end up with a lot of extra unnecessary queries. 
+
+Now we don't have this problem with the 'values' method. Because with the values method, we get dictionary objects and these dictionary objects don't have this behavior. So if you access a field that doesn't exist in a dictionary, that dictionary is not going to issue a query to the database. Now we have another method, which is the opposite of the 'only' method, and that is called 'defer'. With this method, we can defer the loading of certain fields to later. So let's say our product table has a bunch of columns. You're interested in all of them except the 'description' field. So we can defer this to later. But once again, you have to be careful. So if somewhere else in the template you have a for loop, and in that loop, you're iterating over the products and rendering the description of each product, once again, you're going to end up with all those extra queries.
+
 queryset = Product.objects.defer('description')
 
+
+
+
+
+
+
+Selecting Related Objects:
+--------------------------
+<li>{{ product.title }} - {{ product.collection.title }}</li>
 
 to query the related tables -->
 queryset = Product.objects.select_related('collection').all()
 
 
-select store_product.id, store_product.title, store_product.slug, store_product.description, store_product.unit_price, 
-store_collection.id, store_collection.title, store_collection.featured_product_id from store_product inner join store_collection on 
-(store_product.collection_id = store_collection.id)
+SQL:
+SELECT store_product.id, store_product.title, store_product.slug, store_product.description, store_product.unit_price, store_product.inventory, store_product.last_update, store_product.collection_id, store_collection.id, store_collection.title, store_collection.featured_product_id FROM store_product INNER_JOIN store_collection ON (store_product.collection_id = store_collection.id)
+
+
+we can also span relationships here: 
+queryset = Product.objects.select_related('collection__someOtherField').all()
+
+
 
 
 #select_related(1) --> other end of the relationship has one instance (product - collection)
@@ -768,10 +1219,92 @@ store_collection.id, store_collection.title, store_collection.featured_product_i
 #prefetch_related
 queryset = Product.objects.prefetch_related('promotions').all()
 
+#sql queries
 select store_product.id, store_product.title, store_product.slug, store_product.description, store_product.unit_price from store_product
 
 select (store_product_promotions.product_id) as _prefetch_related_val_product_id, store_promotion.id, store_promotion.description, store_promotion.discount
 from store_promotion inner join store_product_promotions on (store_promotion.id = store_product_promotions.promotion_id) where store_product_promotions.product_id in (1,2,3,4,5,6,7,8,9,10...)
+
+
+
+we can also combine these two methods: 
+
+queryset = Product.objects.prefetch_related('promotions').select_related('collection').all()
+
+
+#SQL Queries: 
+
+SELECT store_product.id, store_product.title, store_product.slug, store_product.description, store_product.unit_price, store_product.inventory, store_product.last_update, store_product.collection_id, store_collection.id, store_collection.title, store_collection.featured_product_id FROM store_product INNER JOIN store_collection ON (store_product.collection_id = store_collection.id)
+
+
+SELECT (store_product_promotions.product_id) AS _prefetch_related_val_product_id, store_promotion.id, store_promotion.description, store_promotion.discount FROM store_promotion INNER JOIN store_product_promotions ON (store_promotion.id = store_product_promotions.promotion_id) WHERE store_product_promotions.product_id IN(2,3,12........)
+
+
+
+
+Get the last 5 orders with their customer and items (incl product)
+
+
+queryset = Order.objects.select_related('customer').order_by('-placed_at')[:5]
+
+
+sql:
+SELECT store_order.id, store_order.placed_at, store_order.payment_status, store_order.customer_id, store_customer.id, store_customer.first_name, store_customer.last_name, store_customer.email, store_customer.phone, store_customer.birth_date, store_customer.membership FROM store_order INNER JOIN store_customer ON (store_order.customer_id = store_customer.id) ORDER BY store_order.placed_at DESC LIMIT 5
+
+
+
+class Order(models.Model):
+    PAYMENT_STATUS_PENDING = 'P'
+    PAYMENT_STATUS_COMPLETE = 'C'
+    PAYMENT_STATUS_FAILED = 'F'
+    PAYMENT_STATUS_CHOICES = [
+        (PAYMENT_STATUS_PENDING, 'Pending'),
+        (PAYMENT_STATUS_COMPLETE, 'Complete'),
+        (PAYMENT_STATUS_FAILED, 'Failed')
+    ]
+
+    placed_at = models.DateTimeField(auto_now_add=True)
+    payment_status = models.CharField(
+        max_length=1, choices=PAYMENT_STATUS_CHOICES, default=PAYMENT_STATUS_PENDING)
+    customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.PROTECT)
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)
+    quantity = models.PositiveSmallIntegerField()
+    unit_price = models.DecimalField(max_digits=6, decimal_places=2)
+
+
+
+
+
+queryset = Order.objects.select_related('customer').prefetch_related('orderitem_set')order_by('-placed_at')[:5]
+
+
+SQL:
+SELECT store_order.id, store_order.placed_at, store_order.payment_status, store_order.customer_id, store_customer.id, store_customer.first_name, store_customer.last_name, store_customer.email, store_customer.phone, store_customer.birth_date, store_customer.membership FROM store_order INNER JOIN store_customer ON (store_order.customer_id = store_customer.id) ORDER BY store_order.placed_at DESC LIMIT 5
+
+SELECT store_orderitem.id, store_orderitem.order_id, store_orderitem.product_id, store_orderitem.quantity, store_orderitem.unit_price FROM store_orderitem WHERE store_orderitem.order_id IN (408,513,711,2,248)
+
+
+
+
+
+
+
+queryset = Order.objects.select_related('customer').prefetch_related('orderitem_set__product')order_by('-placed_at')[:5]
+
+
+SQL:
+SELECT store_order.id, store_order.placed_at, store_order.payment_status, store_order.customer_id, store_customer.id, store_customer.first_name, store_customer.last_name, store_customer.email, store_customer.phone, store_customer.birth_date, store_customer.membership FROM store_order INNER JOIN store_customer ON (store_order.customer_id = store_customer.id) ORDER BY store_order.placed_at DESC LIMIT 5
+
+SELECT store_orderitem.id, store_orderitem.order_id, store_orderitem.product_id, store_orderitem.quantity, store_orderitem.unit_price FROM store_orderitem WHERE store_orderitem.order_id IN (408,513,711,2,248)
+
+SELECT store_product.id, store_product.title, store_product.slug, store_product.description, store_product.unit_price, store_product.inventory, store_product.last_update, store_product.collection_id FROM store_product WHERE store_product.id IN (166, 780, 976, 505, 219)
+
+
+
 
 
 
