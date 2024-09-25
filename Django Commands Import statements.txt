@@ -487,7 +487,7 @@ class Promotion(models.Model):
     discount = models.FloatField()
 
 
-Now we can define the relationship in either of these classes. And as i said earlier, Django will automatically create the reverse relationship. Now in this particular case, it makes more sense to define the relationship in the product class because we might have a product that we're showing to the user. And at the same time, we want to show all the promotions that apply to that product.
+Now we can define the relationship in either of these classes. And as i said earlier, Django will automatically create the reverse relationship. Now in this particular case, it makes more sense to define the relationship in the product class because we might have a product that we're showing to the user and at the same time, we want to show all the promotions apply to that product.
 	
 class Product(models.Model):
     title = models.CharField(max_length=255)
@@ -497,7 +497,7 @@ class Product(models.Model):
     collection = models.ForeignKey(Collection, on_delete=models.PROTECT)
 	promotions = models.ManyToManyField(Promotion)
 
-Now with this implementation, Django is going to create the reverse relationship in the Promotion class. So, in the Promotion class, we're going to have a field called 'Product_set' that returns all the products that a particular promotion is applied to if you don't like this name You can always change it. So, in our product class, we can supply a keyword argument related_name='products'. Django will use this name as the name of the field in the promotion class. So instead of 'product_set' we're gonna have a 'products'. 
+Now with this implementation, Django is going to create the reverse relationship in the Promotion class. So, in the Promotion class, we're going to have a field called 'Product_set' that returns all the products that a particular promotion is applied to, if you don't like the name You can always change it. So, in our product class, we can supply a keyword argument related_name='products'. Django will use this name as the name of the field in the promotion class. So instead of 'product_set' we're gonna have a 'products'. 
 
 Just remember, if you change the default convention in Django, it's best to change it consistently everywhere, otherwise in some classes you're going to have a field 'products', and in some other classes you're going to have a field 'product_set', and this makes your code really ugly.
 
@@ -1195,62 +1195,96 @@ queryset = Product.objects.defer('description')
 
 Selecting Related Objects:
 --------------------------
+
 <li>{{ product.title }} - {{ product.collection.title }}</li>
 
-to query the related tables -->
-queryset = Product.objects.select_related('collection').all()
+Sometimes we need to preload a bunch of objects together. For example, while fetching all the products, we also want to render the collection of each product next to its title (say product.collection.title). But when you do it normally, you would get the same problem as before. Our application will be hanging because Django is sending a thousands of extra queries Queries to the database to read the collection of all the related products. Because when we ask for products, Django is only going to query the product table. It's not going to query the related tables unless we specifically instructed to do so. So here we want to preload the products with our collection. 
 
+
+
+
+To do that we can use the select_related()(before we call the 'all' method, we can call select_related and specify the field that we want to preload). 
+Here say the field is 'collection'
+Now our products loaded instantly. 
+
+queryset = Product.objects.select_related('collection').all()
 
 SQL:
 SELECT store_product.id, store_product.title, store_product.slug, store_product.description, store_product.unit_price, store_product.inventory, store_product.last_update, store_product.collection_id, store_collection.id, store_collection.title, store_collection.featured_product_id FROM store_product INNER_JOIN store_collection ON (store_product.collection_id = store_collection.id)
 
+Here we're selecting all the fields from the product table followed by the three fields from the collection table and then we have a join between product and collection table. So, when we use the select related method, Django creates a join between our tables. 
 
-we can also span relationships here: 
+
+
+
+Now, we can also span relationships. So, let's say collection has another field that we want to preload as part of the query. So, we can add double underscores here and then type the name of that other field. 
+
 queryset = Product.objects.select_related('collection__someOtherField').all()
 
 
 
 
+Okay so, this is select_related. now. We have another method called prefetch_related. We use select_related when the other end of the relationship has one instance (a product has one collection). But we use prefetch related when the other end of the relationship has many objects (The promotions of a product). you can check product class real quick, where each product has one collection, but it can have many promotions. So to preload the promotions, we use the prefetch method. 
+
+class Product(models.Model):
+    title = models.CharField(max_length=255)
+	slug = models.SlugField()
+    description = models.TextField()
+    inventory = models.IntegerField()
+    last_update = models.DateTimeField(auto_now=True)
+    collection = models.ForeignKey(Collection, on_delete=models.PROTECT)
+	promotions = models.ManyToManyField(Promotion)
+
 #select_related(1) --> other end of the relationship has one instance (product - collection)
 #prefetch_related(N) when other end of the relationship has many objects (product - promotion)
-
-
 
 #prefetch_related
 queryset = Product.objects.prefetch_related('promotions').all()
 
-#sql queries
+SQL:
 select store_product.id, store_product.title, store_product.slug, store_product.description, store_product.unit_price from store_product
 
 select (store_product_promotions.product_id) as _prefetch_related_val_product_id, store_promotion.id, store_promotion.description, store_promotion.discount
 from store_promotion inner join store_product_promotions on (store_promotion.id = store_product_promotions.promotion_id) where store_product_promotions.product_id in (1,2,3,4,5,6,7,8,9,10...)
 
+Here's the first query to read the columns from the product table. Now, after that, we have another query to read the promotions of the products. So, you're reading three columns from the promotion table, and we have a join between promotion and product. So, essentially, we have two result sets. The first set includes the products. The second set includes promotions. Django reads these sets and then populates our objects in memory. 
 
 
-we can also combine these two methods: 
+
+
+Now, we can also combine these two methods. So let's say we want to load all the products with their promotions and collection. So after the call to 'prefetch_related', we can call the 'select_related' to load the collection of each product. 
 
 queryset = Product.objects.prefetch_related('promotions').select_related('collection').all()
 
 
-#SQL Queries: 
+SQL: 
 
 SELECT store_product.id, store_product.title, store_product.slug, store_product.description, store_product.unit_price, store_product.inventory, store_product.last_update, store_product.collection_id, store_collection.id, store_collection.title, store_collection.featured_product_id FROM store_product INNER JOIN store_collection ON (store_product.collection_id = store_collection.id)
 
-
 SELECT (store_product_promotions.product_id) AS _prefetch_related_val_product_id, store_promotion.id, store_promotion.description, store_promotion.discount FROM store_promotion INNER JOIN store_product_promotions ON (store_promotion.id = store_product_promotions.promotion_id) WHERE store_product_promotions.product_id IN(2,3,12........)
 
+we have two queries. The first query is to read the products and their collection. So, there we have a join between product and collection. And the second query is to read the promotions of all these products.
 
 
 
-Get the last 5 orders with their customer and items (incl product)
 
+Exercise: 
 
+I want you to write a query to get the last five orders with their customer and items, including the product reference in each order item. 
+
+First we want to get a list of orders. So, we should start with the order class. Then we go to Objects. Now we want to preload these orders with their customer. So, this is where we call select related to preload the customer field. Now we don't want to show all the orders, we want to show the last five orders. Hence, we need to sort them by 'placed_at' in descending order. So that latest orders come first. And then we use array slicing syntax to pick the top five orders. 
+ 
 queryset = Order.objects.select_related('customer').order_by('-placed_at')[:5]
 
 
-sql:
+SQL:
 SELECT store_order.id, store_order.placed_at, store_order.payment_status, store_order.customer_id, store_customer.id, store_customer.first_name, store_customer.last_name, store_customer.email, store_customer.phone, store_customer.birth_date, store_customer.membership FROM store_order INNER JOIN store_customer ON (store_order.customer_id = store_customer.id) ORDER BY store_order.placed_at DESC LIMIT 5
 
+So, we have a single query to read the orders along with their customers. So, we are selecting all the columns from the order table, followed by all the columns from the customer table. And we have a join operation between order and customer tables. Great. So let's move on to the next step.
+
+
+
+Now we should preload the items of these orders. So, here we can call prefetch_related because each order can have many items. Now, to know the name of the field we're going to query, you have a quick look at our Order class. 
 
 
 class Order(models.Model):
@@ -1276,22 +1310,20 @@ class OrderItem(models.Model):
     unit_price = models.DecimalField(max_digits=6, decimal_places=2)
 
 
+So, each order has three fields 'placed_at', 'payment status' and 'customer'. But we don't have a field called 'items', but when you look at the OrderItem class, there we have 'order' field, which is a foreign key to Order. So, Django is going to create the reverse relationship for us. And the relationship name as you know, would be 'orderitem_set'. This is the convention that Django uses to create the reverse relationship. If you don't like this name, you can always set it using the 'related_name' argument. 
 
 
-
-queryset = Order.objects.select_related('customer').prefetch_related('orderitem_set')order_by('-placed_at')[:5]
-
+queryset = Order.objects.select_related('customer').prefetch_related('orderitem_set').order_by('-placed_at')[:5]
 
 SQL:
 SELECT store_order.id, store_order.placed_at, store_order.payment_status, store_order.customer_id, store_customer.id, store_customer.first_name, store_customer.last_name, store_customer.email, store_customer.phone, store_customer.birth_date, store_customer.membership FROM store_order INNER JOIN store_customer ON (store_order.customer_id = store_customer.id) ORDER BY store_order.placed_at DESC LIMIT 5
 
 SELECT store_orderitem.id, store_orderitem.order_id, store_orderitem.product_id, store_orderitem.quantity, store_orderitem.unit_price FROM store_orderitem WHERE store_orderitem.order_id IN (408,513,711,2,248)
 
+Nothing much, we have one extra query to load the order items. So, we're loading the order items for the Orders in this list. 
 
 
-
-
-
+So, everything is fine so far Now the last step is to load the products referenced in each order item. So, over where we are prefetching the order item, we can span the relationship by adding two underscores, and then we can type the name of the target field, which is 'product'. 
 
 queryset = Order.objects.select_related('customer').prefetch_related('orderitem_set__product')order_by('-placed_at')[:5]
 
@@ -1303,17 +1335,131 @@ SELECT store_orderitem.id, store_orderitem.order_id, store_orderitem.product_id,
 
 SELECT store_product.id, store_product.title, store_product.slug, store_product.description, store_product.unit_price, store_product.inventory, store_product.last_update, store_product.collection_id FROM store_product WHERE store_product.id IN (166, 780, 976, 505, 219)
 
+Now we have one more extra query to read the products referenced in the order items. So, we are reading all the columns from the product table where the product id is in the list(166, 780, 976, 505, 219). And this list is the list of order items we have queried so far. 
+
+So this is how I want you to write code. Write a little bit of code, test your code, make sure everything works before doing a big step. 
+With this technique, we can prevent a lot of crazy issues down the road.
 
 
 
 
 
-result = Product.objects.aggregage(Count('id')) --> {id__count : 1000}
+
+Aggregating Objects:
+--------------------
+
+Sometimes you want to compute summaries like max or average price of our products. This is where we use the 'aggregate' method.
+
+So, let's say we want to count our products. Here we create a count object and specify the field we want to use for counting. If we use ID, we can count the total number of products because every product has an ID, right?. But if we use a different column, let's say 'description', and assume that description can be NULL, this will count the number of products that have a description, okay? 
+
+So the proper way to count the total number of records to use the ID or the primary key field. Now the aggregate method doesn't return a query set because once we calculate a summary value, it doesn't really make sense to do anything extra with it. We're not gonna add filters or sort data and so on. 
+
+
+from django.db.models.aggregates import Count, Max, Min, Avg, Sum
+
+result = Product.objects.aggregage(Count('id')) 
+
+
+So, here we get a dictionary. Let's call that result and add that to our context object in our views. 
+
+def say_hello(request):
+	result= Product.objects.aggregate(Count('id'))
+	return render(request, 'hello.html', {'name': 'Mosh', 'result': result})
+	
+	
+in UI part: {id__count : 1000}
+
+
+So, we get a dictionary with one key value pair. Look at the name of the key. It's 'id__count', because we use the 'id' column for counting objects. We can also change the name of this key if we want to. 
+
 result = Product.objects.aggregage(count = Count('id')) 
-	
-	
-queryset = Customer.objects.annotate(is_new = Value(True))
-	
+
+#in UI --> {'count': 1000}
+
+
+Now we can also calculate multiple summaries. So, in addition to the total number of products, We can also calculate the minimum price of our products. 
+
+result = Product.objects.aggregage(count = Count('id'), min_price=Min('unit_price'))
+
+#in UI --> {'count': 1000, 'min_price': Decimal('1.06')} 
+
+Since aggregate is one of the methods of query sets, we can also apply it wherever we have a query set. So, we can filter our products and pull out the products in our given collection. And then calculate these summaries over that data set.
+
+result = Product.objects.filter(collection__id=1).aggregate(count=Count('id'))
+
+
+Aggregate Exercises:
+
+#How many orders do we have?
+result = Order.objects.aggregate(count=Count('id'))
+
+#How many units of product 1 have we sold?
+result = OrderItem.objects.filter(product__id=1).aggregate(units_sold=Sum('quantity'))
+
+#How many orders has customer 1 placed?
+result = Order.objects.filter(customer__id=1).aggregate(count=Count('id'))
+
+#What is the min, max and avg price of products in collection 1? 
+result = Product.objects.filter(collection__id=3).aggregate(min_price=Min('unit_price'), avg_price=Avg('unit_price'), max_price=Max('unit_price'))	
+
+
+
+
+
+
+Annotating Objects:
+-------------------
+
+Sometimes we want to add additional attributes to our objects while querying them. This is where we use the 'annotate' method. And we cannot set keyword directly to any boolean or normal value, else we get an error saying QuerySet.annotate() received non-expressions	. 
+This error tells us that we cannot pass a Boolean value. We need to pass an expression object. So, in Django, we have this 'Expression' class, which is the base class for all all types of expressions. Derivatives of this class are 'Value', for representing simple values, like a number, a boolean, a string. We have 'F', which you have seen before. Using the F class, we can reference a field in the same or another table, right? So an F object is essentially an expression object. We also have 'Func' for calling database functions. So, all these database engines have a bunch of functions for manipulating data. To call those functions, We use a 'Func' object. We also have Aggregate, which is the Base class for all Aggregate classes. So those aggregate classes you learn about, like Count,sum, max, min.  All these classes derived from the aggregate class.
+
+Expression 
+	Value
+	F
+	Func
+	Aggregate
+
+
+
+So back to our code, we cannot pass a boolean value here. We need to pass an expression object. The simplest expression object is a value object. 
+
+from django.db.models import Value, F
+
+queryset = Customer.objects.annotate(is_new=Value(True))
+
+SQL:
+SELECT store_customer.id, store_customer.first_name, store_customer.last_name, store_customer.email, store_customer.phone, store_customer.birth_date, store_customer.membership, 1 AS is_new FROM store_customer
+
+
+Let's look at another example. This time we want to give our customers a new field called new_id. And for this demo, we want to set this to the same value as the id field. So we need to reference another field in this model. To do that, first we need to import the F class from django.db.models. And then over here, we can reference the id field. 
+
+queryset = Customer.objects.annotate(new_id=F('id))
+
+SQL:
+SELECT store_customer.id, store_customer.first_name, store_customer.last_name, store_customer.email, store_customer.phone, store_customer.birth_date, store_customer.membership, store_customer.id AS new_id FROM store_customer
+
+
+
+Now, we can also perform computations here. So, for example, we can add 1 to the id to generate the new ID. Now, take a look. So now the new ID is the original ID plus one.
+
+queryset = Customer.objects.annotate(new_id=F('id) + 1)
+
+SQL:
+SELECT store_customer.id, store_customer.first_name, store_customer.last_name, store_customer.email, store_customer.phone, store_customer.birth_date, store_customer.membership, (store_customer.id + 1) AS new_id FROM store_customer
+
+
+
+
+
+
+
+
+
+Calling Database Functions: 
+---------------------------
+
+
+
 
 queryset = Customer.objects.annotate(full_name = F(('first_name'), Value(' '), F('last_name'), function = 'CONCAT')
  #Here concat is the concat function database engine
