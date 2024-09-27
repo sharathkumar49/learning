@@ -1458,16 +1458,29 @@ SELECT store_customer.id, store_customer.first_name, store_customer.last_name, s
 Calling Database Functions: 
 ---------------------------
 
+Alright, now let's see how we can call a database function. So,from the same module, we're need to import the Func class. Now we're going to give our customers a new field called 'full_name'. And this is where we're going to call the CONCAT function of a database engine. So pretty much all database engines have this function for concatenating strings. So, we have to create a 'Func' object and give it a bunch of arguments. Just remember that can we reference fields using the F objects. Next we need to give a keyword argument that specifies the target function. So, we set function to 'CONCAT'. We also need to add a space in between and we cannot simply pass a white space. We need to pass an expression object. So, we need to wrap this inside a value object.
 
+from django.db.models import Value, F, Func
 
-
-queryset = Customer.objects.annotate(full_name = F(('first_name'), Value(' '), F('last_name'), function = 'CONCAT')
+queryset = Customer.objects.annotate(full_name = Func(('first_name'), Value(' '), F('last_name'), function = 'CONCAT')
  #Here concat is the concat function database engine
 
+SQL: SELECT store_customer.id, store_customer.first_name, store_customer.last_name, store_customer.email, store_customer.phone, store_customer.birth_date, store_customer.membership CONCAT(store_customer.first_name, '', store_customer.last_name) AS full_name FROM store_customer
+
+
+
+Great. Now, there is also a shorthand to achieve the same result. we're going to import the CONCAT class from Django. Remember to add a white space, we need to wrap it inside a 'Value' object otherwise Django thinks this is a column in our table. Now, if you're curious about Django database functions, just Google Django database functions on this page. You can see various functions in different categories. For example, we have a bunch of functions for working with dates We have mathematical functions. We have functions for manipulating text and so on These functions are common across all database engines, but different database engines have their own unique functions so to call those functions you have to go back and use a func object.
+
+
+from django.db.models.functions import Concat
 
                                    or  by Concat function
 
-                                   full_name = Concat('first_name', Value(' '), 'last_name')
+queryset = Customer.objects.annotate(full_name = Concat('first_name', Value(' '), 'last_name'))
+
+
+
+just google django database functions --> 
 
 
 
