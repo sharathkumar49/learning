@@ -1469,34 +1469,331 @@ SQL: SELECT store_customer.id, store_customer.first_name, store_customer.last_na
 
 
 
-Great. Now, there is also a shorthand to achieve the same result. we're going to import the CONCAT class from Django. Remember to add a white space, we need to wrap it inside a 'Value' object otherwise Django thinks this is a column in our table. Now, if you're curious about Django database functions, just Google Django database functions on this page. You can see various functions in different categories. For example, we have a bunch of functions for working with dates We have mathematical functions. We have functions for manipulating text and so on These functions are common across all database engines, but different database engines have their own unique functions so to call those functions you have to go back and use a func object.
+Great. Now, there is also a shorthand to achieve the same result. we're going to import the CONCAT class from Django. Remember to add a white space, we need to wrap it inside a 'Value' object otherwise Django thinks this is a column in our table. 
 
 
 from django.db.models.functions import Concat
-
-                                   or  by Concat function
 
 queryset = Customer.objects.annotate(full_name = Concat('first_name', Value(' '), 'last_name'))
 
 
 
-just google django database functions --> 
+Now, if you're curious about Django database functions, just Google Django database functions 
+https://docs.djangoproject.com/en/5.1/ref/models/database-functions/
+
+On this page. You can see various functions in different categories. For example, we have a bunch of functions for working with dates, we have mathematical functions. We have functions for manipulating text and so on. These functions are common across all database engines, but different database engines have their own unique functions. So, to call those functions you have to go back and use a 'Func' object.
 
 
 
-ExpressionWrapper:
+
+
+
+
+
+
+Grouping Data:
+--------------
+
+Now let's say we want to see the number of orders each customer has placed. So we're going to annotate our customers with a new field called 'orders_count'. For that we are going to use the count class.
+
+
+from django.db.models import Value, F, Funct, Count
+
+
+Now if you look at Customer and Order class
+
+
+class Customer(models.Model):
+    MEMBERSHIP_BRONZE = 'B'
+    MEMBERSHIP_SILVER = 'S'
+    MEMBERSHIP_GOLD = 'G'
+
+    MEMBERSHIP_CHOICES = [
+        (MEMBERSHIP_BRONZE, 'Bronze'),
+        (MEMBERSHIP_SILVER, 'Silver'),
+        (MEMBERSHIP_GOLD, 'Gold'),
+    ]
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    email = models.EmailField(unique=True)
+    phone = models.CharField(max_length=255)
+    birth_date = models.DateField(null=True)
+    membership = models.CharField(
+        max_length=1, choices=MEMBERSHIP_CHOICES, default=MEMBERSHIP_BRONZE)
+
+
+class Order(models.Model):
+    PAYMENT_STATUS_PENDING = 'P'
+    PAYMENT_STATUS_COMPLETE = 'C'
+    PAYMENT_STATUS_FAILED = 'F'
+    PAYMENT_STATUS_CHOICES = [
+        (PAYMENT_STATUS_PENDING, 'Pending'),
+        (PAYMENT_STATUS_COMPLETE, 'Complete'),
+        (PAYMENT_STATUS_FAILED, 'Failed')
+    ]
+
+    placed_at = models.DateTimeField(auto_now_add=True)
+    payment_status = models.CharField(
+        max_length=1, choices=PAYMENT_STATUS_CHOICES, default=PAYMENT_STATUS_PENDING)
+    customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
+
+
+
+When you look at the order class. Here we have customer field, which is a foreign key, right? And you know that, with this implementation, Django is going to create the reverse relationship for us. So, in the customer class, we're gonna have a field called 'order_set'(the singular name of the target class followed by '_set' and this all should in lowercase). 
+Now, for some reason that is known to Django developers, we cannot use the same, to count the number of orders for each customer, which means  
+
+if you use,
+queryset = Customer.objects.annotate(orders_count=Count('order_set'))
+
+we get an exception saying 'cannot resolve keyword order_set into field. Our choices are address, birth_date, email, first_name, id, last_name, membership, order, phone. 
+
+
+
+So, the name of the field that we should use for counting is 'order'. Why? Honestly, I don't know. So back to our code, let's change it to 'order'. 
+
+queryset = Customer.objects.annotate(orders_count=Count('order'))
+
+SQL:
+SELECT store_customer.id, store_customer.first_name, store_customer.last_name, store_customer.email, store_customer.phone, store_customer.birth_date, store_customer.membership, COUNT(store_order.id) AS orders_count FROM store_customer LEFT OUTER JOIN store_order ON (store_customer.id =  store_order.customer_id) GROUP BY store_customer.id ORDER BY NULL
+
+So in the SQL,  we are selecting all the fields from the customer table, and we're also counting the number of orders. Now look, we have a left join between customers and orders, because not every customer has an order. And finally we have, a group by clause for grouping the number of orders for each customer.
+
+
+
+
+
+
+
+
+
+
+
+Working with Expression Wrappers:
+---------------------------------
+
+Expression 
+	Value
+	F
+	Func
+	Aggregate
+	ExpressionWrapper
+
+
+So, let's quickly recap what you have learned so far. We talked about the Expression class, which is the base class for all types of expressions. Derivatives of this class are 'Value' for representing simple values like a boolean, a number, a string. We have 'F' for referencing fields, 'Func' for calling database functions, 'Aggregate', which is the base class for all aggregate classes like count, sum, and so on. Now in this lesson, we're going to talk about another derivative of the Expression class called ExpressionWrapper. We use this class when building complex expressions. 
+
+
+queryset = Product.objects.annotate(discounted_price=F('unit_price') * 0.8)
+
+
+So, here's an example. Let's say we're going to annotate our products and give them a new field called discounted_price. So here we're going to get the unit price and multiply it by 0.8. 
+Now, if we run it, we're going to get an exception. So we get this error saying FieldError: Expression contains mixed types: DecimalField, FloatField. you must set output_field. , because we have mixed decimal field, which is our unit price field, with a float field, which is our 0.8 number. Now the error is saying that we must set the output field. So, to solve this problem, first we need to import the expression wrapper class from the same module. Then we should wrap the expression inside an ExpressionWrapper object, and that's where we specify the type of the output field. As the second argument to the constructor of ExpressionWrapper class, we specify the output field. So, we need to decide what is the type of the output field. For monetary values, we should always use a decimal field, because float fields have rounding issues and are not very accurate. 
+
+from django.db.models import Value, F, ExpressionWrapper
+
 dicounted_price = ExpressionWrapper(F('unit_price') * 0.8, output_field = DecimalField())
 queryset = Product.objects.annotate(dicounted_price = discounted_price)
 
 
+SQL: select store_product.id, store_product.title, store_product.slug, store_product.description, store_product.unit_price, store_product.inventory, store_product.last_update, store_product.collection_id, (store_product.unit_price * 0.8e0) AS discounted_price FROM store_product
 
-content_type = ContentType.objects.get_for_model(Product)
 
-TaggedItem.objects.select_related('tag').filter(
-   content_type= content_type,
-   object_id = 1)     
-   # this object_id is calculated dynamically eg., depending on the product that the user is looking for, we're going get the product id from the url
+More exercises with ExpressionWrapper:
 
+# customers and their last order ID
+queryset = Customer.objects.annotate(last_order_id=Max('order__id'))
+
+# collections and count of their products
+queryset = Collection.objects.annotate(products_count=Count('product'))
+
+# Customers with more than 5 orders
+queryset = Customer.objects.annotate(orders_count=Count('order')).filter(orders_count__gt=5)
+
+# Customers and the total amount they've spent
+queryset = Customer.objects.annotate(total_spent=Sum(F('order__orderitem__unit_price') * F('order__orderitem__quantity')))
+
+
+# Top 5 best-selling products and their total sales
+queryset = Product.objects.annotate(total_sales=Sum(F('orderitem__unit_price') * F('orderitem__quantity'))).order_by('-total_sales')[:5]
+
+
+
+
+
+
+
+
+
+Querying Generic Relationships:
+-------------------------------
+
+class Tag(models.Model):
+    label = models.CharField(max_length=255)
+
+
+class TaggedItem(models.Model):
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey()
+
+
+
+let's talk about querying generic relationships. So earlier in the course, we created the tags app with two models(Tag and TaggedItem). Now if you remember, we decided to use the ContentType framework to decouple the tag app from the store app. So, the tag app knows absolutely nothing about the store app. It doesn't know that we have a model called product or anything else. So with this decoupling, we can reuse this app in any kind of project. Tomorrow we can use it to tag articles, blog posts, videos and so on. But now let's see how we can find the tags for a given product. If you check in the database, there is a table django_content_type. In this table, we can see all the models we have in our application. 
+So, in the admin app, we have a model called log entry, we didn't create this, this is built into the admin app that comes with every Django project. Similarly, in the auth app, we have three models group, permission and user. In the likes app, we have a model called liked item. And in the store app, we have address, cart, cartitem, collection, customer, and order that we have defined so far. 
+
+
+django_content_type -->
+
+id       app_label               model 
+1         admin                  logentry
+11        store                  product
+
+
+
+taggeditem -->
+
+id     object_id  content_type_id   tag_id
+
+
+Now when you look at the tagged item table in the tags app.There we have a few columns like object_id, content_type_id, and tag_id. So, to find the tags for a given product, first we have to find the content_type_id of the product model, which you can get it from django_content_type table and the content_type_id for the product is 11. 
+So once we find it, then we can go to the taggeditem table and write a query to filter all records where content_type_id equals 11 and object_id equals the id of the product whose tags you want to find out. That is the big picture. Now let's implement this in code. 
+
+
+
+First we have to import a few classes. From django.contrib.contenttypes.models, we're going to import the ContentType model. This is the model that represents the content type table that you just saw. Then from store.models, we're going to import the Product class. And finally from the tags.models module, we're going to import the TaggedItem class. Now first we need to find the content_type_ID for the product model. 
+
+
+from django.contrib.contenttypes.models import ContentType
+from store.models import Product
+from tags.models import TaggedItem
+
+def say_hello(request):
+	content_type = ContentType.objects.get_for_model(Product) # returns the id of the model which is 11
+
+queryset = TaggedItem.objects.select_related('tag').filter(
+	   content_type= content_type,
+	   object_id = 1
+	)     
+	   
+Note: 	   
+get_for_model = This is a special method that is only available in the manager. Remember I told you that the objects attribute returns a manager object which is a gateway to the database. So content type manager has a special method called get for model. So we call this method and give it our 'Product' class. Now we get a content type instance. Now more accurately, this object represents the row  which is having the 'product' in our content type table. So, this is how we can find the content_type_id for the product model. 
+
+Now you might be wondering why we're not just using the number 11. Because we cannot rely on these numbers. In your database, in your development database, the content_type_id for product might be 11. But in your production database, it might be something else. That's why first we have to find the content_type_id for the product model. 
+Now that we have this content_type_id, we can use it to filter tagged items. You're going to give it two filters. First is content_type, which we set to our 'content_type' object that we have found initially. And then we set object_id to the id of the product those tags you want to query (let's say product number one). Note that this value should be calculated dynamically. For example, depending on the product that the user is looking at, we're going to get the product id from the url and pass it here. 
+
+One more thing is when you check the taggeditem table. We have a field called tag_id, which is a foreign key to the tag table. So, the actual tag is not stored in the taggeditem table, it is stored in the other table which is our tag table. So we need to preload this field. Otherwise, we'll end up with a lot of extra queries sent to the database. So back to our code. Here we're going to call select_related to preload the tag field. 
+
+
+SQL:
+SELECT django_content_type.id, django_content_type.app_label, django_content_type.model FROM django_content_type WHERE (django_content_type.app_label = 'store' AND django_content_type.model = 'product') LIMIT 21
+
+SELECT tags_taggeditem.id, tags_taggeditem.tag_id, tags_taggeditem.content_type_id, tags_taggeditem.object_id, tags_tag.id, tags_tag.label FROM tags_taggeditem INNER JOIN tags_tag ON (tags_taggeditem.tag_id = tags_tag.id) WHERE (tags_taggeditem.content_type_id = 11 AND tags_taggeditem.object_id =1)
+
+
+So we have two queries. The first query is for finding the content_type_id for our product model. And the second query is for reading the tags for a given product. So this is how we can get the tags for a given product. Now in the next lesson, I'm going to show you how to encapsulate this logic inside a custom manager so that our code is cleaner and easier to work with.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Custom Managers:
+================
+
+So. our tags app is decoupled from the store app, but writing code like in the last lesson is not ideal. Every time we want to find the tags for a given object, first we have to find the content type, then we have to go to the taggeditem model, therewe have to preload the tag field and apply a filter. There must be a better way. So wouldn't that be nicer if we had a method like --> TaggedItem.objects.get_tags_for(Product,1). Obviously, calling this method is much nicer and cleaner than writing all the code again and again. So let me show you how to implement this method. To do this, we have to build a custom manager for the TaggedItem model. So we want to replace the default manager that is returned from the 'objects' attribute, which you want to replace that with a custom manager. 
+
+
+in tags/models.py
+-----------------
+from django.db import models
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
+
+
+class TaggedItemManager(models.Manager):
+    def get_tags_for(self, obj_type, obj_id):
+        content_type = ContentType.objects.get_for_model(obj_type)
+
+        return TaggedItem.objects \
+            .select_related('tag') \
+            .filter(
+                content_type=content_type,
+                object_id=obj_id
+            )
+
+
+class Tag(models.Model):
+    label = models.CharField(max_length=255)
+
+
+class TaggedItem(models.Model):
+    objects = TaggedItemManager()
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey()
+
+So, in a class called TaggedItemManager, this class should inherit from the 'Manager' class in the models module. So, this class(models.Manager) is the base class for all managers. Now here we're going to implement that custom method 'get_tags_for', now the first parameter should be self, so this becomes a method of this class. We also need two more parameters, object type and object id. Now grab all the code from last lesson and move it to our new method. Okay now we're going to replace product with 'obj_type' and 1 with 'obj_id'. Now finally, we're going to return this query set.
+
+Now we need to use this manager in the TaggedItem model. There we add a new attribute here called objects. We're going to set it to an instance of the TaggedItemManager class.  Now we can use that simple new method --> TaggedItem.objects.get_tags_for(Product,1) to get the tags for a given object, like a product.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Understanding QuerySet:
+-----------------------
+
+Let's talk about the caching mechanism built into query sets.
+
+queryset = Product.objects.all()
+
+list(queryset)
+
+queryset[0]
+
+Now, you know that when we convert the query set to a list, Django is going to evaluate the query set and that's when it's going to go to the database to get the result. Now, this is an expensive operation because reading data from the disk is always slower than reading it from the memory. So, when Django evaluates this query and gets the data from the database and it's going to store it somewhere in memory called the query set cache. So, the second time we convert the query set in to a list(say again list(queryset)), Django is not going to evaluate thhe query again. 
+It's not going to go to the database. It's going to read the result from the query set cache. Now the same thing happens if you access an individual element from this query set. Again, Django is going to read this object from the query set cache. Now one thing you need to know about caching is that caching happens only if you evaluate the entire query set first. In contrast, if you accessed an individual element first, Then converted our query set to a list. you would end up with two queries to the database. 
+
+
+
+SELECT store_product.id, store_product.title, store_product.slug, store_product.description, store_product.unit_price, store_product.inventory, store_product.last_update, store_product.collection_id FROM store_product LIMIT 1
+
+SELECT store_product.id, store_product.title, store_product.slug, store_product.description, store_product.unit_price, store_product.inventory, store_product.last_update, store_product.collection_id FROM store_product
+
+
+We have two queries. With the first query. We are reading the first product in the product table. And with the second query you're reading all products. So keep this in mind. Even though caching is a great optimization technique, if you don't structure your code properly, Caching is going to come back and bite you. So this is all about caching. Next we're going to talk about creating objects.
+
+
+
+
+
+
+
+
+
+
+
+Creating Objects:
+=================
 
 
 collection = Collection()
