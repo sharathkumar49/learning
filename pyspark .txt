@@ -1,0 +1,412 @@
+
+
+pyspark (python + apache spark):
+---------------------------------
+
+PySpark is an interface for Apache Spark in Python. It not only allows you to write Spark applications using Python APIs, but also provides the PySpark shell for interactively analyzing your data in a distributed environment. PySpark supports most of Spark's features such as Spark SQL, Dataframe, Streaming, MLlib(Maching Learning) and Spark Core. 
+
+
+
+
+
+Create Dataframe manually with hard coded values in PySpark
+we will be using createDataframe() method from Spark session object. 
+
+
+
+createDataframe(): 
+Dataframe is a distributed collection of data organized into named columns. It is conceptually equivalent to a table in a relational database. 
+
+
+
+
+
+
+type(spark) --> pyspark.sql.session.SparkSession
+
+
+dir(spark) --> will give you the all attributes and methods of the spark object 
+
+help(spark.createDataframe)
+
+data = [(1, 'Maheer'), (2, 'Wafa')]
+df = spark.createDataframe(data=data, schema=['id', 'name']) 
+
+df.show()
+
+df.printSchema() # 
+
+
+
+
+from pySpark.sql.types import *
+
+schema = StructType([StructField(name="id", dataType=IntegerType()),
+					 StructField(name="name", dataType=StringType())
+					])
+					
+for more information --> you can check --> help(StructType), help(StructField)			
+
+type(schema) # pyspark.sql.types.StructType
+
+df = spark.createDataframe(data=data, schema=schema) 	
+
+
+
+
+from pySpark.sql.types import *
+data = [{'id': 1, 'name': 'Maheer'}, {'id': 2, 'name': 'Wafa'}]
+df = spark.createDataframe(data)
+df.show()
+df.printSchema()
+
+Note: when you use dictionary, the keys of the dictionary will become the column names. 
+
+					
+
+
+
+
+
+
+
+To read csv file into Dataframe:
+
+Using csv("path") or format("csv").load("path") of DataFrameReader, you can read a CSV file into a PySpark Dataframe.
+
+df = spark.read.csv(path="dbfs:/FileStore/data/Employees1.csv", header=True)
+
+df = spark.read.format("csv").load("/tmp/resources/zipcodes.csv") 
+
+df = spark.read.format("csv").option(key='header', value=True).load("/tmp/resources/zipcodes.csv") 
+
+df = spark.read.format("org.apache.spark.sql.csv").load("/tmp/resources/zipCodes.csv")
+
+df.printSchema()
+
+
+
+df2 = spark.read.option("header", True).csv("/tmp/resources/zipcodes.csv")
+
+
+To read multiple csv files:
+you can also read multiple csv files, just pass all file names by separating comma as path
+df = spark.read.csv("path1, path2, path3")
+
+Read All csv files:
+we can read all csv files from a directory into Dataframe just by passing directory as a path to the csv()
+
+df = spark.read.csv("Folder path")
+
+
+Multiple files:
+df = spark.read.csv(path=["dbfs:/FileStore/data/Employees1.csv", "dbfs:/FileStore/data1/Employees2.csv", header=True)
+
+To read all csv files in a folder: 
+df = spark.read.csv(path="dbfs:/FileStore/data/", header=True)
+
+
+you can also define schema for each column:
+
+
+from pySpark.sql.types import *
+
+schema = StructType().add(field="id", data_type=IntegerType())\
+					 .add(field="name", data_type=StringType())\
+					 .add(field="gender", data_type=StringType())\
+					 .add(field="salary", data_type=IntegerType())
+					
+df = spark.read.csv(path="dbfs:/FileStore/data/", schema=schema, header=True)
+
+display(df)
+
+df.printSchema()
+
+
+
+
+To write dataframe into csv file using PySpark:
+-----------------------------------------------
+
+you can use csv method in DataFrameWriter class 
+
+or you can use the write object of the PySpark DataFrame class in dataframe module to write PySpark Dataframe to a CSV file. 
+
+df.write.option("header", True).csv("tmp/spark_output/zipcodes")
+
+
+from pyspark.sql import *
+help(DataFrameWriter)
+
+
+to get the 'DataFrameWriter' class, you can use the write object in the DataFrame class in the dataframe module. Both of them are same only
+which means dataframe.Dataframe.write returns the DataFrameWriter class only. You can check it using help() function. 
+
+from pyspark.sql import dataframe
+help(dataframe.Dataframe.write)
+
+
+example:
+
+data = [(1, "Maheer"), (2, "Wafa")]
+schema = ['id', 'name']
+
+df = spark.createDataframe(data=data, schema=schema)
+
+
+type(df.write) # pyspark.sql.readwriter.DataFrameWriter
+
+
+you can df.write.option().csv() or directly df.write.csv():
+
+df.write.csv(path='dbfs:/tmp/emps', header=True)  # it will gives us the partitions 
+
+to accumulate all the partitions into single file, we can do a workaround: before write(), you need to include repartition()
+
+
+Note: while writing dataframe to csv, the default mode is 'error', and it will throw the error, if the director/file is already there.
+
+
+
+
+
+
+
+To read single json file or multiple json file or all json files into Dataframe:
+--------------------------------------------------------------------------------
+
+
+To check the  DataFrameReader class:
+
+help(spark.read)
+
+Similar to 'spark.read.csv' that we have, we also have (spark.read.json)
+
+You can check by, help(spark.read.json)
+
+df = spark.read.json(path='dbfs:/fileStore/data/emps.json')
+df.printSchema()
+df.show()
+
+you can also supply a schema parameter to define a schema
+
+Another way of reading json file into dataframe:
+df = spark.read.format('org.apache.spark.sql.json').load('dbfs:/FileStore/data/emps.josn')
+
+
+Let's say that the json data you're fetching are in multiline: 
+
+df = spark.read.json(path='dbfs:/fileStore/data/emps.json', multiline=True)
+
+to read multiple json file: 
+
+df2= spark.read.json(['resources/zipcode1.json', 'resources/zipcode2.json'])
+df2.show()
+
+
+to read all json files in the given folder:
+
+df3 = spark.read.json("resources/*.json")
+eg:
+df = spark.read.json(path='dbfs:/FileStore/data/*.json')
+df.printSchema()
+df3.show()
+
+
+
+if you add schema:
+
+schema = StructType().add(field="id", data_type=IntegerType())\
+					 .add(field="name", data_type=StringType())\
+					 .add(field="gender", data_type=StringType())\
+					 .add(field="salary", data_type=IntegerType())
+df = spark.read.json(path='dbfs:/FileStore/data/*.json', schema=schema)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+To write Dataframe into json file: 
+----------------------------------
+
+We can use the DataFrameWriter class to write PySpark DataFrame to a json file.
+
+
+data = [(1, 'maheer'), (2, 'wafa')]
+schema =  ['id', 'name']
+
+df  = spark.createDataframe(data=data, schema=shema)
+display(df)
+
+
+help(df.write)
+
+
+df.write.json('dbfs:/FileStore/jsondata/emps.json')  # the name that have given here, which is 'emps.json' will be stored as a folder. which means the part files will be stored inside the folder named 'emps' 
+
+
+
+
+
+
+
+
+
+To read parquet file into dataframe:
+------------------------------------
+
+help(spark.read.parquet)
+
+df = spark.read.parquet('dbfs:/FileStore/data/userdata1.parquet')
+
+display(df) # displays the dataframe
+
+print(df.count())  # prints the count 
+
+
+to read all the parquet files:
+df = spark.read.parquet('dbfs:/FileStore/data/*.parquet')  # to read all the parquet files inside the data folder
+
+
+Say that the folder contains only the parquet files:
+df = spark.read.parquet('dbfs:/FileStore/parquetdata/') # to fetch all the parquet files from the parquetdata folder
+
+
+
+
+
+To write dataframe into parquet file using pyspark:
+---------------------------------------------------
+
+you can use DataFrameWriter class to write PySpark DataFrame to a parquet file.
+
+data = [(1, 'maheer'), (2, 'wafa')]
+schema =  ['id', 'name']
+
+df  = spark.createDataframe(data=data, schema=shema)
+display(df)
+
+
+help(df.write)
+
+
+df.write.parquet('/FileStore/parquetoutput.parquet/')  # remember that whatever you give in the enclosed singlequotes, will be created as folder and in that folder, we will having parquet files , hence inside the 'parquetoutput.parquet' folder we will be having the part files
+
+
+All these write operations comes with a saving mode, kindly select the saving modes as per your wish
+
+overwrite
+append
+ignore
+error
+
+
+
+
+
+
+show() in pyspark:
+------------------
+
+df.show(truncate=False) # shows the full content, does not truncate the characters
+df.show(truncate=5)  # show upto 5 character
+
+
+
+df.show(n=2, truncate=False)  # shows upto 2 rows, by default it will show 20 rows 
+
+df.show(n=4, truncate=False, vertical=True) # Everything becomes vertical 
+
+
+
+
+
+withColumn() in PySpark:
+------------------------
+
+PySpark withColumn() is a transformation function of DataFrame which is used to change the value, convert the datatype of an existing column, create a new column, and many more
+
+
+you can check with, 
+help(df.withColumn)
+
+
+from pyspark.sql.functions import col
+df1 = df.withColumn(colName='salary', col= col('salary').cast('Integer'))
+
+Note: col('salary') returns the class: 'Column'
+	  you can also use the df.column_name
+	  
+The use of withColumn completely returns a new dataframe
+
+
+df1.withColumn('salary', col'(salary') * 2) # Multiplies the salary columns by 2
+
+
+from pyspark.sql.functions import lit 	
+
+df1.withColumn('country', lit('india'))  # fills up the all the columns as 'india'
+
+
+df1.withColumn('copiedSalary', col('salary'))  # copies the values from the salary column
+
+
+
+
+withColumnRenamed():
+--------------------
+
+This function is used to rename a existing column name in dataframe
+
+
+you can check by using, help(df.withColumnRenamed)
+
+data = [(1, 'Maheer', '3000'), (2, 'Wafa', '4000')]
+schema = ['id', 'name', 'salary']
+df = spark.createDataframe(data, schema)
+df1 = df.withColumnRenamed('salary', 'salary_amount')  #produces new dataframe
+df1.show()
+
+
+
+
+structType() and structField():
+-------------------------------
+
+PySpark StructType and StructField classes are used to programmatically specify the schema to the DataFrame and create complex columns like nested struct, array, and map columns 
+
+StructType is a collection of StructField
+
+
+from pyspark.sql.types import StructType, StructField, StringType, IntegerType
+
+
+data = [(1, 'Maheer', '3000'), (2, 'Wafa', '4000')]
+
+schema = StructType().add(field="id", data_type=IntegerType())
+					 .add(field="name", data_type=StringType())
+					 .add(field="salary", data_type=IntegerType())
+					 
+df = spark.createDataFrame(data, schema)
+df.show()
+
+
+df.printSchema()
+
+
+you can also create schema for the nested structure:
+
+
+data = [(1, ('Maheer', 'Shaik'), 3000), (2, ('Wafa', 'Shaik'), 4000)]
+
+structName = StructType([StructField('firstName', StringType()), 
+						 
