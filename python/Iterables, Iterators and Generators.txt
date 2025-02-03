@@ -1,0 +1,421 @@
+
+Iterables:
+----------
+
+what does it means, a iterable? 
+
+it means it is something that can be looped over
+
+for example a list is iterable because we can loop over a list 
+
+nums = [1, 2, 3]
+
+for num in nums:
+	print(num)
+	
+	
+output:
+1
+2
+3
+
+List aren't the only things that we can loop over, we can also loop over tuples, dictionary, strings, files, generators and all kinds of different objects.
+
+
+So, what's actually going in the background? How can we tell something that we can loop over or not or another way to ask this is how can we tell if something is iterable:
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+So, it something is iterable, it needs to have a special method called __iter__()(dunder iter or double underscore iter)
+
+
+if you check your list, it would be having '__iter__' method
+
+
+To look the methods and attributes available to a specific object, we can simply use builtin 'dir' function:
+
+
+print(dir(nums))
+
+['__add__', '__class__', '__class_getitem__', '__contains__', '__delattr__', '__delitem__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__gt__', '__hash__', '__iadd__', '__imul__', '__init__', '__init_subclass__', '__iter__', '__le__', '__len__', '__lt__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__reversed__', '__rmul__', '__setattr__', '__setitem__', '__sizeof__', '__str__', '__subclasshook__', 'append', 'clear', 'copy', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort']
+
+
+So, basically we can say something can be looped over, if it has the __iter__method. So, what the for loop doing in the background is, calling the __iter__ on our object and returning and iterator that we can loop over. so, that is why we call a list iterable.
+
+okay so that brings us to iterators. So, I said that a list was iterable but it's not an iterator but if we run the dunder iter method on our list then it will return an iterator.  
+
+
+So what makes something an iterator? 
+An iterator is an object with a state.  So, that it remembers where it is during iteration. 
+Iterators also know how to get their next value (they get their next value with a dunder next method i.e. __next__)
+
+
+
+So, if you look at the above list methods, you'll see that there's no dunder next method in our list and it doesn't know how to get its next value. So, therefore it isn't an iterator.
+
+
+print(next(nums)) 
+
+# TypeError: 'list' object is not an iterator
+
+when I pass an 'nums' object into that next function, in the background it's actually trying to run the dunder next method on that object and we saw that our list doesn't have a dunder next method. So, that's why it's telling us that our list object isn't an iterator and it's throwing an error
+
+
+
+I say when run dunder iter method, it returns an iterator, let's try that 
+
+
+i_nums = nums.__iter__() or iter(nums)
+
+the iter() calls the __iter__ in the background. So instead of putting __iter__, you can call iter()
+
+Now, i_nums is an iterator, and this is what for loop gets in the background and with that iterator it runs over and produces us result one by one. 
+
+
+
+print(i_nums) # <list_iterator object at 0x000001ED68D95B40>
+print(dir(i_nums))
+
+#
+['__class__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__iter__', '__le__', '__length_hint__', '__lt__', '__ne__', '__new__', '__next__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__setstate__', '__sizeof__', '__str__', '__subclasshook__']
+
+
+
+let's concentrate only on two thing on this list: 
+1. __iter__   2. __next__
+
+1. dunder iter: you might think it's a little weird that this iterator has a dunder iter method, because that's what where we ran on our list with it in order to get the iterator and we have that now again because iterators are also iterable but the main difference is that this new dunder iter method returns the same object, which means it just returns 'self' 
+
+
+2. when I ran 'next' on our original list, it threw an error and said that our list wasn't an iterator and that's because it didn't have the dunder next method, but our iterator that just returned here does have a dunder next method. So, we should be able to get the next value 
+
+print(next(i_nums)) # 1
+
+
+Now, if you remember that I have said that an iterator is an object with a State. So, it remembers where it was during iteration. And if we run 'next' on this again then it should remember where it left off and print the next value.
+
+
+print(next(i_nums)) # 2
+
+print(next(i_nums)) # 3
+
+
+we can see that each time we printed the next value it remembered where it left off and the 'next' method pointed to the next value in the iterator.
+
+
+Since we printed all the items in the list and if we 'next' method once again: it throws StopIteration exception
+
+
+That's what iterators are meant to do. So when we hit a 'StopIteration' exception. It means that the iterator has been exhausted and has no more values.  
+We can see this 'StopIteration' exception when we run the next method manually, but when we run a normal for loop it knows how to handle the StopIteration exception and doesn't show it to us. 
+
+So, in the background what for-loop is basically doing is, 
+
+1.it's first getting an iterator of our original object like 
+i_nums = iter(nums)
+
+
+2. Then by below logic it runs:
+
+while true:
+	try:
+		item = next(i_nums)
+		print(item)
+	except StopIteration:
+		break
+		
+		
+Another important characteristic of iterators that I should have mentioned is that they can only go forward. So, there's no going backwards resetting it or making a copy of it, you can only go forward by calling next, if you need to start from scratch then you can simply create a new iterator object from scratch and just start over again.
+
+
+
+
+Why does any of this really matter? what is the purpose of knowing iterator? what are the practical examples?
+-------------------------------------------------------------------------------------------------------------
+Well one example is that we can add these methods to our own classes and make them iterable as well.
+So let's see an example,
+let's create a class that basically behaves like the built-in range function :
+
+
+
+class MyRange:
+
+    def __init__(self, start, end):
+        self.value = start
+        self.end = end
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.value >= self.end:
+            raise StopIteration
+        current = self.value
+        self.value += 1
+        return current
+
+	
+Overview of the above MyRange of what we have above:
+
+1. we need start and end point.
+
+2. To make this class iterable, we need to have dunder iter method, so it would be iterable
+
+3. so, at this point if we remember our '__iter__' method has to return an iterator and by that I mean that it has to return an object that should have a dunder next method (__next__). So, what can we do is, we can simply create a dunder next method within this class itself and we can simply return this same object from our __iter__ method. 
+
+4. At this point, we need to figure out the logic for our dunder next method: 
+  If you remember, iterator have a state and remember where they left off in the iteration and if they're out of values, then it raises a StopIteration exception. 
+  okay so each time we run this next method it will come in and get the current value, increment the old value by one and then return current. 
+  
+  
+nums = MyRange(1, 10)
+
+
+for num in nums:
+	print(num)
+
+also,	
+	
+print(next(nums)) # 1
+print(next(nums)) # 2
+print(next(nums)) # 3
+print(next(nums)) # 4
+
+
+So, this class is iterable, since we can use it in for loop, but it's also an iterator because it has an dunder next method. 
+So, we should able to call 'next' method on it manually to get the values one at a time. 
+
+
+
+Generators:
+
+They're extremely useful for creating easy-to-read iterator, 
+They look lot like a normal function, but instead of returning a result, they instead yield a value and  when they yield a value it keeps that state until the generator runs again and yields the next value. So generators are iterators as well but the dunder iter and dunder next methods are created automatically, we don't have to create them like we did in our class
+
+
+Let's write a generator function that does the exact same thing as our range class:
+
+def my_range(start, end):
+    current = start
+    while current < end:
+        yield current
+        current += 1
+
+
+nums = my_range(1, 10)
+
+for num in nums:
+    print(num)
+	
+also, 	
+
+print(next(nums)) # 1
+print(next(nums)) # 2
+print(next(nums)) # 3
+print(next(nums)) # 4
+
+
+
+The last thing that I want to say about iterators is that they don't actually need to end. So, one of the cool things about iterators is that they can simply go on forever. So, as long as there is a next value then our iterator will keep getting each next value one at a time.
+
+So, for example if I were to remove our end parameter and then just put in a true statement in our while loop. 
+Now this generator no longer accepts an end value, so we can just pass in a start value alone. 
+So, now our generator iterator is going to simply go on forever
+
+
+
+def my_range(start):
+    current = start
+    while True:
+        yield current
+        current += 1
+
+
+nums = my_range(1)
+
+for num in nums:
+    print(num)
+	
+	
+So, like I said the iterator can go on forever, but it still only fetches one value at a time. Now this really comes in handy when writing memory efficient programs because sometimes there are so many values that you just couldn't hold them all in memory if you were to put them in a list or a tuple. 
+But if you simply use an iterator, then you can loop over one value at a time until it's exhausted or just let it keep going.
+
+Say for example that you were writing a password cracker and wanted to brute-force it by checking all of the possible password using a certain group of characters. well there would be so many different possible passwords that you couldn't possibly hold them all in a single list, your computer would just run out of memory, but you could use an iterator to loop through all those possibilities one at a time and it might take some time until you find a result but your program wouldn't take up all of your computer's memory and it wouldn't crash.
+
+
+Quick Recap:
+------------
+what does it mean for something to be iterable: 
+Broadly speaking,it means that  it can be looped over. But more specifically, it means that the object needs to return an iterator object from its dunder iter method and the iterator that is returned from the dunder iter must define dunder next method which accesses its elements in the container one at a time.
+
+So, just because something is iterable doesn't mean that it is an iterator 
+
+what does it mean for something to be an iterator: So that means, that it's an object with a state. So, that it remembers where it's at during its iteration and it knows how to fetch the next value using the dunder next method and when it doesn't have an value, it raises a StopIteration exception.    
+
+
+
+======================================================================================================================================================================================
+
+Coding problem: iterators
+-------------------------
+
+Let's say that you want to create a sentence object, where we expect a string of words and when we loop over the sentence, we simply want to loop over the words in the sentence
+
+
+my_sentence = sentence('This is a test')
+
+for word in my_sentence:
+	print(word)
+	
+	
+This should have the following output:
+This
+is 
+a
+test
+	
+	
+Iterator:
+---------	
+class Sentence:
+
+    def __init__(self, sentence):
+        self.sentence = sentence
+        self.index = 0
+        self.words = self.sentence.split()
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.index >= len(self.words):
+            raise StopIteration
+        index = self.index
+        self.index += 1
+        return self.words[index]
+
+		
+my_sentence = Sentence('This is a test')
+
+for word in my_sentence:
+	print(word)
+	
+or
+print(next(my_sentence))
+print(next(my_sentence))
+print(next(my_sentence))
+print(next(my_sentence))
+
+
+Note:
+Iterators is an object with a state, so that it remembers where it is during its iteration. So, in order to keep track of where we currently are in our loop, let's add in an index attribute.
+To make this class iterable, we need to create a dunder iter method and it has to return an object that has a dunder next method. So, what can we do is, we can create the dunder next method in the same class itself and then we can simply return 'self' from dunder iter.
+		
+Generator:
+----------
+def sentence(sentence):
+    for word in sentence.split():
+        yield word
+		
+		
+my_sentence = sentence('This is a test')
+
+for word in my_sentence:
+	print(word)
+	
+	
+or
+print(next(my_sentence))
+print(next(my_sentence))
+print(next(my_sentence))
+print(next(my_sentence))
+
+
+======================================================================================================================================================================================
+
+python Generators: 
+------------------
+
+
+
+Normal list: 
+------------
+
+def square_numbers(nums):
+	result = []
+	for i in nums:
+		result.append(i * i)
+	return result
+	
+	
+my_nums = square_numbers([1, 2, 3, 4, 5])
+
+
+print(my_nums)  #1, 4, 9, 16, 25
+
+
+
+To convert it above list into generator:
+----------------------------------------
+
+
+def square_numbers(nums):
+	for i in nums:
+		yield(i * i)
+		
+		
+my_nums = square_numbers([1, 2, 3, 4, 5])
+
+
+print(my_nums)  #<generator object square_numbers at 0x0000016542370510>
+
+
+Hence we no longer getting the result --> 1, 4, 9, 16, 25. Instead we have got generator object. Now the reason for this is because generators don't hold the entire result in memory, it yields one result at a time. So, this generator object is really waiting for us to ask for the next result. So, it hasn't actually computed anything yet.
+
+And soon after you invoke next function, it will yield the value one by one
+
+
+print(next(my_nums))  # 1
+print(next(my_nums))  # 4
+print(next(my_nums))  # 9
+print(next(my_nums))  # 16
+print(next(my_nums))  # 25
+
+
+print(next(my_nums))  # you will get StopIteration exception
+
+you can also use for on these generators
+
+
+
+
+
+list comprehension:
+--------------------
+my nums = [x*x for x in [1, 2, 3, 4, 5]]
+
+
+you can convert the above list comprehension into generator --> (x*x for x in [1, 2, 3, 4, 5])
+
+So,
+
+my_nums = (x*x for x in [1, 2, 3, 4, 5])  # you would get the generator object
+
+
+for num in my_nums:
+	print(num)
+
+
+
+what if want to print out all of the values from the generator. well like I said, they are not currently all held in memory, but you can convert it to a list
+
+
+my_nums = list((x*x for x in [1, 2, 3, 4, 5]))
+
+print(my_nums) # [1, 4, 9, 16, 25]
+
+Note:
+Now, when you convert this generator to a list, then you do lose the advantages in terms of memory performance. Generators are better with memory performance
+
+
+
+

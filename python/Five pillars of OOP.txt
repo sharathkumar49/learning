@@ -1,0 +1,130 @@
+
+
+Five Pillars of OOP Concepts: 
+-----------------------------
+
+
+The five pillars of Object-Oriented Programming (OOP) in Python are: Encapsulation, Inheritance, Polymorphism, Abstraction, Composition
+
+1. Encapsulation: 
+
+Encapsulation is the bundling of data (attributes) and methods (functions) that operate on the data into a single unit, usually a class. It also involves restricting direct access to some components of an object to enforce data integrity.
+
+Example:
+
+class Car:
+    def __init__(self, brand, speed):
+        self.brand = brand  # Public attribute
+        self.__speed = speed  # Private attribute (name mangling)
+
+    def accelerate(self, increment):
+        self.__speed += increment
+
+    def get_speed(self):
+        return self.__speed
+
+my_car = Car("Toyota", 50)
+my_car.accelerate(10)
+print(my_car.get_speed())  # Output: 60
+
+
+2. Inheritance: 
+---------------
+Inheritance allows one class (child or derived class) to inherit attributes and methods from another class (parent or base class), promoting code reuse.
+
+Example:
+
+class Animal:
+    def speak(self):
+        print("This animal makes a sound")
+
+class Dog(Animal):
+    def speak(self):
+        print("Bark")
+
+my_dog = Dog()
+my_dog.speak()  # Output: Bark
+
+
+
+3. Polymorphism:
+----------------
+Polymorphism allows objects of different classes to be treated as objects of a common superclass. It enables a single interface to represent different types of objects.
+
+Example:
+
+class Bird:
+    def fly(self):
+        print("Bird is flying")
+
+class Airplane:
+    def fly(self):
+        print("Airplane is flying")
+
+def let_it_fly(flying_object):
+    flying_object.fly()
+
+let_it_fly(Bird())  # Output: Bird is flying
+let_it_fly(Airplane())  # Output: Airplane is flying
+
+
+4. Abstraction:
+---------------
+Abstraction hides implementation details and shows only essential features of an object. In Python, abstraction can be achieved using abstract base classes (ABCs) from the abc module.
+
+Example:
+
+from abc import ABC, abstractmethod
+
+class Shape(ABC):
+    @abstractmethod
+    def area(self):
+        pass
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return 3.14 * self.radius * self.radius
+
+my_circle = Circle(5)
+print(my_circle.area())  # Output: 78.5
+
+
+
+5. Composition:
+---------------
+Composition involves constructing complex objects by combining other objects rather than inheriting from a base class. It emphasizes "has-a" relationships.
+
+Example:
+class Engine:
+    def start(self):
+        print("Engine started")
+
+class Car:
+    def __init__(self):
+        self.engine = Engine()  # Car has an Engine
+
+    def drive(self):
+        self.engine.start()
+        print("Car is driving")
+
+my_car = Car()
+my_car.drive()
+
+# Output:
+# Engine started
+# Car is driving
+
+
+These pillars work together to enable developers to build robust, reusable, and maintainable code in Python.
+
+
+
+
+
+
+
+
+

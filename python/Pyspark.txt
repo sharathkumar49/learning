@@ -1,0 +1,37 @@
+
+
+Pandas and PySpark are both popular libraries used in the Python ecosystem for data analysis and manipulation, but they have different purposes and functionalities:
+
+1. **Pandas**:
+   - Pandas is a Python library mainly used for data manipulation and analysis, particularly for tabular data.
+   - It provides data structures like DataFrame and Series which are efficient for handling structured data.
+   - Pandas is best suited for working with small to medium-sized datasets that can fit into memory.
+   - It offers a wide range of functions for data cleaning, manipulation, aggregation, merging, and more.
+   - Pandas runs on a single machine and relies heavily on in-memory computations.
+
+2. **PySpark**:
+   - PySpark is the Python API for Apache Spark, a distributed computing framework for processing and analyzing large-scale data.
+   - It is designed to handle big data processing tasks and can efficiently scale from a single machine to thousands of machines.
+   - PySpark provides a DataFrame API similar to Pandas, but it operates on distributed datasets known as Resilient Distributed Datasets (RDDs).
+   - It offers fault-tolerant processing, in-memory computation, and supports various data sources such as HDFS, Cassandra, HBase, etc.
+   - PySpark can be particularly useful when dealing with large-scale datasets that cannot fit into memory on a single machine.
+
+In summary, Pandas is suitable for small to medium-sized datasets and is focused on data manipulation and analysis on a single machine, while PySpark is designed for big data processing tasks, leveraging distributed computing across multiple machines.
+
+
+Pyspark Q and A:
+
+1. How to import PySpark and check the version?
+
+Solution :
+
+import findspark
+findspark.init()
+
+# Creating a SparkSession: A SparkSession is the entry point for using the PySpark DataFrame and SQL API.
+# To create a SparkSession, use the following code
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName("PySpark 101 Exercises").getOrCreate()
+
+# Get version details
+print(spark.version)

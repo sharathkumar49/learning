@@ -1,0 +1,77 @@
+Basic Syntax and Data Types:
+Swap two numbers without using a temporary variable.
+Check if a number is prime.
+Find the factorial of a number using both recursion and iteration.
+Count the number of vowels in a given string.
+Reverse a string.
+Check if a string is a palindrome.
+
+
+Control Flow:
+Find the largest of three numbers.
+Print Fibonacci series up to a given number.
+Print a pattern of stars (e.g., a triangle).
+Check if a number is a perfect number.
+Print a multiplication table of a number.
+Find all the prime numbers within a given range.
+
+
+Functions:
+Write a function to calculate the GCD (Greatest Common Divisor) of two numbers.
+Create a function that checks if a number is even or odd.
+Find the sum of digits of a number.
+Create a function that takes two numbers and returns the smallest and largest numbers.
+Write a function to generate the nth Fibonacci number.
+Create a function that returns a factorial of a number without using * operator.
+
+
+Data Structures:
+Implement a stack and queue using lists.
+Find the intersection of two lists.
+Remove duplicates from a list.
+Merge two sorted lists into one sorted list.
+Count the frequency of each element in a list.
+Implement a linked list and traverse through it.
+Find the second largest number in a list.
+Write a Python program to sort a list of dictionaries by a given key.
+
+
+Object-Oriented Programming (OOP):
+Create a Car class with attributes like brand, model, and methods like start and stop.
+Implement inheritance by creating a Person class and a Student class that inherits from it.
+Create a class to represent a Rectangle and calculate its area and perimeter.
+Implement method overriding in a class.
+Create a BankAccount class with deposit, withdrawal, and balance methods.
+Implement polymorphism by creating multiple shapes and calculating their areas.
+
+
+Modules and Packages:
+Use the math module to find the square root of a number.
+Write a program to read and write to a file using open().
+Use random module to generate a random number between 1 and 100.
+Create a custom module with basic mathematical operations and import it.
+
+
+File Handling:
+Read a file and count the number of lines, words, and characters.
+Write a program to copy contents of one file to another.
+Write a Python program to append data to a file.
+Write a Python program to read a JSON file and print it.
+
+
+Error Handling:
+Handle division by zero error using try and except.
+Write a function that raises a custom exception when a number is negative.
+Handle a FileNotFoundError when attempting to open a file that doesn’t exist.
+Iterators and Generators
+Create a generator that returns squares of numbers from 1 to n.
+Write an iterator to generate Fibonacci numbers up to a given limit.
+Use yield to generate an infinite series of prime numbers.
+
+
+Decorators:
+Write a decorator that logs the time taken to execute a function.
+Write a decorator that checks whether a user is authorized to access a function.
+Regular Expressions
+Write a Python program to extract all email addresses from a text using regular expressions.
+Validate a phone number using regular expressions (e.g., format (123) 456-7890).

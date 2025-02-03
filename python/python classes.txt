@@ -1,0 +1,745 @@
+
+
+Python classes:
+---------------
+
+OOP- (object oriented programming) - it will be useful to logically group our data and functions in a way that's easy to reuse and also easy to build upon further
+
+Here when I say data and functions, which means it is attributes and methods. 
+
+A class in Python is a blueprint for creating objects. Objects represent real-world entities with specific attributes (data) and behaviors (methods). Classes provide a way to organize code, encapsulate data, and implement object-oriented programming (OOP) concepts.
+
+
+class A:
+	def __init__(self, name):
+		self.nm = name
+		
+		
+	def skill():
+		pass
+		
+a = A()
+
+a.nm
+a.skill()
+		
+here 'nm' is a attribute and 'skill' is a method of class A,
+'a' is the instance of class A, which is also called object
+So, 'a' is instance of class A/object
+
+
+attribute = variables associated with a class 
+methods = functions associated with a class  
+class - basically a blueprint for creating instances 
+
+
+company application:
+--------------------
+
+class Employee:
+	pass
+	
+	
+emp_1 = Employee()
+emp_2 = Employee()
+
+
+if you print it, you can see that it will be present in the different memory locations
+
+print(emp_1) # <__main__.Employee object at 0x00000165F3A55390>
+print(emp_2) # <__main__.Employee object at 0x00000165F3ED7910>
+
+
+
+
+instance variables and class variables:
+----------------------------------------
+
+Now, as you see, instances of a class are unique, so the instance variables also will be having unique values.
+
+
+
+class Employee:
+	pass
+	
+	
+emp_1 = Employee()
+emp_2 = Employee()
+
+
+emp1.fname = 'vijayalakshmi'
+emp1.lname = 'r'
+emp1.email = 'vijayalakshmi.r@wipro.com'
+emp1.pay = 50000
+
+
+emp2.fname = 'sharath'
+emp2.lname = 'kumar'
+emp2.email = 'sharath.kumar@wipro.com'
+emp2.pay = 10000
+-
+-
+-
+
+
+print(emp1.email)
+print(emp2.email)
+
+
+
+Let's say that we want to set all of these information (fname, lname, email, pay) for each employee the momentthey're created rather than doing manually.
+
+That's where we use __init__method. 
+
+Note: 
+__init__ method is for initializing the variables.
+__init__ method receives instance as a first argument i.e. self
+
+
+
+
+
+class Employee:
+
+    def __init__(self, first, last, pay):
+        self.first = first
+        self.last = last
+        self.email = first + '.' + last + '@email.com'
+        self.pay = pay
+
+    def fullname(self):
+        return '{} {}'.format(self.first, self.last)
+
+emp_1 = Employee('Corey', 'Schafer', 50000)  
+emp_2 = Employee('Test', 'Employee', 60000)
+
+
+
+Note: self.first = emp_1.first 
+	  self.first = emp_2.first
+	  
+instance methods are the functions of the class that acts on an instance of that class 
+isntance methods takes instance as the first argument i.e. self
+
+
+if we don't provide self to instance method --> it will gives us error "fullname() takes 0 positional arguments but 1 was given"
+
+so, literally emp1.fullname() means --> Employee.fullname(emp1)
+
+
+======================================================================================================================================================================================
+
+Class variables:
+----------------
+
+we have just seen instance variables which are unique for each instance. Similary, there is another one, which is called class variables that are shared among all instances.
+
+i.e. instance variables are different for each instances
+	  class variables are same for all instances 
+
+Employee count =
+Employee uniform color =
+Employee standard tax =
+yearly_raise =
+nums_of_employees =
+
+
+class Employee:
+    yearly_raise = 1.50
+
+    def __init__(self, first, last, pay):
+        self.first = first
+        self.last = last
+        self.email = first + '.' + last + '@email.com'
+        self.pay = pay
+
+    def fullname(self):
+        return '{} {}'.format(self.first, self.last)
+
+    def apply_raise(self):
+        self.pay = int(self.pay * Employee.yearly_raise)  # or self.yearly_raise
+
+
+emp_1 = Employee('Corey', 'Schafer', 50000)
+emp_2 = Employee('Test', 'Employee', 60000)
+
+print(emp_1.pay)    # 50000
+emp_1.apply_raise()
+print(emp_1.pay)  # 75000
+
+
+
+Note: 
+
+1. we can access the class variable by using the class or instance itself
+
+
+you might have doubt that if they are class variables, then why we can also access them using instance variables also?
+
+The reason is, when we try to access an attribute(variables in the class_) on an instance, it will first check if that instance contains that attribute in its namespace and if it doesn't then it will see if the class or any class that it inherits from contains that attribute. 
+So basically it like checking in tree order.
+
+
+So, when we access 'yearly_raise' using the instance 'emp_1', the emp_1 doesn't have that attribute, then they are accessing the class' attribute 'yearly_raise' 
+
+
+2. if we change the class instance using class, the change will be visible to all the instances.
+
+3. But if you change the class intance using instance, the change will be visible to that particular instance only, not all the instances and class itself. 
+Since it would be present in its instance's namesace itself, it wouldn't go and check in the class' namespace.
+You can check it in its namespace __dict__  (check the lesson 1 ---> we assign each employee attributes manually)
+
+======================================================================================================================================================================================
+
+class methods: 
+--------------
+
+instance method: automatically takes instance as first argument i.e self 
+
+class method : 
+@classmethod decorator at the top the method and it takes cls as the first argument
+
+
+
+class Employee:
+
+    num_of_emps = 0
+    raise_amt = 1.04
+
+    def __init__(self, first, last, pay):
+        self.first = first
+        self.last = last
+        self.email = first + '.' + last + '@email.com'
+        self.pay = pay
+
+        Employee.num_of_emps += 1
+
+    def fullname(self):
+        return '{} {}'.format(self.first, self.last)
+
+    def apply_raise(self):
+        self.pay = int(self.pay * self.raise_amt)
+
+    @classmethod
+    def set_raise_amt(cls, amount):
+        cls.raise_amt = amount self
+
+
+emp_1 = Employee('Corey', 'Schafer', 50000)
+emp_2 = Employee('Test', 'Employee', 60000)
+
+print(Employee.raise_amt)
+print(emp_1.raise_amt)
+print(emp_2.raise_amt)
+
+Employee.set_raise_amt(1.05)
+
+print(Employee.raise_amt)
+print(emp_1.raise_amt)
+print(emp_2.raise_amt)
+
+
+you can also run class methods from instances as well but that doesn't really make sense. Anyway it would accept the class as the first argument and works with that class only
+
+
+
+class methods can also be as the alternative constructors: 
+Say for example, employee information that we are getting in different forms
+
+class Employee:
+
+    num_of_emps = 0
+    raise_amt = 1.04
+
+    def __init__(self, first, last, pay):
+        self.first = first
+        self.last = last
+        self.email = first + '.' + last + '@email.com'
+        self.pay = pay
+
+        Employee.num_of_emps += 1
+
+    def fullname(self):
+        return '{} {}'.format(self.first, self.last)
+
+    def apply_raise(self):
+        self.pay = int(self.pay * self.raise_amt)
+
+    @classmethod
+    def set_raise_amt(cls, amount):
+        cls.raise_amt = amount
+
+    @classmethod
+    def from_string(cls, emp_str):
+        first, last, pay = emp_str.split('-')
+        return cls(first, last, pay)  # returns Employee(first, last, pay)
+
+emp_str_1 = 'John-Doe-70000'
+emp_str_2 = 'Steve-Smith-30000'
+emp_str_3 = 'Jane-Doe-90000'
+
+first, last, pay = emp_str_1.split('-')
+
+new_emp_1 = Employee(first, last, pay)
+# new_emp_1 = Employee.from_string(emp_str_1)
+
+print(new_emp_1.email)
+print(new_emp_1.pay)
+
+
+Hence the class method acts as injector to the __init__ method
+
+real-time example is datetime module. 
+
+
+
+Now,let's see static methods:
+
+A static method in Python is a method defined within a class that does not depend on any instance or class-specific data. It is used for utility or helper functions that logically belong to the class but do not require access to instance (self) or class (cls) variables.
+
+Static methods are defined using the @staticmethod decorator.
+
+Syntax:
+
+class MyClass:
+    @staticmethod
+    def my_static_method(arg1, arg2):
+        return arg1 + arg2
+
+
+Key Characteristics:
+
+No Access to Instance or Class Data: Static methods cannot access self or cls.
+Called Using the Class or Instance: They can be called either on the class or an instance of the class.
+Defined with @staticmethod Decorator: This indicates that the method is static.
+
+
+Static methods: They don't act on any instance or class variables. It used for some logical connection with the class
+
+
+    @staticmethod
+    def is_workday(day):
+        if day.weekday() == 5 or day.weekday() == 6:
+            return False
+        return True
+
+
+Note: if you don't use cls or self anywhere in your method, then it is static method. 
+
+
+======================================================================================================================================================================================
+
+Inheritance:
+------------
+
+Inheritance is inheriting attributes and methods from the parent class or base class. 
+
+This is useful, because we can create subclasses and get all of the functionality of our parent class and then we can overwrite or add new functionlity without affecting the parent class in any way
+
+
+
+Lets's create developer class and manager class that inherits some of the functionality from the employee class.
+
+
+
+class Employee:
+    num_of_emps = 0
+    raise_amt = 1.04
+
+    def __init__(self, first, last, pay):
+        self.first = first
+        self.last = last
+        self.email = first + '.' + last + '@email.com'
+        self.pay = pay
+
+        Employee.num_of_emps += 1
+
+    def fullname(self):
+        return '{} {}'.format(self.first, self.last)
+
+    def apply_raise(self):
+        self.pay = int(self.pay * self.raise_amt)
+
+
+class Developer(Employee):
+    pass
+
+
+dev_1 = Developer('Corey', 'Schafer', 50000)
+dev_2 = Developer('Test', 'Employee', 60000)
+
+print(dev_1.email)
+print(dev_2.email)
+
+
+So what happened here is, that when we instantiated our developers instances, it first looked in our developer class for the __init__ method and since it's unable to find it within the Developer class (because it is currently empty). So, python is walkup the chain of inheritance until it finds what its looking for. this chain of looking is called method resolution order popularly know as MRO
+
+do help(Developer)
+
+
+
+More changes in subclass:
+-------------------------
+class Employee:
+
+    raise_amt = 1.04
+
+    def __init__(self, first, last, pay):
+        self.first = first
+        self.last = last
+        self.email = first + '.' + last + '@email.com'
+        self.pay = pay
+
+    def fullname(self):
+        return '{} {}'.format(self.first, self.last)
+
+    def apply_raise(self):
+        self.pay = int(self.pay * self.raise_amt)
+
+
+class Developer(Employee):
+    raise_amt = 1.10
+
+    def __init__(self, first, last, pay, prog_lang):
+        super().__init__(first, last, pay)  # instead of assigning self.first, self.last,.... again   # Similar to Employee.__init__(first, last, pay)
+        self.prog_lang = prog_lang
+		
+		
+keep it DRY --> Dont repeat yourself
+So, basically the above code means the arguments first, last, pay will be handled by Employee class and prog_lang will be handled by Developer class
+
+
+
+using manager class that inhertits from Employee class:
+
+class Employee:
+
+    raise_amt = 1.04
+
+    def __init__(self, first, last, pay):
+        self.first = first
+        self.last = last
+        self.email = first + '.' + last + '@email.com'
+        self.pay = pay
+
+    def fullname(self):
+        return '{} {}'.format(self.first, self.last)
+
+    def apply_raise(self):
+        self.pay = int(self.pay * self.raise_amt)
+
+
+class Developer(Employee):
+    raise_amt = 1.10
+
+    def __init__(self, first, last, pay, prog_lang):
+        super().__init__(first, last, pay)
+        self.prog_lang = prog_lang
+
+
+class Manager(Employee):
+
+    def __init__(self, first, last, pay, employees=None):		  
+        super().__init__(first, last, pay)
+        if employees is None:
+            self.employees = []
+        else:
+            self.employees = employees
+
+    def add_emp(self, emp):
+        if emp not in self.employees:
+            self.employees.append(emp)
+
+    def remove_emp(self, emp):
+        if emp in self.employees:
+            self.employees.remove(emp)
+
+    def print_emps(self):
+        for emp in self.employees:
+            print('-->', emp.fullname())
+
+
+dev_1 = Developer('Corey', 'Schafer', 50000, 'Python')
+dev_2 = Developer('Test', 'Employee', 60000, 'Java')
+
+mgr_1 = Manager('Sue', 'Smith', 90000, [dev_1])
+
+print(mgr_1.email)
+
+mgr_1.add_emp(dev_2)
+mgr_1.remove_emp(dev_2)
+
+mgr_1.print_emps()
+
+
+
+Real life example --> HTTPException
+
+
+isinstance and issubclass builtin functions: 
+--------------------------------------------
+print(isinstance(mgr_1, Manager))  # True
+print(isinstance(mgr_1, Employee)) # True
+print(isinstance(mgr_1, Developer)) # False
+
+print((issubclass(Developer, Employee))  # True
+print(issubclass(Manager, Developer)) # False
+
+
+======================================================================================================================================================================================
+
+Special methods/magic methods/dunder methods(double underscores):
+-----------------------------------------------------------------
+
+These special methods allows us to emulate some built in behaviour in python and it's also tell us how to implement operator overloading .
+
+
+Some common dunder methods:
+
+dunder init or __init__, is implicitly called when an object is created. 
+
+
+repr means an unambiguous representation of the object and should be used for debugging and logging, other things like that(used by developers)
+str is the more readable representation of an object and is meant to be used as a display to the end users
+
+
+while printing the instance, it will check for __str__ first, else it will fall back to __repr__, else it will print the memory location. 
+
+class Employee:
+
+    raise_amt = 1.04
+
+    def __init__(self, first, last, pay):
+        self.first = first
+        self.last = last
+        self.email = first + '.' + last + '@email.com'
+        self.pay = pay
+
+    def fullname(self):
+        return '{} {}'.format(self.first, self.last)
+
+    def apply_raise(self):
+        self.pay = int(self.pay * self.raise_amt)
+
+    def __repr__(self):
+        return "Employee('{}', '{}', {})".format(self.first, self.last, self.pay)
+
+    def __str__(self):
+        return '{} - {}'.format(self.fullname(), self.email)
+
+    def __add__(self, other):
+        return self.pay + other.pay
+
+    def __len__(self):
+        return len(self.fullname())
+
+
+emp_1 = Employee('Corey', 'Schafer', 50000)
+emp_2 = Employee('Test', 'Employee', 60000)
+
+
+print(emp_1)
+print(emp_2)
+
+
+see what is __new__, __len__ and other dunder methods 
+
+https://docs.python.org/3/reference/datamodel.html#special-method-names
+
+
+reallife example datetime module
+
+======================================================================================================================================================================================
+
+property decorators:
+--------------------
+
+properties:
+
+
+In Python, a property is a built-in way to manage attributes of an object. It allows you to define methods in a class that can be accessed like attributes, providing a way to add logic for getting, setting, or deleting an attribute without changing the interface of the class.
+
+
+How Does It Work?
+If you just want the read only property, there is also a @property decorator you can add above your method.
+To make the property writable or deletable, you use the @<property_name>.setter and @<property_name>.deleter decorators.
+
+
+
+class Employee:
+
+    def __init__(self, first, last):
+        self.first = first
+        self.last = last
+
+    @property
+    def email(self):
+        return '{}.{}@email.com'.format(self.first, self.last)
+
+    @property
+    def fullname(self):
+        return '{} {}'.format(self.first, self.last)
+
+    @fullname.setter
+    def fullname(self, name):
+        first, last = name.split(' ')
+        self.first = first
+        self.last = last
+
+    @fullname.deleter
+    def fullname(self):
+        print('Delete Name!')
+        self.first = None
+        self.last = None
+
+
+emp_1 = Employee('John', 'Smith')
+print(emp_1.email)
+print(emp_1.fullname)
+emp_1.fullname = "Corey Schafer"
+
+print(emp_1.first)
+print(emp_1.email)
+print(emp_1.fullname)
+
+del emp_1.fullname
+
+
+
+Why Use the @property Decorator?
+
+Encapsulation: It allows you to expose a "readable" and "writable" attribute interface while hiding the implementation details.
+Validation: You can validate data before setting or modifying an attribute.
+Read-Only Attributes: You can create attributes that are only readable and cannot be modified.
+Computed Properties: It lets you compute a value dynamically when the attribute is accessed, rather than storing it in memory.
+
+======================================================================================================================================================================================
+
+
+Abstract classes:
+-----------------
+
+class Employee:
+
+class Developer(Employee):
+
+
+ 
+class Manager(Employee):
+
+
+
+dev_1 = Develp() # devel  # manager
+
+
+
+
+class Stream:
+
+class FileStream(Stream):
+
+class NetworkStream(Stream):
+
+
+There are a couple of issues with the inheritance approach. The first issue is that we can create a Employee object and call the permission method. Why is this an issue? Because this Employee class is an abstract concept.
+
+What does it mean to permission to Employee? Is it a developer or manager, what kind of Employee? So we shouldn't be able to directly create an instance of the Empployee class. We should always subclass it and then create an instance of the subclass. That is the first issue.
+
+So we only created this Employee class as a base class to provide some code that we're going to reuse across different kinds of Employees(Developers, Managers). This is the first issue. Now the second issue is that if we had implemented the permission method inside the Employee and we also need to implement the same method with the same name in the Developer and Manager class. If tomorrow we decide to create a different kind of Employee(Say tester or DataAnalyst), we should remember to implement this Permission method and call it exactly 'permissions'. If you call it 'permission_' or 'readpermissions' or read whatever, it's not going to be consistent with the other kinds of Employees that we have here.
+
+In other words, currently there is no way to enforce a common interface across different kinds of Employees. This is more of a convention we have used here. It would be nice to have a common contract or a common interface across these different types of streams. So how can we solve these problems? That's when we use an abstract base class.
+
+
+
+
+An abstract base class is like a half baked cookie, it's not ready to be eaten, it's half baked, it's half cooked. It's purpose is to provide some common code to it's derivatives. So here we want to make this Employee class an abstract base class.  To do that, 
+
+
+Step 1: to make employee class a abstract class, you should be derive it from ABC class --> which means in brackets you have to put 'ABC'
+Step 2: The second step is to define the common interface for all Employee derived class. We want all emplouee to have a permission method and potentially a 'fullname' method in the future. So, in the Employee class we define a permissions method and full name method, we can make these methods with no implementation. So we simply use 'pass' statement, we need to decorate these methods with @abstractmethod decorator. With these two simple steps, we fix both the problems I talked about in this lecture.
+
+from abc import ABC, abstractmethod
+
+
+class Employee(ABC):
+
+	@abstractmethod
+	def permissions():
+		pass
+	
+	@abstractmethod
+	def fullname():
+		pass
+		
+
+		
+class Developer(Employee):
+	
+	def permissions():
+	
+	def fullname():
+		
+
+
+Remember: with abstract class approach, we cannot create instance for the base class and need to implement the contract or interface which is mentioned in parent class in the child classes
+
+
+Also in the future, if a class derives from the Employee class, it has to implement the methods mentioned in the Employee class, otherwise, that class will also be considered abstract. If you want to make the derived class as a concrete class, we'll have to implement the methods, it also follows the contract or the interface of the Employee class.
+
+======================================================================================================================================================================================
+Polymorphism:
+-------------
+
+from abc import ABC, abstractmethod
+
+
+class UIControl(ABC):
+    @abstractmethod
+    def draw(self):
+        pass
+
+class TextBox(UIControl):
+    def draw(self):
+        print("TextBox")
+
+class DropDownList(UIControl):
+    def draw(self):
+        print("DropDownList")
+
+
+
+def render(ob):
+    ob.draw()
+
+def render_list(objs):
+    for obj in objs:
+        obj.draw()
+
+
+dropdown = DropDownList()
+render(dropdown)
+
+textbox = TextBox()
+render(textbox)
+
+render_list([dropdown,textbox])
+
+
+
+So, using this approach, we can render the user interface of an application. Imagine we have a form with a bunch of text boxes, drop down lists, radio buttons and so on. We could have a list of all these objects and pass that list to a function like draw, and that function would take care of rendering the entire form.
+
+
+What is interesting here is that our draw function doesn't know what kind of control it's working with. This is determined at run time.
+
+It simply iterates over the list of controls and calls the draw method of each control object. This is what we call polymorphism. Poly means many, morph means form. So polymorphism means many forms. In this example, our draw method is taking many different forms and this is determined at run time.
+
+We could be calling the draw method on a text box or a drop down list or a radio button and so on. So this is the classic example of polymorphism.
+
+
+
+Runtime Polymorphism:
+Occurs when the behavior of a method is determined at runtime based on the type of the object.
+
+In Python, this is achieved through method overriding: a child class can redefine a method from its parent class to provide its own specific implementation.
+
+Python’s dynamic nature allows it to excel at runtime polymorphism, enabling flexible and adaptable code.

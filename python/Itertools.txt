@@ -1,0 +1,38 @@
+
+Itertools:
+---------
+itertools is a collection of tools that allows us to work with iterators in a fast and memory efficient way.
+itertools module contains a number of commonly used iterators, as well as functions for combining several iterators.
+It is available in the Python standard library. you can import it (import itertools) 
+
+
+
+
+count:
+
+This function simply returns an iterator that counts, and if we don't pass any argument, it will start from 0 and count one on each iteration and this is going to go on forever, which means it never ends. 
+
+
+counter = itertools.counts()
+
+for num in counter:
+	print(num)
+	
+	
+Remember that we can also use next() function to get the next value.
+
+
+
+Why is this useful?
+
+
+data = [100, 200, 300], say this is going to be matched on daily basis 
+
+
+daily_data = zip(itertools.count(), data)
+
+
+So, what the built-in zip function basically does is that it will pair the values together. So, it will get the first value of the count function which is '0' and it will pair it with the first value of data which is '100' and then it will move on and pair '1' with 200 and '2' with 300 and so on. 
+Now the zip function will return an iterator itself that needs to be looped over in order to get all the values.
+
+Also, if we want, we can convert them into a list and get them all at once. 

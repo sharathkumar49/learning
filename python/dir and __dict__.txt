@@ -1,0 +1,57 @@
+
+1. dir() Function:
+-------------------
+Purpose: Returns a list of attributes and methods associated with an object. This includes:
+
+Attributes defined in the object's class.
+Attributes inherited from base classes.
+Methods (both built-in and user-defined).
+In some cases, special attributes like __class__, __doc__, etc.
+
+
+Example:
+
+class MyClass:
+    def __init__(self):
+        self.x = 10
+    def my_method(self):
+        return "Hello"
+
+obj = MyClass()
+print(dir(obj))  # ['__class__', ..., 'x', 'my_method']
+
+
+
+
+2. __dict__ Attribute:
+----------------------
+Purpose: A dictionary-like object that stores only the instance-specific attributes of the object.
+
+Keys are attribute names.
+Values are the corresponding values of these attributes.
+
+Example:
+
+class MyClass:
+    def __init__(self):
+        self.x = 10
+        self.y = 20
+
+obj = MyClass()
+print(obj.__dict__)  # {'x': 10, 'y': 20}
+
+
+Key Differences:
+----------------
+Feature	                       dir()	                          __dict__
+Type of Output	               List of attribute/method names	  Dictionary of instance attributes
+Includes Methods?	           Yes	                              No
+Includes Inherited?	           Yes	                              No
+Focus	                       Broader view of the object	      Instance-specific attributes
+
+
+
+When to Use?
+
+Use dir() when you want a complete overview of an object’s capabilities.
+Use __dict__ when you want to inspect or manipulate the specific state of an instance.

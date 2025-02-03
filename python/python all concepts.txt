@@ -1,0 +1,211 @@
+
+1. Basic Syntax and Data Types
+Variables and assignments
+Data types: int, float, str, bool, list, tuple, set, dict
+Type conversion: int(), str(), list(), etc.
+Operators: Arithmetic, Comparison, Logical, Identity, Membership, Bitwise
+
+
+2. Control Flow
+if, elif, else statements
+Looping: for, while
+break, continue, pass
+List comprehensions
+try, except, finally blocks (Exception handling)
+
+
+3. Functions
+Function definition: def keyword
+Arguments: positional, keyword, default, variable-length arguments (*args, **kwargs)
+Lambda functions
+Recursion
+Scope and namespaces (local, global)
+
+
+4. Data Structures
+Lists, Tuples, Sets, Dictionaries
+List operations: append, insert, pop, remove, slicing, etc.
+Set operations: union, intersection, difference, etc.
+Dictionary operations: keys, values, items, pop, get, etc.
+List and dictionary comprehensions
+
+
+5. Object-Oriented Programming (OOP)
+Classes and objects
+Constructors (__init__)
+Instance vs class variables
+Methods: instance, class, static
+Inheritance
+Polymorphism
+Encapsulation (private/public attributes)
+Method Overriding and Overloading
+Special methods (__str__, __repr__, __len__, __add__, etc.)
+
+
+6. Modules and Packages
+Importing modules (import, from ... import)
+Standard Library (e.g., math, os, sys, collections, itertools, etc.)
+Creating modules and packages
+__init__.py and the role of packages
+pip (package installer)
+
+
+7. File Handling
+Opening and closing files: open(), close()
+File operations: read(), write(), append()
+File context manager (with statement)
+Working with CSV, JSON, and other file formats
+
+
+8. Error Handling
+try, except, else, finally blocks
+Custom exception handling
+raise keyword
+
+
+9. Iterators and Generators
+iter() and next()
+Creating custom iterators
+yield and creating generators
+Generator expressions
+
+
+10. Decorators
+Function decorators
+Decorators with arguments
+Class decorators
+
+
+11. Regular Expressions
+re module
+Pattern matching (re.match(), re.search(), re.findall(), re.sub())
+Quantifiers, special characters, and groups
+
+
+12. Concurrency and Parallelism
+threading and multiprocessing modules
+Global Interpreter Lock (GIL)
+Synchronization: Lock, Event, Semaphore
+Asynchronous programming: asyncio, async/await
+Futures and Threads
+
+
+13. Memory Management
+Memory allocation and garbage collection
+del and reference counting
+gc (garbage collection module)
+Object mutability and immutability
+
+
+14. Pythonic Code and Best Practices
+Code readability (PEP 8)
+Idiomatic Python: list comprehensions, unpacking, enumerate(), zip(), filter(), map(), etc.
+Writing unit tests (unittest, pytest)
+Use of assert for validation
+
+
+15. Advanced Python Concepts
+Metaclasses
+Context Managers (with statement, __enter__ and __exit__)
+Descriptors
+__new__ and __init__ methods
+Function annotations
+Function currying
+Mutable vs immutable objects
+
+
+
+16. Database Interaction
+Using sqlite3 and other database connectors (e.g., psycopg2, SQLAlchemy)
+Writing SQL queries in Python
+ORM (Object Relational Mapping)
+
+
+17. Testing
+Unit testing (unittest, pytest)
+Mocking and patching
+Test-driven development (TDD)
+
+
+18. Networking
+Sockets
+requests library for HTTP requests
+Creating a simple HTTP server with http.server
+
+
+19. Web Development Frameworks (Optional, if relevant to the role)
+Django, Flask, FastAPI, etc.
+Routing, Views, Templates, and Static Files
+
+
+
+20. Version Control Systems (Optional, if relevant to the role)
+Git basics (clone, commit, branch, merge)
+Using Python with version control
+
+
+
+
+
+
+
+
+common built-in data types in python
+List, tuple, set, dictionary, string and their methods
+Data types: int, float, str, bool, list, tuple, set, dict
+Type conversion: int(), str(), list(), etc.
+Operators: Arithmetic, Comparison, Logical, Identity, Membership, Bitwise
+differnce between list and tuple
+difference between list and set
+global, private and protected attributes in python
+string formatting in python 
+python memory management
+classes and objects
+five pillars of oop
+class method vs static method
+class variable vs static variable
+__new__ and __init__
+__str__ and __repr__
+Types of Inheritance
+MRO(Method Resolution Order)
+First class functions, closures, decorators
+mutable and immutable types in python
+How copying works
+shallow copy and deep copy 
+iterable, iterators and generators
+multithreading and multiprocessing, GIL
+aysnc and await
+Map, filter, reduce
+singleton class
+dunder methods/special methods/ magic methods
+Lambda function
+range function 
+collections module
+meta classes in python
+metaprogramming
+python context manager
+python garbage collection
+python reduce and accumulate function
+python name mangling
+python pickling and unpickling
+SOLID Priniple
+packing and unpacking
+dynamic typed language and whether python is dynamic typed language
+enumerate function in python and how it works
+Is tuple comprehension possible in Python? => No, it is not possible because it will end up in a generator instead of a tuple comprehension.
+what are modules and packages in python? 
+what is scope in python
+PEP8 
+frozenset
+Monkey Patching in Python
+what are python namespaces and how they are used
+Python exception handling
+Few common Exception Types and explanation of when they occur
+python files and its open(how to open, write, read etc)
+python os module
+difference between break and continue statement
+python request module
+Is tuple comparison possible? Explain how with example
+
+
+

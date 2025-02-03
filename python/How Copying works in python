@@ -1,0 +1,62 @@
+
+In Python, whether copying a variable to another variable refers to the same value or not, depends on the type of object the variable is pointing to.
+
+1. For immutable types (like integers, floats, strings, tuples):
+
+When you assign one variable to another, Python actually creates a new reference to the same value. However, since the value cannot be modified (they are immutable), it effectively behaves like copying.
+
+Example with an immutable type:
+
+
+x = 10
+y = x
+y = 20
+print(x)  # Output: 10
+print(y)  # Output: 20
+
+In this case, x and y initially refer to the same value (10), but after y = 20, they refer to different values (10 and 20). So, the value is copied, and changes to y don't affect x.
+
+
+
+
+2. For mutable types (like lists, dictionaries, sets):
+
+When you assign one variable to another, both variables refer to the same object in memory. If you modify one variable, the changes will be reflected in the other because they are both pointing to the same object.
+
+Example with a mutable type:
+
+python
+Copy
+x = [1, 2, 3]
+y = x
+y.append(4)
+print(x)  # Output: [1, 2, 3, 4]
+print(y)  # Output: [1, 2, 3, 4]
+Here, x and y both point to the same list, so modifying y also changes x.
+
+
+
+
+To copy objects explicitly:
+---------------------------
+If you want to create a new independent object (especially for mutable types), you can use methods like copy() or copy.deepcopy():
+
+For a shallow copy (new object, but nested structures still share references), use copy().
+For a deep copy (new object with all nested structures copied as well), use copy.deepcopy().
+Example:
+
+
+import copy
+
+x = [1, 2, [3, 4]]
+y = copy.deepcopy(x)
+y[2].append(5)
+
+print(x)  # Output: [1, 2, [3, 4]]
+print(y)  # Output: [1, 2, [3, 4, 5]]
+Here, y is a deep copy of x, and modifying y doesn't affect x in any way.
+
+So, to answer your question, it depends on the type of object. For immutable types, copying effectively means referring to the same value, while for mutable types, both variables refer to the same object unless you explicitly copy the object.
+
+
+

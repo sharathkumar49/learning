@@ -1,0 +1,68 @@
+
+
+Mutable and Immutable Types in Python:
+=======================================
+
+
+In Python, mutable and immutable types refer to whether an object’s value can be changed after it is created.
+
+Mutable Types:
+--------------
+Mutable types are objects that can be modified after they are created. This means you can change their contents (e.g., add, remove, or update elements) without changing their identity (i.e., memory address).
+
+Examples of mutable types:
+
+list
+dict
+set
+bytearray
+
+Example:
+
+my_list = [1, 2, 3]
+print(id(my_list))  # Memory address before modification
+
+my_list.append(4)  # Modifying the list
+print(my_list)  # Output: [1, 2, 3, 4]
+print(id(my_list))  # Memory address remains the same
+
+
+
+
+Immutable Types:
+----------------
+Immutable types are objects that cannot be modified after they are created. Any change results in a new object being created in memory.
+
+Examples of immutable types:
+
+int
+float
+bool
+str
+tuple
+frozenset
+bytes
+Example:
+
+my_string = "hello"
+print(id(my_string))  # Memory address before modification
+
+my_string += " world"  # Creating a new string
+print(my_string)  # Output: "hello world"
+print(id(my_string))  # New memory address
+
+
+
+Why does it matter?
+Performance Considerations: Immutable types are more efficient in some cases, such as dictionary keys and set elements.
+Thread Safety: Immutable objects are safe for concurrent access in multi-threading.
+Predictability: Prevents unintended side effects when passing objects between functions.
+Let me know if you need more clarification! 🚀
+
+
+
+
+
+
+
+

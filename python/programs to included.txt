@@ -1,0 +1,7 @@
+programs to be included:
+
+def count_vowels(string):
+    vowels = 'aeiou'
+    return sum(1 for char in string if char.lower() in vowels)
+
+print(count_vowels("Hello World"))
