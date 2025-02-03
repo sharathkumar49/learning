@@ -1,0 +1,36 @@
+Microsoft Fabric:
+-----------------
+
+Microsoft Fabric is an all-in-one analytics solution for enterprises that covers everything from data movement to data science, Real-Time Analytics, and business intelligence. It offers a comprehensive suite of services, including data lake, data engineering, and data integration, all in one place. 
+
+Microsoft Fabric brings together new and existing components from power BI, Azure Synapse, and Azure Data Factory into a single integrated environment. 
+
+The data from different sources(huge data, big data from various sources) --> loading into Data warehouse as tables--> using these tables, people will create reports using powerBI tool.
+
+when you are reading the data which is from different sources, the data will be huge which is Big Data, okay? the data warehouse tables will not load all the data from the sources as it is. It has to do some filteration like what is needed, what is the subset of the data, what is the meaningful data, only that meaningful data or needed data will get processed from the sources and finally land into the datawarehouse tables. 
+
+On top of these tables generally people will create some reports, for example a report that will show how the revenue is growing. So, the tables will act as a source for generating reports using the powerBI tool.
+
+
+powerBI --> to generate the reports -->  the people who create the reports are called as data analyst
+
+datawarehouse table --> subset of the big data --> the people who takes the data from different sources and finally putting into the data warehouse are called data Engineers. So, Data Engineers will take the data from different sources and then they will transform it into some meaningful data. Then they will transform the data into Data warehouse Systems.
+
+
+To do this ETL(Extract, Transform and Load) operations, we need something called Data Factory and for the Data Warehouse needs, we needed something called synapse
+
+
+So, Microsoft Fabric is SaaS Foundation which has OneLake(which is a big storage and built on the top of gen2) that integrates capabilities like Data Factory, Power BI, Synapse(Data Engineering, Data Science, Data Warehouse, Real-Time Analytics). 
+
+Data Factory -> data integration, the ETL pipeline part, taking the data from different sources, transforming and loading 
+Synapse Data Engineering --> apache spark part,
+Synapse Data Warehousing --> SQL Table part
+
+Synapse Data Science --> Once you have the data in the data warehouse, not only you can create powerBI reports, you can also create ML models and educate these models, train these models with your buisness data. So, that these models can predict the future
+
+
+
+
+
+
+

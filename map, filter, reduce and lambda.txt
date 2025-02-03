@@ -1,0 +1,5 @@
+Map() , Filter() , Reduce() and Lambda Function in Python:
+
+https://medium.com/@engr.tanveersultan53/map-filter-reduce-and-lambda-function-in-python-3822916f3de8
+
+https://www.freecodecamp.org/news/lambda-functions-in-python/

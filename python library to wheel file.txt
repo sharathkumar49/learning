@@ -1,0 +1,195 @@
+
+
+python library to wheel file:
+-----------------------------
+
+1.Ensure your project follows a proper structure for packaging. For example:
+
+ my_project/
+	├── your_package/
+	│   ├── __init__.py
+	│   └── other_files.py
+	├── setup.py
+	├── pyproject.toml (optional but recommended)
+	└── README.md
+	
+	
+setup.py: Contains metadata and build configuration for your package.
+pyproject.toml: It specifies the build system (e.g., setuptools or poetry).
+
+
+2. Install the 'build' package for creating wheel files: pip install build
+python setup.py bdist_wheel
+
+3. Now to create a Wheel file, navigate to the root of your project(where setup.py or pyproject.toml is located) and run: python -m build
+This will create a 'dist/' directory containing the wheel(.whl) and source distribution (.tar.gz) files.
+
+
+
+For verification:
+-----------------
+you can check the contents of the wheel file using the wheel tool:
+
+pip install wheel 
+wheel unpack dist/your_package-<version>.whl
+
+
+
+Example for setup.py:
+--------------------
+install setuptools
+
+pip3 install --upgrade pip
+pip insall setuptools
+
+
+setup.py:
+
+from setuptools import setup, find_packages
+
+setup(
+	name="your_package",
+	version="1.0.0",
+	author="Your Name",
+	author_email="your.email@example.com",
+	description="A description of your package",
+	long_description=open('README.md').read(),
+	long_description_content_type="text/markdown",
+	url="https://github.com/your-repo/your-package",
+	packages=find_packages(),
+	classifiers=[
+		"Programming Language :: Python :: 3",
+		"License :: OSI Approved :: MIT License",
+		"Operating System :: OS Independent:",
+	],
+	python_requires=">=3.6",
+	install_requires=[
+		# List your dependencies here
+	],
+)
+
+
+After creating the wheel, you can upload it to PyPI using twine or distribute it locally.
+
+
+Here's an example of an pyproject.toml file for a python package using setuptools as the build backend:
+
+[build-system]
+requires = ["setuptools>=42", "wheel"]  # Build requirements
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "your_package"
+version = "1.0.0"
+description = "A description of your package"
+readme = "README.md"
+authors = [
+    { name = "Your Name", email = "your.email@example.com" }
+]
+license = { text = "MIT" }
+homepage = "https://github.com/your-repo/your-package"
+keywords = ["example", "package", "python"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+requires-python = ">=3.6"
+dependencies = [
+    "requests>=2.0.0",
+    "numpy>=1.20.0"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+your-script = "your_package.module:function_name"
+
+
+Key Sections Explained:
+-----------------------
+1. [build-system]:
+ - specifies the build requirements and backend.
+ - setuptools and wheel are required to build the package.
+
+
+2. [project]:
+ - contains metadata about the package, such as name, version, description, author, license, etc.
+ - 'dependencies' lists the package dependencies
+
+
+3.[tool.setuptools.packages.find]
+ - Helps 'setuptools' locate your source files. If your package is in a src directory, use where = ['src']
+ 
+
+4.[project.scripts]:
+ - Defines command-line scripts. For example, your-script will point to a callable function in the specified module
+ 
+ 
+ 
+ 
+Example for setup.py:
+----------------------
+
+
+
+setuptools.setup(
+    name="hive",
+    version="0.0.1",
+    author="Ron LEsteve",
+    author_email="ronlesteve@ronlesteve.com",
+    description="Package to create Hive",
+    packages=setuptools.find_packages(),
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
+    python_requires='greaterthan=3.7',
+)
+
+
+
+
+
+
+More example: 
+
+Folder structure:
+-----------------
+ pythonWheelExample/
+	├── myPackage/
+	│   ├── __init__.py
+	│   └── calculations.py
+	├── setup.py
+	├── pyproject.toml (optional but recommended)
+	└── README.md
+	
+	
+	
+setup.py:
+---------
+
+import setuptools
+
+
+setuptools.setup(
+	name='myPackage',
+	version="0.0.1",
+	author="sharath",
+	author_email="sharath.muthu@msci.com",
+	description="package to create Hive",
+	packages=setuptools.find_packages(),
+	classifiers=[
+		"Programming Language :: Python :: 3",
+		"License :: OSI Approved :: MIT License",
+		"Operating System :: OS Independent:",
+	],
+	python_requires=">=3.6",
+)
+
+
+
+
+open command prompt where setup.py is located --> python setup.py bdist_wheel
