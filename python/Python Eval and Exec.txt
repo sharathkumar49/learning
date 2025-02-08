@@ -1,0 +1,2 @@
+Difference between eval() and exec() in python:
+https://medium.com/@codingpilot25/difference-between-eval-and-exec-in-python-b387b25207d2

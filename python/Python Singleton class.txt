@@ -1,0 +1,114 @@
+
+source: chatgpt
+
+creation of singleton class in python:
+---------------------------------------
+n Python, a singleton class is a class that allows only one instance of itself to be created and provides a global point of access to that instance. Here's a simple way to create a singleton class using a class variable to store the instance and a static method to access it:
+
+
+class Singleton:
+    _instance = None
+    
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+    
+    @staticmethod
+    def get_instance():
+        if Singleton._instance is None:
+            Singleton._instance = Singleton()
+        return Singleton._instance
+
+# Example usage:
+singleton1 = Singleton.get_instance()
+singleton2 = Singleton.get_instance()
+
+print(singleton1 is singleton2)  # Output: True
+
+
+In this example:
+
+The '_instance' variable is used to store the singleton instance. It is initialized to None.
+
+The '__new__' method is overridden to control the instantiation process. It checks whether '_instance' is None and creates a new instance only if it's None.
+The 'get_instance' static method provides a way to access the singleton instance. It creates a new instance if '_instance' is None, otherwise, it returns the existing instance.
+
+By using this approach, you can ensure that only one instance of the Singleton class is ever created, no matter how many times you try to instantiate it.
+============================================================================================================================================================================================
+ways to create singleton class in python:
+
+
+There are multiple ways to implement a singleton class in Python. Here are a few commonly used methods:
+
+Using a Module:
+--------------
+Create a module and define the singleton class within it.
+Since modules are imported only once by Python, the class inside the module effectively becomes a singleton.
+
+# singleton.py
+class Singleton:
+    def __init__(self):
+        pass
+
+singleton_instance = Singleton()
+
+# main.py
+from singleton import singleton_instance
+
+# Use singleton_instance
+
+
+
+
+Using a Decorator:
+------------------
+Create a decorator that ensures only one instance of a class is created.
+
+def singleton(cls):
+    instances = {}
+
+    def get_instance(*args, **kwargs):
+        if cls not in instances:
+            instances[cls] = cls(*args, **kwargs)
+        return instances[cls]
+    
+    return get_instance
+
+@singleton
+class Singleton:
+    def __init__(self):
+        pass
+		
+		
+		
+		
+Using Metaclass:
+----------------
+Define a metaclass that controls the creation of the class instances.
+
+class SingletonMeta(type):
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super().__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+class Singleton(metaclass=SingletonMeta):
+    def __init__(self):
+        pass
+		
+		
+		
+Each of these methods has its advantages and use cases. Choose the one that fits your specific requirements and coding style best.
+
+
+
+
+===========================================================================================================================================================================================
+you can go through geekforgeeks for deep understanding:
+
+you can also know about borg singleton
+
+https://www.geeksforgeeks.org/singleton-pattern-in-python-a-complete-guide/

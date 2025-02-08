@@ -1,0 +1,119 @@
+
+Check geekforgeeks as well
+
+
+
+
+In Python, both class methods and static methods are used for different purposes.
+
+A class method is a method that is bound to the class and not the instance. It takes the class itself as the first parameter (conventionally named cls). Class methods are often used for providing alternative constructors or for creating factory methods.
+
+Here's an example of a class method in Python:
+
+class Person:
+    def __init__(self, first_name, last_name):
+        self.first_name = first_name
+        self.last_name = last_name
+
+    @classmethod
+    def from_string(cls, name_string):
+        first_name, last_name = name_string.split()
+        return cls(first_name, last_name)
+		
+In this example, from_string is a class method that takes a string representation of a name and creates a new Person instance from it.
+
+
+
+
+On the other hand, a static method is a method that is bound to the class but doesn't take the class or instance as a parameter. It's just like a regular function, but it's defined inside a class. Static methods are often used for utility functions that don't depend on the class or instance state.
+
+Here's an example of a static method in Python:
+
+class Person:
+    @staticmethod
+    def is_adult(age):
+        return age >= 18
+		
+In this example, is_adult is a static method that takes an age and returns True if the person is an adult. It doesn't depend on the class or instance state, so it's a good candidate for a static method.
+
+Here's the complete implementation:
+
+
+class Person:
+    def __init__(self, first_name, last_name):
+        self.first_name = first_name
+        self.last_name = last_name
+
+    @classmethod
+    def from_string(cls, name_string):
+        first_name, last_name = name_string.split()
+        return cls(first_name, last_name)
+
+    @staticmethod
+    def is_adult(age):
+        return age >= 18
+
+# Example usage:
+p1 = Person.from_string("John Doe")
+print(p1.first_name) # John
+print(p1.last_name) # Doe
+
+print(Person.is_adult(25)) # True
+print(Person.is_adult(15)) # False
+
+
+In summary, class methods are used for providing alternative constructors or factory methods, while static methods are used for utility functions that don't depend on the class or instance state.
+
+
+
+
+
+
+
+==========================================================================================================================================
+Class Method:
+Definition: A class method is a method that is bound to the class rather than the instance of the class. It can access and modify class-level variables but not instance-level variables.
+
+Decorator: Class methods are defined using the @classmethod decorator.
+
+First Parameter: By convention, the first parameter of a class method is named cls, which refers to the class itself.
+
+Usage: Class methods are often used to define methods that operate on the class itself rather than on instances of the class. They can be used as alternative constructors or for accessing or modifying class-level variables.
+
+
+class MyClass:
+    class_variable = 10
+
+    @classmethod
+    def class_method(cls):
+        return cls.class_variable
+
+print(MyClass.class_method())  # Output: 10
+
+
+
+Static Method:
+Definition: A static method is a method that is bound to the class but does not have access to either the class or instance variables. It is similar to a regular function defined outside the class but is included within the class for organizational purposes.
+
+Decorator: Static methods are defined using the @staticmethod decorator.
+
+No First Parameter: Unlike class methods, static methods do not have a special first parameter.
+
+Usage: Static methods are often used to define utility functions that are related to the class but do not depend on instance or class variables.
+
+
+class MyClass:
+    @staticmethod
+    def static_method():
+        return "This is a static method"
+
+print(MyClass.static_method())  # Output: This is a static method
+
+
+
+Key Differences:
+Class methods have access to the class itself via the cls parameter, while static methods do not have access to either the class or instance variables.
+Class methods are often used for operations involving the class itself, such as alternative constructors or accessing class variables. Static methods are typically used for utility functions that are related to the class but do not depend on instance or class variables.
+Class methods can be overridden by subclasses, while static methods cannot be overridden because they are not tied to the class hierarchy.
+In summary, class methods and static methods are both useful tools for organizing and defining methods within a class, but they have different purposes and behaviors. Class methods are bound to the class and have access to class variables, while static methods are independent of both class and instance variables.
+

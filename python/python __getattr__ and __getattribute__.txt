@@ -1,0 +1,45 @@
+
+
+
+
+In Python, both '__getattr__' and '__getattribute__' are special methods that are used for attribute access in classes, but they behave differently.
+
+'__getattr__':
+This method is invoked when the requested attribute is not found through the normal lookup process.
+It is only called when the attribute is not found via the usual methods (i.e., it's not an instance attribute, class attribute, or found in the instance's class hierarchy).
+It takes two arguments: self and the name of the attribute being accessed.
+It's commonly used to dynamically compute attributes or handle attribute access errors by returning a default value or raising an AttributeError.
+Example:
+
+
+class Example:
+    def __getattr__(self, name):
+        return f"Attribute {name} not found!"
+
+obj = Example()
+print(obj.foo)  # Output: Attribute foo not found!
+
+
+
+
+
+'__getattribute__':
+This method is invoked for every attribute access, regardless of whether the attribute exists or not.
+It's called before looking at the actual attributes of the object.
+It allows you to intercept every attribute access and customize the behavior accordingly.
+Be cautious when using it, as accessing existing attributes within '__getattribute__' might lead to infinite recursion if not handled properly.
+Example:
+
+
+class Example:
+    def __init__(self):
+        self.foo = "bar"
+
+    def __getattribute__(self, name):
+        print(f"Accessing attribute: {name}")
+        # Avoid infinite recursion by calling the base class implementation
+        return super().__getattribute__(name)
+
+obj = Example()
+print(obj.foo)  # Output: Accessing attribute: foo, then bar
+In summary, '__getattr__' is called only when the attribute is not found through the usual lookup process, while '__getattribute__' is called for every attribute access and allows for interception and customization of attribute access behavior.

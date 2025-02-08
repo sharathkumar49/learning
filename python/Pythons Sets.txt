@@ -1,0 +1,258 @@
+
+
+Python sets are a data structure used to store unique elements. They are mutable, unordered collections of unique elements. Sets are useful for various tasks, such as removing duplicates from a list, performing set operations like union, intersection, difference, and more.
+
+Here's a brief overview of how sets work in Python:
+
+Creating a set:
+----------------
+You can create a set by placing a comma-separated sequence of elements within curly braces {}.
+
+my_set = {1, 2, 3, 4, 5}
+You can also create an empty set using the set() constructor:
+
+empty_set = set()
+
+
+Adding elements:
+----------------
+You can add elements to a set using the add() method.
+
+my_set.add(6)
+
+# adding multiple elements
+
+a = {}
+a.update([22, 13, 14])
+
+print(a)
+
+# adding list and set
+
+a.update([14, 15], {11, 16, 18})
+
+
+Removing elements:
+------------------
+You can remove elements from a set using the remove() or discard() methods.
+my_set.remove(3)
+If the element doesn't exist, remove() will raise a KeyError, while discard() won't.
+
+Set operations:
+----------------
+Sets support various operations such as union, intersection, difference, and symmetric difference.
+
+set1 = {1, 2, 3}
+set2 = {3, 4, 5}
+
+# Union
+union_set = set1.union(set2)  # {1, 2, 3, 4, 5}
+
+# Intersection
+intersection_set = set1.intersection(set2)  # {3}
+
+# Difference
+difference_set = set1.difference(set2)  # {1, 2}
+
+# Symmetric Difference
+symmetric_difference_set = set1.symmetric_difference(set2)  # {1, 2, 4, 5}
+
+Iterating over a set:
+You can iterate over the elements of a set using a loop.
+
+
+for item in my_set:
+    print(item)
+Checking membership:
+You can check if an element is present in a set using the in operator.
+
+
+if 3 in my_set:
+    print("3 is in the set")
+
+Sets are particularly useful when you need to work with collections of unique elements or perform set operations efficiently.
+
+
+
+
+Various Set Methods (With Their Uses):
+--------------------------------------
+Set in python have various methods. We have seen the use of some of the above. Below is a list of all the available methods for the set objects:
+
+update()- used to update the set with union of others and itself
+add()- used to add a single item to the set
+copy()- used to return a copy of the set
+clear()- used to remove all items of the set
+discard()- used to remove an item from the set. If the item is not an element, then nothing is done
+union()- used to return a new set as a union of sets
+difference()- used to return a new set as the difference of two or more sets
+difference_update()- used to remove intersecting items from this set
+intersection()- used to return a new set as intersection of two sets
+intersection_update()- used to update a set with the intersection of another set and itself
+pop()- used to return and remove an arbitrary set item, KeyError is raised if the set is empty
+remove()- used to remove an item from the set. KeyError is raised if an item is not a member of the set
+issubset()- if another set is contained in this set, return true
+issuperset()- if this set is contained in another set, return true
+isdisjoint()- if the intersection of two sets is null, return true
+symmetric_difference- used to return a new set as the symmetric difference of two sets 
+symmetric_difference_update()- used to update a set with the symmetric difference of another set and itself 
+
+
+
+set constructor:
+----------------
+Set() Constructor in Python
+As mentioned earlier, in-built set() constructor can also be used to create a set in python. Here’s how:
+
+cars = set(("Audi", "BMW", "Chevrolet")) # double round-brackets are used
+
+print(cars)  --> {'Audi', 'Chevrolet', 'BMW'}
+
+
+
+Python Frozenset:
+------------------
+
+A new class having the characteristics of a set in python whose items cannot be changes post assignment is known as Frozenset. Like tuples behave as immutable lists, frozensets behave as immutable sets. 
+
+As sets are unhashable, they cannot be uses as keys of a dictionary. However, frozensets are hashable and can act as keys of a dictionary. 
+
+frozenset() function is used to create frozensets. As they are immutable, add and remove item methide aren’t supported. However, the following methods are:
+
+cop(), intersection(), union(), difference(), issubset(), issuperset(), isdisjoint() and symmetric_difference().
+
+Here’s an example:
+
+#initialize frozenset a and b
+
+a = frozenset([11, 12, 13, 14])
+
+b = frozenset([23, 24, 25, 26])
+
+print(a.isdisjoint(b))
+
+print(a.difference(b))
+
+print(a|b)
+
+============================================================================================================================================================================================
+Advanced questions in python sets
+-----------------------------------
+
+Immutable Elements in Sets:
+---------------------------
+Question: Why are only immutable elements allowed in a set in Python?
+
+ Answer:
+
+Set is a data type in python used to store several items in a single variable. It is one of the four built-in data types (List, Dictionary, Tuple, and Set) having qualities and usage different from the other three. It is a collection that is written with curly brackets and is both unindexed and unordered. 
+
+A set is mutable, i.e., we can remove or add elements to it. Set in python is similar to mathematical sets, and operations like intersection, union, symmetric difference, and more can be applied. 
+
+
+
+Set Items:
+
+Items of a set in python are immutable (unchangeable), do not duplicate values, and unordered. Thus, items in a set do not appear in a stipulated manner, i.e., they can appear in a different order every time it is used. Due to this, set items cannot be referred to by key or index. 
+
+After a set is created, its items cannot be changed. However, new items can be added. As we mentioned, all set items need to be unique because duplicates are not allowed. Items in a set can be of any data type.
+
+Set items can be of any data type: String, Boolean, tuple, float, int. 
+
+set1 = {"ab", "bc", "cd"}
+
+set2 = {11, 15, 17, 19, 13}
+
+set3 = {False, False, True}
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Frozenset:
+-----------
+Question:What is the frozenset in Python, and how does it differ from a regular set?
+
+Ans: look above
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Set Comprehension:
+------------------
+How do you create a set using set comprehension? Provide an example.
+
+
+Set comprehension may be a concise and capable way to make a new set based on an existing iterable object, such as a list, a tuple, or a run. It permits you to write code in a more expressive way 📝📝 and can spare you a lot of time and exertion.
+
+
+Set comprehension has a simple and elegant syntax that consists of two parts:
+
+new_set = {expression for variable in iterable if condition}
+
+
+new_set: the new set you want to create.
+expression: an expression that defines the value of each element in the new set.
+variable: a variable that takes each value in the iterable object.
+iterable: an iterable object, such as a list, a tuple, or a range, that provides values for the variable.
+condition (optional): a conditional statement that filters the elements in the iterable object.
+
+The for loop and the if statement are the two fundamental building blocks of set comprehension. The for loop iterates over the iterable object 🔃, and the if statement filters the elements based on a condition.
+
+
+Examples:
+Creating a new set of squared values:
+
+numbers = [1, 2, 3, 4, 5] 
+squared_numbers = {x**2 for x in numbers}
+print(squared_numbers)
+
+In this example, we're creating a new set called squared_numbers that contains the squared values of the elements in the numbers list.
+
+
+
+Filtering elements in a list:
+
+numbers = [1, 2, 3, 4, 5] 
+even_numbers = {x for x in numbers if x % 2 == 0} 
+print(even_numbers)
+
+In this example, we're creating a new set called even_numbers that contains only the even numbers from the numbers list.
+
+
+Using a set comprehension with strings:
+
+words = ['apple', 'banana', 'cherry'] 
+vowels = {'a', 'e', 'i', 'o', 'u'} 
+vowel_words = {word for word in words if any(letter in vowels for letter in word)} 
+print(vowel_words)
+
+
+In this example, we're creating a new set called vowel_words that contains only the words from the words list that contain at least one vowel.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Subset, Superset, and Disjoint Sets:
+How can you determine if one set is a subset, superset, or disjoint from another set in Python?
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Hashability and Sets:
+Why is hashability important for elements in a set?
+
+https://www.reddit.com/r/learnpython/comments/skopqa/why_set_can_only_have_hashable_objects/?rdt=44970
+
+
+Go through sarrysyst and brain comments
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Removing Duplicates from a List:
+How can you efficiently remove duplicates from a list using sets?
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Performance of Set Operations:
+What is the time complexity of set operations such as union, intersection, difference, and symmetric difference?
+
+Set Operations with Multiple Sets:
+How can you perform set operations on more than two sets efficiently?
+
+Mutable vs. Immutable Sets:
+Can you explain the difference between mutable and immutable sets in Python?
+
+Practical Applications of Sets:
+What are some real-world scenarios where Python sets are particularly useful?

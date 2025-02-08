@@ -1,0 +1,52 @@
+
+In Python, a context manager is an object that manages resources within a with statement. Context managers allow you to properly manage resources like files, network connections, locks, and database transactions by automatically acquiring and releasing them when they are no longer needed, even if an exception occurs.
+
+The with statement provides a convenient way to work with context managers. It ensures that resources are properly managed by calling the __enter__() method of the context manager before entering the block and the __exit__() method after exiting the block, regardless of whether an exception occurs within the block.
+
+Here's a basic example of using a context manager with a file object:
+
+
+# Open a file using a context manager
+with open("example.txt", "r") as file:
+    # Do something with the file
+    content = file.read()
+    print(content)
+# The file is automatically closed when exiting the `with` block
+
+
+In this example:
+
+'open("example.txt", "r")' returns a file object, which is a context manager.
+The 'with' statement automatically calls the '__enter__()' method of the file object before entering the block, which opens the file.
+Inside the block, we read the contents of the file.
+After the block, the '__exit__()' method of the file object is called, which closes the file, ensuring that resources are properly managed.
+You can also create your own context managers using the contextlib module or by implementing the '__enter__()' and '__exit__()' methods in a custom class. Here's an example using 
+
+
+the contextlib module:
+
+from contextlib import contextmanager
+
+@contextmanager
+def my_context_manager():
+    # Code executed before entering the `with` block
+    print("Entering the context")
+    yield  # This is where the `with` block's code will execute
+    # Code executed after exiting the `with` block
+    print("Exiting the context")
+
+# Using the custom context manager
+with my_context_manager():
+    print("Inside the context")
+	
+	
+In this example, the '@contextmanager' decorator creates a context manager from a generator function. The code before the 'yield' statement is executed before entering the 'with' block, and the code after the 'yield' statement is executed after exiting the 'with' block. The yield statement acts as a placeholder for the 'with' block's code.
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,26 @@
+Duck typing is a concept in Python (and other dynamic programming languages) that focuses on an object's behavior rather than its type or class. The term "duck typing" comes from the saying "If it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck."
+
+In Python, duck typing means that you can use an object if it supports the necessary methods or attributes, without checking its specific type or class explicitly. If an object behaves like a specific type (e.g., a duck), then it can be treated as that type.
+
+Here's an example to illustrate duck typing:
+class Duck:
+    def quack(self):
+        print("Quack!")
+
+class Dog:
+    def bark(self):
+        print("Woof!")
+
+def make_sound(animal):
+    animal.quack()
+
+duck = Duck()
+dog = Dog()
+
+make_sound(duck)  # Output: Quack!
+make_sound(dog)   # Throws an AttributeError: 'Dog' object has no attribute 'quack'
+
+
+In this example, the 'make_sound()' function expects an object that has a 'quack()' method. It doesn't care about the object's specific class or type; it only cares about whether the object supports the 'quack()' method. Both the 'Duck' class and the 'Dog' class have their own methods ('quack()' and 'bark()'), but only the 'Duck' class has the 'quack()' method, so only a 'Duck' object can be passed to 'make_sound()'.
+
+Duck typing promotes flexibility and simplicity in code by focusing on what an object can do rather than what it is. It allows you to write more generic and reusable code that can work with a wide range of objects as long as they provide the necessary behavior. However, it's essential to document the expected behavior of objects and handle potential errors gracefully if an object doesn't behave as expected.

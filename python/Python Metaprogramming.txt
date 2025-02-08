@@ -1,0 +1,31 @@
+Go through first-class functions, closures and decorators of corey schafer.
+
+
+
+
+How does Python implement metaprogramming using class decorators?
+
+In Python, metaprogramming using class decorators involves modifying or enhancing the behavior of classes by wrapping them with another class or function. Class decorators are functions that take a class as input and return a new class, typically with some modifications.
+
+Here's a simple example to demonstrate how class decorators work:
+
+
+def add_method(cls):
+    def new_method(self, x, y):
+        return x + y
+    cls.add = new_method
+    return cls
+
+@add_method
+class MyClass:
+    pass
+
+obj = MyClass()
+print(obj.add(2, 3))  # Output: 5
+
+
+In this example, add_method is a class decorator that adds a new method called 'add' to the class it decorates. When the MyClass class is defined with @add_method, it is effectively transformed into a new class with the add method added.
+
+Behind the scenes, the @add_method syntax is equivalent to calling MyClass = add_method(MyClass). The add_method function takes the MyClass as input, adds the add method to it, and returns the modified class.
+
+Class decorators are powerful tools for metaprogramming in Python, allowing you to dynamically modify classes at runtime to add functionality, enforce constraints, or implement other custom behavior.

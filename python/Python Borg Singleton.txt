@@ -1,0 +1,34 @@
+In Python, the Borg Singleton pattern is a variation of the Singleton pattern that allows multiple instances of a class to share the same state. Unlike the traditional Singleton pattern, where there is only one instance of the class, the Borg Singleton pattern allows multiple instances to be created, but they all share the same internal state.
+
+Here's a basic implementation of the Borg Singleton pattern in Python:
+
+class Borg:
+    _shared_state = {}
+
+    def __init__(self):
+        self.__dict__ = self._shared_state
+
+    # Add other methods and properties as needed
+	
+	
+In this implementation:
+The '_shared_state' class variable is a dictionary that holds the shared state among instances.
+In the '__init__' method, 'self.__dict__' is set to '_shared_state', so each instance shares the same dictionary for its attributes. This means that any changes made to the attributes of one instance will be reflected in all other instances.
+
+
+Here's how you would use the Borg Singleton pattern:
+
+# Creating instances of Borg
+b1 = Borg()
+b2 = Borg()
+
+# Modifying attributes of b1
+b1.some_attribute = "some_value"
+
+# Accessing the same attribute from b2
+print(b2.some_attribute)  # Output: some_value
+
+In this example, b1 and b2 are separate instances of the Borg class, but they share the same internal state because they use the same _shared_state dictionary. Therefore, any changes made to the state of one instance are visible to all other instances.
+
+
+So why would you want to use the Borg pattern instead of the more traditional singleton pattern? One reason is that the Borg pattern allows for more flexibility. With the singleton pattern, there is only ever one instance of the class. But with the Borg pattern, you can create multiple instances that all share the same state. This can be useful if you want to create multiple instances of a class that all need to share some common state, but you don't want to have to pass that state around explicitly.

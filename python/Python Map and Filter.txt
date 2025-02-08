@@ -1,0 +1,3 @@
+Difference between Map() and Filter() in Python:
+https://medium.com/@ankur.ghogle100/difference-between-map-and-filter-in-python-8c5bca11afe8
+

@@ -1,0 +1,22 @@
+Collections in Python are basically container data types.
+There are four collection data types in python which are used to store collections of data.
+List: is a collection which is ordered and changeable/mutable. Allows duplicate members. Declared in square brackets []. Elements can be accessed through index.
+Tuple: is a collection which is ordered and unchangeable/immutable. Allows duplicate members.
+Set: is a collection which is unordered, unchangeable*, and unindexed. No duplicate members. Declared in curly brackets {}. It’s not indexed, so you can’t access an element using an index.
+Dictionary: is a collection which is ordered** and changeable/mutable. No duplicate members. Have Key : value pairs.
+
+
+Python also comes with built in Collections module which has specialised data structures which basically covers the shortcomings of the four data types
+Specialised Collection Data Types:
+namedtuple()
+Chainmap
+deque
+Counter
+OrderedDict
+Defaultdict
+UserDict
+UserList
+UserString
+
+
+namedtuple() : namedtuple() returns a tuple with a named value for each element in the tuple.

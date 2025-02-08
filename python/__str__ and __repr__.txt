@@ -1,0 +1,32 @@
+In Python, the __str__() and __repr__() methods are used to define how an object should be represented as a string. They serve different purposes:
+
+__str__(): This method is called when the str() function is used or when an object is converted to a string implicitly (e.g., with the print() function). Its primary purpose is to provide a human-readable representation of the object.
+
+__repr__(): This method is called when the repr() function is used or when an object is displayed interactively in the Python interpreter (e.g., by entering the object's name and pressing Enter). Its primary purpose is to provide an unambiguous representation of the object that can be used to recreate the object.
+
+Here's a more detailed explanation with examples:
+
+class Example:
+    def __init__(self, value):
+        self.value = value
+    
+    def __str__(self):
+        return f'Value: {self.value}'  # Human-readable representation
+    
+    def __repr__(self):
+        return f'Example({self.value})'  # Unambiguous representation
+
+obj = Example(42)
+
+print(str(obj))  # Output: Value: 42
+print(repr(obj)) # Output: Example(42)
+
+
+
+In this example:
+
+The '__str__()' method returns a human-readable string representation of the object. It's intended for users and should provide a concise, informative representation of the object's state.
+
+The '__repr__()' method returns an unambiguous string representation of the object. It's intended for developers and should provide a string that, when passed to the eval() function, would produce an equivalent object.
+
+Using '__str__()' and '__repr__()' allows you to control how your objects are displayed as strings, providing more meaningful output for users and developers alike. By default, if these methods are not implemented, Python uses default implementations that may not be very informative. Therefore, it's often a good practice to define '__str__()' and '__repr__()' methods for your classes to improve debugging and readability.

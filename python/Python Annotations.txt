@@ -1,0 +1,63 @@
+
+In Python, annotations are used to provide additional information about variables, function parameters, and return values. Annotations do not affect the runtime behavior of the code but can be accessed through the '__annotations__' attribute of a function or module. Here are some common types of annotations in Python:
+
+Type Annotations:
+----------------
+Type annotations specify the expected types of variables, function parameters, and return values. They are defined using the ':' syntax.
+Type annotations are optional and are primarily used for documentation and static analysis by tools like linters and type checkers.
+
+def greet(name: str) -> str:
+    return f"Hello, {name}!"
+	
+	
+Variable Annotations:
+---------------------
+Variable annotations specify the types of variables and can be used to declare variables without assigning values to them.
+
+age: int
+age = 25
+
+
+
+Function Annotations:
+---------------------
+Function annotations specify the types of function parameters and return values.
+
+def add(x: int, y: int) -> int:
+    return x + y
+	
+	
+	
+Module Annotations:
+-------------------
+Module-level annotations specify the types of variables and constants at the module level.
+
+PI: float = 3.14
+
+
+Type Alias Annotations:
+-----------------------
+Type alias annotations define aliases for complex type annotations to improve readability.
+
+from typing import List
+
+Vector = List[float]
+
+def scale(scalar: float, vector: Vector) -> Vector:
+    return [scalar * num for num in vector]
+	
+	
+Generic Annotations:
+--------------------
+Generic annotations are used to define generic types, allowing for the creation of flexible and reusable code.
+
+from typing import TypeVar, Generic
+
+T = TypeVar('T')
+
+class Box(Generic[T]):
+    def __init__(self, content: T):
+        self.content = content
+		
+		
+These are some of the common types of annotations in Python. Annotations are a powerful feature that can improve code readability and maintainability, especially in larger projects or when collaborating with others.

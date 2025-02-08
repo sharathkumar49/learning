@@ -1,0 +1,128 @@
+
+
+
+==========================================================================================================================================
+Source: https://builtin.com/data-science/new-python
+
+new__ vs. __init__ Methods in Python
+-------------------------------------
+
+The __init__ and __new__ magic methods play a vital role in the creation and initialization of objects in Python.
+
+
+
+What Is the __new__ Method in Python?
+The new method is a static method that belongs to the class itself. It’s responsible for creating and returning a new instance of the class. The method takes the class as its first argument, followed by any additional arguments that need to be passed to it. 
+
+
+class MyClass:
+    def __new__(cls, *args, **kwargs):
+        instance = super().__new__(cls)
+        return instance
+
+
+The __new__ method is called before the __init__ method and is often used when you need to control the object creation process, like in the case of singletons or when you want to inherit from immutable classes.
+
+
+
+
+
+What Is the __init__ Method in Python?
+The __init__ method, on the other hand, is an instance method that is responsible for initializing the newly created object. 
+
+PYTHON __INIT__ METHOD DEFINED
+In Python, __init__ is an instance method that initializes a newly created object. It takes the object as its first argument followed by additional arguments.
+
+The method takes the object as its first argument (self), followed by any additional arguments that need to be passed to it.
+
+
+class MyClass:
+    def __init__(self, *args, **kwargs):
+        self.attribute = 'value'
+
+
+The __init__ method is called after the object is created by the __new__ method, and it initializes the object attributes with the values passed as arguments.
+
+
+
+
+Differences Between __new__ and __init__ :
+_new__ is a static method, while __init__ is an instance method.
+__new__ is responsible for creating and returning a new instance, while __init__ is responsible for initializing the attributes of the newly created object.
+__new__ is called before __init__.
+__new__ happens first, then __init__.
+__new__ can return any object, while __init__ must return None.
+
+
+
+
+When to Use __new__ in Python:
+You should use __new__ when you need to control the creation of the object. For example, you might want to use __new__ to:
+
+Ensure that the object is of a certain type.
+Set the object’s initial state.
+Prevent the object from being created.
+
+
+
+When to Use __init__ in Python:
+You should use __init__ when you need to initialize the object. For example, you might want to use __init__ to:
+
+Set the object’s attributes.
+Call the object’s superclass’ __init__ method.
+Perform other initialization tasks.
+
+==========================================================================================================================================
+source: blackbox.ai
+
+
+In Python, __new__ and __init__ are special methods used for object creation and initialization.
+
+__new__ is a static method that's called to create a new instance of a class. It receives the class as its first argument (conventionally named 'cls') and returns a new instance of that class. If __new__ returns an instance of the class, then the newly created instance’s __init__ method is invoked.
+
+__init__, on the other hand, is a regular method that's called to initialize the new instance. It receives the newly created instance as its first argument (conventionally named self) and is used to set up the instance’s attributes.
+
+Here's a simple example:
+
+class MyClass:
+    def __new__(cls):
+        print("__new__ called")
+        return super().__new__(cls)
+
+    def __init__(self):
+        print("__init__ called")
+
+MyClass()
+
+Output:
+__new__ called
+__init__ called
+
+
+In this example, __new__ is called first, which creates a new instance of MyClass. Then, __init__ is called on the new instance, which initializes the instance by printing a message.
+
+
+
+
+
+One of the best use cases for __new__ is when creating a Singleton. A Singleton is a design pattern that ensures that a class has only one instance and provides a global point of access to it.
+
+Here's an example of how to create a Singleton in Python using __new__:
+
+
+class Singleton:
+    __instance = None
+
+    def __new__(cls):
+        if cls.__instance is None:
+            cls.__instance = super(Singleton, cls).__new__(cls)
+        return cls.__instance
+
+s1 = Singleton()
+s2 = Singleton()
+
+print(s1 is s2)  # prints True
+
+In this example, __new__ is overridden to ensure that only one instance of Singleton is created. If __new__ is called and an instance of Singleton has already been created, the existing instance is returned. Otherwise, a new instance is created and stored for future use.
+
+==========================================================================================================================================

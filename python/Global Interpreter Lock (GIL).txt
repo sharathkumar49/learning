@@ -1,0 +1,7 @@
+The Global Interpreter Lock (GIL) is a mutex (or lock) that protects access to Python objects, preventing multiple native threads from executing Python bytecodes at once. In simpler terms, it ensures that only one thread executes Python bytecode at any given time, even in a multi-threaded environment.
+
+The GIL has a significant impact on multi-threaded programs in Python. While Python supports threading through its 'threading' module, due to the GIL, threads in Python cannot fully exploit multiple CPU cores for CPU-bound tasks. This is because, even though multiple threads may be spawned, only one thread can execute Python bytecode at a time. As a result, in CPU-bound scenarios, multi-threaded Python programs might not exhibit significant performance improvements compared to single-threaded programs.
+
+However, the GIL does not necessarily hinder performance for I/O-bound tasks, as threads can still perform I/O operations concurrently without being blocked by the GIL.
+
+To overcome the limitations imposed by the GIL for CPU-bound tasks, developers often resort to multiprocessing instead of threading. The 'multiprocessing' module allows parallel execution of multiple processes, each with its own Python interpreter and memory space, thereby bypassing the GIL and making use of multiple CPU cores efficiently.

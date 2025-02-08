@@ -1,0 +1,33 @@
+
+
+
+https://www.youtube.com/watch?v=o6PVOgkdbWI
+
+
+import numpy as np
+np.random.seed(42)
+x = np.random.randint(1,7, size =3)
+
+output:
+[4 5 3]
+
+
+
+
+
+import random
+random.seed(0)
+x= []
+for i in range(3):
+   x.append(random.randint(1,6))
+   
+print(x)
+
+output:
+[6, 1, 1]
+
+
+
+random.seed              NumPy          random
+0                      [5, 6, 1]       [4, 4, 1]
+42                     [4, 5, 3]       [6, 1, 1]

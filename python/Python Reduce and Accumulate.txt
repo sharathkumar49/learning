@@ -1,0 +1,5 @@
+https://codeburst.io/reduce-vs-accumulate-in-python-3ecee4ee8094
+
+https://www.geeksforgeeks.org/reduce-in-python/
+
+

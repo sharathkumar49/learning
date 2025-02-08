@@ -1,0 +1,41 @@
+A lambda function in Python is a small, anonymous function defined using the lambda keyword. It's called "anonymous" because it doesn't have a name like a regular function defined using the def keyword.
+
+Lambda functions are often used when you need a simple function for a short period of time, typically where you would otherwise use a regular function object. They are particularly useful in functional programming and for operations like mapping and filtering lists.
+
+Here's the basic syntax of a lambda function:
+
+lambda arguments: expression
+
+
+For example, suppose you want to create a function that squares a number:
+
+square = lambda x: x ** 2
+
+
+This lambda function takes one argument x and returns its square. You can then use this lambda function just like any other function:
+print(square(5))  # Output: 25
+
+
+Lambda functions can also take multiple arguments:
+add = lambda x, y: x + y
+print(add(3, 4))  # Output: 7
+
+
+Lambda functions are often used in combination with higher-order functions like map(), filter(), and sorted():
+
+# Using lambda with map()
+numbers = [1, 2, 3, 4, 5]
+squared_numbers = list(map(lambda x: x ** 2, numbers))
+print(squared_numbers)  # Output: [1, 4, 9, 16, 25]
+
+# Using lambda with filter()
+even_numbers = list(filter(lambda x: x % 2 == 0, numbers))
+print(even_numbers)  # Output: [2, 4]
+
+# Using lambda with sorted()
+words = ["banana", "apple", "orange", "strawberry"]
+sorted_words = sorted(words, key=lambda x: len(x))
+print(sorted_words)  # Output: ['apple', 'banana', 'orange', 'strawberry']
+
+
+Lambda functions are concise and can often make code more readable, especially when used in conjunction with these higher-order functions. However, they should be used judiciously, as they can sometimes make code harder to understand if overused or if the lambda expression becomes too complex.
