@@ -1,0 +1,209 @@
+__new__ operator in python:
+
+
+In Python, the __new__ operator is a special method that is called to create a new instance of a class. It is a static method that takes the class itself as its first argument and returns a new instance of that class. This method is primarily used in the context of custom class creation and is rarely needed in everyday programming.
+
+Here's an example to illustrate how the __new__ method works:
+
+class MyClass:
+    def __new__(cls, *args, **kwargs):
+        print("Creating a new instance of MyClass")
+        instance = super(MyClass, cls).__new__(cls)
+        return instance
+
+    def __init__(self, value):
+        self.value = value
+        print("Initializing the instance with value:", self.value)
+
+# Creating an instance of MyClass
+obj = MyClass(10)
+
+
+In this example:
+
+1. When MyClass(10) is called, the __new__ method is invoked first, creating a new instance of MyClass.
+2. The __init__ method is then called to initialize the instance with the given value.
+
+The __new__ method is often used in scenarios where you need to control the creation of instances, such as implementing singleton patterns or metaclasses.
+
+================================================================================================================================================================
+
+Let's break down the term super(MyClass, cls).__new__(cls) in the given code snippet:
+
+1. super() Function: The super() function returns a temporary object of the superclass that allows you to call its methods. In this case, super(MyClass, cls) returns a temporary object of the superclass of MyClass(which is object).
+
+2. Superclass: Since MyClass is directly inheriting from the built-in 'object' class (implicitly, because it has no explicit parent), the superclass here is 'object'.
+
+3. __new__() Method: The __new__() method is a special method that is responsible for creating a new instance of a class. It's called before the __init__() method.
+
+4. Parameters:
+	MyClass: This specifies the class whose superclass we want to call.
+	cls: This is a reference to the class itself (MyClass in this context).
+
+So, when you write super(MyClass, cls).__new__(cls), it essentially means:
+	Call the __new__() method of the superclass of MyClass (which is object).
+	Pass cls (which is MyClass) to the __new__() method of the superclass.
+
+This process ensures that a new instance of MyClass is created by invoking the superclass's (object's) __new__() method. This is important when you're working with custom class creation, especially in complex inheritance hierarchies.
+
+
+
+================================================================================================================================================================
+Breaking down the line 'instance = super(MyClass, cls).__new__(cls)'
+
+
+Let's break down the line instance = super(MyClass, cls).__new__(cls) step by step:
+
+Step 1: super(MyClass, cls):
+
+super(MyClass, cls): This part of the line calls the super() function, which returns a temporary object of the superclass of MyClass (which is the built-in object class) that allows us to call its methods.
+
+Step 2: .__new__(cls)
+.__new__(cls): This part calls the __new__ method of the superclass. The __new__ method is responsible for creating a new instance of a class.
+
+
+
+Putting It All Together:
+-----------------------
+When you combine these parts, super(MyClass, cls).__new__(cls) does the following:
+
+1. Calls the super() function: This returns a temporary object of the superclass of MyClass (which is object).
+
+2. Calls the __new__ method of the superclass (object): It passes cls (which is MyClass) to the __new__ method.
+
+3. Creates a new instance of MyClass: By calling the __new__ method of the superclass and passing cls to it, we ensure that a new instance of MyClass is created.
+
+Storing the Instance:
+-----------------------
+instance = super(MyClass, cls).__new__(cls): The newly created instance is then stored in the variable instance.
+
+
+
+Simplified Explanation:
+-----------------------
+1. Retrieve the superclass's (object) __new__ method using super(MyClass, cls).
+
+2. Call the __new__ method with cls (which is MyClass) as the argument.
+
+3. Store the resulting new instance of MyClass in the variable instance.
+
+Here's a more visual representation of what's happening:
+
+instance = super(MyClass, cls).__new__(cls)
+           |__________|   |__________|   |__|
+           |               |             |
+           1. super()      2. __new__()  3. cls
+
+This ensures that the proper instance creation process is followed according to the class hierarchy.
+
+
+================================================================================================================================================================
+
+Difference between the 'cls' in super() and 'cls' in __new__ :
+
+
+cls in super():
+---------------
+Usage: super(MyClass, cls)
+
+Purpose: Here, cls is used as an argument to the super() function to indicate the class whose superclass is being accessed.
+
+Function: The cls keyword helps super() determine the correct method resolution order (MRO) and find the appropriate superclass from which to call methods. In other words, it tells super() to start looking for the method in the superclass of MyClass.
+
+Context: It’s passed to super() to make sure it retrieves the superclass's method correctly in complex inheritance hierarchies.
+
+
+
+
+cls in __new__ :
+-----------------
+Usage: super(MyClass, cls).__new__(cls)
+
+Purpose: Here, cls is passed as an argument to the __new__ method.
+
+Function: The cls keyword here refers to the class that is being instantiated. In this context, cls is a reference to the class itself (in this case, MyClass).
+
+Context: It's used by the __new__ method to create a new instance of the class. When you call __new__(cls), you’re instructing the superclass's __new__ method to create an instance of cls (i.e., MyClass).
+
+
+
+Summary:
+--------
+cls in super(MyClass, cls): It helps super() find the superclass of MyClass to correctly resolve and call its methods.
+
+cls in super(MyClass, cls).__new__(cls): It represents the class itself (MyClass) and is passed to the __new__ method to create a new instance of that class.
+
+In essence, while the cls keyword is the same, its role changes slightly depending on the context—one helping super() find the superclass, and the other being passed to the __new__ method for instantiation.
+
+I hope that clears things up! If you need more examples or have further questions, feel free to ask.
+================================================================================================================================================================
+
+why do we need to pass both MyClass and cls within super() and do they differ in any way:
+
+
+
+Great observation! Let's delve into why we pass both MyClass and cls within super() and how they differ.
+
+Purpose of MyClass and cls
+--------------------------
+MyClass:
+
+	Usage: super(MyClass, cls)
+	Purpose: This specifies the class (MyClass) whose method resolution order (MRO) should be followed.
+	Function: super() needs to know the class you're working within, so it knows where to start the search for the next method in the inheritance chain. 
+              By specifying MyClass, you're telling super() to start looking for the next method from the perspective of MyClass.
+
+cls:
+	Usage: super(MyClass, cls)
+	Purpose: This specifies the instance or subclass.
+	Function: cls is a reference to the class being instantiated (which is MyClass itself). 
+			  It's used to pass the class itself to methods like __new__ and __init__.
+
+
+Why Pass Both?
+1. Method Resolution Order (MRO): By passing MyClass, you're specifying the class's MRO, so super() knows how to find the next method to call in the hierarchy.
+2. Class Reference: By passing cls, you're providing the class itself that is being instantiated. This is crucial for the __new__ method to create an instance of the correct class.
+
+
+
+Do They Differ?
+Yes, they serve different roles:
+
+	MyClass: Indicates the class whose MRO should be followed.
+	cls: Represents the actual class being instantiated (which is MyClass in this case).
+
+
+
+Here's a visual analogy:
+
+instance = super(MyClass, cls).__new__(cls)
+# super(MyClass, cls)
+# - MyClass tells super() which class's MRO to follow
+# - cls provides the class reference to __new__ method
+
+
+
+Practical Example:
+
+Imagine you have a complex inheritance chain:
+
+class Base:
+    def __new__(cls):
+        print("Base __new__ called")
+        return super(Base, cls).__new__(cls)
+
+class Derived(Base):
+    def __new__(cls):
+        print("Derived __new__ called")
+        return super(Derived, cls).__new__(cls)
+
+# Creating an instance of Derived
+obj = Derived()
+
+
+In this example:
+	super(Derived, cls).__new__(cls) tells super() to look for the __new__ method starting from the superclass of Derived, which is Base.
+	cls ensures that the instance being created is of the correct class.
+
+================================================================================================================================================================
+

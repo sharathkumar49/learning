@@ -1,0 +1,77 @@
+
+
+Searching Algorithms for unsorted Arrays:
+
+When it comes to searching through unsorted arrays in Python, there are a few algorithms you can use, each with its own strengths and trade-offs. Here are some common ones:
+
+1. Linear Search:
+Linear search, also known as sequential search, checks each element in the array one by one until the target element is found or the end of the array is reached. It's simple but not the most efficient for large arrays.
+
+def linear_search(arr, target):
+    for i in range(len(arr)):
+        if arr[i] == target:
+            return i
+    return -1
+
+arr = [4, 2, 9, 7, 5]
+target = 7
+result = linear_search(arr, target)
+
+if result != -1:
+    print(f"Element found at index {result}")
+else:
+    print("Element not found")
+
+
+
+
+2. Binary Search (Only works if the array is sorted):
+Binary search is much more efficient, but it requires the array to be sorted. For an unsorted array, you'll need to sort it first.
+
+def binary_search(arr, target):
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+
+arr = [4, 2, 9, 7, 5]
+arr.sort()  # Sort the array first
+target = 7
+result = binary_search(arr, target)
+
+if result != -1:
+    print(f"Element found at index {result}")
+else:
+    print("Element not found")
+
+
+
+
+
+3. Hash Table (Dictionary) Approach:
+Using a hash table can provide efficient searching, especially if you need to perform multiple searches. This method involves building a hash table with the array elements.
+
+def create_hash_table(arr):
+    hash_table = {}
+    for i, val in enumerate(arr):
+        hash_table[val] = i
+    return hash_table
+
+def hash_table_search(hash_table, target):
+    return hash_table.get(target, -1)
+
+arr = [4, 2, 9, 7, 5]
+hash_table = create_hash_table(arr)
+target = 7
+result = hash_table_search(hash_table, target)
+
+if result != -1:
+    print(f"Element found at index {result}")
+else:
+    print("Element not found")

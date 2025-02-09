@@ -29,8 +29,66 @@ Synapse Data Warehousing --> SQL Table part
 Synapse Data Science --> Once you have the data in the data warehouse, not only you can create powerBI reports, you can also create ML models and educate these models, train these models with your buisness data. So, that these models can predict the future
 
 
+Synapse Real Time Analytics --> This is like Azure Data Explorer, ADX, kusto, if you have any IOT devices or sensors, they will feed huge amounts of the data, is also called generally observational data, so on top of that on real time, if you want to query the data and want to see how the things are working  
+
+
+
+In OneLake only, all the data resides, whether your warehouse data or your source data. And as I said, OneLake is built on top of the gen2
 
 
 
 
+Microsoft Fabric:
+-----------------
 
+The Fabric trail requires a PowerBI License. Navigate to 
+
+
+step 1: create a Outlook account(https://signup.live.com)
+step 2: Join Microsoft 365 Developer program
+
+
+
+
+3.
+
+Capacity: Capacity is dedicated set of resources that is available at a given time to be used. Capacity defines the ability of a resource to perform an activity or to produce output.  Fabric offers capacity through the Fabric SKU and Trails. 
+
+Experience: A collection of capabilities targeted to a specific functionality. The Fabric experiences include Synapse Data Warehouse, Synapse Data Engineering, Synapse Data Science, Synapse Real-Time Analytics, Data Factory and PowerBI 
+
+Item: An item is a set of capabilities within an experience. For example, the Data Engineering experience includes lakehouse, notebook and Spark Job which we define as items.
+
+Tenant: A tenant is a single instance of Fabric for an organization and is aligned with Microsoft Entra ID. 
+
+Workspace: A workspace is a collection of items. It acts as a container that leverages capacity for the work that is executed and provides controls for who can access the items in it. For example, in a workspace, user create reports, notebooks, semantic models.
+
+
+
+
+4. How to create a workspace in Microsoft Fabric:
+
+Workspaces are places to collaborate with colleagues to create collections of items such as lakehouses, warehouses and reports.
+
+imagine like one folder, for your entire organization, fabric ID will be there with a tenant ID and inside this fabric, your entire organization may have so many different projects, so that different project people will come there and create their own workspaces and they create a fabric item inside of it
+
+
+to create a workspace:
+
+select an experience by clicking on Microsoft Fabric in the bottom left of the page (you can select Data Engineering Experince)
+
+Once you selected the experience, the left tab would have many icons, there you can see workspace icon 
+Then click workspace and create new workspace 
+
+
+
+
+5. Roles available in workspace and give access to users in workspace: 
+
+Workspace roles let you manage who can do what in a Microsoft Fabric workspace. 
+
+There are 4 roles in workspaces: 
+
+	1.Admin
+	2.Member
+	3.Contributor
+	4.Viewer

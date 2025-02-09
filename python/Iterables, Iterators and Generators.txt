@@ -83,7 +83,7 @@ print(dir(i_nums))
 let's concentrate only on two thing on this list: 
 1. __iter__   2. __next__
 
-1. dunder iter: you might think it's a little weird that this iterator has a dunder iter method, because that's what where we ran on our list with it in order to get the iterator and we have that now again because iterators are also iterable but the main difference is that this new dunder iter method returns the same object, which means it just returns 'self' 
+1. dunder iter: you might think it's a little weird that this iterator has a dunder iter method again(i.e. __iter__), because that's what where we ran on our list with it in order to get the iterator and we have that now again because iterators are also iterable but the main difference is that this new dunder iter method returns the same object, which means it just returns 'self' 
 
 
 2. when I ran 'next' on our original list, it threw an error and said that our list wasn't an iterator and that's because it didn't have the dunder next method, but our iterator that just returned here does have a dunder next method. So, we should be able to get the next value 

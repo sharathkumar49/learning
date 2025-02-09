@@ -1,0 +1,71 @@
+
+
+Python Regular Expression:
+-------------------------
+A Regular Expression or RegEx is a special sequence of characters that uses a search pattern to find a string or set of strings.
+It can detect the presence or absence of a text by matching it with a particular pattern and also can split a pattern into one or more sub-patterns.
+
+
+Module: 
+-------
+import re 
+
+
+
+Functions available in re module:
+---------------------------------
+
+findall - Returns a list containing all matches
+search - Returns a Match object if there is a match anywhere in the string
+split - Returns a list where the string has been split at each match
+sub - Replaces one or many matches with a string
+
+
+
+Why you should python raw strings: 
+----------------------------------
+
+for proper understanding pls visit Real python : https://realpython.com/python-raw-strings/#:~:text=In%20the%20context%20of%20regular,and%20Python's%20escape%20character%20sequences.
+
+In the context of regular expressions, using Python raw strings is considered a best practice even when you don’t necessarily need them. They absolve you from worrying about the potential conflicts between the regex syntax and Python’s escape character sequences. Raw strings let you think in terms of the regex syntax, regardless of how complicated your regular expression becomes in the future.
+
+More specifically, raw string literals can help you avoid the following problems when you work with regular expressions:
+
+Problem	                Symbol	       Escape Sequence	                             Regular Expression
+
+Conflicting meaning	     \n	           Render a line break	                         Match the non-printable newline character
+False friends	         \b	           Move the cursor back one character	         Match a word boundary
+Invalid syntax	         \d	           Not applicable	                             Match any digit character
+
+
+
+The regular expression syntax shares a few symbols with Python’s escape character sequences. Some symbols refer to the same concept but in a different context, while others remain false friends. Other symbols have a specific meaning within regular expressions but result in an invalid Python string literal.
+
+When you use one of these or a similar symbol in a standard string literal without escaping the backslash character, you may not be able to properly represent the expected regular expression:
+
+>>> import re
+>>> text = "Pythonic means idiomatic in Python."
+>>> re.findall("Python\b", text)
+[]
+
+
+
+In this code example, the string literal "Python\b" contains the word 'Python' followed by the non-printable backspace character(\b), which isn’t present in the text to search through. As a result, re.findall() returns an empty list.
+
+On the other hand, when you escape this special character sequence (\\b), it becomes the literal part of the string. The regular expression that it represents can now match the word boundary at the end of the sentence:
+
+>>> re.findall("Python\\b", text)
+['Python']
+
+
+Unfortunately, escaping becomes particularly prone to the leaning toothpick syndrome mentioned earlier when combined with regular expressions. Therefore, you’re better off using Python’s raw string literals in the first place:
+
+>>> re.findall(r"Python\b", text)
+['Python']
+
+
+This code works as expected, and your string literal looks much cleaner. Although this example may not show a spectacular improvement, using raw strings becomes more important as your regular expressions get more complicated.
+
+Note: Remember that raw strings can only help with string literals defined in Python source code. If you load your regular expression from a file or elsewhere, then you don’t need to take any extra steps because the resulting string object will already be in the right format.
+
+At this point, you have a pretty good idea about the benefits that raw string literals bring to Python. However, that isn’t to say they’re without their own set of challenges. In the next section, you’ll learn when to be careful about using them.
