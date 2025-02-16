@@ -5,7 +5,7 @@ Microsoft Fabric is an all-in-one analytics solution for enterprises that covers
 
 Microsoft Fabric brings together new and existing components from power BI, Azure Synapse, and Azure Data Factory into a single integrated environment. 
 
-The data from different sources(huge data, big data from various sources) --> loading into Data warehouse as tables--> using these tables, people will create reports using powerBI tool.
+The data from different sources(huge data, big data from various sources) --> loaded into Data warehouse as tables--> using these tables, people will create reports using powerBI tool.
 
 when you are reading the data which is from different sources, the data will be huge which is Big Data, okay? the data warehouse tables will not load all the data from the sources as it is. It has to do some filteration like what is needed, what is the subset of the data, what is the meaningful data, only that meaningful data or needed data will get processed from the sources and finally land into the datawarehouse tables. 
 
@@ -79,7 +79,7 @@ select an experience by clicking on Microsoft Fabric in the bottom left of the p
 Once you selected the experience, the left tab would have many icons, there you can see workspace icon 
 Then click workspace and create new workspace 
 
-
+to check the workspace --> app.fabric.microsoft.com 
 
 
 5. Roles available in workspace and give access to users in workspace: 
@@ -92,3 +92,168 @@ There are 4 roles in workspaces:
 	2.Member
 	3.Contributor
 	4.Viewer
+	
+https://learn.microsoft.com/en-us/fabric/fundamentals/roles-workspaces
+
+
+to create a role --> open a workspace --> Manage access --> add people --> then role 
+
+
+
+
+
+
+6. what is OneLake?
+
+OneLake is a Single, unified, logical data lake for your whole organization. Like OneDrive, OneLake comes automatically with every Microsoft Fabric tenant and is designed to be the single place for all your analytics data. 
+
+Every Fabric tenant automatically provisions OneLake, with no extra resources to set up or manage. 
+
+Within a workspace, you can create data items and you access all data in OneLake through data items. Similar to how Office store Word, Excel, and Powerpoint files in OneDrive, Fabric store lakehouses, warehouses, and other items in OneLake. 
+
+
+Learn about Azure Data Lake Storage(Gen2), where oneLake is built on top of this 
+
+All Fabric data items like data warehouses and lakeshouses store their data automatically in OneLake in Delta Parquet format. 
+
+Every workspace appears as a container within the storage account, and different data items appear as folders within those containers. 
+
+
+
+if you go check your workspace, you can see the LakeHouse and inside the lakehouse couple of items will be there.  
+
+MySampleLakeHouse
+ |
+ |
+ |-MySampleLakeHouse
+       |
+	   |-Tables
+	     Files
+		 
+		 
+		 
+So, in short, 
+
+fabric account is for entire organization
+OneLake is a single storage for the entire account
+
+If you create different workspace for the fabric account, for every workspace, a folder will be created and inside the folder, the data items will be there ( it can be data warehouse, data lakehouse
+
+
+
+
+
+7. OneLake File Explorer to access Fabric data: 
+-----------------------------------------------
+OneLake is a single, unified, logical data lake for your whole organization. Like OneDrive, OneLake comes automatically with every Microsoft Fabric tenant and is designed to be the single place for all your analytics data. 
+
+The OneLake file explorer application seamlessly integrates OneLake with Windows File Explorer. This application automatically syncs all OneLake items that you have access to in Windows File Explorer.  "Sync" refers to pulling up-to-date metadata on files and folders, and sending changes made locally to the OneLake Service. 
+
+https://www.microsoft.com/en-us/download/details.aspx?id=105222
+
+
+
+
+8. Bring your data to OneLake with LakeHouse: 
+---------------------------------------------
+Create a LakeHouse in workspace
+Navigate to files and upload it from options
+we can check properties of files
+Get Data helps to load data using various options such as pipelines, dataflows etc. 
+
+
+click on the Microsoft Fabric icon --> click on any experience(say Data Engineering) --> click on the workspace or create one --> create a LakeHouse item by clicking on add new button (Now you can bring the data to OneLake via this LakeHouse)  --> Now once you created LakeHouse item, you can see Tables, Files option and using that 'Files' folder you can bring the data inside  the LakeHouse
+
+Also, one more option is, Get data --> this option gives you various different ways to bring the data to the fabric, one way is creating a pipeline. So when you create a pipeline you know that these pipelines are equals to the data Factory pipelines and there is something called copy activity and using that you can bring the data 
+
+
+So, in-short you can bring the data into the fabric or into the OneLake using the LakeHouse item 
+
+
+
+
+9. What are shortcuts in Fabric?
+---------------------------------
+Shortcuts are objects in OneLake that point to other storage locations. The location can be internal and external to OneLake. The location that a shortcut points to is known as the target path of the shortcut. 
+
+Shortcuts behave like symbolic links. They're an independent object from the target. If you delete a shortcut, the target remains unaffected. If you move, rename, or delete a target path, the shortcut can break. 
+
+you can create shortcuts in lakehouses and Kusto Query Language(KQL) databases. Furthermore, the shortcuts you create within these items can point to other OneLake locations, Azure DataLake Storage(ADLS) Gen2, Amazon S3 storage accounts, or Dataverse. 
+
+
+10.to create shortcut in fabric: 
+
+Files --> three dotted icons --> New shortcut --> Microsoft OneLake  --> it will ask for select a data source type --> select the lakehouse 
+
+
+
+
+11. to access shortcuts in spark Notebook: 
+-------------------------------------------
+
+Once you created a new item (notebook) --> click Lakehouses --> Add LakeHouse ---> select Existing or New Lakehouse 
+
+Then the lakehouse will be available in the explorer menu, there you can file( say customer.csv) by using Load data option 
+
+
+you can also 
+
+df = spark.read.format('csv').option('header', 'true').load('Files/customers/customers.csv')
+
+display(df) 
+
+
+you can also provide the ABFS path (Azure Blob File System)
+
+
+
+
+
+
+12. creating ADLS gen2 shortcut in Fabric: 
+
+Say for example in the Azure portal, you have ADLS gen2 storage, and in that you have to mention some container or some files 
+
+So, again in the Files --> New Shortcut --> under the External Sources tab --> you can select Azure Data Lake Storage Gen2 
+
+
+
+
+
+13. Use Python to Manage OneLake in Fabric:  
+python to access files and everthing using a python library
+
+https://learn.microsoft.com/en-us/fabric/onelake/onelake-access-python
+
+
+Open powershell and execute the below command to connect to the Azure account: 
+
+Install-Module -Name Az
+
+Connect-AzAccount 
+
+
+
+
+14. Connect to OneLake using Azure Synapse Analytics
+
+
+
+
+15. what is LakeHouse in Microsoft Fabric
+
+A lakehouse is a unified platform that combines: 
+	The flexible and scalable storage of a data lake 
+	The ability to query and analyze data of a data warehouse
+	
+	
+Data Lake: 
+Scalable, distributed file storage
+flexible schema-on-read semantics
+Big data technology compatibility
+
+
+Data Warehouse:
+Relational schema modeling 
+SQL based querying
+proven basis for reporting and analytics

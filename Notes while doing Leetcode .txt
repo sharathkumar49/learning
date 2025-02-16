@@ -1,0 +1,3 @@
+notes while doing leetcode: 
+---------------------------
+
