@@ -1,0 +1,15 @@
+
+
+usage of SQL Analytics Endpoint: 
+
+
+A SQL Analytics endpoint in Microsoft Fabric is a connection point that allows you to run SQL queries against your data stored in Azure Synapse Analytics. It provides a way for you to interact with and analyze your data using SQL language.
+
+In the Fabric workflow, the SQL Analytics endpoint is typically used during the following stages:
+
+1. Data Ingestion: Bringing data into the lakehouse from various sources.
+2. Data Transformation: Transforming and preparing data for analysis using SQL queries.
+3. Data Analysis: Running SQL queries to analyze the data and extract insights.
+4. Data Visualization: Creating reports and dashboards based on the analyzed data using SQL queries.
+
+So, the SQL Analytics endpoint is used primarily for interacting with your data through SQL queries, making it a crucial component in the data transformation, analysis, and visualization stages of the Fabric workflow.

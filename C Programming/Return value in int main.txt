@@ -1,0 +1,33 @@
+
+
+Return value in int main: 
+
+In C programming, the value returned by the main function is used by the operating system to determine the termination status of your program. Returning 0 signifies that the program executed successfully, while returning a non-zero value indicates an error or abnormal termination.
+
+Here's a simple example in C:
+
+#include <stdio.h>
+
+int main() {
+    // Your code here
+    printf("Hello, World!\n");
+    
+    // Returning 0 to indicate successful termination
+    return 0;
+}
+
+
+
+In this example, the main function returns 0, which tells the operating system that the program terminated successfully. If you wanted to indicate an error, you could return a different value, like 1:
+
+
+#include <stdio.h>
+
+int main() {
+    // Your code here
+    printf("An error occurred!\n");
+    
+    // Returning 1 to indicate an error
+    return 1;
+}
+By convention, returning 0 is the standard way to indicate that everything went smoothly.

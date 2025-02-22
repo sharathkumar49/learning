@@ -1,0 +1,165 @@
+ways to bring data into Lakehouse:
+
+There are several ways to bring data into a Microsoft Fabric Lakehouse. Here are some common methods:
+
+1. File Upload from Local Computer: You can directly upload files stored on your local machine into the Lakehouse.
+
+2. Copy Tool in Pipelines: This highly scalable data integration solution allows you to connect to different data sources and load data into the Lakehouse.
+
+3. Dataflows: If you're familiar with Power BI dataflows, you can use the same tool to load data into your Lakehouse.
+
+4. Apache Spark Libraries in Notebook Code: You can use Spark libraries to connect to a data source, load data into a DataFrame, and then save it in the Lakehouse.
+
+5. Stream Real-Time Events with Eventstream: Eventstream allows you to get, process, and route high volumes of real-time events from various sources.
+
+6. Get Data from Eventhouse: When you enable OneLake availability on data in an Eventhouse, a Delta table is created in OneLake, which can be accessed by the Lakehouse.
+
+
+You can refer to the following page. This page provides a comprehensive guide on different methods to load data into a Lakehouse,
+https://learn.microsoft.com/en-us/fabric/data-engineering/load-data-lakehouse
+
+
+
+
+
+
+Here’s how you can upload data using the File Upload from Local Computer method in Microsoft Fabric:
+
+1. Open Lakehouse Explorer: Navigate to your Fabric workspace and open the Lakehouse Explorer.
+
+2. Upload Files: Click on the Upload button (usually represented by an arrow or cloud icon) in the Lakehouse Explorer. This will open a file selection dialog.
+
+3. Select Files: Browse your local computer and select the files you want to upload. You can upload multiple files at once if needed.
+
+4. Upload and Confirm: Click on the Upload button to start the upload process. Once the upload is complete, you should see a confirmation message or a green checkmark indicating success2.
+
+
+For a detailed visual guide, you can refer to this YouTube tutorial:
+https://www.youtube.com/watch?v=CnQkB-aK6B8
+
+
+
+
+
+
+
+Copy Tool in Pipelines: 
+-----------------------
+The Copy Tool in Pipelines is a robust and scalable data integration solution within Microsoft Fabric. It allows you to copy data from a wide range of sources into your Fabric Lakehouse. Here’s a high-level overview of how it works:
+
+Create a Pipeline: First, you need to create a new pipeline in your Fabric environment.
+
+Add a Copy Activity: Inside the pipeline, you add a copy activity. The copy activity is responsible for extracting data from the source and loading it into the destination.
+
+Configure Source and Destination: You need to specify the source and destination for the copy activity. The source could be a variety of data stores like SQL databases, Azure Blob Storage, or even on-premises data sources. The destination will be your Lakehouse.
+
+Set Up Mapping: Define the mapping between the source and destination. This ensures that the data is transformed correctly during the copy process.
+
+Run the Pipeline: Once everything is configured, you can run the pipeline. The copy activity will execute, extracting data from the source and loading it into the Lakehouse.
+
+Monitor and Manage: You can monitor the progress of the pipeline and handle any errors that might occur. The tool provides logs and metrics to help you manage the data integration process.
+
+This tool is particularly useful because it supports a wide variety of data sources and offers flexibility in how you handle and transform the data. If you have any specific questions or need details on a particular step, feel free to ask!
+
+For a detailed visual guide, you can refer to the official Microsoft Learn page: 
+https://learn.microsoft.com/en-us/fabric/data-factory/copy-data-activity
+
+
+
+
+
+
+Uploading data using Dataflows:
+-------------------------------
+Here’s a step-by-step guide on how to upload data using Dataflows in Microsoft Fabric:
+
+Create a Dataflow: Open your Fabric workspace and select New > Dataflow Gen2. This will open the dataflow editor1.
+
+Get Data: In the dataflow editor, select Get Data and choose your data source. For example, you can select OData, SQL Database, Excel, etc. Enter the necessary details to connect to your data source and select Create.
+
+Transform Data: Use the Power Query Editor to apply transformations to your data. You can clean, filter, and shape your data as needed1.
+
+Publish Dataflow: Once you’re satisfied with your data transformations, click Publish to save and publish your dataflow. This will load the transformed data into your Lakehouse1.
+
+For a detailed visual guide, you can refer to the official Microsoft Learn page:
+https://learn.microsoft.com/en-us/fabric/data-factory/create-first-dataflow-gen2
+
+
+
+
+
+
+
+
+Here’s a step-by-step guide on how to upload data using Apache Spark Libraries in a Notebook Code:
+
+1. Open a Notebook: Start by opening a new notebook in your Fabric environment.
+
+2. Load Apache Spark Libraries: Ensure that the necessary Apache Spark libraries are loaded in your notebook. You can do this by running a code cell with the following command:
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName("LoadData").getOrCreate()
+
+3. Read Data: Use the Spark DataFrame API to read data from your source. For example, if you have a CSV file, you can read it as follows:
+df = spark.read.csv("path/to/your/file.csv")
+
+
+4. Transform Data: Apply any necessary transformations to your DataFrame. This could include filtering, selecting columns, or performing calculations.
+
+5. Save Data: Save the transformed data back into your Lakehouse. You can save it as a CSV, Parquet file, or Delta Lake table:
+# Save as CSV
+df.write.mode("overwrite").format("csv").save("Files/csv_table_name")   
+# Save as Parquet
+df.write.mode("overwrite").format("parquet").save("Files/parquet_table_name")
+# Save as Delta Lake table
+df.write.mode("overwrite").format("delta").saveAsTable("delta_table_name")
+
+For a detailed visual guide, you can refer to the official Microsoft Learn page:
+https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-notebook-load-data
+
+
+
+
+
+
+
+Here’s a step-by-step guide on how to upload data using Stream Real-Time Events with Eventstream in Microsoft Fabric:
+
+1. Create an Eventstream: Navigate to your Fabric workspace and select New > Eventstream. This will open the Eventstream editor1.
+
+2. Add Event Data Sources: In the Eventstream editor, add event data sources. You can connect to various sources like Azure Event Hubs, Azure IoT Hub, Azure SQL Database Change Data Capture (CDC), PostgreSQL Database CDC, MySQL Database CDC, and more2.
+
+3. Configure Transformations: Optionally, you can add transformations to process the event data. This can include filtering, enriching, or aggregating the data as needed.
+
+4. Add Destinations: Define the destinations where the processed data will be routed. This could be a KQL database, Azure Data Lake, or other supported destinations2.
+
+5. Run and Monitor: Once everything is set up, you can run the Eventstream and monitor its progress. The tool provides logs and metrics to help you manage the data integration process2.
+
+For a detailed visual guide, you can refer to the official Microsoft Learn page:
+https://learn.microsoft.com/en-us/fabric/real-time-intelligence/event-streams/stream-real-time-events-from-custom-app-to-kusto
+
+
+
+
+
+
+
+
+Here’s a step-by-step guide on how to upload data using the Get Data from Eventhouse method in Microsoft Fabric:
+
+1. Create an Eventhouse: Navigate to your Fabric workspace and select New > Eventhouse. This will open the Eventhouse editor.
+
+2. Connect Data Sources: In the Eventhouse editor, connect to your data sources. You can connect to various sources like Azure Event Hubs, Azure IoT Hub, Azure SQL Database Change Data Capture (CDC), PostgreSQL Database CDC, MySQL Database CDC, and more.
+
+3. Enable OneLake Availability: Once your data is in the Eventhouse, enable OneLake availability. This will create a Delta table in OneLake that can be accessed by your Lakehouse1.
+
+4. Create a Shortcut: Create a shortcut in your Lakehouse to access the Delta table created in OneLake. This allows you to reference the data without copying it1.
+
+5. Access Data in Lakehouse: Now, you can access the data from your Lakehouse using the shortcut. This method allows you to reference and use the data without duplicating it1.
+
+For a detailed visual guide, you can refer to the official Microsoft Learn page:
+https://learn.microsoft.com/en-us/fabric/data-engineering/load-data-lakehouse
+
+
+
+
+

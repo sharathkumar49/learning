@@ -1,0 +1,48 @@
+
+
+Data Warehouse, Data Lake and Data Lakehouse:
+
+
+Data Warehouse: 
+
+A Data Warehouse is a centralized repository for storing structured data from various sources. It is designed to support business intelligence activities such as data analysis, reporting, and querying. Here are some key characteristics:
+
+Structured Data: Data warehouses store data in a structured format, typically using schemas and tables.
+
+ETL Processes: Data is extracted from various sources, transformed into a common format, and loaded into the warehouse.
+
+Historical Data: Data warehouses often contain historical data, making it possible to perform trend analysis over time.
+
+Optimized for Read Operations: Data warehouses are optimized for read-heavy operations, making it efficient to run complex queries and generate reports.
+
+
+
+
+Data Lake:
+
+A Data Lake is a centralized repository that allows you to store all your structured and unstructured data at any scale. You can store data as-is, without having to first structure it, and run different types of analytics. Here are some key characteristics:
+
+Unstructured Data: Data lakes can store raw data in its native format, including text files, images, videos, and more.
+
+Scalability: Data lakes can scale to accommodate large volumes of data.
+
+Flexibility: Unlike data warehouses, data lakes do not require a predefined schema, making it easy to ingest diverse types of data.
+
+Data Processing: Data lakes support various data processing frameworks, such as Hadoop and Spark, to perform analytics and machine learning tasks.
+
+
+
+
+Data Lakehouse: 
+
+A Data Lakehouse is a modern data architecture that combines the best features of both data warehouses and data lakes. It aims to provide the structured data management capabilities of a data warehouse with the scalability and flexibility of a data lake. Here are some key characteristics:
+
+Unified Storage: Data lakehouses store both structured and unstructured data in a single repository.
+
+ACID Transactions: Data lakehouses support ACID (Atomicity, Consistency, Isolation, Durability) transactions, ensuring data reliability and integrity.
+
+Schema Enforcement: While allowing for schema-on-read (flexibility of a data lake), data lakehouses also support schema-on-write (rigor of a data warehouse).
+
+Performance: Data lakehouses are designed to deliver high performance for both data warehousing and data lake use cases, enabling faster query execution and data processing.
+
+Cost-Efficiency: By combining storage and compute resources efficiently, data lakehouses offer a cost-effective solution for managing large-scale data.

@@ -1,0 +1,38 @@
+
+
+Preprocessor directives in C:
+
+
+Preprocessor directives in C are instructions that are processed before the actual compilation of the code begins. They provide a way to manipulate the source code programmatically. Preprocessor directives always begin with the # symbol and do not require a semicolon at the end.
+
+
+Here are some common preprocessor directives in C:
+
+#include: This directive is used to include the contents of a file or a standard library into your program. For example:
+
+#include <stdio.h>
+
+
+
+#define: This directive is used to define macros, which are constant values or expressions that are replaced by the preprocessor before compilation. For example:
+
+#define PI 3.14159
+
+
+
+#ifdef, #ifndef, #endif: These directives are used for conditional compilation. They allow the compiler to include or exclude portions of code based on whether certain conditions are met. For example:
+
+#ifdef DEBUG
+printf("Debug mode\n");
+#endif
+
+
+
+#undef: This directive is used to undefine a macro that was previously defined using #define. For example:
+
+#define SIZE 100
+#undef SIZE
+
+
+
+Preprocessor directives are very powerful and can help you manage complex codebases, conditionally include/exclude code, and define constants in a clean and maintainable way. Keep in mind that they are processed before the actual compilation, so any errors related to preprocessor directives will be reported before the compiler starts analyzing your code.

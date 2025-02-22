@@ -1,0 +1,148 @@
+
+
+How C code run: 
+
+
+In the case of C, you can’t run it directly; it has to go through a compilation process first. Here's a quick overview of the steps:
+
+Compiling: The compiler takes your C code (source code) and translates it into machine code (object code). This is usually done using a command like gcc -o myprogram myprogram.c if you’re using the GCC compiler.
+
+Linking: After compilation, the object code is linked with libraries to produce an executable file. This is often handled automatically by the compiler in one step with the command mentioned above.
+
+Running: Once you have the executable file, you can run it by executing a command like ./myprogram.
+
+So the sequence is: Write code -> Compile -> Link -> Run.
+
+
+
+
+
+let's dive deeper into the compilation and execution process for C programs!
+
+Compilation Process:
+
+1. Preprocessing:
+The preprocessor handles directives that start with #, such as #include and #define.
+This stage creates a "translation unit," which is then processed by the compiler.
+
+2. Compilation:
+The compiler translates the preprocessed source code into assembly code specific to the target machine's architecture.
+Errors like syntax errors are typically caught during this phase.
+
+3. Assembly:
+An assembler converts the assembly code into machine code (object code), generating .o or .obj files.
+
+4.Linking:
+The linker combines object code with standard libraries (like the C Standard Library) to produce an executable.
+It resolves external references and symbols.
+If there are missing functions or libraries, the linker will generate errors.
+
+
+
+Tools for Compiling and Running C Code:
+There are several tools available for compiling and running C code:
+
+1. GCC (GNU Compiler Collection):
+Widely used open-source compiler.
+Supports many languages, including C.
+Works on various platforms (Linux, Windows via MinGW, macOS).
+Command: gcc myprogram.c -o myprogram
+
+2.Clang/LLVM:
+Modern compiler with a focus on modularity and integration.
+Great for development and debugging.
+Command: clang myprogram.c -o myprogram
+
+3.MSVC (Microsoft Visual C++):
+Part of Microsoft Visual Studio.
+Offers comprehensive development environment.
+Used primarily on Windows.
+Command (using Developer Command Prompt): cl myprogram.c
+
+4.MinGW (Minimalist GNU for Windows):
+Provides a set of open-source programming tools for Windows.
+Includes GCC for Windows.
+Command: gcc myprogram.c -o myprogram.exe
+
+5.Code::Blocks:
+Free, open-source, cross-platform IDE.
+Supports multiple compilers (GCC, Clang, etc.).
+Provides an integrated environment for writing, compiling, and debugging.
+
+6.Eclipse IDE:
+Popular open-source IDE with extensive plugin support.
+CDT (C/C++ Development Tooling) plugin for C/C++ development.
+Works on multiple platforms.
+
+
+
+
+How It Works:
+Writing Code: You write your C code in a text editor or an Integrated Development Environment (IDE).
+Compiling: Use a compiler to preprocess, compile, and assemble the code into an object file.
+Linking: The linker combines the object file with necessary libraries to create an executable.
+Running: Execute the resulting binary (e.g., by running ./myprogram on Unix-like systems or myprogram.exe on Windows).
+
+The choice of tools depends on your platform, preferred development environment, and specific project requirements.
+
+
+
+
+
+
+
+Explanation of "Translation unit" in preprocessing step:
+
+A translation unit is a single source file after it has been processed by the preprocessor. Here's a bit more detail:
+
+Translation Unit:
+1.Source File: It starts with your C source file, let’s call it myprogram.c.
+2.Preprocessing:
+The preprocessor handles all preprocessor directives like #include, #define, #if, etc.
+It essentially performs tasks such as file inclusion, macro expansion, and conditional compilation.
+
+Expanded Source File:
+After preprocessing, the source file is expanded to include all header files specified by #include.
+Macros defined by #define are also expanded.
+
+
+Translation Unit:
+The resulting code after preprocessing is called a "translation unit".
+This unit is then passed to the compiler for further processing.
+
+Example:
+Consider the following simple C program:
+
+
+
+
+#include <stdio.h>
+
+#define PI 3.14
+
+int main() {
+    printf("PI is %f\n", PI);
+    return 0;
+}
+
+
+
+
+During preprocessing:
+The #include <stdio.h> directive will be replaced by the content of the stdio.h header file.
+The #define PI 3.14 directive will replace every occurrence of PI with 3.14.
+
+So, the translation unit might look something like this:
+
+
+
+/* Content of stdio.h file included here */
+
+int main() {
+    printf("PI is %f\n", 3.14);
+    return 0;
+}
+
+
+This expanded code, known as the translation unit, is then fed into the compiler for the next steps of the compilation process.
+I hope that helps clear things up!

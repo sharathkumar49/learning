@@ -1,0 +1,26 @@
+
+Data Ingestion: First, you bring the data into the lakehouse. This is the initial step where you collect data from various sources like databases, files, or external APIs.
+
+Data Engineering Experience: Once the data is ingested into the lakehouse, you can apply data engineering tasks. This involves transforming, cleaning, and preparing the data for analysis and reporting.
+
+Essentially, the process is:
+Ingest Data into Lakehouse: Bringing raw data into the storage system.
+Apply Data Engineering: Perform necessary transformations and preparations within the lakehouse environment.
+
+So, the sequence is: bring the data into the lakehouse first, then apply your data engineering experience. This approach allows for centralized data storage and management, making it easier to perform data engineering tasks effectively.
+
+
+
+
+Synapse Data Engineering in Microsoft Fabric is designed to help organizations efficiently manage and process large volumes of data. 
+
+Here are some key features:
+
+1. Lakehouse Architecture: Combines the best of data lakes and data warehouses, allowing you to store and manage both structured and unstructured data in one place.
+2. Apache Spark Integration: Utilize Apache Spark for large-scale data processing and transformation.
+3. Data Pipelines: Create and manage data pipelines to automate the movement and transformation of data from various sources.
+4. Interactive Notebooks: Use notebooks for data ingestion, preparation, transformation, and analysis. Notebooks support multiple programming languages like Python, R, and Scala1.
+5. Data Ingestion: Easily bring data into the lakehouse using various methods, including dataflows and pipelines.
+6. Security and Governance: Ensure data security and compliance with built-in governance features.
+
+These features enable data engineers to focus on their core tasks without worrying about the underlying infrastructure.

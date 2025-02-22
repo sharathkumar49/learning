@@ -26,3 +26,19 @@ find the circular rotation of an array by k positions
 sort an array according to the order defined by another array
 search for an element in an array
 check if an array is a subset of another array or not
+
+
+
+
+top array questions:
+
+1. Two Sum
+2. Find the missing number (1 to N) 
+3. Find the Largest and Smallest Element in an Array -
+4. Reverse an Array -
+5. Remove Duplicates from a Sorted Array 
+6. Move Zeroes  to the End of the Array 
+7. Check if an Array is Sorted 
+8. Intersection and Union of Two Arrays 
+9. Rotate an Array 
+10. Find the First and Second Smallest Element in an Array 

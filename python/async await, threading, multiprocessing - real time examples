@@ -1,0 +1,89 @@
+
+
+Async/Await :
+Scenario: Imagine you’re developing a web scraping tool to collect data from multiple websites. Some websites take longer to respond, which might cause your program to wait, slowing down the entire process.
+
+Solution: Using async and await, you can make your program handle these delays more efficiently. When you hit an await statement, the program can "pause" that particular task and move on to other tasks, resuming it once the awaited task completes.
+
+Example: 
+import asyncio
+import aiohttp
+
+async def fetch_data(session, url):
+    async with session.get(url) as response:
+        return await response.text()
+
+async def main(urls):
+    async with aiohttp.ClientSession() as session:
+        tasks = [fetch_data(session, url) for url in urls]
+        results = await asyncio.gather(*tasks)
+        return results
+
+urls = ['https://example.com', 'https://example.org']
+results = asyncio.run(main(urls))
+print(results)
+
+
+
+
+
+
+Threading:
+Scenario: You’re building a real-time chat application where you need to listen for new messages while also updating the user interface. Without threading, the user interface might freeze while waiting for new messages.
+
+Solution: Using threading, you can create separate threads for listening to messages and updating the user interface simultaneously.
+
+Example: 
+import threading
+import time
+
+def listen_for_messages():
+    while True:
+        print("Listening for messages...")
+        time.sleep(2)
+
+def update_ui():
+    while True:
+        print("Updating UI...")
+        time.sleep(3)
+
+# Create threads for each task
+thread1 = threading.Thread(target=listen_for_messages)
+thread2 = threading.Thread(target=update_ui)
+
+# Start threads
+thread1.start()
+thread2.start()
+
+
+
+
+
+Multiprocessing: 
+Scenario: You’re performing CPU-intensive computations, like calculating the factorial of large numbers, and want to leverage multiple CPU cores to speed up the process.
+
+Solution: Using multiprocessing, you can distribute these tasks across multiple processes, each running on different CPU cores, achieving better performance.
+
+
+Example: 
+import multiprocessing
+
+def factorial(n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n - 1)
+
+def calculate_factorial(number):
+    result = factorial(number)
+    print(f"Factorial of {number} is {result}")
+
+numbers = [10, 20, 30, 40]
+
+# Create a pool of worker processes
+with multiprocessing.Pool(processes=4) as pool:
+    pool.map(calculate_factorial, numbers)
+
+
+These examples illustrate how async/await, threading, and multiprocessing can be used to handle different types of tasks more efficiently in your programs.
+

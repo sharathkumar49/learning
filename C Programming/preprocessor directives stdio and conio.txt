@@ -1,0 +1,27 @@
+
+
+In C programming, #include <stdio.h> and #include <conio.h> are preprocessor directives that include standard library header files. Here's a brief explanation of each:
+
+1. #include <stdio.h>:
+
+Stands for: Standard Input-Output Header.
+
+Purpose: It includes the definitions for the core input and output functions in C, such as printf() for output and scanf() for input.
+
+Usage: This header file is essential for performing standard input and output operations, like reading from the keyboard and writing to the screen.
+
+
+
+2. #include <conio.h>:
+
+Stands for: Console Input-Output Header.
+
+Purpose: It includes definitions for functions specifically designed for console input and output, such as getch(), getche(), and clrscr().
+
+Usage: This header is often used in environments like Turbo C/C++ to control console input/output operations directly, such as getting a character input without waiting for the Enter key or clearing the screen.
+
+To summarize:
+
+Use #include <stdio.h> when you need standard input and output functionalities.
+
+Use #include <conio.h> when you need console-specific input and output functionalities, although it's less commonly used in modern programming environments.
