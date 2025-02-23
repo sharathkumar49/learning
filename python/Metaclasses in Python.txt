@@ -1,0 +1,69 @@
+
+
+metaclass in python:
+--------------------
+
+In Python, metaclasses are the "classes of classes" — meaning they define how classes behave. A class in Python is an instance of a metaclass. You can think of metaclasses as the blueprint for classes themselves.
+
+Here's a simple breakdown:
+1. Class: Defines how objects behave. It acts as a blueprint for creating objects.
+2. Metaclass: Defines how classes behave. It acts as a blueprint for creating classes.
+
+When you create a class in Python, it is itself an instance of a metaclass. The default metaclass in Python is type. You can define your own metaclass to customize class creation and behavior. This can be particularly useful for implementing frameworks and APIs.
+
+
+Here's an example of using a metaclass:
+
+class Meta(type):
+    def __init__(cls, name, bases, dct):
+        super().__init__(name, bases, dct)
+        print(f'Class {name} has been created')
+
+class MyClass(metaclass=Meta):
+    pass
+
+# This will print "Class MyClass has been created"
+
+
+In this example, the metaclass Meta is used to print a message whenever a class is created.
+
+Metaclasses are a powerful feature in Python, but they can also add complexity to your code. They are typically used in advanced scenarios where you need to customize class behavior on a deeper level. If you're just starting with Python, you might not need to use metaclasses right away, but it's good to know they exist and understand their purpose.
+
+
+
+
+metaclass in python - definition 2: 
+-----------------------------------
+
+
+
+
+
+
+
+
+Purpose of 'type' metaclass:
+----------------------------
+The type metaclass in Python serves several important purposes:
+
+1. Creating Classes: It is the default metaclass for all classes in Python. When you create a class, Python internally uses the type metaclass to construct the class object.
+
+2. Custom Class Creation: The type metaclass allows for custom behavior when creating classes. By defining your own metaclass derived from type, you can modify how classes are constructed, control their attributes, and implement advanced features such as custom initialization, attribute validation, and more.
+
+3. Introspection: It provides mechanisms for introspection, allowing you to examine the structure and properties of classes and objects at runtime. You can use type to dynamically create new classes, modify existing ones, and inspect their attributes and methods.
+
+
+Here's an example of using the type metaclass to create a class dynamically:
+
+# Creating a class dynamically using type
+MyDynamicClass = type('MyDynamicClass', (object,), {'attr': 42, 'method': lambda self: 'Hello, World!'})
+
+# Creating an instance of the dynamically created class
+instance = MyDynamicClass()
+print(instance.attr)  # Output: 42
+print(instance.method())  # Output: Hello, World!
+
+
+In this example, we use 'type' to create a class named 'MyDynamicClass' with an attribute 'attr' and a method 'method'. The class is then instantiated, and its attributes and methods are accessed just like a regular class.
+
+The 'type' metaclass is a powerful tool that provides flexibility and control over class creation and behavior in Python. While it is used behind the scenes by default, understanding and leveraging it can open up advanced programming techniques and customization options in your code.
