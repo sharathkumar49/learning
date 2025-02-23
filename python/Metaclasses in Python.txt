@@ -35,9 +35,66 @@ Metaclasses are a powerful feature in Python, but they can also add complexity t
 metaclass in python - definition 2: 
 -----------------------------------
 
+In Python, a metaclass is a class that defines the behavior of other classes. Essentially, a metaclass is the "class of a class"—it controls the creation and behavior of classes. In Python, classes are themselves instances of metaclasses. By using a metaclass, you can modify class creation, inheritance, and other class-level behavior.
+
+Basics of Metaclasses:
+1. Every class in Python is an instance of a metaclass.
+2. By default, the metaclass of all classes in Python is type. This means that when you define a class, it is actually created by the metaclass type.
+
+
+How to Define a Metaclass:
+A metaclass is typically defined by inheriting from 'type' and overriding certain methods like '__new__' or '__init__'. 
+Here's a basic example:
+
+# Define a custom metaclass by inheriting from type
+class MyMeta(type):
+    def __new__(cls, name, bases, dct):
+        print(f"Creating class {name}")
+        # Modify the class definition (dct) here if needed
+        return super().__new__(cls, name, bases, dct)
+
+# Define a class using the custom metaclass
+class MyClass(metaclass=MyMeta):
+    pass
+
+
+When you create MyClass, the metaclass MyMeta is responsible for its creation. You will see the print output Creating class MyClass.
+
+
+Common Uses for Metaclasses:
+1. Automatic Property/Method Addition: Metaclasses can automatically add properties or methods to a class when it's created.
+2. Validation: You can use a metaclass to enforce certain constraints on class attributes, such as ensuring class methods are named correctly or type-checked.
+3. Singleton Pattern: You can use a metaclass to ensure that only one instance of a class is ever created (i.e., implement the Singleton design pattern).
 
 
 
+
+Example: Enforcing Method Naming Convention
+
+class MethodNameMeta(type):
+    def __new__(cls, name, bases, dct):
+        for key, value in dct.items():
+            if callable(value) and not key.startswith("test_"):
+                raise TypeError(f"Method {key} must start with 'test_'")
+        return super().__new__(cls, name, bases, dct)
+
+class MyClass(metaclass=MethodNameMeta):
+    def test_hello(self):
+        print("Hello")
+
+    def hello(self):  # This will raise a TypeError
+        print("Hi")
+
+# This will raise a TypeError because 'hello' does not start with 'test_'
+obj = MyClass()
+
+
+
+Key Methods in Metaclasses:
+__new__(cls, name, bases, dct): Called to create the class. It is used to modify the class's dictionary before the class is actually created.
+__init__(cls, name, bases, dct): Called after the class has been created, where you can perform further initialization.
+
+Metaclasses provide powerful customization options in Python, but they should be used with care, as they can make the code harder to understand for others.
 
 
 

@@ -1,0 +1,212 @@
+
+
+Metaprogramming is the practice of writing code that modifies, generates, or manipulates other code at runtime. Python provides powerful metaprogramming capabilities through introspection, decorators, metaclasses, and runtime code execution.
+
+
+Key Metaprogramming Concepts in Python
+
+1.Introspection – Introspection is the ability of a program to examine its own structure at runtime. Python allows checking attributes, methods, types, and even modifying them dynamically
+
+
+Examples of Introspection:
+class MyClass:
+    def method(self):
+        pass
+
+obj = MyClass()
+
+# Checking type
+print(type(obj))  # <class '__main__.MyClass'>
+
+# Listing attributes and methods
+print(dir(obj))  
+
+# Checking if an object has an attribute
+print(hasattr(obj, 'method'))  # True
+
+# Getting attribute dynamically
+method_ref = getattr(obj, 'method')
+print(method_ref)  # <bound method MyClass.method of <__main__.MyClass object>>
+
+# Setting an attribute dynamically
+setattr(obj, 'new_attr', 42)
+print(obj.new_attr)  # 42
+
+
+Use case: Introspection is useful in debugging, logging, and dynamic modifications at runtime.
+
+
+
+
+2. Decorators:
+Decorators allow modifying functions or methods without changing their actual code. They are commonly used for logging, authentication, memoization, and more.
+
+Function Decorator Example:
+def my_decorator(func):
+    def wrapper(*args, **kwargs):
+        print("Before function call")
+        result = func(*args, **kwargs)
+        print("After function call")
+        return result
+    return wrapper
+
+@my_decorator
+def greet(name):
+    print(f"Hello, {name}!")
+
+greet("Alice")
+
+
+Output:
+
+Before function call  
+Hello, Alice!  
+After function call  
+
+
+
+
+Class Decorators:
+Class decorators modify an entire class rather than just a function.
+
+def class_decorator(cls):
+    cls.decorated = True
+    return cls
+
+@class_decorator
+class MyClass:
+    pass
+
+print(MyClass.decorated)  # True
+
+
+Use case: Logging, access control, and modifying class behavior dynamically.
+
+
+
+
+
+
+3. Metaclasses:
+Metaclasses define how classes are created. Normally, classes create objects, but metaclasses create classes themselves. Every class in Python is an instance of a metaclass (by default, type is the metaclass).
+
+Basic Metaclass Example:
+
+class Meta(type):  # Inheriting from `type` makes it a metaclass
+    def __new__(cls, name, bases, class_dict):
+        print(f"Creating class: {name}")
+        return super().__new__(cls, name, bases, class_dict)
+
+class MyClass(metaclass=Meta):  # Uses Meta to create this class
+    pass  # Outputs: Creating class: MyClass
+
+
+What happens here?
+
+The metaclass Meta modifies how MyClass is created.
+__new__ method is called when the class is defined.
+Useful for dynamically enforcing rules, modifying attributes, or injecting behaviors.
+
+
+
+Example: Enforcing Class Naming Convention
+
+class EnforceUpperCaseMeta(type):
+    def __new__(cls, name, bases, class_dict):
+        if not name.isupper():
+            raise TypeError("Class name must be in uppercase!")
+        return super().__new__(cls, name, bases, class_dict)
+
+class TEST(metaclass=EnforceUpperCaseMeta):  # Works
+    pass
+
+# class test(metaclass=EnforceUpperCaseMeta):  # Raises TypeError
+#     pass
+
+
+Use case: Used in frameworks (Django, SQLAlchemy) to enforce patterns and automate object creation.
+
+
+
+
+4. Monkey Patching (Modifying Objects at Runtime)
+Monkey patching means dynamically modifying or replacing attributes and methods of classes or modules at runtime.
+
+Example: Patching a Method
+
+class MyClass:
+    def greet(self):
+        return "Hello, world!"
+
+def new_greet(self):
+    return "Patched Hello!"
+
+MyClass.greet = new_greet  # Patching the method
+obj = MyClass()
+print(obj.greet())  # "Patched Hello!"
+
+
+Use case: Useful in testing and debugging but should be used with caution in production.
+
+
+
+
+
+
+
+5. Code Generation (exec, eval)
+Python allows generating and executing code dynamically using exec() and eval().
+
+
+
+Example: Using exec to Define a Function Dynamically
+
+code = """
+def new_function():
+    return "Dynamically created function!"
+"""
+exec(code)  # Executes the string as Python code
+
+print(new_function())  # "Dynamically created function!"
+
+
+
+
+Example: Using eval to Evaluate Expressions
+
+x = 10
+expr = "x * 5"
+print(eval(expr))  # 50
+
+
+Use case: Dynamic function generation (e.g., SQL query builders, DSLs). Be careful with security risks (e.g., code injection).
+
+
+
+
+
+Why Use Metaprogramming?
+✅ Reduces Boilerplate Code – Less repetition, more abstraction
+✅ Enhances Code Reusability – Write reusable decorators and metaclasses
+✅ Dynamically Modifies Behavior – Change class behaviors at runtime
+✅ Framework Development – Django ORM, Flask, SQLAlchemy heavily rely on metaprogramming
+
+
+
+
+
+Summary Table:
+
+Technique	                     What It Does	                                                  Use Case
+
+Introspection	                 Examine attributes, types, and methods at runtime	              Debugging, dynamic behavior
+Decorators	                     Modify function or class behavior	                              Logging, authentication, memoization
+Metaclasses	                     Modify class creation process	                                  Enforce rules, automate class creation
+Monkey Patching	                 Modify classes or modules at runtime	                          Testing, temporary fixes
+Code Generation	                 Dynamically create and execute code	                          DSLs, query builders
+
+
+
+
+Final Thoughts:
+Metaprogramming makes Python extremely flexible but should be used wisely. Overuse can lead to code that's hard to read, debug, and maintain. If used properly, it reduces boilerplate and enhances maintainability.
