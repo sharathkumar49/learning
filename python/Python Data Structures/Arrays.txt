@@ -1,0 +1,173 @@
+
+Arrays:
+
+
+stock_prices = [298, 305, 320, 301, 292]
+
+
+stock_prices[0] <-- 298 <-- price on day 1
+
+stock_prices[2] <-- 320 <-- price on day 3 
+
+
+
+If you look at the internal memory representation, the memory means RAM, and the below hexadecimal numbers are the addresses in the RAM
+
+0x00500 --> 298
+0x00504 --> 305
+0x00508 --> 320
+0x0050A --> 301
+0x0050F --> 292
+
+
+Also, actually the numbers are stored in the RAM as bits(1's and 0's)
+
+298 = 100101010 (each digit is a bit here and when you have a integer number, you can take up to 4 bytes - 16 bits
+                 Hence  00000000 00000000 00000001 00101010)
+				 
+				 
+				 
+Hence these 4 bytes stored in memory location like,
+
+0x00500 --> 00000000
+0x00501 --> 00000000           ---\   298    
+0x00502 --> 00000001           ---/
+0x00503 --> 00101010
+
+
+And the same applies for the rest of the integer values, 305 takes from 0x00504 to 0x00507 and goes on. 
+
+0x00500 --> 298
+0x00504 --> 305              
+0x00508 --> 320           
+0x0050A --> 301
+0x0050F --> 292
+
+
+Scenario 1: 
+
+if asked what was the price on day 3? 
+
+You can use the index, stock_prices[2] --> 320
+
+
+
+Let's see how it works under the hood, let's the stock_prices is being assigned a memory location, it is pointing to the address 0x00500 and when you access index of 2, what it would be doing is 
+
+stock_prices[2] --> 0x00500 + 2 * sizeof(integer)  --> 0x00500 + 2 * 4  --> 0x00508  
+
+
+Lookup by index = O(1) --> which means it is constant time operation
+
+
+
+Scenario 2: 
+On what day price was 301?
+
+Remember now you're not looking by index, you are looking by value
+
+
+for i in range(len(stock_prices)):
+	if stock_prices[i] == 301:
+		return i
+		
+		
+Look_by_value = O(n)  --> which means you have to do n number of iteration
+
+
+
+
+Scenario 3: to print all prices  -- you are traversing 
+
+for price in stock_prices:
+	print(price)
+	
+	
+Complexity - Array traversal - O(n)
+
+
+
+
+Scenario 4: to insert a new price(284) at index 1
+
+stock_prices.insert(1, 284)
+
+So, what will happen is, after inserting the element 284 at the location 1, it will shift all the elements by one position.
+So, the complexity, Array insertion = O(n)
+
+
+
+
+Scenario 5: Delete elements at index 1 
+
+stock_prices.remove(1)
+
+Again after removing the particular elements you have to shift the elements
+
+The complexity, Array deletion = O(n)
+
+
+
+
+In python, list is implemented as dynamic  array.
+In other languages like Java, C++ we have static and dynamic arrays both
+
+
+Lets say, in java, you're declaring an array
+
+int[] stock_prices = new int[5];  // it will create an array of fixed size 5
+
+stock_prices[0] = 298;
+stock_prices[1] = 305              
+stock_prices[2] = 320           
+stock_prices[3] = 301
+stock_prices[4] = 292
+
+
+if you try to insert an element at the 7th position --> stock_prices[6] = 400; --> gives an exception --> Throws ArrayIndexOutofBounds exception 
+
+Since it is static array, in static array the size is fixed and you cannot insert elements beyond the mentioned size 
+
+
+The other type is dynamic array, ArrayList in Java is a dynamic array 
+
+ArrayList<Integer> stockPrices = new ArrayList<Integer>();
+
+
+stockPrices.add(298);
+stockPrices.add(305);              
+stockPrices.add(320);           
+stockPrices.add(301);
+stockPrices.add(292):
+
+stockPrices.add(400); like this, you can keep on adding elements 
+
+
+Let's see how both static array and dynamic array works under the hood. For static array, since it has fixed size and it will only allocate the memory for that fixed size 
+
+
+For the dynamic array, initially it will allocate some capacity (say 10) - say 10 white boxes and also grey boxes forth and back 
+
+say, ArrayList<Integer> stockPrices = new ArrayList<Integer>(); 
+So, 10 white boxes area has been allocated to 'stockPrices' and some extra grey box area forth and back. 
+And these grey boxes area is continuous memory locations which might be used by some other program or might be used by other variables in the same program. So, these gray boxes are not available for you to use.
+
+Now, if you insert an element at 11th position, it checks that the capacity is over and in this case what it would do is, it will allocate completely new memory area at a different location and it will allocate a total capacity of 30 (additional capacity =  current capacity * 2). So, now with current capacity, additionally you will have 20 capacities.
+
+
+So, when dynamic array grow, there is an overhead of allocating new memory and copying all the elements. 
+So, if again the capacity of all the 30 is over and you try to insert 31st element, it will again allocate new memory segment somewhere else in the memory area and now it will allocate (30 + 2 * 30) = 90. This is called geometric progression 
+
+
+Arrays can store numbers, text or complex objects 
+
+stock_prices = [2, 3, 4, 5]
+stock_names = ["AAPL", "IBM", "TATA"]
+stock_data = [
+		{"ticker"
+		
+		
+		
+The thing about python is, python can store multiple types of elements, python can store integers, text and other data types together in the same array but Java and C++ cannot do it. 
+
+
