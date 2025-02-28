@@ -1,0 +1,17 @@
+
+
+bitwise right shift operator:
+
+The >> operator in C is the bitwise right shift operator. It shifts the bits of its left operand to the right by the number of positions specified by its right operand. For example, a >> b shifts the bits in a to the right by b positions.
+
+Here's how it works:
+For each shift to the right, the least significant bit (rightmost bit) is discarded.
+The most significant bit (leftmost bit) is filled based on the type of the value being shifted. For unsigned types, it is always filled with 0. For signed types, it may be filled with the sign bit (arithmetic shift) or 0 (logical shift), depending on the compiler implementation.
+
+
+For example:
+unsigned int a = 8;  // In binary: 00001000
+unsigned int result = a >> 2;  // Result will be 00000010 (in binary), which is 2 in decimal
+
+
+In the example above, the bits in a (8 in decimal) are shifted to the right by 2 positions, resulting in the value 2.

@@ -1,0 +1,63 @@
+pre order traversal:
+
+let's explore pre-order traversal. Pre-order traversal is another depth-first search (DFS) method, where the nodes are visited in the following order:
+
+1. Root: Visit the root node.
+2. Left Subtree: Visit all the nodes in the left subtree.
+3. Right Subtree: Visit all the nodes in the right subtree.
+
+
+Example of a Pre-Order Traversal
+Consider this binary tree:
+           8
+       /       \
+     4         12
+    / \       /  \
+  2   6      10   14
+ / \ / \     / \ / \
+1  3 5 7    9  11 13 15
+
+
+
+Pre-Order Traversal Step-by-Step:
+
+1. Start at node 8:
+	Visit node 8.
+	Traverse the left subtree (subtree rooted at 4):
+		Visit node 4.
+		Traverse the left subtree (subtree rooted at 2):
+			Visit node 2.
+			Traverse the left subtree (subtree rooted at 1): Visit node 1 (no left or right children, so we return to 2).
+			Traverse the right subtree (subtree rooted at 3): Visit node 3 (no left or right children, so we return to 2).
+		Traverse the right subtree (subtree rooted at 6):
+			Visit node 6.
+			Traverse the left subtree (subtree rooted at 5): Visit node 5 (no left or right children, so we return to 6).
+			Traverse the right subtree (subtree rooted at 7): Visit node 7 (no left or right children, so we return to 6).
+
+2. Traverse the right subtree (subtree rooted at 12):
+	Visit node 12.
+	Traverse the left subtree (subtree rooted at 10):
+		Visit node 10.
+		Traverse the left subtree (subtree rooted at 9): Visit node 9 (no left or right children, so we return to 10).
+		Traverse the right subtree (subtree rooted at 11): Visit node 11 (no left or right children, so we return to 10).
+	Traverse the right subtree (subtree rooted at 14):
+		Visit node 14.
+		Traverse the left subtree (subtree rooted at 13): Visit node 13 (no left or right children, so we return to 14).
+		Traverse the right subtree (subtree rooted at 15): Visit node 15 (no left or right children, so we return to 14).
+		
+		
+		
+Pre-Order Traversal Sequence:
+The pre-order traversal of this tree would produce the sequence: 8, 4, 2, 1, 3, 6, 5, 7, 12, 10, 9, 11, 14, 13, 15.
+
+Implementation:
+In pseudocode, the pre-order traversal can be implemented as:
+
+def pre_order_traversal(node):
+    if node is not None:
+        print(node.value)
+        pre_order_traversal(node.left)
+        pre_order_traversal(node.right)
+
+
+This method ensures that you visit the root node first, then the left subtree, and finally the right subtree.

@@ -1,0 +1,5 @@
+
+
+python standard operators as functions:
+
+https://docs.python.org/3/library/operator.html

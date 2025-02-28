@@ -1,0 +1,113 @@
+
+
+
+Depth first search - in order traversal:
+
+Let's dive into the concept of Depth First Search (DFS) and in-order traversal:
+
+Depth First Search (DFS)
+DFS is a fundamental algorithm used in graph and tree traversal. It starts at a root node and explores as far as possible along each branch before backtracking. There are three primary methods for tree traversal using DFS: pre-order, in-order, and post-order.
+
+In-Order Traversal: 
+
+In-order traversal is specific to binary trees. It involves visiting the nodes of the tree in a specific sequence:
+
+	1. Left Subtree: Traverse the left subtree first.
+
+	2. Root Node: Visit the root node.
+
+	3. Right Subtree: Traverse the right subtree last.
+
+The order of these operations ensures that the nodes are visited in ascending order (for a binary search tree).
+
+Here's a step-by-step example to help illustrate:
+
+Example Binary Tree:
+
+      4
+     / \
+    2   5
+   / \
+  1   3
+
+
+
+In-Order Traversal Process:
+
+1. Start at the root node (4).
+2. Traverse the left subtree (node 2):
+	Traverse the left subtree of node 2 (node 1): No left child, visit node 1, no right child.
+3. Visit node 2.
+4. Traverse the right subtree of node 2 (node 3): No left child, visit node 3, no right child.
+5. Visit the root node (4).
+6. Traverse the right subtree (node 5): No left child, visit node 5, no right child.
+
+
+In-Order Traversal Sequence:
+1, 2, 3, 4, 5
+
+
+Algorithm in Pseudocode:
+
+InOrderTraversal(node):
+    if node is not NULL:
+        InOrderTraversal(node.left)
+        visit(node)
+        InOrderTraversal(node.right)
+
+
+
+
+Detailed Explanation:
+1. Initialization:
+	Begin at the root node.
+
+2. Left Subtree:
+	Recursively traverse the left child until you reach a leaf node (a node with no children). Visit each node's left child first.
+
+3. Visit Node:
+	After reaching the leftmost node, "visit" it (process it according to your needs, like printing its value).
+
+4. Right Subtree:
+	If a node has a right child, move to the right child and repeat the process.
+	
+	
+Benefits of In-Order Traversal:
+For binary search trees, in-order traversal yields nodes in non-decreasing order, which is useful for sorting and binary search operations.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+do we need to reach the leaf of the left child first, say if we get the element on the first level itself. can we stop there itself
+
+
+In in-order traversal, the goal is to visit all the nodes in a specific order (left subtree, root, right subtree). So, even if you encounter an element on the first level, you need to continue traversing the left subtree until you reach the leaf nodes.
+
+For instance, in the binary tree I described earlier, the in-order traversal ensures that you visit nodes in ascending order. Stopping at an element on the first level would disrupt this order.
+
+Here's a quick reminder of the example binary tree:
+
+
+      4
+     / \
+    2   5
+   / \
+  1   3
+
+
+If you were to stop at node 2 without visiting its left child (node 1), the traversal sequence would be incorrect.
+
+In summary, to maintain the correct order in in-order traversal, you need to reach the leaf nodes of the left subtree before visiting the root and right subtrees. This ensures that all nodes are visited in the proper sequence.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+say, the element that we need is node 2. why we need to do further traversal, we can stop the iteration there itself, right?
+
+
+Great question! If you're searching for a specific element (e.g., node 2) and you're using in-order traversal with the purpose of finding that element, you can indeed stop the traversal as soon as you find it. This approach is often used in practical applications to optimize search operations.
+
+In in-order traversal, however, if your goal is to visit all nodes in a specific sequence (left subtree, root, right subtree), you'll need to complete the entire traversal to maintain the correct order.
+
+To summarize:
+If you're specifically searching for an element: You can stop the traversal as soon as you find the target element (node 2 in this case).
+If you're performing in-order traversal for the purpose of visiting all nodes: You'll need to continue the traversal even after encountering a specific element.

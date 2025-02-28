@@ -1,0 +1,172 @@
+
+nyc_weather.csv
+---------------
+date	temperature(F)
+Jan 1	27
+Jan 2	31
+Jan 3	23
+Jan 4	34
+Jan 5	37
+Jan 6	38
+Jan 7	29
+Jan 8	30
+Jan 9	35
+Jan 10	30
+
+
+1. nyc_weather.csv contains new york city weather for first few days in the month of January. Write a program that can answer following,
+
+i) What was the average temperature in first week of Jan
+ii) What was the maximum temperature in first 10 days of Jan
+
+Figure out data structure that is best for this problem
+
+
+Solution: 
+
+arr = []
+
+with open("nyc_weather.csv","r") as f:
+    for line in f:
+        tokens = line.split(',')
+        try:
+            temperature = int(tokens[1])
+            arr.append(temperature)
+        except:
+            print("Invalid temperature.Ignore the row")
+			
+			
+arr  # [27, 31, 23, 34, 37, 38, 29, 30, 35, 30]
+
+
+
+What was the average temperature in first week of Jan  
+
+# sum(arr[0:7])/len(arr[0:7])
+# 31.285714285714285
+
+
+
+What was the maximum temperature in first 10 days of Jan
+
+# max(arr[0:10])
+# 38
+
+The best data structure to use here was a list because all we wanted was access of temperature elements.
+
+
+
+
+
+
+
+
+
+
+
+2. nyc_weather.csv contains new york city weather for first few days in the month of January. Write a program that can answer following,
+
+i) What was the temperature on Jan 9?
+ii) What was the temperature on Jan 4?
+
+Figure out data structure that is best for this problem
+
+
+Solution: 
+
+weather_dict = {}
+
+with open("nyc_weather.csv","r") as f:
+    for line in f:
+        tokens = line.split(',')
+        day = tokens[0]
+        try:
+            temperature = int(tokens[1])
+            weather_dict[day] = temperature
+        except:
+            print("Invalid temperature.Ignore the row")
+			
+			
+weather_dict
+
+#
+{'Jan 1': 27,
+ 'Jan 2': 31,
+ 'Jan 3': 23,
+ 'Jan 4': 34,
+ 'Jan 5': 37,
+ 'Jan 6': 38,
+ 'Jan 7': 29,
+ 'Jan 8': 30,
+ 'Jan 9': 35,
+ 'Jan 10': 30}
+ 
+ 
+ 
+What was the temperature on Jan 9
+
+# weather_dict['Jan 9']
+# 35
+
+
+
+What was the temperature on Jan 4
+
+# weather_dict['Jan 4']
+# 34
+
+
+
+The best data structure to use here was a dictionary (internally a hash table) because we wanted to know temperature for specific day, requiring key, value pair access where you can look up an element by day using O(1) complexity
+
+
+
+
+
+
+
+
+
+
+poem.txt:
+---------
+
+Two roads diverged in a yellow wood,
+And sorry I could not travel both
+And be one traveler, long I stood
+And looked down one as far as I could
+To where it bent in the undergrowth;
+
+Then took the other, as just as fair,
+And having perhaps the better claim,
+Because it was grassy and wanted wear;
+Though as for that the passing there
+Had worn them really about the same,
+
+And both that morning equally lay
+In leaves no step had trodden black.
+Oh, I kept the first for another day!
+Yet knowing how way leads on to way,
+I doubted if I should ever come back.
+
+I shall be telling this with a sigh
+Somewhere ages and ages hence:
+Two roads diverged in a wood, and I—
+I took the one less traveled by,
+And that has made all the difference.
+
+
+
+3. poem.txt Contains famous poem "Road not taken" by poet Robert Frost. You have to read this file in python and print every word and its count as show below. Think about the best data structure that you can use to solve this problem and figure out why you selected that specific data structure.
+
+
+word_count = {}
+with open("poem.txt","r") as f:
+    for line in f:
+        tokens = line.split(' ')
+        for token in tokens:
+            token=token.replace('\n','')
+            if token in word_count:
+                word_count[token]+=1
+            else:
+                word_count[token]=1

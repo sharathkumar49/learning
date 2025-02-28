@@ -1,0 +1,217 @@
+
+
+Say for example you have stock prices csv file as input, you have a date and price on the given day:
+
+
+Say, you want to write a program that can fetch you the stock price, based on a day
+
+
+
+One way you can do this, is to implement it by program: 
+
+stock_prices = []
+with open("stock_prices.csv", "r") as f: 
+	for line in f: 
+		token = line.split(',')
+		day = tokens[0]
+		price = float(tokens[1])
+		stock_prices.append([day,price])
+
+
+then stock_prices would look like this:
+[['march 6', 310],
+ ['march 7', 340],
+ ['march 8', 380],
+ ['march 9', 302],
+ ['march 10', 297],
+ ['march 11', 323]]
+
+
+Say, you want to fetch stock price on the day Mar 9th:
+
+for element in stock_prices:
+	if element[0] == 'march 9':
+		print(element[1])
+		
+		
+Here, we are depending most of the list data structure, but it is not that much efficient. Because, say if your file size is having million records and then the date that you're looking at it at the end of list. Then you have to run the loop till the loop. So, the complexity here would be O(n).
+
+In python, there is dictionary which can do the same thing in O(1) which is a constant time operation
+
+
+stock_prices = {}
+with open("stock_prices.csv", "r") as f: 
+	for line in f: 
+		token = line.split(',')
+		day = tokens[0]
+		price = float(tokens[1])
+		stock_prices[day] = price
+		
+and you can acces it now easily by stock_prices['march 9']
+
+
+Lets look into internal implementation of dictionary, So, dictionary implements hash table. Hash table is the underlying data structure
+
+
+Now, when you store your data as two dimensional list. In the memory, it would look like this
+
+stock_prices = 
+[['march 6', 310],
+ ['march 7', 340],
+ ['march 8', 380],
+ ['march 9', 302],
+ ['march 10', 297],
+ ['march 11', 323]]
+ 
+ 
+march 6
+310
+march 7
+340
+march 8
+380
+march 9
+302
+march 10
+297
+march 11
+323
+
+
+Like this, it would be stored in a contiguous memory location in your RAM
+
+
+In case of Dictionary:
+
+{'march 6': 310,
+ 'march 7': 340,
+ 'march 8': 380,
+ 'march 9': 302,
+ 'march 10': 297,
+ 'march 11': 323}
+
+First it will allocate list of some size(say 10), then it take the key 'march 6' and with hash function it convert that key value into index a value between 0 to 9 (since the size of the list is 10). 
+
+'march 6' --> Hash Function --> 9 and with index 9 it will map the value --> index 9 = 310 
+
+Similary, it will apply the hash function to all other keys in the dictionary, finds out an index (between 0-9) and then put an respective element into that particular index of an array
+
+
+So, basically what's happening is, 
+
+In case of array,
+
+0 --> 340  stock_prices[0]     
+
+
+9 --> 302  stock_prices[9]
+
+
+In case of Hash Map, all you have is string index 
+
+march 6 --> 340 stock_prices['march 6']
+
+march 7 --> 310 stock_prices['march 7']
+
+HashTable or HashMap is the internal data structure and dictionary is the python's specific implementation of Hash Table  
+
+
+
+So, lets see how hash function is implemented 
+
+There are different ways, that hash function can be implemented, one way is by using ASCII
+
+
+m   = 109
+a   =  97
+r   = 114
+c   =  99
+h   = 104
+    =  32
+6   =  54
+
+SUM = 609
+
+For each of letter in 'march 6', we'll find the ascii value and then we sum up. And then the size of array is 10, and we need to get the value between 0 -9, we are doing modulo of 10
+
+MOD(609, 10) --> 9
+
+Therefore in the allocated space of 10, the value of 'march 6' which is 310 will be inserted in the index position 9.
+
+
+So, here in the hash map, 
+Lookup by key is O(1) on average and Insertion/Deletion is O(1) on average 
+
+
+
+
+Different ways of implementing hash table/hash map in different programming language:
+
+Python -->  Dictionary
+
+prices = {
+			'march 6' : 310,
+			'march 7' : 430
+		  }
+		  
+		  
+Java --> HashMap
+
+HashMap<String, Integer> prices = new HashMap<String, Integer>();
+prices.put("march 6", 310)
+prices.put("march 7", 430)
+
+
+Java --> LinkedHashMap
+
+LinkedHashMap<String, Integer> prices = new LinkedHashMap<String, Integer>();
+prices.put("march 6", 310)
+prices.put("march 7", 430)
+
+
+C++ --> std::map
+
+std::map<string, int> prices; 
+
+prices['march 6']=310;
+prices['march 7']=430;
+
+ 
+ 
+Now, let's implement hash in python: 
+
+
+class HashTable:  
+    def __init__(self):
+        self.MAX = 100
+        self.arr = [None for i in range(self.MAX)]
+        
+    def get_hash(self, key):
+        hash = 0
+        for char in key:
+            hash += ord(char)
+        return hash % self.MAX
+    
+    def __getitem__(self, index):
+        h = self.get_hash(index)
+        return self.arr[h]
+    
+    def __setitem__(self, key, val):
+        h = self.get_hash(key)
+        self.arr[h] = val    
+        
+    def __delitem__(self, key):
+        h = self.get_hash(key)
+        self.arr[h] = None        
+
+
+t = HashTable()
+t["march 6"] = 310
+t["march 7"] = 420
+
+t["dec 30"] = 88
+t["dec 30"]
+del t["march 6"]
+
+
+So, by implementing this hash class, we have come to know how dictionary works under the hood

@@ -1,0 +1,30 @@
+
+
+
+Programming: 
+C
+Python
+Java
+Javascipt(Node, React)
+
+
+SQL:
+
+
+
+
+DSA:
+Linked List
+Doubly Linked List
+
+
+Webframework:
+Django
+
+
+
+https://www.bigocheatsheet.com/
+
+
+
+

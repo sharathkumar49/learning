@@ -1,0 +1,122 @@
+
+
+In a hash table, a collision occurs when two different keys hash to the same index in the array where the data is stored. This is inevitable because the number of possible keys is usually much larger than the size of the array.
+
+
+
+say for example, in the allocated space of a size 10, with the key 'march 6' and 'march 17' will give you the index as 9, if you pass them to the hash function 
+
+
+We should know how to handle these collisions:
+
+1. Chaining: Each array index points to a linked list of entries that have the same hash value. When a collision occurs, the new entry is simply added to the end of the list at that index. This way the linked list will keep on growing and multiple keys will share the same hash value
+
+for example :
+at index 9
+
+9 --> ('march 6', 310) ('march 17', 459) 
+
+
+Here the complexity, for average case of hash map search, the complexity is O(1), but for the worst case it can go upto O(n), because imagine if you have a bad hash function and it produces same hash value for all the keys. So, in this case, the search complexity is same as the search complexity of linked list which is O(n). And if you want to retrieve the value of 'march 17', you need to get index value using the hash function, then you would get the index 9, then you go to the index 9 and then you linearly search the linked list and for that reason it is important to have your keys stored in each of those elements. So that you know which value is associated with which key. 
+
+
+
+
+
+
+2. Open Addressing: When a collision occurs, the algorithm probes the array to find the next empty slot. There are several probing methods:
+Linear Probing: Check the next slot in the array (i.e., move linearly).
+Quadratic Probing: Check slots at intervals of 1, 4, 9, 16, etc.
+Double Hashing: Use a second hash function to determine the probe step.
+
+
+3. Cuckoo Hashing: This involves using two hash tables and two hash functions. When a collision occurs, the entry is moved to the other table, possibly displacing another entry, which in turn must be moved as well.
+
+4. Robin Hood Hashing: This technique keeps track of the number of probes each element undergoes and tries to ensure that all elements have roughly the same probe count by displacing elements with higher probe counts less frequently.
+
+5. Hopscotch Hashing: This method uses a neighborhood concept where each element has a neighborhood of slots it can be moved to upon collision, allowing elements to stay close to their original hash slot.
+ 
+Each of these methods has its own trade-offs in terms of performance, complexity, and memory usage. The choice of collision handling technique depends on the specific requirements and constraints of the application.
+
+
+
+
+Hash Table Collision Handling Using Chaining:
+
+class HashTable:  
+    def __init__(self):
+        self.MAX = 10
+        self.arr = [[] for i in range(self.MAX)]
+        
+    def get_hash(self, key):
+        hash = 0
+        for char in key:
+            hash += ord(char)
+        return hash % self.MAX
+    
+    def __getitem__(self, key):
+        arr_index = self.get_hash(key)
+        for kv in self.arr[arr_index]:
+            if kv[0] == key:
+                return kv[1]
+            
+    def __setitem__(self, key, val):
+        h = self.get_hash(key)
+        found = False
+        for idx, element in enumerate(self.arr[h]):
+            if len(element)==2 and element[0] == key:
+                self.arr[h][idx] = (key,val)
+                found = True
+        if not found:
+            self.arr[h].append((key,val))
+        
+    def __delitem__(self, key):
+        arr_index = self.get_hash(key)
+        for index, kv in enumerate(self.arr[arr_index]):
+            if kv[0] == key:
+                print("del",index)
+                del self.arr[arr_index][index]
+        
+		
+		
+t = HashTable()
+t["march 6"] = 310
+t["march 7"] = 420
+t["march 8"] = 67
+t["march 17"] = 63457
+t["march 6"]  # 310
+t["march 17"] # 63457
+
+t.arr
+#
+[[('march 7', 420)],
+ [('march 8', 67)],
+ [],
+ [],
+ [],
+ [],
+ [],
+ [],
+ [],
+ [('march 6', 310), ('march 17', 63457)]]
+ 
+ 
+t["march 6"] = 11
+
+
+t.arr
+#
+[[('march 7', 420)],
+ [('march 8', 67)],
+ [],
+ [],
+ [],
+ [],
+ [],
+ [],
+ [],
+ [('march 6', 11), ('march 17', 63457)]]
+ 
+ 
+t["march 6"]  # 310
+del t["march 6"]

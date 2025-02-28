@@ -102,7 +102,7 @@ print(s1 is s2)  # Output: True (both s1 and s2 are the same instance)
 
 In the above example, s1 and s2 are references to the same instance of the Singleton class. This demonstrates that only one instance is created, even when trying to instantiate the class multiple times.
 
-
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Some serious questions by me: 
 
@@ -136,7 +136,7 @@ Any subsequent attempts to create an instance will return the existing instance,
 
 
 
-
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Why we need to call the new method of superclass instead of calling its own new method?
 
@@ -180,7 +180,7 @@ In summary, calling the __new__ method of the superclass ensures that the instan
 
 
 
-
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Also, whenever we call super class' new method, we passing the class name and cls as argument. can you explain me this very clearly. I am totally confused
 
@@ -248,7 +248,7 @@ cls (class itself) is passed to ensure proper method resolution and instantiatio
 
 
 
-
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 I don't understand the cls argument part exactly. can you explain me very clearly

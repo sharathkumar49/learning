@@ -1,0 +1,205 @@
+
+
+Queue Data Structure: 
+
+
+you might have used portals such as yahoo finance or money control.com or to track down the stock prices.  Now the way these portals get stock prices is from stock exchanges such as New York Stock Exchange and if you look at the technical architecture the engineering things team sitting at New York Stock Exchange will be supplying the prices
+
+New york Stock Exchange --> (11.02 : 132.12, 11.01 : 131.10) --> Yahoo Finance 
+
+
+The New York Stock Exchange supply thee prices continuously to portal like Yahoo Finance and they will display various charts and information. Now Going deeper into technical architecture, one way to solve this problem would be the engineering team at Yahoo Finance will develop an HTTP server which can accept the HTTP POST request coming in from New York Stock Exchange. 
+
+{
+  'company' : 'WMT',
+  'timestamp' : '15 apr, 11.01 am',
+  'price' : 131.10$
+}
+
+{
+  'company' : 'WMT',
+  'timestamp' : '15 apr, 11.02 am',
+  'price' : 132.12$
+}
+ 
+
+so the engineering team sitting in NYSC would make HTTP POST calls along with the JSON objects, and this could be one architecture. You can supply the stock prices to the other end, but there are a couple of issues with this architecture the first problem is what if the HTTP server is down? In that case these guys will be making the calls and it will result in loss of messages. So the prices during the time frame that the HTTP server was down would be lost. So, all these prices will be lost and for Yahoo Finance, let's say after five minute the server comes up, there is no way to retrieve those old prices because they made entire thing as synchronous calls which the Yahoo Finance guys couldn't process, because that server was down and now you lost all those information. Other issue is tomorrow if Google Finance wants to receive the same pricing feed, the engineering team at NYSC now will have to change their code and use Google's URL to supply them the prices. This is called tightly coupled architecture and it has lot of issues.
+
+Such as every time you want to on-board a new consumer, you have to make code changes and if the system is tightly coupled, lets say if there is any change on the consumer side then producer side will also have to change and it's a nasty infrastructure. So, there are lot of issues. 
+
+What if you had a memory buffer, where NYSC can just put those prices one by one, 
+like at 11 o'clock they some price, at 11.02 they put another price , they just keep on pushing the prices time by time 
+
+On the other hand, Yahoo Finance or Google Finance guys can receive these prices in the order that they were pushed in, this data structure that we used here is called Queue and Queue allows you to establish loose coupling. So when there is a loose coupling between these systems, tomorrow if safe money control.com bounds to use thes prices, NYSC doesn't have to make any change actually. They can just keep pushing the prices to the same memory buffer and money control can just consume it. So, it's a very flexible infrastructure with minimal amount of issue. This problem is also called producer-consumer problem where one entity is producing some information and other entity is consuming that information. In this way they are not tightly coupled, here whatever is pushed first in the buffer is consumed first, hence it is called FIFO(First In First Out) data structure. In real life, lets say if you are at a movie theater buying tickets, whoever is standing first will get the first turn, so it's like first in first out. 
+
+
+These are the code snippets from different programming languages in Queue:
+
+python --> list, collections.deque, queue.LifoQueue
+
+q = deque()
+q.appendLeft(5)
+q.appendLeft(9)
+q.pop() # returns 5 
+
+
+Java  --> Linkedlist
+
+Queue<Integer> q = new Linkedlist<>();
+q.add(5);
+q.add(89);
+q.remove(); //returns 5
+
+
+C++ --> std::queue
+
+std::queue<int> q; 
+q.push(5);
+q.push(89);
+q.pop(); returns 5
+ 
+  
+  
+You can use list in python for queue implementation: 
+
+wmt_stock_price_queue = []
+wmt_stock_price_queue.insert(0,131.10)
+wmt_stock_price_queue.insert(0,132.12)
+wmt_stock_price_queue.insert(0,135)
+
+
+wmt_stock_price_queue
+# [135, 132.12, 131.1]
+
+wmt_stock_price_queue.pop()
+# 131.1
+
+wmt_stock_price_queue
+# [135, 132.12]
+
+wmt_stock_price_queue.pop()
+# 132.12
+
+wmt_stock_price_queue.pop()
+# 135
+
+
+wmt_stock_price_queue.pop()
+#
+---------------------------------------------------------------------------
+IndexError                                Traceback (most recent call last)
+<ipython-input-11-09580442e205> in <module>
+----> 1 wmt_stock_price_queue.pop()
+
+IndexError: pop from empty list
+
+Even though we can use list as queue, it has problems with dynamic array 
+
+
+
+
+
+
+
+
+Using collections.deque as a queue:
+
+
+from collections import deque
+q = deque()
+q.appendleft(5)
+q.appendleft(8)
+q.appendleft(10)
+
+q
+#deque([10, 8, 5])
+
+q.pop()
+# 5
+
+q
+# deque([10, 8])
+
+q.pop()
+# 8
+
+q.pop()
+# 10
+
+q.pop()
+#
+---------------------------------------------------------------------------
+IndexError                                Traceback (most recent call last)
+<ipython-input-21-a75d510a0910> in <module>
+----> 1 q.pop()
+
+IndexError: pop from an empty deque
+
+
+
+
+
+
+
+
+
+
+
+
+Implement queue class using collections.deque
+
+
+
+from collections import deque
+
+class Queue:
+    
+    def __init__(self):
+        self.buffer = deque()
+    
+    def enqueue(self, val):
+        self.buffer.appendleft(val)
+        
+    def dequeue(self):
+        return self.buffer.pop()
+    
+    def is_empty(self):
+        return len(self.buffer)==0
+    
+    def size(self):
+        return len(self.buffer)
+
+
+
+
+pq = Queue()
+#
+pq.enqueue({
+    'company': 'Wall Mart',
+    'timestamp': '15 apr, 11.01 AM',
+    'price': 131.10
+})
+pq.enqueue({
+    'company': 'Wall Mart',
+    'timestamp': '15 apr, 11.02 AM',
+    'price': 132
+})
+pq.enqueue({
+    'company': 'Wall Mart',
+    'timestamp': '15 apr, 11.03 AM',
+    'price': 135
+})
+
+
+pq.size()
+# 3
+
+pq.dequeue()
+# {'company': 'Wall Mart', 'timestamp': '15 apr, 11.01 AM', 'price': 131.1}
+
+pq.dequeue()
+# {'company': 'Wall Mart', 'timestamp': '15 apr, 11.01 AM', 'price': 131.1}
+
+
+
+

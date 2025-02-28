@@ -1,0 +1,13 @@
+
+Deque<Integer> stk = new ArrayDeque<>(); 
+
+
+Why the second angular bracket<> is empty. can we provide any data type
+
+
+
+Great question! In your code Deque<Integer> stk = new ArrayDeque<>();, the second angular bracket <> is empty due to a feature in Java called "diamond operator" (introduced in Java 7). The diamond operator allows you to omit the type parameters on the right-hand side when they can be inferred from the left-hand side.
+
+So, ArrayDeque<> automatically infers the type Integer from Deque<Integer>. The code is essentially equivalent to writing Deque<Integer> stk = new ArrayDeque<Integer>(); but is more concise and avoids redundancy.
+
+Regarding your second query, no, you cannot provide a different data type in the second angular bracket. The type on the right-hand side must match or be compatible with the type specified on the left-hand side, ensuring type safety.

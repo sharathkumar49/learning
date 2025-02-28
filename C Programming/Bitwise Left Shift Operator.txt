@@ -1,0 +1,40 @@
+
+
+The << operator in C is the bitwise left shift operator. It shifts the bits of its left operand to the left by the number of positions specified by its right operand. For example, a << b shifts the bits in a to the left by b positions.
+
+Here's how it works:
+For each shift to the left, the most significant bit (leftmost bit) is discarded.
+The least significant bit (rightmost bit) is filled with 0.
+
+This operation essentially multiplies the number by 2 power b(where b is the number of positions to shift) for each left shift.
+
+
+unsigned int a = 5;  // In binary: 00000101
+unsigned int result = a << 1;  // Result will be 00001010 (in binary), which is 10 in decimal
+
+
+For example:
+
+unsigned int a = 5;  // In binary: 00000101
+unsigned int result = a << 1;  // Result will be 00001010 (in binary), which is 10 in decimal
+
+
+In this example, the bits in a (5 in decimal) are shifted to the left by 1 position, resulting in the value 10.
+
+
+
+
+Here's another example with more shifts:
+
+unsigned int b = 3;  // In binary: 00000011
+unsigned int result = b << 2;  // Result will be 00001100 (in binary), which is 12 in decimal
+
+In this case, the bits in b (3 in decimal) are shifted to the left by 2 positions, resulting in the value 12.
+
+
+Key Points:
+1. Multiplication by Powers of Two: Left shifting by 1 is equivalent to multiplying by 2. Left shifting by n is equivalent to multiplying by 2 power 𝑛
+2. Filling with Zeros: The vacated positions on the right are filled with zeros.
+3. Discarding Bits: Bits shifted out of the leftmost position are discarded.
+
+Bitwise left shift operators are often used in low-level programming tasks such as graphics, cryptography, and performance optimization

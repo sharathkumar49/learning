@@ -1,0 +1,203 @@
+
+
+Use cases of stack data structure: 
+
+cnn.com, when you navigate over different topics and come back again, it would remember where you left (means at which page you were last visited)
+
+
+Say, This is order you were visited 
+
+https://www.cnn.com/  --> https://www.cnn.com/world/  --> https://www.cnn.com/india --> https://www.cnn.com/china
+
+
+And when you click the back button, it would go the page that you were last visited, which means you're traversing in the reversing order
+
+
+How about using array or linked list?
+
+So, whenever you want to get the last element, you can go to the end of an array and then pop that element out. Another option is, you can use the linked list. But the problem with these two data structures is that, if you are using linked list, you have to traverse the linked list to go to the end and that end will give you the last link that you have visited. So every time you are doing O(n) operation.
+
+Similarly with the array, you have to use the dynamic array, because you can't use static array, since it can keep on growing. Also with dynamic array, there are issues such as memory relocating and copying the elements etc. 
+
+In this situation, imagine you have a data structure like where once you visit a link you can keep on pushing the respective elements to that particular data structure and then when you clicks on back button you retrieve the last element that you pushed
+
+
+So, the push is for pushing the element to the stack and pop is for popping out the last element from the stack. Here we are doing Last In First Out(LIFO).
+
+
+Push/Pop element: O(1)
+Search element by value: O(n)
+
+
+Use cases for stack:
+Function calling in any programming language is manages using a stack. 
+Undo(ctrl + z) functionality in any editor uses stack to track down last set of operations.  
+
+
+
+
+Stack implementation in different programming languages: 
+
+
+Python  --> list, collections.deque, queue.LifoQueue
+
+stk = deque()
+stk.append(5)
+stk.append(89)
+stk.pop() # returns 89
+
+
+
+Java  --> Stack  
+
+Stack<Integer> stk = new Stack<>();
+stk.push(5);
+stk.push(89);
+stk.pop(); //returns 89
+
+
+Java --> Deque
+
+Deque<Integer> stk = new ArrayDeque<>();
+stk.push(5);
+stk.push(89)
+
+
+C++ --> std::stack 
+
+std::stack<int> stk;
+stk.push(5);
+stk.push(89);
+stk.pop(); // returns 89 
+
+
+
+Lets see how we can manage browing history 'back' functionality using list in python:
+
+
+s = []
+s.append('https://www.cnn.com/')
+s.append('https://www.cnn.com/world')
+s.append('https://www.cnn.com/india')
+s.append('https://www.cnn.com/china')
+
+
+
+s.pop()
+# 'https://www.cnn.com/china'
+
+s.pop()
+# 'https://www.cnn.com/india'
+
+s
+# ['https://www.cnn.com/', 'https://www.cnn.com/world']
+
+
+s[-1]     to get the last element in the list 
+# 'https://www.cnn.com/world'
+
+
+
+The issue with using a list as a stack is that list uses dymanic array internally and when it reaches its capacity it will reallocate a big chunk of memory somewhere else in memory area and copy all the elements. Say if a list has a capacity of 10 and we try to insert 11th element, it will allocate new memory in a different memory region, copy all 10 elements and then insert the 11th element. 
+So overhead here is (1) allocate new memory plus (2) copy all existing elements in new memory area
+
+So allocating new memory and copying all the elements again costs us too much. So, list is not a recommended approach for using it as a stack. 
+
+The recommended approach in python is to use 'collections.deque'
+
+
+You can look at collections.deque documentation 
+
+
+
+
+from collections import deque
+stack = deque()
+
+
+dir(stack)
+#
+['__add__', '__class__', '__class_getitem__', '__contains__', '__copy__', '__delattr__', '__delitem__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getstate__', '__gt__', '__hash__', '__iadd__', '__imul__', '__init__', '__init_subclass__', '__iter__', '__le__', '__len__', '__lt__', '__module__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__reversed__', '__rmul__', '__setattr__', '__setitem__', '__sizeof__', '__str__', '__subclasshook__', 'append', 'appendleft', 'clear', 'copy', 'count', 'extend', 'extendleft', 'index', 'insert', 'maxlen', 'pop', 'popleft', 'remove', 'reverse', 'rotate']
+
+
+stack.append("https://www.cnn.com/")
+
+stack
+# 
+deque(['https://www.cnn.com/'])
+
+
+stack.append("https://www.cnn.com/world")
+
+stack
+#
+deque(['https://www.cnn.com/', 'https://www.cnn.com/world'])
+
+stack.append("https://www.cnn.com/india")
+
+stack.append("https://www.cnn.com/china")
+
+stack
+#
+deque(['https://www.cnn.com/',
+       'https://www.cnn.com/world',
+       'https://www.cnn.com/india',
+       'https://www.cnn.com/china'])
+
+
+stack.pop()
+# 'https://www.cnn.com/china'
+
+
+stack.pop()
+# 'https://www.cnn.com/india'
+
+stack
+#
+deque(['https://www.cnn.com/', 'https://www.cnn.com/world'])
+
+stack.pop()
+# 'https://www.cnn.com/world'
+
+stack.pop()
+# 'https://www.cnn.com/'
+
+
+stack.pop()
+---------------------------------------------------------------------------
+IndexError                                Traceback (most recent call last)
+<ipython-input-22-415460d3b717> in <module>
+----> 1 stack.pop()
+
+IndexError: pop from an empty deque
+
+
+
+
+
+
+
+
+
+Implement Stack class using a deque:
+
+
+
+class Stack:
+    def __init__(self):
+        self.container = deque()
+    
+    def push(self,val):
+        self.container.append(val)
+        
+    def pop(self):
+        return self.container.pop()
+    
+    def peek(self):
+        return  self.container[-1]
+    
+    def is_empty(self):
+        return len(self.container)==0
+    
+    def size(self):
+        return len(self.container)

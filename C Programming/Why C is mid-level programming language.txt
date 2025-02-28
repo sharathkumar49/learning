@@ -1,0 +1,9 @@
+
+
+Great question! C is often referred to as a mid-level programming language because it strikes a balance between low-level and high-level languages. Here's why:
+
+1. Low-Level Features: C allows for manipulation of hardware and memory directly, similar to assembly language. You can use pointers, and access and manipulate memory addresses, which gives you more control over hardware.
+
+2. High-Level Features: At the same time, C offers features of high-level languages such as structured programming, functions, and easy-to-read syntax. This makes it more user-friendly and easier to write and maintain compared to pure assembly language.
+
+Essentially, C provides the power and flexibility of low-level programming languages while also offering the ease of use and abstraction found in high-level languages. This blend makes it uniquely versatile and effective for a wide range of programming tasks!
