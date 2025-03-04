@@ -1,0 +1,123 @@
+Binary Search tree deletion:
+
+In a binary search tree (BST), deletion is a bit trickier than insertion or searching because there are three different cases to consider. Let me guide you through each case:
+
+
+1. Deleting a Leaf Node (Node with No Children):
+This is the simplest case. If the node to be deleted is a leaf, it can simply be removed from the tree.
+
+Example:
+
+     5
+    / \
+   3   7
+
+
+If we delete node 3, the tree will look like:
+
+     5
+      \
+       7
+
+
+Steps:
+Find the node to delete.
+Remove the node.
+
+
+
+
+
+
+2. Deleting a Node with One Child:
+In this case, the child of the node to be deleted replaces the node.
+
+Example:
+
+     5
+    / \
+   3   7
+  /
+ 2
+
+
+If we delete node 3, node 2 will replace it, making the tree look like:
+
+     5
+    / \
+   2   7
+
+
+Steps:
+Find the node to delete.
+Replace the node with its child.
+
+
+
+
+
+3. Deleting a Node with Two Children
+This is the most complex case. You need to find the node's in-order predecessor (maximum value node in the left subtree) or in-order successor (minimum value node in the right subtree) to replace the node.
+
+Example:
+
+     5
+    / \
+   3   7
+  / \
+ 2   4
+
+
+If we delete node 3, we can replace it with its in-order predecessor 2 or its in-order successor 4. Assuming we use the in-order successor, the tree will look like:
+
+     5
+    / \
+   4   7
+  /
+ 2
+
+
+
+Steps:
+Find the node to delete.
+Find the in-order predecessor or in-order successor.
+Replace the node with the predecessor or successor.
+Delete the predecessor or successor node.
+
+
+
+Example Code
+Here’s a Python implementation for deletion in a BST:
+
+
+class TreeNode:
+    def __init__(self, key):
+        self.left = None
+        self.right = None
+        self.val = key
+
+def deleteNode(root, key):
+    if not root:
+        return root
+
+    if key < root.val:
+        root.left = deleteNode(root.left, key)
+    elif key > root.val:
+        root.right = deleteNode(root.right, key)
+    else:
+        if not root.left:
+            return root.right
+        elif not root.right:
+            return root.left
+        
+        temp = minValueNode(root.right)
+        root.val = temp.val
+        root.right = deleteNode(root.right, temp.val)
+    
+    return root
+
+def minValueNode(node):
+    current = node
+    while current.left:
+        current = current.left
+    return current
