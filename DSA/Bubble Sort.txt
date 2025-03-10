@@ -1,0 +1,145 @@
+
+Let's say you are building a system for a wireless store, where in your computer might have so many transactions and you want to sort this transaction by the amount. you want to know  who bought the maximum amount of inventory from your store. Or sometimes you want to sort based on names. So sorting is very common use case in the software engineering.
+
+
+
+Bubble Sort is one of the simplest sorting algorithms. It works by repeatedly stepping through the list to be sorted, comparing each pair of adjacent items, and swapping them if they are in the wrong order. The process is repeated until the list is sorted.
+
+
+How Bubble Sort Works:
+1. Start with the first element of the array.
+2. Compare the current element with the next element.
+3. If the current element is greater than the next element, swap them.
+4. Move to the next element and repeat steps 2 and 3 until the end of the array is reached.
+5. Repeat the entire process for all elements, ignoring the last sorted elements after each pass, as they are already in place.
+
+
+
+
+Example
+Suppose we have an array: [5, 3, 8, 4, 2]
+
+First Pass:
+	Compare 5 and 3: [3, 5, 8, 4, 2] (swap)
+	Compare 5 and 8: [3, 5, 8, 4, 2] (no swap)
+	Compare 8 and 4: [3, 5, 4, 8, 2] (swap)
+	Compare 8 and 2: [3, 5, 4, 2, 8] (swap)
+
+Second Pass:
+	Compare 3 and 5: [3, 5, 4, 2, 8] (no swap)
+	Compare 5 and 4: [3, 4, 5, 2, 8] (swap)
+	Compare 5 and 2: [3, 4, 2, 5, 8] (swap)
+
+Third Pass:
+	Compare 3 and 4: [3, 4, 2, 5, 8] (no swap)
+	Compare 4 and 2: [3, 2, 4, 5, 8] (swap)
+
+Fourth Pass:
+	Compare 3 and 2: [2, 3, 4, 5, 8] (swap)
+
+Now the array is sorted.
+
+So, if I have to keep on doing this process as many time as there are elements in the list. I will get my whole list sorted. Also, I don't need to do it n times(n is the size of an array). I need to do only n-1 time. I have to do this 'for-loop', for all the elements and within that 'for-loop', everytime I am comparing two consective elements and running the second for-loop throughout the list. So, if you have two for-loops running, your complexity would be O(npow2).
+
+
+
+Time Complexity:
+Worst-case: The worst-case time complexity of Bubble Sort is 𝑂(npow2), where n is the number of elements in the array. This occurs when the array is sorted in reverse order, and every possible swap is needed.
+
+Average-case: The average-case time complexity is also 𝑂(npow2). This is because on average, each element needs to be compared with half of the other elements.
+
+Best-case: The best-case time complexity of Bubble Sort is 𝑂(𝑛). This happens when the array is already sorted, and no swaps are needed. With an optimization to break the loop early if no swaps are made during a pass, Bubble Sort can achieve this best-case time complexity.
+
+Space Complexity
+The space complexity of Bubble Sort is 𝑂(1). This is because Bubble Sort is an in-place sorting algorithm, meaning it requires only a constant amount of additional memory space, aside from the input array itself.
+
+To summarize:
+Time Complexity:
+Worst-case: 𝑂(npow2)
+Average-case: 𝑂(npow2)
+Best-case: O(n)
+
+
+Space Complexity: 
+𝑂(1)
+
+Bubble Sort is simple to implement and understand, but it is not efficient for large datasets due to its quadratic time complexity. It is mainly used for educational purposes or when simplicity is preferred over efficiency.
+
+
+Code: 
+
+
+# you can use this to sort strings too
+def bubble_sort(elements):
+    size = len(elements)
+
+    for i in range(size-1):
+        swapped = False
+        for j in range(size-1-i):   
+		#each time the iteration for j decrease as i increases, since the trail elements or at any elements, would be in right place as per the 'i' iteration
+            if elements[j] > elements[j+1]:
+                tmp = elements[j]
+                elements[j] = elements[j+1]
+                elements[j+1] = tmp
+                swapped = True
+
+        if not swapped:
+            break
+
+
+if __name__ == '__main__':
+    elements = [5,9,2,1,67,34,88,34]
+    elements = [1,2,3,4,2]
+    elements = ["mona", "dhaval", "aamir", "tina", "chang"]
+
+    bubble_sort(elements)
+    print(elements)
+
+
+
+Outer Loop (for i in range(size-1))
+Purpose: The outer loop controls the number of passes through the array. Each pass ensures that at least one element is placed in its correct position.
+Range Calculation: The loop runs size - 1 times because after the n-1th pass, the array will be sorted.
+
+
+Inner Loop (for j in range(size-1-i)):
+Purpose: The inner loop compares and swaps adjacent elements if they are in the wrong order.
+Range Calculation: The range is 0 to size - 1 - i. This reduces the number of comparisons in each pass, as the last i elements are already in their correct positions.
+
+First Pass: Compares elements from index 0 to size - 2.
+
+Second Pass: Compares elements from index 0 to size - 3, and so on.
+
+
+
+Example Calculation
+Let's use the array [5, 9, 2, 1, 67, 34, 88, 34] as an example:
+
+Initial Array: [5, 9, 2, 1, 67, 34, 88, 34]
+
+First Pass:
+Compare 5 and 9: No swap
+Compare 9 and 2: Swap -> [5, 2, 9, 1, 67, 34, 88, 34]
+Compare 9 and 1: Swap -> [5, 2, 1, 9, 67, 34, 88, 34]
+Compare 9 and 67: No swap
+Compare 67 and 34: Swap -> [5, 2, 1, 9, 34, 67, 88, 34]
+Compare 67 and 88: No swap
+Compare 88 and 34: Swap -> [5, 2, 1, 9, 34, 67, 34, 88]
+
+Second Pass:
+Compare 5 and 2: Swap -> [2, 5, 1, 9, 34, 67, 34, 88]
+Compare 5 and 1: Swap -> [2, 1, 5, 9, 34, 67, 34, 88]
+Compare 5 and 9: No swap
+Compare 9 and 34: No swap
+Compare 34 and 67: No swap
+Compare 67 and 34: Swap -> [2, 1, 5, 9, 34, 34, 67, 88]
+
+Third Pass:
+Compare 2 and 1: Swap -> [1, 2, 5, 9, 34, 34, 67, 88]
+Compare 2 and 5: No swap
+Compare 5 and 9: No swap
+Compare 9 and 34: No swap
+Compare 34 and 34: No swap
+Compare 34 and 67: No swap (no swaps means the array is sorted)
+
+After these passes, the array is sorted as [1, 2, 5, 9, 34, 34, 67, 88].

@@ -1,0 +1,33 @@
+
+Binary Search: 
+
+
+
+
+0 1 2  3  4  5  6  7  8
+4 9 11 17 21 25 29 32 38  
+
+
+
+In linear search operation, the complexity would be O(n)
+
+
+
+In every search, in every iteration, you are dividing your search space by half
+
+
+
+iteration 1 = n/2
+iteration 2 = n/2 pow 2
+iteration 3 = n/2 pow 3
+
+...
+
+iteration k = n/2 pow k
+
+
+
+linear search = n/2
+
+binary search = log(n)
+
