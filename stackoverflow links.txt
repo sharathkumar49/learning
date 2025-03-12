@@ -1,0 +1,46 @@
+
+
+
+inpStr = '123412345123456'
+
+# O(1) array creation.
+# freq = [0] * 1000
+freq = {}
+#
+# print(freq)
+# print(len(inpStr))
+# for pos in range(len(inpStr) - 2):
+#     print(pos)
+
+# O(n) string processing.
+for val in [int(inpStr[pos:pos+3]) for pos in range(len(inpStr) - 2)]:
+    if val in freq:
+        freq[val] += 1
+    else:
+        freq.update({val : 0})
+# O(1) output of relevant array values.
+print([(k, v) for k, v in freq.items() if freq[k] >= 1])
+#print ([(num, freq[num]) for num in range(1000) if freq[num] > 1])
+
+
+https://stackoverflow.com/search?page=2&tab=Relevance&pagesize=15&q=Python%20interview%20questions&searchOn=3
+
+
+https://stackoverflow.com/search?tab=votes&q=Python%20interview%20questions&searchOn=3&s=6d8bc2f5-3e72-4a70-b348-3f2f4715a31f
+
+
+
+
+https://stackoverflow.com/questions/68110679/how-to-replace-a-sub-string-from-main-string-in-a-python-without-using-replace-f
+
+https://stackoverflow.com/questions/40456627/finding-size-of-largest-subtree-of-a-bst-contained-in-a-range
+
+https://stackoverflow.com/questions/69247013/find-common-items-in-two-lists-using-for-loop-python-reduce-time-complexity
+
+https://stackoverflow.com/questions/10148849/find-lowest-index-of-a-given-value-in-a-presorted-array
+
+https://stackoverflow.com/questions/56639740/what-is-the-difference-between-coding-and-scripting
+
+https://stackoverflow.com/questions/9493853/given-an-array-find-out-the-next-smaller-element-for-each-element/9495815#9495815
+
+https://stackoverflow.com/questions/40391500/length-of-longest-subarray-of-sum-less-than-or-equal-to-k

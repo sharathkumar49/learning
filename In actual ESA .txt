@@ -1,0 +1,108 @@
+
+
+
+Pipeline        MTA
+				Message Store  (message_store : pkg, quarantine_store, gcq_store, 
+				Mail flow(scan coordination)
+				Message filters
+				content filters
+				Mail Delivery  (omh.py, PrioritizedIP.py, dns_cache.py, imh.py)
+				
+				
+				
+			
+Reporting Engine talks to Berkley DB
+
+we have 2 db --> Berkley DB and Postgres
+
+Postrgres is mainly for handling quarantined data
+
+Reporting and Tracking are all rely on the Berkley DB
+
+
+Sujatha worked in Mail Delivery flow ( you can ask her, what are all the related files, that she has worked on)
+
+
+mid is the id for the each mail 
+
+
+we use hiemdall to start and stop services, hermes is the one of the service, which is used to orchestrate the mail workflow
+
+
+euq_server and euq_webui are the separate services where we can view the quarantined messages, these are specifically created for the end users
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Senthil: 
+Once the email is received, put on a queue, they call it as a GCQ (Garbage Collector Queue), after initial connection, the 
+
+As far as my understanding is icon is something like. Once the e-mail is received. Maybe put on a queue, they call it as a.
+Gcq garbage collector Q OK after initial collection validation.
+The other Talos verification rate, they put that e-mail in the queue and from there on they do a lot of scanning like message message filters, policies, checking, safe listing block listing verification. There are so many verification done. OK.
+Anti spam antivirus and finally it is being put on and but if it is valid e-mail then they are put in a delivery queue.
+That's a whole flow of mail. Within these components, they call it as a pipeline.
+
+So it is the pipeline through which the mail flows.
+
+Yep.
+So connection is something like once the.
+Smtp Connection is established right?
+They do some pre check's if they have some cloudbased service called Talos and they do the IP address check some some other preliminary checks, OK.
+And once it is through with all those checks and then they put them in a queue.
+OK, they call it as a garbage collector queue.
+And from there on, they call it as a pipeline.
+Typically a scanning process, right?
+And the scanning and.
+Putting in a quarantine, all this comes under a pipeline.
+
+
+
+
+Sujatha:
+
+We have like once we when a mail is injected to ESA then it will check whether it's a Dane flow or a legacy flow like how to send the mail. Dane is like nothing but a secured way of getting the record and sending the mail to the destination.  If the mail profile is not obtained, then we go for a legacy flow.
+The mail flow is nothing but once the mail is injected, first it will scan whether the mail is malicious mail or not. If it is not then, if it is dumped it will be in the queue. In the queue, one by one, the mail will be processed. So, internally, it will take each mail and check MX record for each of those email's destination and based on that it will forward the mail to the destination. So, Dane is part of the pipeline flow
+
+
+Senthil:
+
+Beaker client is client for Talos
+
+
+GCQ: once the SMTP connection is established and email checks are done, they put them in a queue, it goes through some of the scanning, filters and then put in a DQ, if it fails in any one of the process, it will be quarantined
+
+
+Files:
+
+Dns --> all the files under DNS goes for DNS communication
+
+
+
+Sujatha: 
+
+dns_cache.py:
+
+
+
+This is the main file.
+This is the main file, DNS, under score, cache.
+Which interacts between the DNS server and the mail like pitch the record and gives to the.
+Mail flow. So this is one of the important file for the pipeline and this DNS and the score unbound is the package used for Dane Flow.
+And uh, if we enable Dave, then only it will this flow will go.
+Otherwise it will go for the legacy flow.
+So all these files are the important one and the triggering point is the omh dot py file.
+From there, only the it'll come till the DNS and then return the record to the OMS dot PY.
