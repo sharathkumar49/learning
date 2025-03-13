@@ -1,0 +1,75 @@
+
+youtube video:
+
+Cisco ESA Training: 
+
+Shared in the group,
+
+https://www.youtube.com/watch?v=gu0yio7bp60&list=PL7M4bS1GF0DGdq0c_d3UX8mYywxx2Rn_Y
+
+SMTP - Simple Mail Transfer Protocol 
+
+
+
+
+Glossary: 
+
+MTA:
+MTA(Mail Transfer Agent), ESA is a Mail Transfer Agent. So, it's a box that receives email and sends out emails 
+Email Gateway or software agent that transfers mail from one system to another. The Cisco ESA is an MTA
+
+
+Groupware Server:
+Server that accepts, forwards, delivers and stores messages on behalf of users. Example: MS Excange
+
+
+SMTP Server: 
+Receives connection requests from the SMTP client
+
+SMTP client: 
+Initiate connections to an SMTP server
+
+
+Mail User Agent: 
+Software Client Application like MS Outlook that accesses a groupware server to send or receive mail
+
+MX record: 
+DNS Mail eXchanger Record that specifies how emails are routed. MX records point to the servers that should receive an email. 
+
+
+A record:  
+DNS record used to locate IP address of MTA specified by MX record
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Cisco Email Security Appliance Overview part 1
+
+ESA can help your organization with Protection against spammers malware and also data loss.
+
+
+
+
+
+Monitor Menu --> Message Tracking --> to track messages/ track history of individual emails
+En
+
+SMA will acts as the metadata for all the ESAs combined 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+your Esa is the public pH of your organization mail infrastructure
