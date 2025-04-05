@@ -1,0 +1,8 @@
+data structures and algorithms books:
+
+1. “Introduction to Algorithms” by Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein
+2. “Algorithms Unlocked” by Thomas H. Cormen
+3. “The Algorithm Design Manual” by Steven S. Skiena
+4. “Algorithms” by Robert Sedgewick and Kevin Wayne“Algorithms” by Robert Sedgewick and Kevin Wayne
+5. “Advanced Data Structures” by Peter Brass
+6. “Automate This: How Algorithms Came To Rule Our World” by Christopher Steiner

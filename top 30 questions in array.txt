@@ -1,0 +1,25 @@
+Top 30 Array questions:
+
+
+1. Two sum
+2. Find the missing number (1 to N)
+3. Find the largest and smallest element in an array
+4. Reverse an array
+5. Remove duplicates from an sorted array
+6. Move Zeroes to the end of the array
+7. check if an array is sorted 
+8. intersection and union of two arrays
+9. Rotate an array(cyclic rotation)
+10. Find the first and second smallest element in an array
+
+Medium level: 
+1. Maximum subarray sum(Kadane's Algorithm)
+2. Best time to buy and sell stock 
+3. Sort an array of 0s, 1s and 2s (Duch National Flag problem)
+4. Find the Majority Element (Moore's Voting Algorithm)
+5. Kth largest and smallest element in an array
+6. Find all pairs in an array that sum to a given value
+7. Rearrange an Array with alternating positive and negative numbers
+8. Find the Longest consecutive sequence
+9. Next Greater Element
+10. Sliding window Maximum

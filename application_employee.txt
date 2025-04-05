@@ -1,0 +1,152 @@
+
+
+
+Project setup:
+--------------
+django-admin startproject employee_project
+cd employee_project
+python manage.py startapp employee_app
+
+
+
+settings.py
+-----------
+
+INSTALLED_APPS = [
+    ...
+    'employee_app',
+    ...
+]
+
+
+
+
+models.py
+---------
+Define the Employee model using dataclass and Django's models.Model:
+
+from django.db import models
+from dataclasses import dataclass
+
+@dataclass
+class Employee:
+    employee_id: int
+    name: str
+    email: str
+    department: str
+    designation: str
+    salary: float
+    date_of_joining: str
+
+class EmployeeModel(models.Model):
+    employee_id = models.IntegerField(unique=True)
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    department = models.CharField(max_length=100)
+    designation = models.CharField(max_length=100)
+    salary = models.FloatField()
+    date_of_joining = models.DateField()
+
+    def __str__(self):
+        return self.name
+
+
+
+serializers.py
+--------------
+Create a serializer for the EmployeeModel:
+
+from rest_framework import serializers
+from .models import EmployeeModel
+
+class EmployeeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EmployeeModel
+        fields = '__all__'
+
+
+
+views.py
+--------
+Create a view to handle POST requests for employee records with decorators for logging and validation:
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from .models import EmployeeModel
+from .serializers import EmployeeSerializer
+
+def log_request(func):
+    def wrapper(*args, **kwargs):
+        print(f"Processing request: {args[0].method} {args[0].path}")
+        return func(*args, **kwargs)
+    return wrapper
+
+def validate_employee_data(func):
+    def wrapper(*args, **kwargs):
+        data = args[0].data
+        required_fields = ['employee_id', 'name', 'email', 'department', 'designation', 'salary', 'date_of_joining']
+        for field in required_fields:
+            if field not in data:
+                return Response({"error": f"Missing field: {field}"}, status=status.HTTP_400_BAD_REQUEST)
+        return func(*args, **kwargs)
+    return wrapper
+
+@api_view(['POST'])
+@log_request
+@validate_employee_data
+def add_employee(request):
+    serializer = EmployeeSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+urls.py
+-------
+Add URL pattern for the add_employee view:
+
+from django.urls import path
+from .views import add_employee
+
+urlpatterns = [
+    path('add_employee/', add_employee, name='add_employee'),
+]
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Client-Side Code:
+----------------
+
+client/client.py:
+
+Client-side code to read the CSV and send records to the server using aiohttp:
+
+import aiohttp
+import asyncio
+import csv
+
+async def send_employee_record(session, url, record):
+    async with session.post(url, json=record) as response:
+        if response.status == 201:
+            print(f"Successfully added employee: {record['name']}")
+        else:
+            print(f"Failed to add employee: {record['name']} - {await response.text()}")
+
+async def main():
+    url = "http://localhost:8000/add_employee/"
+    
+    async with aiohttp.ClientSession() as session:
+        with open('../employee_data.csv', newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+            tasks = []
+            for row in reader:
+                tasks.append(send_employee_record(session, url, row))
+            await asyncio.gather(*tasks)
+
+if __name__ == '__main__':
+    asyncio.run(main())

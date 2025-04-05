@@ -1,0 +1,5464 @@
+
+
+
+pandas w3 resource:
+
+
+Python Pandas DataSeries: 
+=========================
+1. Write a Pandas program to create and display a one-dimensional array-like object containing an array of data:
+
+
+----------------
+
+Python Code :
+
+import pandas as pd
+ds = pd.Series([2, 4, 6, 8, 10])
+print(ds)
+
+
+Sample Output:
+
+0     2                                                                
+1     4                                                                
+2     6                                                                
+3     8                                                                
+4    10                                                                
+dtype: int64
+
+Explanation:
+
+ds = pd.Series([2, 4, 6, 8, 10]) # The code creates a Pandas Series object named 'ds' which contains a sequence of five integers: 2, 4, 6, 8, and 10.
+
+print(ds) # This line prints the contents of the Series object to the console.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2. Write a Pandas program to convert a Panda module Series to Python list and it’s type.Code editor software
+
+
+----------------
+
+
+Python Code :
+
+import pandas as pd
+ds = pd.Series([2, 4, 6, 8, 10])
+print("Pandas Series and type")
+print(ds)
+print(type(ds))
+print("Convert Pandas Series to Python list")
+print(ds.tolist())
+print(type(ds.tolist()))
+
+
+
+Sample Output:
+
+Pandas Series and type                                                 
+0     2                                                                
+1     4                                                                
+2     6                                                                
+3     8                                                                
+4    10                                                                
+dtype: int64                                                           
+<class 'pandas.core.series.Series'>                                    
+Convert Pandas Series to Python list                                   
+[2, 4, 6, 8, 10]                                                       
+<class 'list'>     
+
+
+                                                 
+Explanation:
+
+ds = pd.Series([2, 4, 6, 8, 10])  # This code creates a Pandas Series object named 'ds' containing a sequence of five integers: 2, 4, 6, 8, and 10.
+
+print(type(ds))   # This statement prints the type of the 'ds' object using the type() function, which will be <class 'pandas.core.series.Series'>. This confirms that the object is indeed a Pandas Series.
+
+print(ds.tolist())  # This statement prints the contents of the Series object as a Python list using the tolist() method.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3. Write a Pandas program to add, subtract, multiple and divide two Pandas Series.
+
+Sample Series: [2, 4, 6, 8, 10], [1, 3, 5, 7, 9]
+
+
+----------------
+Python Code :
+
+import pandas as pd
+ds1 = pd.Series([2, 4, 6, 8, 10])
+ds2 = pd.Series([1, 3, 5, 7, 9])
+ds = ds1 + ds2
+print("Add two Series:")
+print(ds)
+print("Subtract two Series:")
+ds = ds1 - ds2
+print(ds)
+print("Multiply two Series:")
+ds = ds1 * ds2
+print(ds)
+print("Divide Series1 by Series2:")
+ds = ds1 / ds2
+print(ds)
+
+
+
+Sample Output:
+
+Add two Series:                                                        
+0     3                                                                
+1     7                                                                
+2    11                                                                
+3    15                                                                
+4    19                                                                
+dtype: int64                                                           
+Subtract two Series:                                                   
+0    1                                                                 
+1    1                                                                 
+2    1                                                                 
+3    1                                                                 
+4    1                                                                 
+dtype: int64                                                           
+Multiply two Series:                                                   
+0     2                                                                
+1    12                                                                
+2    30                                                                
+3    56         
+4    90                                                                
+dtype: int64                                                           
+Divide Series1 by Series2:                                             
+0    2.000000                                                          
+1    1.333333                                                          
+2    1.200000                                                          
+3    1.142857                                                          
+4    1.111111                                                          
+dtype: float64                                                         
+
+
+
+Explanation:
+
+Following code creates two Pandas Series objects named 'ds1' and 'ds2' containing a sequence of five integers each:
+
+ds1 = [2, 4, 6, 8, 10]
+ds2 = [1, 3, 5, 7, 9]
+ds = ds1 + ds2   # This line adds the two Series objects element-wise, resulting in a new Series object 'ds' with the values [3, 7, 11, 15, 19].
+ds = ds1 - ds2   # This line subtracts the second Series object from the first Series object element-wise, resulting in a new Series object 'ds' with the values [1, 1, 1, 1, 1].
+ds = ds1 * ds2   # This line multiplies the two Series objects element-wise, resulting in a new Series object 'ds' with the values [2, 12, 30, 56, 90].
+ds = ds1 / ds2   # This line divides the first Series object by the second Series object element-wise, resulting in a new Series object 'ds' with the values [2.0, 1.333, 1.2, 1.143, 1.111].
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4. Write a Pandas program to compare the elements of the two Pandas Series.
+
+Sample Series: [2, 4, 6, 8, 10], [1, 3, 5, 7, 10]
+
+
+Sample Solution:
+----------------
+
+
+Python Code :
+
+import pandas as pd
+ds1 = pd.Series([2, 4, 6, 8, 10])
+ds2 = pd.Series([1, 3, 5, 7, 10])
+print("Series1:")
+print(ds1)
+print("Series2:")
+print(ds2)
+print("Compare the elements of the said Series:")
+print("Equals:")
+print(ds1 == ds2)
+print("Greater than:")
+print(ds1 > ds2)
+print("Less than:")
+print(ds1 < ds2)
+
+
+
+Sample Output:
+
+Series1:                                                               
+0     2                                                                
+1     4                                                                
+2     6                                                                
+3     8                                                                
+4    10                                                                
+dtype: int64                                                           
+Series2:                                                               
+0     1                                                                
+1     3                                                                
+2     5                                                                
+3     7                                                                
+4    10                                                                
+dtype: int64                                                           
+Compare the elements of the said Series:                               
+Equals:                                                                
+0    False                                                             
+1    False                                                             
+2    False
+3    False                                                             
+4     True                                                             
+dtype: bool                                                            
+Greater than:                                                          
+0     True                                                             
+1     True                                                             
+2     True                                                             
+3     True                                                             
+4    False                                                             
+dtype: bool                                                            
+Less than:                                                             
+0    False                                                             
+1    False                                                             
+2    False                                                             
+3    False                                                             
+4    False                                                             
+dtype: bool                                             
+
+
+
+Explanation:
+
+The above exercise demonstrates how to perform element-wise comparison operations between two Pandas Series objects using Python's comparison operators.
+
+Following code creates two Pandas Series objects named 'ds1' and 'ds2' containing a sequence of five integers each:
+
+ds1 = [2, 4, 6, 8, 10]
+ds2 = [1, 3, 5, 7, 10]
+print(ds1 == ds2)   # This line compares the two Series objects using the '==' operator, resulting in a new Series object with boolean values indicating whether the corresponding elements in ‘ds1’ and ‘ds2’ are equal or not. The output will be: [False, False, False, False, True]
+
+print(ds1 > ds2)   # This line compares the two Series objects using the '>' operator, resulting in a new Series object with boolean values indicating whether the corresponding elements in ‘ds1’ are greater than those in ‘ds2’ or not. The output will be: [True, True, True, True, False]
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+5. Write a Pandas program to convert a dictionary to a Pandas series.
+
+Sample dictionary: d1 = {'a': 100, 'b': 200, 'c':300, 'd':400, 'e':800}
+
+
+----------------
+Python Code :
+
+import pandas as pd
+d1 = {'a': 100, 'b': 200, 'c':300, 'd':400, 'e':800}
+print("Original dictionary:")
+print(d1)
+new_series = pd.Series(d1)
+print("Converted series:")
+print(new_series)
+
+
+
+Output:
+
+Original dictionary:
+{'a': 100, 'b': 200, 'c': 300, 'd': 400, 'e': 800}
+Converted series:
+a    100
+b    200
+c    300
+d    400
+e    800
+dtype: int64                                 
+
+
+
+Explanation:
+
+In the above example –
+
+d1 = {'a': 100, 'b': 200, 'c':300, 'd':400, 'e':800}  # This line creates a Python dictionary 'd1' with five key-value pairs. Each key is a string ('a', 'b', 'c', 'd', 'e') and each value is an integer.
+
+new_series = pd.Series(d1)   # This line creates a new Pandas Series object 'new_series' from the dictionary 'd1' using the pd.Series() constructor. The resulting Series object will have the same keys as the dictionary and the corresponding values as its elements.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+6. Write a Pandas program to convert a NumPy array to a Pandas series.
+
+
+Sample NumPy array: d1 = [10, 20, 30, 40, 50]
+
+
+
+Python Code :
+import numpy as np
+import pandas as pd
+np_array = np.array([10, 20, 30, 40, 50])
+print("NumPy array:")
+print(np_array)
+new_series = pd.Series(np_array)
+print("Converted Pandas series:")
+print(new_series)
+
+
+
+Output:
+
+  NumPy array:
+[10 20 30 40 50]
+Converted Pandas series:
+0    10
+1    20
+2    30
+3    40
+4    50
+dtype: int64                               
+
+
+Explanation:
+
+np.array([10, 20, 30, 40, 50])  # This code creates a NumPy array 'np_array' containing a sequence of five integers: [10, 20, 30, 40, 50].
+
+new_series = pd.Series(np_array)  # This line creates a new Pandas Series object 'new_series' from the NumPy array using the pd.Series() constructor. The resulting Series object will have the same values as the NumPy array, and the default index will be assigned to each element starting from 0 and increasing by 1 for each subsequent element.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+7. Write a Pandas program to change the data type of given a column or a Series.
+
+Sample Series:
+Original Data Series:
+0 100
+1 200
+2 python
+3 300.12
+4 400
+dtype: object
+
+Change the said data type to numeric:
+0 100.00
+1 200.00
+2 NaN
+3 300.12
+4 400.00
+dtype: float64
+
+
+
+
+Python Code :
+import pandas as pd
+s1 = pd.Series(['100', '200', 'python', '300.12', '400'])
+print("Original Data Series:")
+print(s1)
+print("Change the said data type to numeric:")
+s2 = pd.to_numeric(s1, errors='coerce')
+print(s2)
+
+
+
+Output:
+Original Data Series:
+0       100
+1       200
+2    python
+3    300.12
+4       400
+dtype: object
+Change the said data type to numeric:
+0    100.00
+1    200.00
+2       NaN
+3    300.12
+4    400.00
+dtype: float64                              
+
+
+Explanation:
+s1 = pd.Series(['100', '200', 'python', '300.12', '400'])   # This line creates a Pandas Series object 's1' containing a sequence of five string values: ['100', '200', 'python', '300.12', '400'].
+
+s2 = pd.to_numeric(s1, errors='coerce')   # This line applies the pd.to_numeric() function to the Series object 's1' with the 'errors' parameter set to 'coerce'. This function attempts to convert each value in the Series object to a numeric type (e.g., integer or float). If a value cannot be converted, it will be replaced with a NaN (not a number) value.
+
+
+value in the Series object to a numeric type (e.g., integer or float). If a value cannot be converted, it will be replaced with a NaN (not a number) value.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+8. Write a Pandas program to convert the first column of a DataFrame as a Series.
+
+
+Python Code :
+import pandas as pd
+
+d = {'col1': [1, 2, 3, 4, 7, 11], 'col2': [4, 5, 6, 9, 5, 0], 'col3': [7, 5, 8, 12, 1, 11]}
+df = pd.DataFrame(data=d)
+
+print("Original DataFrame")
+print(df)
+
+# Using iloc
+s1 = df.iloc[:, 0]
+
+# Alternatively, you can directly reference the column by name
+#s1 = df['col1']
+
+print("\n1st column as a Series:")
+print(s1)
+print(type(s1))
+
+
+ 
+Output:
+Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     2     5     5
+2     3     6     8
+3     4     9    12
+4     7     5     1
+5    11     0    11
+
+1st column as a Series:
+0     1
+1     2
+2     3
+3     4
+4     7
+5    11
+Name: col1, dtype: int64
+<class 'pandas.core.series.Series'>                  
+
+
+
+Explanation:
+Here is the breakdown of the above exercise:
+
+Import Pandas Library:
+import pandas as pd  #This line imports the Pandas library and assigns it the alias "pd" for easier reference.
+
+Create a DataFrame:
+d = {'col1': [1, 2, 3, 4, 7, 11], 'col2': [4, 5, 6, 9, 5, 0], 'col3': [7, 5, 8, 12, 1, 11]} df = pd.DataFrame(data=d) 
+				#This code creates a DataFrame (df) using a dictionary (d). Each key-value pair in the dictionary represents a column in the DataFrame.
+
+Print Original DataFrame:
+print("Original DataFrame") print(df) #This prints the original DataFrame (df) to the console.
+
+
+Extract the First Column as a Series:
+s1 = df.iloc[:, 0]
+
+or alternatively:
+s1 = df['col1']
+ # This line extracts the first column from the DataFrame as a Series (s1). The iloc[:, 0] indexer is used to select all rows (:) from the first column (0). Alternatively, you can directly reference the column by name (df['col1']).
+
+
+Print the Result:
+print("\n1st column as a Series:") print(s1)
+# This prints the extracted Series (s1) to the console.
+
+
+Print the Type of the Series:
+print(type(s1))
+# This prints the type of the Series (s1). The result will show that s1 is a Pandas Series.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+9. Write a Pandas program to convert a given Series to an array.
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+s1 = pd.Series(['100', '200', 'python', '300.12', '400'])
+print("Original Data Series:")
+print(s1)
+print("Series to an array")
+a = s1.values
+print(a)
+print(type(a))
+
+
+Output:
+Original Data Series:
+0       100
+1       200
+2    python
+3    300.12
+4       400
+dtype: object
+Series to an array
+['100' '200' 'python' '300.12' '400']
+<class 'numpy.ndarray'>                     
+
+
+Explanation:
+
+s1 = pd.Series(['100', '200', 'python', '300.12', '400']) # This code creates a Pandas Series object 's1' containing a sequence of five string values: ['100', '200', 'python', '300.12', '400'].
+
+a = np.array(s1.values.tolist())   # This code extracts the values of the Pandas Series object 's1' using the .values attribute and assigns them to a new variable 'a'.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+10. Write a Pandas program to convert Series of lists to one Series.
+
+
+Python Code :
+import pandas as pd
+s = pd.Series([
+    ['Red', 'Green', 'White'],
+    ['Red', 'Black'],
+    ['Yellow']])
+print("Original Series of list")
+print(s)
+s = s.apply(pd.Series).stack().reset_index(drop=True)
+print("One Series")
+print(s)
+
+
+Output:
+Original Series of list
+0    [Red, Green, White]
+1           [Red, Black]
+2               [Yellow]
+dtype: object
+One Series
+0       Red
+1     Green
+2     White
+3       Red
+4     Black
+5    Yellow
+dtype: object                      
+
+
+Explanation:
+s = pd.Series([ ['Red', 'Green', 'White'], ['Red', 'Black'], ['Yellow']])   # This line creates a Pandas Series object 's' containing a sequence of three lists of strings.
+
+s = s.apply(pd.Series).stack().reset_index(drop=True)
+
+In the above code:
+s.apply(pd.Series): Applies the pd.Series() constructor to each element of the Pandas Series object 's' using the .apply() method. This converts each list element into a separate Pandas Series object with one row per element.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+11. Write a Pandas program to sort a given Series.
+
+
+Python Code :
+
+import pandas as pd
+s = pd.Series(['100', '200', 'python', '300.12', '400'])
+print("Original Data Series:")
+print(s)
+new_s = pd.Series(s).sort_values()
+print(new_s)
+
+
+
+Output:
+Original Data Series:
+0       100
+1       200
+2    python
+3    300.12
+4       400
+dtype: object
+0       100
+1       200
+3    300.12
+4       400
+2    python
+dtype: object                     
+
+
+
+Explanation:
+
+In the above exercise -
+
+s = pd.Series(['100', '200', 'python', '300.12', '400'])  # This code creates a Pandas Series object 's' containing a sequence of five string values: ['100', '200', 'python', '300.12', '400'].
+
+new_s = pd.Series(s).sort_values(): This line creates a new Pandas Series object 'new_s' by passing the original Series object 's' to the pd.Series() constructor and sorting the resulting Series object using the .sort_values() method.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+12. Write a Pandas program to add some data to an existing Series.
+
+Sample Solution:
+Python Code:
+
+import pandas as pd
+s = pd.Series(['100', '200', 'python', '300.12', '400'])
+print("Original Data Series:")
+print(s)
+print("\nData Series after adding some data:")
+new_s = pd.concat([s, pd.Series([500, "php"])], ignore_index=True)
+print(new_s)
+
+
+
+Output:
+Original Data Series:
+0       100
+1       200
+2    python
+3    300.12
+4       400
+dtype: object
+
+Data Series after adding some data:
+0       100
+1       200
+2    python
+3    300.12
+4       400
+5       500
+6       php
+dtype: object               
+
+
+
+Explanation:
+In the above exercise -
+
+s = pd.Series(['100', '200', 'python', '300.12', '400'])  # This code creates a Pandas Series object 's' containing a sequence of five string values: ['100', '200', 'python', '300.12', '400'].
+
+new_s = pd.concat([s, pd.Series([500, "php"])], ignore_index=True)   # This line creates a new Pandas Series object 'new_s' by concatenating the original Series object 's' with a new Pandas Series object containing two additional values: [500, "php"]. The pd.concat() function is used to concatenate the two Series objects, with the 'ignore_index' parameter set to True to reset the index of the resulting Series object 'new_s'.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+13. Write a Pandas program to create a subset of a given series based on value and condition.
+
+
+Python Code :
+
+import pandas as pd
+s = pd.Series([0,1,2,3,4,5,6,7,8,9,10])
+print("Original Data Series:")
+print(s)
+print("\nSubset of the above Data Series:")
+n = 6
+new_s = s[s < n]
+print(new_s)
+
+
+
+Output:
+
+Original Data Series:
+0      0
+1      1
+2      2
+3      3
+4      4
+5      5
+6      6
+7      7
+8      8
+9      9
+10    10
+dtype: int64
+
+Subset of the above Data Series:
+0    0
+1    1
+2    2
+3    3
+4    4
+5    5
+dtype: int64                   
+
+
+
+Explanation:
+
+In the above exercise -
+s = pd.Series([0, 1,2,3,4,5,6,7,8,9,10])  # This line creates a Pandas Series object 's' containing a sequence of 11 integer values from 0 to 10.
+
+new_s = s[s < n] 
+# This line creates a new Pandas Series object 'new_s' by selecting the elements from the original Series object 's' that are less than a specified integer value 'n'. Here the value of n = 6. This is done by applying a boolean mask to the original Series object using the condition s < n.
+The resulting Series object 'new_s' will contain only the elements from the original Series object 's' that are less than 6.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+14. Write a Pandas program to change the order of index of a given series.
+
+
+Python Code :
+import pandas as pd
+s = pd.Series(data = [1,2,3,4,5], index = ['A', 'B', 'C','D','E'])
+print("Original Data Series:")
+print(s)
+s = s.reindex(index = ['B','A','C','D','E'])
+print("Data Series after changing the order of index:")
+print(s)
+
+
+Output:
+Original Data Series:
+A    1
+B    2
+C    3
+D    4
+E    5
+dtype: int64
+Data Series after changing the order of index:
+B    2
+A    1
+C    3
+D    4
+E    5
+dtype: int64                   
+
+
+
+Explanation:
+In the above exercise -
+
+s = pd.Series(data = [1,2,3,4,5], index = ['A', 'B', 'C','D','E'])  
+# This code creates a Pandas Series object 's' containing a sequence of five integer values and assigns custom index labels to each value. The index labels are ['A', 'B', 'C', 'D', 'E'] and the corresponding values are [1, 2, 3, 4, 5].
+
+s = s.reindex(index = ['B','A','C','D','E'])  
+# This code creates a new Pandas Series object 's' by reindexing the original Series object 's' based on a new index list ['B', 'A', 'C', 'D', 'E'] using the .reindex() method. The resulting Series object 's' will have the same values as the original Series object 's', but with the index labels in the order specified by the new index list.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+15. Write a Pandas program to create the mean and standard deviation of the data of a given Series.
+
+
+Python Code :
+import pandas as pd
+s = pd.Series(data = [1,2,3,4,5,6,7,8,9,5,3])
+print("Original Data Series:")
+print(s)
+print("Mean of the said Data Series:")
+print(s.mean())
+print("Standard deviation of the said Data Series:")
+print(s.std())
+
+
+
+Output:
+Original Data Series:
+0     1
+1     2
+2     3
+3     4
+4     5
+5     6
+6     7
+7     8
+8     9
+9     5
+10    3
+dtype: int64
+Mean of the said Data Series:
+4.818181818181818
+Standard deviation of the said Data Series:
+2.522624895547565 
+
+
+                
+Explanation:
+In the above code –
+
+s = pd.Series(data = [1,2,3,4,5,6,7,8,9,5,3])  
+# This line creates a Pandas Series object 's' containing a sequence of 11 integer values.print(s.mean()): This line calculates the mean of the values in the Pandas Series object 's' using the .mean() method and prints the result.
+
+print(s.std()) 
+# This line calculates the standard deviation of the values in the Pandas Series object 's' using the .std() method and prints the result. The standard deviation is a measure of the spread of the data and is calculated by taking the square root of the average of the squared differences from the mean.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+16. Write a Pandas program to get the items of a given series not present in another given series.
+
+
+Python Code :
+
+import pandas as pd
+sr1 = pd.Series([1, 2, 3, 4, 5])
+sr2 = pd.Series([2, 4, 6, 8, 10])
+print("Original Series:")
+print("sr1:")
+print(sr1)
+print("sr2:")
+print(sr2)
+print("\nItems of sr1 not present in sr2:")
+result = sr1[~sr1.isin(sr2)]
+print(result)
+
+
+
+Output:
+Original Series:
+sr1:
+0    1
+1    2
+2    3
+3    4
+4    5
+dtype: int64
+sr2:
+0     2
+1     4
+2     6
+3     8
+4    10
+dtype: int64
+
+Items of sr1 not present in sr2:
+0    1
+2    3
+4    5
+dtype: int64                
+
+
+Explanation:
+sr1 = pd.Series([1, 2, 3, 4, 5])
+sr2 = pd.Series([2, 4, 6, 8, 10])
+Above code creates two Pandas Series objects 'sr1' and 'sr2', each containing a sequence of five integer values.
+
+result = sr1[~sr1.isin(sr2)]  
+# This line creates a new Pandas Series object 'result' by selecting the elements from the original Series object 'sr1' that are not in the Series object 'sr2'. This is done by applying a boolean mask to the original Series object using the .isin() method to check which elements in 'sr1' are present in 'sr2', and then negating the boolean mask using the tilde (~) operator.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+17. Write a Pandas program to get the items which are not common of two given series.
+
+
+Python Code :
+import pandas as pd
+import numpy as np
+sr1 = pd.Series([1, 2, 3, 4, 5])
+sr2 = pd.Series([2, 4, 6, 8, 10])
+print("Original Series:")
+print("sr1:")
+print(sr1)
+print("sr2:")
+print(sr2)
+print("\nItems of a given series not present in another given series:")
+sr11 = pd.Series(np.union1d(sr1, sr2))
+sr22 = pd.Series(np.intersect1d(sr1, sr2))
+result = sr11[~sr11.isin(sr22)]
+print(result)
+
+
+
+Output:
+Original Series:
+sr1:
+0    1
+1    2
+2    3
+3    4
+4    5
+dtype: int64
+sr2:
+0     2
+1     4
+2     6
+3     8
+4    10
+dtype: int64
+
+Items of a given series not present in another given series:
+0     1
+2     3
+4     5
+5     6
+6     8
+7    10
+dtype: int64          
+
+
+
+Explanation:
+sr1 = pd.Series([1, 2, 3, 4, 5])
+sr2 = pd.Series([2, 4, 6, 8, 10])
+Above code creates two Pandas Series objects 'sr1' and 'sr2', each containing a sequence of five integer values.
+
+sr11 = pd.Series(np.union1d(sr1, sr2)) 
+# This line creates a new Pandas Series object 'sr11' by taking the union of the values in the original Series objects 'sr1' and 'sr2' using the np.union1d() function. This will result in a new Series object 'sr11' containing all the unique values present in either Series object 'sr1' or 'sr2'.
+
+sr22 = pd.Series(np.intersect1d(sr1, sr2))  
+# This line creates a new Pandas Series object 'sr22' by taking the intersection of the values in the original Series objects 'sr1' and 'sr2' using the np.intersect1d() function. This will result in a new Series object 'sr22' containing only the values that are present in both Series objects 'sr1' and 'sr2'.   
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+18. Write a Pandas program to compute the minimum, 25th percentile, median, 75th, and maximum of a given series.
+
+
+
+Python Code :
+import pandas as pd
+import numpy as np
+num_state = np.random.RandomState(100)
+num_series = pd.Series(num_state.normal(10, 4, 20))
+print("Original Series:")
+print(num_series)
+result = np.percentile(num_series, q=[0, 25, 50, 75, 100])
+print("\nMinimum, 25th percentile, median, 75th, and maximum of a given series:")
+print(result)
+
+
+Output:
+Original Series:
+0      3.000938
+1     11.370722
+2     14.612143
+3      8.990256
+4     13.925283
+5     12.056875
+6     10.884719
+7      5.719827
+8      9.242017
+9     11.020006
+10     8.167892
+11    11.740654
+12     7.665620
+13    13.267388
+14    12.690883
+15     9.582355
+16     7.874878
+17    14.118931
+18     8.247458
+19     5.526727
+dtype: float64
+
+Minimum, 25th percentile, median, 75th, and maximum of a given series:
+[ 3.00093811  8.09463867 10.23353705 12.21537733 14.61214321]         
+
+
+Explanation:
+In the above exercise -
+
+num_state = np.random.RandomState(100) # This code creates a NumPy RandomState object 'num_state' with a seed value of 100.
+
+num_series = pd.Series(num_state.normal(10, 4, 20)) 
+#This code creates a Pandas Series object 'num_series' containing 20 random values generated from a normal distribution with a mean of 10 and a standard deviation of 4 using the num_state.normal() method.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+19. Write a Pandas program to calculate the frequency counts of each unique value of a given series.
+
+
+Python Code :
+import pandas as pd
+import numpy as np
+num_series = pd.Series(np.take(list('0123456789'), np.random.randint(10, size=40)))
+print("Original Series:")
+print(num_series)
+print("Frequency of each unique value of the said series.")
+result = num_series.value_counts()
+print(result)
+
+
+
+
+Output:
+Original Series:
+0     1
+1     7
+2     1
+3     6
+4     9
+5     1
+6     0
+7     0
+8     7
+9     9
+10    6
+11    0
+12    1
+13    6
+14    7
+15    0
+16    2
+17    9
+18    2
+19    0
+20    5
+21    2
+22    3
+23    2
+24    3
+25    0
+26    0
+27    8
+28    8
+29    2
+30    9
+31    1
+32    2
+33    9
+34    2
+35    9
+36    0
+37    0
+38    4
+39    8
+dtype: object
+Frequency of each unique value of the said series.
+0    9
+2    7
+9    6
+1    5
+6    3
+8    3
+7    3
+3    2
+4    1
+5    1
+dtype: int64
+
+
+
+         
+Explanation:
+num_series = pd.Series(np.take(list('0123456789'), np.random.randint(10, size=40)))
+
+#
+This line generates a Pandas Series object 'num_series' containing 40 random characters from the list of digits '0123456789'.
+The characters are selected randomly using the np.random.randint() function with a range of 10, indicating that 10 is the highest integer that can be returned.
+The np.take() function is then used to select the characters from the list of digits based on the randomly generated indices.
+
+
+result = num_series.value_counts()  
+#This line creates a new Pandas Series object 'result' by counting the frequency of each unique character in the original Pandas Series object 'num_series' using the .value_counts() method. The resulting Series object 'result' will have the unique characters from the original Series object 'num_series' as its index and the count of each unique character as its value.
+
+The output of print(result) will depend on the random characters generated by the NumPy function np.take().
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+20. Write a Pandas program to display most frequent value in a given series and replace everything else as ‘Other’ in the series.
+
+
+Python Code :
+import pandas as pd
+import numpy as np
+num_series = pd.Series(np.random.randint(1, 5, [15]))
+print("Original Series:")
+print(num_series)
+print("Top 2 Freq:", num_series.value_counts())
+result = num_series[~num_series.isin(num_series.value_counts().index[:1])] = 'Other'
+print(num_series)
+
+
+
+
+Sample Output:
+Original Series:
+0     3
+1     1
+2     1
+3     3
+4     2
+5     2
+6     1
+7     2
+8     3
+9     1
+10    2
+11    2
+12    2
+13    3
+14    3
+dtype: int64
+Top 2 Freq: 2    6
+3    5
+1    4
+dtype: int64
+0     Other
+1     Other
+2     Other
+3     Other
+4         2
+5         2
+6     Other
+7         2
+8     Other
+9     Other
+10        2
+11        2
+12        2
+13    Other
+14    Other
+dtype: object   
+
+     
+Explanation:
+
+num_series = pd.Series(np.random.randint(1, 5, [15])) 
+ # This line creates a Pandas Series object 'num_series' containing 15 random integers between 1 and 5 using the np.random.randint() method.
+
+result = num_series[~num_series.isin(num_series.value_counts().index[:1])] = 'Other'  
+# This line creates a boolean mask using the .isin() method to check which values in the Pandas Series object 'num_series' are equal to the most frequent value in the Series object, which is obtained using the .value_counts() method and selecting the first index using the slicing notation [:1]. The tilde (~) operator is used to negate the boolean mask, resulting in a mask that selects all values that are not equal to the most frequent value.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+21. Write a Pandas program to find the positions of numbers that are multiples of 5 of a given series.
+
+
+Python Code :
+import pandas as pd
+import numpy as np
+num_series = pd.Series(np.random.randint(1, 10, 9))
+print("Original Series:")
+print(num_series)
+result = np.where(num_series % 5==0)
+print("Positions of numbers that are multiples of 5:")
+print(result)
+
+
+
+Output:
+Original Series:
+0    1
+1    9
+2    8
+3    6
+4    9
+5    7
+6    1
+7    1
+8    1
+dtype: int64
+Positions of numbers that are multiples of 5:
+[]        
+
+
+Explanation:
+num_series = pd.Series(np.random.randint(1, 10, 9))  
+# This code creates a Pandas series object 'num_series' containing 9 random integers between 1 and 10 using the np.random.randint() method.
+
+result = np.where(num_series % 5==0)
+# This code uses the np.where() function to create a boolean mask that checks which values in the Pandas Series object 'num_series' are divisible by 5. The resulting boolean mask will have the same length as the original Series object, with True values at the positions where the corresponding value in the Series object is divisible by 5, and False values otherwise.
+
+The output of np.where() function returns a tuple containing the indices of the True values in the boolean mask.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+22. Write a Pandas program to extract items at given positions of a given series.
+
+
+Python Code :
+
+import pandas as pd
+num_series = pd.Series(list('2390238923902390239023'))
+element_pos = [0, 2, 6, 11, 21]
+print("Original Series:")
+print(num_series)
+result = num_series.take(element_pos)
+print("\nExtract items at given positions of the said series:")
+print(result)
+
+
+
+Output:
+Original Series:
+0     2
+1     3
+2     9
+3     0
+4     2
+5     3
+6     8
+7     9
+8     2
+9     3
+10    9
+11    0
+12    2
+13    3
+14    9
+15    0
+16    2
+17    3
+18    9
+19    0
+20    2
+21    3
+dtype: object
+
+Extract items at given positions of the said series:
+0     2
+2     9
+6     8
+11    0
+21    3
+dtype: object
+
+
+
+Explanation:
+num_series = pd.Series(list('2390238923902390239023')) # This code creates a Pandas Series object 'num_series' containing a string of digits.
+
+element_pos = [0, 2, 6, 11, 21]  
+# This code creates a Python list ‘element_pos’ containing the positions of the elements in the Pandas Series object 'num_series' that we want to extract. In this case, the positions are [0, 2, 6, 11, 21].
+
+
+result = num_series.take(element_pos)  
+# This code creates a new Pandas Series object 'result' by extracting the elements in 'num_series' that correspond to the indices specified in the list element_pos. This is done using the .take() method, which takes a list of indices and returns a new Series object containing the elements at those indices.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+23. Write a Pandas program to get the positions of items of a given series in another given series.
+
+
+Python Code :
+
+import pandas as pd
+series1 = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+series2 = pd.Series([1, 3, 5, 7, 10])
+print("Original Series:")
+print(series1)
+print(series2)
+result = [pd.Index(series1).get_loc(i) for i in series2]
+print("Positions of items of series2 in series1:")
+print(result)
+
+
+Output:
+Original Series:
+0     1
+1     2
+2     3
+3     4
+4     5
+5     6
+6     7
+7     8
+8     9
+9    10
+dtype: int64
+0     1
+1     3
+2     5
+3     7
+4    10
+dtype: int64
+Positions of items of series2 in series1:
+[0, 2, 4, 6, 9]
+
+
+
+Explanation:
+
+series1 = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+series2 = pd.Series([1, 3, 5, 7, 10])
+The above code creates two Pandas Series objects 'series1' and 'series2'. 'series1' contains integers from 1 to 10, and 'series2' contains integers 1, 3, 5, 7, 10.
+
+result = [pd.Index(series1).get_loc(i) for i in series2]  # This line uses a list comprehension to create a new list 'result' containing the indices of the elements in 'series1' that match the values in 'series2'.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+24. Write a Pandas program convert the first and last character of each word to upper case in each word of a given series.
+
+
+Python Code :
+import pandas as pd
+series1 = pd.Series(['php', 'python', 'java', 'c#'])
+print("Original Series:")
+print(series1)
+result = series1.map(lambda x: x[0].upper() + x[1:-1] + x[-1].upper())
+print("\nFirst and last character of each word to upper case:")
+print(result)
+
+
+Sample Output:
+Original Series:
+0       php
+1    python
+2      java
+3        c#
+dtype: object
+
+First and last character of each word to upper case:
+0       PhP
+1    PythoN
+2      JavA
+3        C#
+dtype: object
+
+
+Explanation:
+
+series1 = pd.Series(['php', 'python', 'java', 'c#'])  #This line creates a Pandas Series object 'series1' containing four strings representing different programming languages.
+
+result = series1.map(lambda x: x[0].upper() + x[1:-1] + x[-1].upper()) 
+# This line applies a lambda function to each element of the Pandas Series object 'series1' using the .map() method. The lambda function takes a string x, capitalizes the first and last character of the string using string indexing, and returns the modified string.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+25. Write a Pandas program to calculate the number of characters in each word in a given series.
+
+
+Python Code :
+import pandas as pd
+series1 = pd.Series(['Php', 'Python', 'Java', 'C#'])
+print("Original Series:")
+print(series1)
+result = series1.map(lambda x: len(x))
+print("\nNumber of characters in each word in the said series:")
+print(result)
+
+
+
+Output:
+Original Series:
+0       Php
+1    Python
+2      Java
+3        C#
+dtype: object
+
+Number of characters in each word in the said series:
+0    3
+1    6
+2    4
+3    2
+dtype: int64
+
+
+
+Explanation:
+In the above exercise -
+
+series1 = pd.Series(['Php', 'Python', 'Java', 'C#'])  # This code creates a Pandas Series object 'series1' containing four strings representing different programming languages.
+
+result = series1.map(lambda x: len(x))  
+# This code applies a lambda function to each element of the Pandas Series object 'series1' using the .map() method. The lambda function takes a string x and returns the length of the string using the len() function.
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+26.  Write a Pandas program to compute difference of differences between consecutive numbers of a given series.
+
+
+Python Code :
+import pandas as pd
+series1 = pd.Series([1, 3, 5, 8, 10, 11, 15])
+print("Original Series:")
+print(series1)
+print("\nDifference of differences between consecutive numbers of the said series:")
+print(series1.diff().tolist())
+print(series1.diff().diff().tolist())
+
+
+
+Output:
+Original Series:
+0     1
+1     3
+2     5
+3     8
+4    10
+5    11
+6    15
+dtype: int64
+
+Difference of differences between consecutive numbers of the said series:
+[nan, 2.0, 2.0, 3.0, 2.0, 1.0, 4.0]
+[nan, nan, 0.0, 1.0, -1.0, -1.0, 3.0]
+
+
+
+Explanation:
+
+In the above exercise -
+
+series1 = pd.Series([1, 3, 5, 8, 10, 11, 15])  # This code creates a Pandas Series object 'series1' containing seven integers.
+
+series1.diff().tolist()
+
+# This line applies the .diff() method to the Pandas Series object 'series1' to compute the first discrete difference of the Series object. The .tolist() method is used to convert the resulting Pandas Series object into a Python list. The resulting list contains the difference between each pair of adjacent elements in the original Series object 'series1'.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+27. Write a Pandas program to convert a series of date strings to a timeseries.
+
+
+Python Code :
+import pandas as pd
+date_series = pd.Series(['01 Jan 2015', '10-02-2016', '20180307', '2014/05/06', '2016-04-12', '2019-04-06T11:20'])
+print("Original Series:")
+print(date_series)
+print("\nSeries of date strings to a timeseries:")
+print(pd.to_datetime(date_series))
+
+
+
+Output:
+Original Series:
+0         01 Jan 2015
+1          10-02-2016
+2            20180307
+3          2014/05/06
+4          2016-04-12
+5    2019-04-06T11:20
+dtype: object
+
+Series of date strings to a timeseries:
+0   2015-01-01 00:00:00
+1   2016-10-02 00:00:00
+2   2018-03-07 00:00:00
+3   2014-05-06 00:00:00
+4   2016-04-12 00:00:00
+5   2019-04-06 11:20:00
+dtype: datetime64[ns]
+
+
+
+Explanation:
+
+date_series = pd.Series(['01 Jan 2015', '10-02-2016', '20180307', '2014/05/06', '2016-04-12', '2019-04-06T11:20']) 
+# This code creates a Pandas Series object 'date_series' containing six strings representing dates in different formats.
+
+pd.to_datetime(date_series) 
+# The code then applies the pd.to_datetime() method to the Pandas Series object 'date_series'. This method attempts to convert the input strings into Pandas Timestamp objects, which represent specific points in time.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+28. Write a Pandas program to get the day of month, day of year, week number and day of week from a given series of date strings.
+
+
+Python Code :
+import pandas as pd
+from dateutil.parser import parse
+date_series = pd.Series(['01 Jan 2015', '10-02-2016', '20180307', '2014/05/06', '2016-04-12', '2019-04-06T11:20'])
+print("Original Series:")
+print(date_series)
+date_series = date_series.map(lambda x: parse(x))
+print("Day of month:")
+print(date_series.dt.day.tolist())
+print("Day of year:")
+print(date_series.dt.dayofyear.tolist())
+print("Week number:")
+print(date_series.dt.weekofyear.tolist())
+print("Day of week:")
+print(date_series.dt.weekday_name.tolist())
+
+
+Output:
+Original Series:
+0         01 Jan 2015
+1          10-02-2016
+2            20180307
+3          2014/05/06
+4          2016-04-12
+5    2019-04-06T11:20
+dtype: object
+Day of month:
+[1, 2, 7, 6, 12, 6]
+Day of year:
+[1, 276, 66, 126, 103, 96]
+Week number:
+[1, 39, 10, 19, 15, 14]
+Day of week:
+['Thursday', 'Sunday', 'Wednesday', 'Tuesday', 'Tuesday', 'Saturday']
+
+
+Explanation:
+
+date_series = pd.Series(['01 Jan 2015', '10-02-2016', '20180307', '2014/05/06', '2016-04-12', '2019-04-06T11:20'])
+# This code creates a Pandas Series object 'date_series' containing six strings representing dates in different formats.
+
+date_series = date_series.map(lambda x: parse(x)) 
+# This line applies the map() method to the Pandas Series object 'date_series' and a lambda function to parse each string into a Pandas Timestamp object using the dateutil.parser.parse() method.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+29. Write a Pandas program to convert year-month string to dates adding a specified day of the month.
+
+
+Python Code :
+import pandas as pd
+from dateutil.parser import parse
+date_series = pd.Series(['Jan 2015', 'Feb 2016', 'Mar 2017', 'Apr 2018', 'May 2019'])
+print("Original Series:")
+print(date_series)
+print("\nNew dates:")
+result = date_series.map(lambda d: parse('11 ' + d))
+print(result)
+
+
+
+Output:
+Original Series:
+0    Jan 2015
+1    Feb 2016
+2    Mar 2017
+3    Apr 2018
+4    May 2019
+dtype: object
+
+New dates:
+0   2015-01-11
+1   2016-02-11
+2   2017-03-11
+3   2018-04-11
+4   2019-05-11
+dtype: datetime64[ns]
+
+
+
+Explanation:
+In the above exercise -
+
+date_series = pd.Series(['Jan 2015', 'Feb 2016', 'Mar 2017', 'Apr 2018', 'May 2019']) 
+# This line creates a Pandas Series object 'date_series' containing five strings representing months and years in the format "MMM YYYY", where MMM is the three-letter abbreviation for the month.
+
+result = date_series.map(lambda d: parse('11 ' + d))  
+# This code applies the map() method to the Pandas Series object 'date_series' and a lambda function to parse each string into a Pandas Timestamp object using the dateutil.parser.parse() method.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+30. Write a Pandas program to filter words from a given series that contain atleast two vowels.
+
+
+Python Code :
+import pandas as pd
+from collections import Counter
+color_series = pd.Series(['Red', 'Green', 'Orange', 'Pink', 'Yellow', 'White'])
+print("Original Series:")
+print(color_series)
+print("\nFiltered words:")
+result =color_series.map(lambda c: sum([Counter(c.lower()).get(i, 0) for i in list('aeiou')]) >= 2)
+print(color_series[result])
+
+
+Output:
+Original Series:
+0       Red
+1     Green
+2    Orange
+3      Pink
+4    Yellow
+5     White
+dtype: object
+
+Filtered words:
+1     Green
+2    Orange
+4    Yellow
+5     White
+dtype: object
+
+
+Explanation:
+color_series = pd.Series(['Red', 'Green', 'Orange', 'Pink', 'Yellow', 'White']) 
+# This line creates a Pandas Series object 'color_series' containing six strings representing different colors.
+
+result = color_series.map(lambda c: sum([Counter(c.lower()).get(i, 0) for i in list('aeiou')]) >= 2) 
+# This code applies the map() method to the Pandas Series object 'color_series' and a lambda function that counts the number of vowels in each string using the Counter() function from the Python collections module. The lambda function then checks if the number of vowels in each string is greater than or equal to 2.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+31. Write a Pandas program to compute the Euclidean distance between two given series.
+
+Euclidean distance: 
+From Wikipedia, In mathematics, the Euclidean distance or Euclidean metric is the "ordinary" straight-line distance between two points in Euclidean space. With this distance, Euclidean space becomes a metric space. The associated norm is called the Euclidean norm.
+
+
+Python Code :
+import pandas as pd
+import numpy as np
+x = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+y = pd.Series([11, 8, 7, 5, 6, 5, 3, 4, 7, 1])
+print("Original series:")
+print(x)
+print(y)
+print("\nEuclidean distance between two said series:")
+print(np.linalg.norm(x-y))
+
+
+Output:
+Original series:
+0     1
+1     2
+2     3
+3     4
+4     5
+5     6
+6     7
+7     8
+8     9
+9    10
+dtype: int64
+0    11
+1     8
+2     7
+3     5
+4     6
+5     5
+6     3
+7     4
+8     7
+9     1
+dtype: int64
+
+Euclidean distance between two said series:
+16.492422502470642
+
+
+
+Explanation:
+x = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+y = pd.Series([11, 8, 7, 5, 6, 5, 3, 4, 7, 1])
+This above code creates two Pandas Series objects 'x' and 'y', each containing ten integers.
+
+print(np.linalg.norm(x-y)) 
+# This line computes the Euclidean distance between the two Series objects using the np.linalg.norm() function from the NumPy library. The norm() function calculates the Euclidean distance between the two vectors formed by the values of 'x' and 'y'. The Euclidean distance is the length of the shortest path connecting two points in a n-dimensional space.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+32. 
+
+
+Write a Pandas program to find the positions of the values neighboured by smaller values on both sides in a given series.
+
+Pictorial Presentation:
+
+Index Position --> 0    1    2    3    4    5    6    7    8    9
+
+value          --> 1    8    7    5    6    5    3    4    7    1
+                   |         |    |         |         |         |
+                   |_________|    |_________|         |_________|     
+                        |              |                  |
+						|______________|__________________|				  
+				                       |
+									   V
+							
+							Neighboured by smaller values 
+							
+So, the correspondin index of those values --> 1, 4, 8 is the output 
+                            
+
+
+Pandas Data Series: Positions of the values surrounded by smaller values on both sides.
+Sample Solution:
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+nums = pd.Series([1, 8, 7, 5, 6, 5, 3, 4, 7, 1])
+print("Original series:")
+print(nums)
+print("\nPositions of the values surrounded by smaller values on both sides:")
+temp = np.diff(np.sign(np.diff(nums)))
+result = np.where(temp == -2)[0] + 1
+print(result)
+
+
+Output:
+Original series:
+0    1
+1    8
+2    7
+3    5
+4    6
+5    5
+6    3
+7    4
+8    7
+9    1
+dtype: int64
+
+Positions of the values surrounded by smaller values on both sides:
+[1 4 8]
+
+
+Explanation:
+nums = pd.Series([1, 8, 7, 5, 6, 5, 3, 4, 7, 1]) # This code creates a Pandas Series object 'nums' containing ten integers.
+
+
+temp = np.diff(np.sign(np.diff(nums)))
+# This code first computes the second order difference of the 'nums' series using the np.diff() and np.sign() functions from the NumPy library. The diff() function computes the difference between consecutive elements in the 'nums' series, while the sign() function returns the sign of each element in the resulting difference series. The second order difference is obtained by computing the difference between consecutive elements of the resulting sign series.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+33. Write a Pandas program to replace missing white spaces in a given string with the least frequent character.
+
+
+Python Code :
+import pandas as pd
+str1 = 'abc def abcdef icd'
+print("Original series:")
+print(str1)
+ser = pd.Series(list(str1))
+element_freq = ser.value_counts()
+print(element_freq)
+current_freq = element_freq.dropna().index[-1]
+result = "".join(ser.replace(' ', current_freq))
+print(result)
+
+
+
+Output:
+Original series:
+abc def abcdef icd
+c    3
+     3
+d    3
+f    2
+e    2
+a    2
+b    2
+i    1
+dtype: int64
+abcidefiabcdefiicd
+
+
+Explanation:
+str1 = 'abc def abcdef icd'  # Stores a string in a variable 'str1'.
+
+ser = pd.Series(list(str1))  # This code takes the string ‘str1’ and converts it into a Pandas Series object ser. The list() function is used to split the string into individual characters and create a list of characters, which is then used to create the Pandas Series object.
+
+element_freq = ser.value_counts()  # Here, the code creates a Pandas Series object 'element_freq' that contains the frequency of each unique element in the 'ser' series using the value_counts() function. The resulting series is sorted in descending order of frequency.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+34. Write a Pandas program to compute the autocorrelations of a given numeric series.
+
+From Wikipedia:
+Autocorrelation, also known as serial correlation, is the correlation of a signal with a delayed copy of itself as a function of delay. Informally, it is the similarity between observations as a function of the time lag between them.
+
+
+
+
+Python Code :
+import pandas as pd
+import numpy as np
+num_series = pd.Series(np.arange(15) + np.random.normal(1, 10, 15))
+print("Original series:")
+print(num_series)
+autocorrelations = [num_series.autocorr(i).round(2) for i in range(11)]
+print("\nAutocorrelations of the said series:")
+print(autocorrelations[1:])
+
+
+
+Output:
+Original series:
+0     13.207262
+1      4.098685
+2     -1.435534
+3     13.626760
+4     -1.435962
+5     28.823612
+6     -3.299048
+7     14.048354
+8      6.991233
+9     13.289209
+10    23.032654
+11     7.080452
+12    -2.453857
+13    -2.346193
+14    17.873884
+dtype: float64
+
+Autocorrelations of the said series:
+[-0.38, 0.1, -0.43, 0.03, 0.35, -0.2, 0.04, -0.59, 0.34, 0.11]
+
+
+
+Explanation:
+
+num_series = pd.Series(np.arange(15) + np.random.normal(1, 10, 15)) 
+# This line creates a Pandas Series object 'num_series' containing 15 elements, where each element is the sum of a corresponding element in a range of 15 numbers and a random number drawn from a normal distribution with a mean of 1 and standard deviation of 10.
+
+autocorrelations = [num_series.autocorr(i).round(2) for i in range(11)]
+# This code computes the autocorrelations of the 'num_series' series up to a lag of 10, using the autocorr() function of the series. The resulting autocorrelations are stored in the 'autocorrelations' list, with each element rounded to 2 decimal places. print(autocorrelations[1:]): Finally, the code prints the autocorrelations from the first lag to the 10th lag using list slicing ([1:]).
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+35. Write a Pandas program to create a TimeSeries to display all the Sundays of given year.
+
+
+Python Code :
+import pandas as pd
+result = pd.Series(pd.date_range('2020-01-01', periods=52, freq='W-SUN'))
+print("All Sundays of 2019:")
+print(result)
+
+
+
+Output:
+All Sundays of 2019:
+0    2020-01-05
+1    2020-01-12
+2    2020-01-19
+3    2020-01-26
+4    2020-02-02
+5    2020-02-09
+6    2020-02-16
+7    2020-02-23
+8    2020-03-01
+9    2020-03-08
+10   2020-03-15
+11   2020-03-22
+12   2020-03-29
+13   2020-04-05
+14   2020-04-12
+15   2020-04-19
+16   2020-04-26
+17   2020-05-03
+18   2020-05-10
+19   2020-05-17
+20   2020-05-24
+21   2020-05-31
+22   2020-06-07
+23   2020-06-14
+24   2020-06-21
+25   2020-06-28
+26   2020-07-05
+27   2020-07-12
+28   2020-07-19
+29   2020-07-26
+30   2020-08-02
+31   2020-08-09
+32   2020-08-16
+33   2020-08-23
+34   2020-08-30
+35   2020-09-06
+36   2020-09-13
+37   2020-09-20
+38   2020-09-27
+39   2020-10-04
+40   2020-10-11
+41   2020-10-18
+42   2020-10-25
+43   2020-11-01
+44   2020-11-08
+45   2020-11-15
+46   2020-11-22
+47   2020-11-29
+48   2020-12-06
+49   2020-12-13
+50   2020-12-20
+51   2020-12-27
+dtype: datetime64[ns]
+
+
+
+
+Explanation:
+result = pd.Series(pd.date_range('2020-01-01', periods=52, freq='W-SUN'))
+# The above code creates a Pandas Series object 'result' containing 52 elements, where each element represents a Sunday from a range of dates starting from '2020-01-01' and extending to 52 weeks (i.e., one year) in the future. The dates are generated using the pd.date_range() function, which creates a range of dates with a specified frequency.
+
+Here, the frequency is set to 'W-SUN', which indicates weekly frequency on Sundays. Therefore, the resulting series contains 52 dates that fall on Sundays, with one date per week.
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+36. Write a Pandas program to convert given series into a dataframe with its index as another column on the dataframe.
+
+
+Python Code :
+import numpy as np
+import pandas as pd
+char_list = list('ABCDEFGHIJKLMNOP')
+num_arra = np.arange(8)
+num_dict = dict(zip(char_list, num_arra))
+num_ser = pd.Series(num_dict)
+df = num_ser.to_frame().reset_index()
+print(df.head())
+
+
+Output:
+  index  0
+0     A  0
+1     B  1
+2     C  2
+3     D  3
+4     E  4
+
+
+
+Explanation:
+char_list = list('ABCDEFGHIJKLMNOP') 
+# This code creates a list of characters called char_list. It contains the 16 uppercase letters from A to P. Each character in the list is a string of length 1. The list() function is used to convert the string of characters into a list of individual characters.
+
+num_arra = np.arange(8) # This code creates a NumPy array 'num_arra' containing the integers from 0 to 7 using the np.arange() function.
+
+num_dict = dict(zip(char_list, num_arra)) # This code creates a dictionary 'num_dict' using the dict() function and the zip() function.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+37. Write a Pandas program to stack two given series vertically and horizontally.
+
+
+Python Code :
+import pandas as pd
+series1 = pd.Series(range(10))
+series2 = pd.Series(list('pqrstuvwxy'))
+print("Original Series:")
+print(series1)
+print(series2)
+series1.append(series2)
+df = pd.concat([series1, series2], axis=1)
+print("\nStack two given series vertically and horizontally:")
+print(df)
+
+
+
+
+Output:
+Original Series:
+0    0
+1    1
+2    2
+3    3
+4    4
+5    5
+6    6
+7    7
+8    8
+9    9
+dtype: int64
+0    p
+1    q
+2    r
+3    s
+4    t
+5    u
+6    v
+7    w
+8    x
+9    y
+dtype: object
+
+Stack two given series vertically and horizontally:
+   0  1
+0  0  p
+1  1  q
+2  2  r
+3  3  s
+4  4  t
+5  5  u
+6  6  v
+7  7  w
+8  8  x
+9  9  y
+
+
+
+
+Explanation:
+series1 = pd.Series(range(10)) # This code creates a Pandas Series object called ‘series1’ containing integers from 0 to 9, generated using the range() function.
+
+series2 = pd.Series(list('pqrstuvwxy')) # This code creates another Pandas Series object called ‘series2‘ containing characters from the string "pqrstuvwxy", generated using the list() function.
+
+series1.append(series2) # This code appends ‘series2’ to ‘series1’ and returns a new Series object that includes both Series objects.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+38. Write a Pandas program to check the equality of two given series.
+
+
+Python Code :
+import pandas as pd
+nums1 = pd.Series([1, 8, 7, 5, 6, 5, 3, 4, 7, 1])
+nums2 = pd.Series([1, 8, 7, 5, 6, 5, 3, 4, 7, 1])
+print("Original Series:")
+print(nums1)
+print(nums2)
+print("Check 2 series are equal or not?")
+print(nums1 == nums2)
+Sample Output:
+
+Original Series:
+0    1
+1    8
+2    7
+3    5
+4    6
+5    5
+6    3
+7    4
+8    7
+9    1
+dtype: int64
+0    1
+1    8
+2    7
+3    5
+4    6
+5    5
+6    3
+7    4
+8    7
+9    1
+dtype: int64
+Check 2 series are equal or not?
+0    True
+1    True
+2    True
+3    True
+4    True
+5    True
+6    True
+7    True
+8    True
+9    True
+dtype: bool
+
+
+
+
+Explanation:
+
+nums1 = pd.Series([1, 8, 7, 5, 6, 5, 3, 4, 7, 1])
+nums2 = pd.Series([1, 8, 7, 5, 6, 5, 3, 4, 7, 1])
+# The above code creates two Pandas series objects nums1 and nums2 containing the same set of integers.
+
+nums1 == nums2  
+# Here the == operator is used to compare each element of the two series and returns a new series of boolean values indicating whether each element is equal or not. The resulting series will contain True for elements that are equal in both series and False for elements that are not equal in both series.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+39. Write a Pandas program to find the index of the first occurrence of the smallest and largest value of a given series.
+
+
+Python Code :
+import pandas as pd
+nums = pd.Series([1, 3, 7, 12, 88, 23, 3, 1, 9, 0])
+print("Original Series:")
+print(nums)
+print("Index of the first occurrence of the smallest and largest value of the said series:")
+print(nums.idxmin())
+print(nums.idxmax())
+
+
+Output:
+Original Series:
+0     1
+1     3
+2     7
+3    12
+4    88
+5    23
+6     3
+7     1
+8     9
+9     0
+dtype: int64
+Index of the first occurrence of the smallest and largest value of the said series:
+9
+4
+
+
+Explanation:
+nums = pd.Series([1, 3, 7, 12, 88, 23, 3, 1, 9, 0]) # This code creates a Pandas Series object 'nums' containing ten integers.
+nums.idxmin()  # This code returns the index label of the minimum value in the ‘nums’ Pandas series.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+40. Write a Pandas program to check inequality over the index axis of a given dataframe and a given series.
+
+
+Python Code :
+import pandas as pd
+df_data = pd.DataFrame({'W':[68,75,86,80,None],'X':[78,75,None,80,86], 'Y':[84,94,89,86,86],'Z':[86,97,96,72,83]});
+sr_data = pd.Series([68, 75, 86, 80, None]) 
+print("Original DataFrame:")
+print(df_data)
+print("\nOriginal Series:")
+print(sr_data)
+print("\nCheck for inequality of the said series & dataframe:")
+print(df_data.ne(sr_data, axis = 0))
+
+
+
+Output:
+Original DataFrame:
+      W     X   Y   Z
+0  68.0  78.0  84  86
+1  75.0  75.0  94  97
+2  86.0   NaN  89  96
+3  80.0  80.0  86  72
+4   NaN  86.0  86  83
+
+Original Series:
+0    68.0
+1    75.0
+2    86.0
+3    80.0
+4     NaN
+dtype: float64
+
+Check for inequality of the said series & dataframe:
+       W      X     Y     Z
+0  False   True  True  True
+1  False  False  True  True
+2  False   True  True  True
+3  False  False  True  True
+4   True   True  True  True
+
+
+
+
+Explanation:
+df_data = pd.DataFrame({'W':[68,75,86,80,None],'X':[78,75,None,80,86], 'Y':[84,94,89,86,86],'Z':[86,97,96,72,83]});
+sr_data = pd.Series([68, 75, 86, 80, None])
+
+# The above code creates a Pandas DataFrame object 'df_data' containing four columns ('W', 'X', 'Y', 'Z') and five rows, and a Pandas Series object 'sr_data' containing the same values as the 'W' column of the DataFrame.
+
+df_data.ne(sr_data, axis = 0) 
+# Here .ne() method is used to compare the dataframe df_data with the series sr_data. ne stands for "not equal". The axis=0 parameter tells pandas to compare the rows of the dataframe and the series. The resulting dataframe will have the same shape as df_data and will contain boolean values indicating whether the corresponding elements in df_data are not equal to the values in sr_data.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Pandas DataFrame: 
+							  Columns
+								|
+								|
+			  -------------------------------------
+			  |              |          |         |
+			  |              |          |         | 
+             Name          Score     Attempt   Qualify    
+  R --   0   Anastasia      12.5         1        yes
+  0 --   1   Dima            9.0         3        no
+  w --   2   Katherine      16.5         2        yes
+  s --   3   James           NaN         3        no
+    --   4   Emily           9.0         2        no
+	
+	
+	The inside values are called Data (which means everything inside except the index and columns)
+	eg. Dima, 9.0, NaN, yes, no
+	
+
+
+
+
+
+Problems: 	
+	
+1. Write a Pandas program to create a dataframe from a dictionary and display it.
+
+Sample data: {'X':[78,85,96,80,86], 'Y':[84,94,89,83,86],'Z':[86,97,96,72,83]}
+
+
+Python Code :
+import pandas as pd
+df = pd.DataFrame({'X':[78,85,96,80,86], 'Y':[84,94,89,83,86],'Z':[86,97,96,72,83]});
+print(df)
+
+
+
+Output:
+    X   Y   Z                                                          
+0  78  84  86                                                          
+1  85  94  97                                                          
+2  96  89  96                                                          
+3  80  83  72                                                          
+4  86  86  83                                       
+
+
+
+Explanation: 
+df = pd.DataFrame({'X':[78,85,96,80,86], 'Y':[84,94,89,83,86],'Z':[86,97,96,72,83]})
+# The above code creates a pandas DataFrame object named ‘df’ with three columns X, Y, and Z and five rows. The values for each column are provided in a dictionary with keys X, Y, and Z.
+
+The print(df) statement prints the entire DataFrame to the console.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2. Write a Pandas program to create and display a DataFrame from a specified dictionary data which has the index labels.
+
+Sample DataFrame:
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+			 'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+             'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+			 'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+
+
+
+-
+Python Code :
+
+import pandas as pd
+import numpy as np
+
+exam_data  = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data , index=labels)
+print(df)
+
+
+
+
+Output:
+
+   attempts       name qualify  score                                  
+a         1  Anastasia     yes   12.5                                  
+b         3       Dima      no    9.0                                  
+c         2  Katherine     yes   16.5                                  
+d         3      James      no    NaN                                  
+e         2      Emily      no    9.0                                  
+f         3    Michael     yes   20.0                                  
+g         1    Matthew     yes   14.5                                  
+h         1      Laura      no    NaN                                  
+i         2      Kevin      no    8.0                                  
+j         1      Jonas     yes   19.0         
+
+
+                             
+Explanation:
+
+The above code creates a Pandas DataFrame ‘df’ containing information about exam scores of ten students, with columns name, score, attempts, and qualify, and row labels 'a' to 'j'.
+
+The name column contains the names of the students.
+The score column contains the exam scores of the students.
+The attempts column contains the number of attempts made by the students to pass the exam.
+The qualify column contains whether the students have qualified for the exam or not.
+The DataFrame is created using a Python dictionary ‘exam_data’ and the index parameter is used to specify the row labels.
+
+Finally, the DataFrame is printed using the print function.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3. Write a Pandas program to display a summary of the basic information about a specified DataFrame and its data.
+
+Sample DataFrame:
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+			 'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+			 'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+			 'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+
+
+-
+Python Code :
+
+import pandas as pd
+import numpy as np
+
+exam_data  = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data , index=labels)
+print("Summary of the basic information about this DataFrame and its data:")
+print(df.info())
+
+
+
+Output:
+Summary of the basic information about this DataFrame and its data:
+<class 'pandas.core.frame.DataFrame'>
+Index: 10 entries, a to j
+Data columns (total 4 columns):
+attempts    10 non-null int64
+name        10 non-null object
+qualify     10 non-null object
+score       8 non-null float64
+dtypes: float64(1), int64(1), object(2)
+memory usage: 400.0+ bytes
+None   
+
+
+
+                           
+Explanation:
+The above code creates a Pandas DataFrame object 'df' containing information about an exam, such as the name of the student, their score, the number of attempts, and whether they qualify.
+
+The DataFrame is created using a Python dictionary 'exam_data' that contains lists of information about the students.
+
+The 'labels' list is used to set the index of the DataFrame.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4. Write a Pandas program to get the first 3 rows of a given DataFrame.
+
+Sample DataFrame:
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+			'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+			'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+			'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+
+
+
+Python Code :
+import pandas as pd
+import numpy as np
+
+exam_data  = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data , index=labels)
+print("First three rows of the data frame:")
+print(df.iloc[:3])
+
+
+
+Output:
+First three rows of the data frame:   
+                                 
+   attempts       name qualify  score                                  
+a         1  Anastasia     yes   12.5                                  
+b         3       Dima      no    9.0                                  
+c         2  Katherine     yes   16.5                                   
+
+
+
+Explanation:
+
+The above code creates a Pandas DataFrame named df with columns 'name', 'score', 'attempts', and 'qualify', and a custom index 'labels'. It then selects and prints the first three rows of the DataFrame using the .iloc indexing method.
+
+Specifically, df.iloc[:3] selects the first three rows of the DataFrame using integer-based indexing, where : indicates all rows and 3 indicates up to the third row (exclusive). This operation returns a new DataFrame containing the selected rows, which is then printed using the print() function.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+5. Write a Pandas program to select the 'name' and 'score' columns from the following DataFrame.
+
+Sample DataFrame:
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+			'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+			'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+			'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+
+
+
+Python Code :
+import pandas as pd
+import numpy as np
+
+exam_data  = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data , index=labels)
+print("Select specific columns:")
+print(df[['name', 'score']])
+
+
+
+Output:
+
+Select specific columns:                                               
+        name  score                                                    
+a  Anastasia   12.5                                                    
+b       Dima    9.0                                                    
+c  Katherine   16.5                                                    
+d      James    NaN                                                    
+e      Emily    9.0                                                    
+f    Michael   20.0                                                    
+g    Matthew   14.5                                                    
+h      Laura    NaN                                                    
+i      Kevin    8.0                                                    
+j      Jonas   19.0                                  
+
+
+
+Explanation:
+The above code creates a Pandas DataFrame ‘df’ with columns 'name', 'score', 'attempts', and 'qualify' using a Python dictionary ‘exam_data’ and index ‘labels’.
+df[['name', 'score']]: This line prints a subset of the DataFrame that includes only the 'name' and 'score' columns using the double square bracket notation .
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+6. Write a Pandas program to select the specified columns and rows from a given DataFrame.
+Select 'name' and 'score' columns in rows 1, 3, 5, 6 from the following data frame.
+
+Sample DataFrame:
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+			'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+			'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+			'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+			
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+
+
+Python Code :
+import pandas as pd
+import numpy as np
+
+exam_data  = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data , index=labels)
+print("Select specific columns and rows:")
+print(df.iloc[[1, 3, 5, 6], [1, 3]])
+
+
+
+
+Output:
+
+Select specific columns and rows:
+   score qualify
+b    9.0      no
+d    NaN      no
+f   20.0     yes
+g   14.5     yes                               
+
+
+
+
+Explanation:
+
+The above code creates a Pandas DataFrame named 'df' containing information related to students' 'exam_data'
+
+print(df.iloc[[1, 3, 5, 6], [1, 3]])
+
+In the said code iloc() function is used to select specific rows and columns from the DataFrame based on their integer location.
+[[1, 3, 5, 6], [1, 3]] is used as the parameter to select the rows with index 1, 3, 5, and 6 and columns with index 1 and 3 from the DataFrame.
+
+The selected rows contain the information for the students with the index label b, d, f, and g.
+
+The selected columns contain the information for the columns ‘score’ and ‘qualify’.
+
+Finally print() function prints 4 rows and 2 columns.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+7. Write a Pandas program to select the rows where the number of attempts in the examination is greater than 2.
+
+Sample DataFrame:
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+			'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+			'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+			'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+			
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+
+
+
+
+Python Code :
+import pandas as pd
+import numpy as np
+
+exam_data  = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts' : [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data , index=labels)
+print("Number of attempts in the examination is greater than 2:")
+print(df[df['attempts'] > 2])
+
+
+
+Output:
+Number of attempts in the examination is greater than 2:
+
+
+      name  score  attempts qualify
+b     Dima    9.0         3      no
+d    James    NaN         3      no
+f  Michael   20.0         3     yes  
+
+
+
+
+                                                                                 
+Explanation:
+The above code creates a DataFrame 'df' containing information about a group of students who took an exam. The code then filters the DataFrame to only include rows where the 'attempts' column has a value greater than 2 using the boolean indexing method.
+
+Finally, print() function prints the filtered DataFrame.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+8. Write a Pandas program to count the number of rows and columns of a DataFrame.
+
+
+Sample DataFrame:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+			'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+			'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+			'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+
+
+-
+Python Code :
+import pandas as pd
+import numpy as np
+exam_data  = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+df = pd.DataFrame(exam_data , index=labels)
+total_rows=len(df.axes[0])
+total_cols=len(df.axes[1])
+print("Number of Rows: "+str(total_rows))
+print("Number of Columns: "+str(total_cols))
+
+
+
+Output:
+Number of Rows: 10                                                     
+Number of Columns: 4                
+
+
+
+Explanation:
+The above code creates a pandas dataframe ‘df’ with the given data in ‘exam_data’ dictionary and assigns the labels to rows using labels list. Then it calculates the number of rows and columns in the dataframe using len(df.axes[0]) and len(df.axes[1]) respectively, and stores them in total_rows and total_cols variables.
+
+Finally, it prints the number of rows and columns using these variables.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------9. Write a Pandas program to select the rows where the score is missing, i.e. is NaN.
+
+Sample DataFrame:
+Sample Python dictionary data and list labels:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+
+
+
+
+
+Python Code :
+import pandas as pd
+import numpy as np
+exam_data  = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data , index=labels)
+print("Rows where score is missing:")
+print(df[df['score'].isnull()])
+
+
+
+Output:
+Rows where score is missing:
+   attempts   name qualify  score
+d         3  James      no    NaN
+h         1  Laura      no    NaN                              
+
+
+
+
+Explanation:
+In the above code -
+
+df = pd.DataFrame(exam_data , index=labels): This line creates a pandas DataFrame called ‘df’ from a dictionary ’exam_data’ with specified index labels. The DataFrame has columns 'name', 'score', 'attempts', and 'qualify' which are created from the corresponding values in the dictionary.
+
+print(df[df['score'].isnull()]): This code filters the rows in the DataFrame where the 'score' column is null using the isnull() method and prints the resulting subset of the DataFrame using boolean indexing with df[df['score'].isnull()]. This will show the rows where the 'score' column has missing or NaN (not a number) values.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+10. Write a Pandas program to select the rows the score is between 15 and 20 (inclusive).
+
+Sample DataFrame:
+
+Sample Python dictionary data and list labels:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+			'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+			'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+			'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+
+
+
+
+
+Python Code :
+import pandas as pd
+import numpy as np
+exam_data  = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data , index=labels)
+print("Rows where score between 15 and 20 (inclusive):")
+print(df[df['score'].between(15, 20)])
+
+
+
+
+Output:
+
+Rows where score between 15 and 20 (inclusive):                        
+   attempts       name qualify  score                                  
+c         2  Katherine     yes   16.5                                  
+f         3    Michael     yes   20.0                                  
+j         1      Jonas     yes   19.0    
+
+
+
+                            
+Explanation:
+The above Pandas code first creates a dataframe ‘df’ from the dictionary ‘exam_data’ using the list labels as index. It then filters the rows of ‘df’ that have a 'score' value between 15 and 20 (inclusive) using the between() method of a Pandas series.
+
+Finally print() function prints the resulting filtered dataframe.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+11. Write a Pandas program to select the rows where number of attempts in the examination is less than 2 and score greater than 15.
+
+Sample DataFrame:
+Sample Python dictionary data and list labels:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+			'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+			'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+			'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+
+
+
+Python Code :
+import pandas as pd
+import numpy as np
+exam_data  = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+df = pd.DataFrame(exam_data , index=labels)
+print("Number of attempts in the examination is less than 2 and score greater than 15 :")
+print(df[(df['attempts'] < 2) & (df['score'] > 15)])
+
+
+
+Output:
+Number of attempts in the examination is less than 2 and score greater than 15 :
+
+    name  score  attempts qualify
+j  Jonas   19.0         1     yes      
+
+
+                        
+Explanation:
+The above code first creates a Pandas DataFrame ‘df’ using the dictionary ‘exam_data’ and a list labels. It then selects the rows where the number of attempts is less than 2 and the score is greater than 15 using the & operator for and condition. Finally, it prints the selected rows of the DataFrame.
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+12. Write a Pandas program to change the score in row 'd' to 11.5.
+
+Sample DataFrame:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+			'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+			'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+			'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+
+
+
+-
+Python Code :
+
+import pandas as pd
+import numpy as np
+exam_data  = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data , index=labels)
+print("\nOriginal data frame:")
+print(df)
+print("\nChange the score in row 'd' to 11.5:")
+df.loc['d', 'score'] = 11.5
+print(df)
+
+
+
+Output:
+
+Original data frame:                                                   
+   attempts       name qualify  score                                  
+a         1  Anastasia     yes   12.5                                  
+b         3       Dima      no    9.0                                  
+c         2  Katherine     yes   16.5                                  
+d         3      James      no    NaN                                  
+e         2      Emily      no    9.0                                  
+f         3    Michael     yes   20.0                                  
+g         1    Matthew     yes   14.5                                  
+h         1      Laura      no    NaN                                  
+i         2      Kevin      no    8.0                                  
+j         1      Jonas     yes   19.0                                  
+                                                                       
+Change the score in row 'd' to 11.5:                                   
+   attempts       name qualify  score                                  
+a         1  Anastasia     yes   12.5                                  
+b         3       Dima      no    9.0                                  
+c         2  Katherine     yes   16.5
+d         3      James      no   11.5                                  
+e         2      Emily      no    9.0                                  
+f         3    Michael     yes   20.0                                  
+g         1    Matthew     yes   14.5                                  
+h         1      Laura      no    NaN                                  
+i         2      Kevin      no    8.0                                  
+j         1      Jonas     yes   19.0      
+
+
+                      
+Explanation:
+The above code first creates a pandas DataFrame 'df' from a dictionary exam_data using a list labels as the index. It then modifies the value in the 'score' column for row 'd' from NaN to 11.5 using the .loc indexer. Finally, it prints the modified DataFrame.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+13. Write a Pandas program to calculate the sum of the examination attempts by the students.
+
+Sample DataFrame:
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+
+
+Python Code :
+import pandas as pd
+import numpy as np
+exam_data  = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data , index=labels)
+print("\nSum of the examination attempts by the students:")
+print(df['attempts'].sum())
+
+
+
+Output:
+Sum of the examination attempts by the students:                       
+19                         
+
+
+
+Explanation:
+
+The above code first creates a Pandas DataFrame ‘df’ from a Python dictionary ‘exam_data’, where the keys of the dictionary represent the column names and the values of the dictionary are lists representing the data in each column. The DataFrame is indexed with the values in the list labels.
+
+print(df['attempts'].sum()): This line prints the sum of the values in the 'attempts' column using the sum() method of the Pandas Series object representing the 'attempts' column. This gives the total number of attempts made by all students.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+14. Write a Pandas program to calculate the mean of all students' scores. Data is stored in a dataframe.
+
+Sample DataFrame:
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+			'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+			'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+			'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+
+
+Python Code :
+import pandas as pd
+import numpy as np
+exam_data  = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data , index=labels)
+print("\nMean score for each different student in data frame:")
+print(df['score'].mean())
+
+
+
+Output:
+Mean score for each different student in data frame:                   
+13.5625                         
+
+
+
+Explanation:
+
+The above code first creates a Pandas DataFrame 'df' from a dictionary 'exam_data' with row labels 'labels'. It then computes and prints the mean value of the 'score' column of the DataFrame using the mean() method of Pandas.
+
+The 'score' column contains numerical values with one missing value represented by numpy.nan. The mean() method automatically excludes the missing value from the computation.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+15. Write a Pandas program to append a new row 'k' to DataFrame with given values for each column. Now delete the new row and return the original data frame.
+
+Sample DataFrame:
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+			'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+			'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+			'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+Values for each column will be:
+name : ‘Suresh’, score: 15.5, attempts: 1, qualify: ‘yes’, label: ‘k’
+
+
+
+Python Code :
+import pandas as pd
+import numpy as np
+exam_data  = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+df = pd.DataFrame(exam_data , index=labels)
+print("Original rows:")
+print(df)
+print("\nAppend a new row:")
+df.loc['k'] = [1, 'Suresh', 'yes', 15.5]
+print("Print all records after insert a new record:")
+print(df)
+print("\nDelete the new row and display the original  rows:")
+df = df.drop('k')
+print(df)
+
+
+Output:
+
+Original rows:
+   attempts       name qualify  score
+a         1  Anastasia     yes   12.5
+b         3       Dima      no    9.0
+c         2  Katherine     yes   16.5
+d         3      James      no    NaN
+e         2      Emily      no    9.0
+f         3    Michael     yes   20.0
+g         1    Matthew     yes   14.5
+h         1      Laura      no    NaN
+i         2      Kevin      no    8.0
+j         1      Jonas     yes   19.0
+
+Append a new row:
+Print all records after insert a new record:
+   attempts       name qualify  score
+a         1  Anastasia     yes   12.5
+b         3       Dima      no    9.0
+c         2  Katherine     yes   16.5
+d         3      James      no    NaN
+e         2      Emily      no    9.0
+f         3    Michael     yes   20.0
+g         1    Matthew     yes   14.5
+h         1      Laura      no    NaN
+i         2      Kevin      no    8.0
+j         1      Jonas     yes   19.0
+k         1     Suresh     yes   15.5
+
+Delete the new row and display the original  rows:
+   attempts       name qualify  score
+a         1  Anastasia     yes   12.5
+b         3       Dima      no    9.0
+c         2  Katherine     yes   16.5
+d         3      James      no    NaN
+e         2      Emily      no    9.0
+f         3    Michael     yes   20.0
+g         1    Matthew     yes   14.5
+h         1      Laura      no    NaN
+i         2      Kevin      no    8.0
+j         1      Jonas     yes   19.0 
+
+
+
+
+Explanation:
+
+The above code first creates a Pandas DataFrame 'df' using the dictionary 'exam_data' and index labels 'labels'.
+
+df.loc['k'] = [1, 'Suresh', 'yes', 15.5]: This line adds a new row to the DataFrame with index label 'k' and values [1, 'Suresh', 'yes', 15.5].
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+16. Write a Pandas program to sort the data frame first by 'name' in descending order, then by 'score' in ascending order.
+
+Sample DataFrame:
+
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+			'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+			'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+			'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+Values for each column will be:
+name : 'Suresh', score: 15.5, attempts: 1, qualify: ‘yes’, label: ‘k’
+
+
+
+Python Code :
+import pandas as pd
+import numpy as np
+exam_data  = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+df = pd.DataFrame(exam_data , index=labels)
+print("Orginal rows:")
+print(df)
+df = df.sort_values(by=['name', 'score'], ascending=[False, True])
+print("Sort the data frame first by ‘name’ in descending order, then by ‘score’ in ascending order:")
+print(df)
+
+
+
+Sample Output:
+
+Orginal rows:
+        name  score  attempts qualify
+a  Anastasia   12.5         1     yes
+b       Dima    9.0         3      no
+c  Katherine   16.5         2     yes
+d      James    NaN         3      no
+e      Emily    9.0         2      no
+f    Michael   20.0         3     yes
+g    Matthew   14.5         1     yes
+h      Laura    NaN         1      no
+i      Kevin    8.0         2      no
+j      Jonas   19.0         1     yes
+Sort the data frame first by ‘name’ in descending order, then by ‘score’ in ascending order:
+        name  score  attempts qualify
+f    Michael   20.0         3     yes
+g    Matthew   14.5         1     yes
+h      Laura    NaN         1      no
+i      Kevin    8.0         2      no
+c  Katherine   16.5         2     yes
+j      Jonas   19.0         1     yes
+d      James    NaN         3      no
+e      Emily    9.0         2      no
+b       Dima    9.0         3      no
+a  Anastasia   12.5         1     yes
+
+
+
+Explanation:
+The above code first creates a Pandas DataFrame ‘df’ from the dictionary ‘exam_data’ using the labels labels as the row index.
+
+df.sort_values(by=['name', 'score'], ascending=[False, True]): This line sorts the DataFrame by the 'name' column in descending order and within each name, it sorts the 'score' column in ascending order.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+17. Write a Pandas program to replace the ‘qualify' column contains the values 'yes' and 'no' with True and False.
+
+Sample DataFrame:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+			'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+			'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+			'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+
+Values for each column will be:
+name : ‘Suresh’, score: 15.5, attempts: 1, qualify: ‘yes’, label: ‘k’
+
+
+
+Python Code :
+import pandas as pd
+import numpy as np
+exam_data  = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+df = pd.DataFrame(exam_data , index=labels)
+print("Original rows:")
+print(df)
+print("\nReplace the 'qualify' column contains the values 'yes' and 'no'  with True and  False:")
+df['qualify'] = df['qualify'].map({'yes': True, 'no': False})
+print(df)
+
+
+
+
+Sample Output:
+
+Original rows:                                                          
+   attempts       name qualify  score                                  
+a         1  Anastasia     yes   12.5                                  
+b         3       Dima      no    9.0                                  
+c         2  Katherine     yes   16.5                                  
+d         3      James      no    NaN                                  
+e         2      Emily      no    9.0                                  
+f         3    Michael     yes   20.0                                  
+g         1    Matthew     yes   14.5                                  
+h         1      Laura      no    NaN                                  
+i         2      Kevin      no    8.0                                  
+j         1      Jonas     yes   19.0                                  
+                                                                       
+Replace the 'qualify' column contains the values 'yes' and 'no'  with T
+rue and  False:                                                        
+   attempts       name  qualify  score                                 
+a         1  Anastasia     True   12.5                                 
+b         3       Dima    False    9.0                                 
+c         2  Katherine     True   16.5 
+d         3      James    False    NaN                                 
+e         2      Emily    False    9.0                                 
+f         3    Michael     True   20.0                                 
+g         1    Matthew     True   14.5                                 
+h         1      Laura    False    NaN                                 
+i         2      Kevin    False    8.0                                 
+j         1      Jonas     True   19.0    
+
+
+                  
+Explanation:
+
+The above code first creates a pandas DataFrame from the ‘exam_data’ dictionary and assigns index labels to each row.
+
+df['qualify'] = df['qualify'].map({'yes': True, 'no': False}): This line maps the values of the 'qualify' column to True and False based on whether the value is 'yes' or 'no', respectively.
+
+Finally print(df) function prints the resulting DataFrame.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+18. Write a Pandas program to change the name 'James' to 'Suresh' in name column of the data frame.
+
+Sample DataFrame:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+			'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+			'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+			'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+exam_data  = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+df = pd.DataFrame(exam_data , index=labels)
+print("Original rows:")
+print(df)
+print("\nChange the name 'James' to ‘Suresh’:")
+df['name'] = df['name'].replace('James', 'Suresh')
+print(df)
+
+
+
+
+Sample Output:
+
+Original rows:                                                          
+   attempts       name qualify  score                                  
+a         1  Anastasia     yes   12.5                                  
+b         3       Dima      no    9.0                                  
+c         2  Katherine     yes   16.5                                  
+d         3      James      no    NaN                                  
+e         2      Emily      no    9.0                                  
+f         3    Michael     yes   20.0                                  
+g         1    Matthew     yes   14.5                                  
+h         1      Laura      no    NaN                                  
+i         2      Kevin      no    8.0                                  
+j         1      Jonas     yes   19.0                                  
+                                                                       
+Change the name 'James' to \‘Suresh\’:                                 
+   attempts       name qualify  score                                  
+a         1  Anastasia     yes   12.5                                  
+b         3       Dima      no    9.0                                  
+c         2  Katherine     yes   16.5                                  
+d         3     Suresh      no    NaN
+e         2      Emily      no    9.0                                  
+f         3    Michael     yes   20.0                                  
+g         1    Matthew     yes   14.5                                  
+h         1      Laura      no    NaN                                  
+i         2      Kevin      no    8.0                                  
+j         1      Jonas     yes   19.0    
+
+
+
+
+                 
+Explanation:
+
+The above code first creates a Pandas DataFrame called ‘df’ with the given ‘exam data’, assigns the provided list ‘labels’ as the index.
+
+df['name'] = df['name'].replace('James', 'Suresh'): This line replaces the name 'James' with 'Suresh' in the name column using the replace() method.
+
+Finally print() function prints the resulting DataFrame.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+19. Write a Pandas program to delete the 'attempts' column from the DataFrame.
+
+Sample DataFrame:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+			'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+			'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+			'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+			
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+exam_data  = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+df = pd.DataFrame(exam_data , index=labels)
+print("Original rows:")
+print(df)
+print("\nDelete the 'attempts' column from the data frame:")
+df.pop('attempts')
+print(df)
+
+
+
+Sample Output:
+
+Original rows:                                                          
+   attempts       name qualify  score                                  
+a         1  Anastasia     yes   12.5                                  
+b         3       Dima      no    9.0                                  
+c         2  Katherine     yes   16.5                                  
+d         3      James      no    NaN                                  
+e         2      Emily      no    9.0                                  
+f         3    Michael     yes   20.0                                  
+g         1    Matthew     yes   14.5                                  
+h         1      Laura      no    NaN                                  
+i         2      Kevin      no    8.0                                  
+j         1      Jonas     yes   19.0                                  
+                                                                       
+Delete the 'attempts' column from the data frame:                      
+        name qualify  score                                            
+a  Anastasia     yes   12.5                                            
+b       Dima      no    9.0                                            
+c  Katherine     yes   16.5                                            
+d      James      no    NaN 
+e      Emily      no    9.0                                            
+f    Michael     yes   20.0                                            
+g    Matthew     yes   14.5                                            
+h      Laura      no    NaN                                            
+i      Kevin      no    8.0                                            
+j      Jonas     yes   19.0     
+
+
+
+               
+Explanation:
+
+The above code first creates a Pandas DataFrame named ‘df’ using the provided ‘exam_data’ dictionary and ‘labels’ list as the index.
+
+df.pop('attempts'): This line removes the 'attempts' column from the DataFrame using the pop() method, which returns the removed column as a Pandas Series.
+
+Finally print() function prints the updated DataFrame.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+20. Write a Pandas program to insert a new column in existing DataFrame.
+
+Sample DataFrame:
+Sample Python dictionary data and list labels:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+			'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+			'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+			'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+			
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+exam_data  = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+df = pd.DataFrame(exam_data , index=labels)
+print("Original rows:")
+print(df)
+color = ['Red','Blue','Orange','Red','White','White','Blue','Green','Green','Red']
+df['color'] = color
+print("\nNew DataFrame after inserting the 'color' column")
+print(df)
+Sample Output:
+
+Original rows:                                                          
+   attempts       name qualify  score                                  
+a         1  Anastasia     yes   12.5                                  
+b         3       Dima      no    9.0                                  
+c         2  Katherine     yes   16.5                                  
+d         3      James      no    NaN                                  
+e         2      Emily      no    9.0                                  
+f         3    Michael     yes   20.0                                  
+g         1    Matthew     yes   14.5                                  
+h         1      Laura      no    NaN                                  
+i         2      Kevin      no    8.0                                  
+j         1      Jonas     yes   19.0                                  
+                                                                       
+New DataFrame after inserting the 'color' column                       
+   attempts       name qualify  score   color                          
+a         1  Anastasia     yes   12.5     Red                          
+b         3       Dima      no    9.0    Blue                          
+c         2  Katherine     yes   16.5  Orange                          
+d         3      James      no    NaN     Red
+e         2      Emily      no    9.0   White                          
+f         3    Michael     yes   20.0   White                          
+g         1    Matthew     yes   14.5    Blue                          
+h         1      Laura      no    NaN   Green                          
+i         2      Kevin      no    8.0   Green                          
+j         1      Jonas     yes   19.0     Red  
+
+
+       
+
+	   
+Explanation:
+
+The above code creates a Pandas DataFrame called ‘df’ with columns 'name', 'score', 'attempts', and 'qualify' using the provided ‘exam_data’ dictionary and ‘labels’ list as the index.
+
+df['color'] = color: This line creates a new column called 'color' using the ‘color’ list. The 'color' column is appended to the end of the DataFrame and contains the colors assigned to each name. The colors are assigned based on the order of the names in the ‘exam_data’ dictionary.
+
+
+Finally print() function prints the updated DataFrame.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+21. Write a Pandas program to iterate over rows in a DataFrame.
+
+Sample Python dictionary data and list labels:
+exam_data = [{'name':'Anastasia', 'score':12.5}, {'name':'Dima','score':9}, {'name':'Katherine','score':16.5}]
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+exam_data = [{'name':'Anastasia', 'score':12.5}, {'name':'Dima','score':9}, {'name':'Katherine','score':16.5}]
+df = pd.DataFrame(exam_data)
+for index, row in df.iterrows():
+    print(row['name'], row['score'])
+	
+	
+	
+Sample Output:
+
+Anastasia 12.5                                                         
+Dima 9.0                                                               
+Katherine 16.5    
+
+
+               
+Explanation:
+
+The above code first creates a Pandas DataFrame called ‘df’ using a list of dictionaries containing information about exam scores for three people.
+
+It then iterates over the rows of the DataFrame using the iterrows() method, which returns an iterator yielding index and row data as tuples. For each row, the code prints the values of the name and score columns using print() function.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+22. Write a Pandas program to get list from DataFrame column headers.
+
+Sample data:
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+			'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+			'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+			'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+exam_data  = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+df = pd.DataFrame(exam_data , index=labels)
+print(list(df.columns.values))
+
+
+
+Sample Output:
+
+['attempts', 'name', 'qualify', 'score']                  
+Explanation:
+
+The above code defines a dictionary 'exam_data' with keys 'name', 'score', 'attempts', and 'qualify' and their corresponding values as lists. It then defines a list of 'labels' and creates a Pandas DataFrame 'df' from the dictionary with the index set to the list of labels.
+
+print(list(df.columns.values)): This line prints the list of column names in the DataFrame df.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+23. Write a Pandas program to rename columns of a given DataFrame.
+
+Sample data:
+Original DataFrame
+col1 col2 col3
+0 1 4 7
+1 2 5 8
+2 3 6 9
+
+New DataFrame after renaming columns:
+Column1 Column2 Column3
+0 1 4 7
+1 2 5 8
+2 3 6 9
+
+
+
+
+
+Python Code :
+import pandas as pd
+d = {'col1': [1, 2, 3], 'col2': [4, 5, 6], 'col3': [7, 8, 9]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+df.columns = ['Column1', 'Column2', 'Column3']
+df = df.rename(columns={'col1': 'Column1', 'col2': 'Column2', 'col3': 'Column3'})
+print("New DataFrame after renaming columns:")
+print(df)
+
+
+
+
+Sample Output:
+
+Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     2     5     8
+2     3     6     9
+New DataFrame after renaming columns:
+   Column1  Column2  Column3
+0        1        4        7
+1        2        5        8
+2        3        6        9      
+
+
+  
+  
+Explanation:
+
+The above code first creates a Pandas DataFrame 'df' from a dictionary 'd' with 3 columns 'col1', 'col2', and 'col3'.
+
+df = df.rename(columns={'col1': 'Column1', 'col2': 'Column2', 'col3': 'Column3'}): This line changes the column names of the DataFrame using two different methods. First, it sets the column names using the .columns attribute, and then it renames the columns using the .rename() method with a dictionary mapping the old column names to the new column names.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+24. Write a Pandas program to select rows from a given DataFrame based on values in some columns.
+
+Sample data:
+Original DataFrame
+col1 col2 col3
+0 1 4 7
+1 4 5 8
+2 3 6 9
+3 4 7 0
+4 5 8 1
+Rows for colum1 value == 4
+col1 col2 col3
+1 4 5 8
+3 4 7 0
+
+
+
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+d = {'col1': [1, 4, 3, 4, 5], 'col2': [4, 5, 6, 7, 8], 'col3': [7, 8, 9, 0, 1]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+print('Rows for colum1 value == 4')
+print(df.loc[df['col1'] == 4])
+Sample Output:
+
+      Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     4     5     8
+2     3     6     9
+3     4     7     0
+4     5     8     1
+Rows for colum1 value == 4
+   col1  col2  col3
+1     4     5     8
+3     4     7     0
+
+
+
+            
+Explanation:
+
+The above code first creates a pandas DataFrame called ‘df’ with three columns 'col1', 'col2', and 'col3' and five rows of data.
+
+df.loc[df['col1'] == 4]: This line selects only the rows of the DataFrame where the 'col1' column is equal to 4. This is done using a boolean mask created by the expression df['col1'] == 4. The .loc method is then used to select only the rows where the boolean mask is True.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+25. Write a Pandas program to change the order of a DataFrame columns.
+
+Sample data:
+
+Original DataFrame
+col1 col2 col3
+0 1 4 7
+1 4 5 8
+2 3 6 9
+3 4 7 0
+4 5 8 1
+
+After altering col1 and col3
+col3 col2 col1
+0 7 4 1
+1 8 5 4
+2 9 6 3
+3 0 7 4
+4 1 8 5
+
+
+
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+d = {'col1': [1, 4, 3, 4, 5], 'col2': [4, 5, 6, 7, 8], 'col3': [7, 8, 9, 0, 1]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+print('After altering col1 and col3')
+df = df[['col3', 'col2', 'col1']]
+print(df)
+Sample Output:
+
+ Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     4     5     8
+2     3     6     9
+3     4     7     0
+4     5     8     1
+After altering col1 and col3
+   col3  col2  col1
+0     7     4     1
+1     8     5     4
+2     9     6     3
+3     0     7     4
+4     1     8     5                 
+
+
+
+
+
+Explanation:
+
+The said code creates a Pandas DataFrame called ‘df’ with three columns labeled 'col1', 'col2', and 'col3' and five rows of data.
+
+df = df[['col3', 'col2', 'col1']]: This code reorders the columns of ‘df’ using double brackets, [['col3', 'col2', 'col1']], to select the columns in the order 'col3', 'col2', and 'col1'. The resulting DataFrame, which has the same data as the original ‘df’ but with columns in a different order, is stored back into the ‘df’ variable.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+26. Write a Pandas program to add one row in an existing DataFrame.
+
+Sample data:
+Original DataFrame
+col1 col2 col3
+0 1 4 7
+1 4 5 8
+2 3 6 9
+3 4 7 0
+4 5 8 1
+After add one row:
+col1 col2 col3
+0 1 4 7
+1 4 5 8
+2 3 6 9
+3 4 7 0
+4 5 8 1
+5 10 11 12
+
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+d = {'col1': [1, 4, 3, 4, 5], 'col2': [4, 5, 6, 7, 8], 'col3': [7, 8, 9, 0, 1]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+print('After add one row:')
+df2 = {'col1': 10, 'col2': 11, 'col3': 12}
+df = df.append(df2, ignore_index=True)
+print(df)
+
+
+
+Sample Output:
+
+   Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     4     5     8
+2     3     6     9
+3     4     7     0
+4     5     8     1
+After add one row:
+   col1  col2  col3
+0     1     4     7
+1     4     5     8
+2     3     6     9
+3     4     7     0
+4     5     8     1
+5    10    11    12  
+
+
+
+             
+Explanation:
+
+The code creates a Pandas DataFrame df from a Python dictionary ‘d’, which has three keys 'col1', 'col2', and 'col3', and corresponding values that are lists of integers. Then, a new Python dictionary df2 is created with the same keys, but with a single set of values.
+
+df = df.append(df2, ignore_index=True): This code is used to add ‘df2’ as a new row to the DataFrame df. The ignore_index parameter is set to True to reset the index of the appended DataFrame.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+27. Write a Pandas program to write a DataFrame to CSV file using tab separator.
+
+
+
+Sample data:
+Original DataFrame
+col1 col2 col3
+0 1 4 7
+1 4 5 8
+2 3 6 9
+3 4 7 0
+4 5 8 1
+Data from new_file.csv file:
+col1\tcol2\tcol3
+0 1\t4\t7
+1 4\t5\t8
+2 3\t6\t9
+3 4\t7\t0
+4 5\t8\t1
+
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+d = {'col1': [1, 4, 3, 4, 5], 'col2': [4, 5, 6, 7, 8], 'col3': [7, 8, 9, 0, 1]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+print('Data from new_file.csv file:')
+df.to_csv('new_file.csv', sep='\t', index=False)
+new_df = pd.read_csv('new_file.csv')
+print(new_df)
+Sample Output:
+
+     Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     4     5     8
+2     3     6     9
+3     4     7     0
+4     5     8     1
+Data from new_file.csv file:
+  col1\tcol2\tcol3
+0          1\t4\t7
+1          4\t5\t8
+2          3\t6\t9
+3          4\t7\t0
+4          5\t8\t1   
+
+
+
+          
+Explanation:
+
+The above code first creates a Pandas DataFrame ‘df’ from a dictionary ‘d’ containing three columns: col1, col2, and col3.
+
+df.to_csv('new_file.csv', sep='\t', index=False): This code saves this DataFrame as a tab-separated file named new_file.csv using the to_csv() method with the parameters sep='\t' and index=False.
+
+new_df = pd.read_csv('new_file.csv'): This code loads the saved file into a new DataFrame new_df using the read_csv() function.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+28. Write a Pandas program to count city wise number of people from a given of data set (city, name of the person).
+
+
+Sample data:
+city Number of people
+0 California 4
+1 Georgia 2
+2 Los Angeles 4
+
+
+
+
+Python Code :
+
+import pandas as pd
+df1 = pd.DataFrame({'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'city': ['California', 'Los Angeles', 'California', 'California', 'California', 'Los Angeles', 'Los Angeles', 'Georgia', 'Georgia', 'Los Angeles']})
+g1 = df1.groupby(["city"]).size().reset_index(name='Number of people')
+print(g1)
+
+
+
+
+Sample Output:
+
+          city  Number of people
+0   California                 4
+1      Georgia                 2
+2  Los Angeles                 4                  
+
+
+
+
+Explanation:
+
+In the above code -
+
+Creates a Pandas DataFrame called df1 with two columns, "name" and "city", and 10 rows of data.
+Groups the rows of df1 by the "city" column using the groupby() method.
+Applies the size() method to each group to count the number of rows in each group.
+Resets the index of the resulting DataFrame using the reset_index() method and renames the column with the count as "Number of people".
+Stores the resulting DataFrame in a variable called g1.
+The resulting DataFrame has two columns: "city" and "Number of people".
+Prints the contents of g1 to the console.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+29. Write a Pandas program to delete DataFrame row(s) based on given column value.
+
+Sample data:
+
+Original DataFrame
+col1 col2 col3
+0 1 4 7
+1 4 5 8
+2 3 6 9
+3 4 7 0
+4 5 8 1
+
+New DataFrame
+col1 col2 col3
+0 1 4 7
+2 3 6 9
+3 4 7 0
+4 5 8 1
+
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+d = {'col1': [1, 4, 3, 4, 5], 'col2': [4, 5, 6, 7, 8], 'col3': [7, 8, 9, 0, 1]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+df = df[df.col2 != 5]
+print("New DataFrame")
+print(df)
+
+
+
+
+Sample Output:
+
+    Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     4     5     8
+2     3     6     9
+3     4     7     0
+4     5     8     1
+New DataFrame
+   col1  col2  col3
+0     1     4     7
+2     3     6     9
+3     4     7     0
+4     5     8     1
+
+
+
+              
+Explanation:
+
+The above code first creates a Pandas DataFrame df with columns col1, col2, and col3 using a dictionary ‘d’.
+
+df = df[df.col2 != 5]: This line filters the rows of the DataFrame where the value in col2 is not equal to 5 using boolean indexing. Specifically, it creates a boolean mask df.col2 != 5, which returns True for all rows where the value in col2 is not 5, and False otherwise. This mask is then passed to the DataFrame to select only the rows where the mask is True, effectively filtering out the row where col2 is equal to 5.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+30. Write a Pandas program to widen output display to see more columns.
+
+Sample data:
+Original DataFrame
+col1 col2 col3
+0 1 4 7
+1 4 5 8
+2 3 6 9
+3 4 7 0
+4 5 8 1
+
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+d = {'col1': [1, 4, 3, 4, 5], 'col2': [4, 5, 6, 7, 8], 'col3': [7, 8, 9, 0, 1]}
+df = pd.DataFrame(data=d)
+pd.set_option('display.max_rows', 500)
+pd.set_option('display.max_columns', 500)
+pd.set_option('display.width', 1000)
+print("Original DataFrame")
+print(df)
+
+
+
+
+Sample Output:
+
+   Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     4     5     8
+2     3     6     9
+3     4     7     0
+4     5     8     1     
+
+
+
+          
+Explanation:
+
+The above code first creates a Pandas DataFrame df with columns col1, col2, and col3 using a dictionary 'd'.
+
+Then the code sets some display options for Pandas dataframes 'df'.
+
+pd.set_option('display.max_rows', 500) sets the maximum number of rows that Pandas will display to 500.
+pd.set_option('display.max_columns', 500) sets the maximum number of columns that Pandas will display to 500.
+pd.set_option('display.width', 1000) sets the maximum width of the display to 1000 characters.
+Finally print() function prints the dataframe ‘df’.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+31. Write a Pandas program to select a row of series/dataframe by given integer index.
+
+Sample data:
+Original DataFrame
+col1 col2 col3
+0 1 4 7
+1 4 5 8
+2 3 6 9
+3 4 7 0
+4 5 8 1
+Index-2: Details
+col1 col2 col3
+2 3 6 9
+
+
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+d = {'col1': [1, 4, 3, 4, 5], 'col2': [4, 5, 6, 7, 8], 'col3': [7, 8, 9, 0, 1]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+result = df.iloc[[2]]
+print("Index-2: Details")
+print(result)
+
+
+
+
+Sample Output:
+
+ Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     4     5     8
+2     3     6     9
+3     4     7     0
+4     5     8     1
+Index-2: Details
+   col1  col2  col3
+2     3     6     9       
+
+
+
+       
+Explanation:
+
+The above code first creates a Pandas DataFrame df with columns col1, col2, and col3 using a dictionary 'd'.
+
+result = df.iloc[[2]] – This code selects the third row of the DataFrame using the iloc() method with index location [2] and stores it in a new DataFrame called result.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+32. Write a Pandas program to replace all the NaN values with Zero's in a column of a dataframe.
+
+Sample data:
+Original DataFrame
+attempts name qualify score
+0 1 Anastasia yes 12.5
+1 3 Dima no 9.0
+2 2 Katherine yes 16.5
+3 3 James no NaN
+4 2 Emily no 9.0
+5 3 Michael yes 20.0
+6 1 Matthew yes 14.5
+7 1 Laura no NaN
+8 2 Kevin no 8.0
+9 1 Jonas yes 19.0
+New DataFrame replacing all NaN with 0:
+attempts name qualify score
+0 1 Anastasia yes 12.5
+1 3 Dima no 9.0
+2 2 Katherine yes 16.5
+3 3 James no 0.0
+4 2 Emily no 9.0
+5 3 Michael yes 20.0
+6 1 Matthew yes 14.5
+7 1 Laura no 0.0
+8 2 Kevin no 8.0
+9 1 Jonas yes 19.0
+
+
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+df = pd.DataFrame(exam_data)
+print("Original DataFrame")
+print(df)
+df =  df.fillna(0)
+print("\nNew DataFrame replacing all NaN with 0:")
+print(df)
+
+
+
+Sample Output:
+
+ Original DataFrame
+   attempts       name qualify  score
+0         1  Anastasia     yes   12.5
+1         3       Dima      no    9.0
+2         2  Katherine     yes   16.5
+3         3      James      no    NaN
+4         2      Emily      no    9.0
+5         3    Michael     yes   20.0
+6         1    Matthew     yes   14.5
+7         1      Laura      no    NaN
+8         2      Kevin      no    8.0
+9         1      Jonas     yes   19.0
+
+New DataFrame replacing all NaN with 0:
+   attempts       name qualify  score
+0         1  Anastasia     yes   12.5
+1         3       Dima      no    9.0
+2         2  Katherine     yes   16.5
+3         3      James      no    0.0
+4         2      Emily      no    9.0
+5         3    Michael     yes   20.0
+6         1    Matthew     yes   14.5
+7         1      Laura      no    0.0
+8         2      Kevin      no    8.0
+9         1      Jonas     yes   19.0     
+
+
+           
+Explanation:
+
+The above code creates a Pandas DataFrame called ‘df’ from a dictionary called ‘exam_data’ that contains information about students and their exam scores. Some of the students have missing scores, which are represented as np.nan values.
+
+df = df.fillna(0): The fillna() method is then used to fill in these missing values with 0.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+33. Write a Pandas program to convert index in a column of the given dataframe.
+
+Sample data:
+Original DataFrame
+attempts name qualify score
+0 1 Anastasia yes 12.5
+1 3 Dima no 9.0
+2 2 Katherine yes 16.5
+3 3 James no NaN
+4 2 Emily no 9.0
+5 3 Michael yes 20.0
+6 1 Matthew yes 14.5
+7 1 Laura no NaN
+8 2 Kevin no 8.0
+9 1 Jonas yes 19.0
+
+After converting index in a column:
+index attempts name qualify score
+0 0 1 Anastasia yes 12.5
+1 1 3 Dima no 9.0
+2 2 2 Katherine yes 16.5
+3 3 3 James no NaN
+4 4 2 Emily no 9.0
+5 5 3 Michael yes 20.0
+6 6 1 Matthew yes 14.5
+7 7 1 Laura no NaN
+8 8 2 Kevin no 8.0
+9 9 1 Jonas yes 19.0
+
+Hiding index:
+index attempts name qualify score
+0 1 Anastasia yes 12.5
+1 3 Dima no 9.0
+2 2 Katherine yes 16.5
+3 3 James no NaN
+4 2 Emily no 9.0
+5 3 Michael yes 20.0
+6 1 Matthew yes 14.5
+7 1 Laura no NaN
+8 2 Kevin no 8.0
+9 1 Jonas yes 19.0
+
+
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+df = pd.DataFrame(exam_data)
+print("Original DataFrame")
+print(df)
+print("\nAfter converting index in a column:")
+df.reset_index(level=0, inplace=True)
+print(df)
+print("\nHiding index:")
+print( df.to_string(index=False))
+
+
+
+Sample Output:
+
+  Original DataFrame
+   attempts       name qualify  score
+0         1  Anastasia     yes   12.5
+1         3       Dima      no    9.0
+2         2  Katherine     yes   16.5
+3         3      James      no    NaN
+4         2      Emily      no    9.0
+5         3    Michael     yes   20.0
+6         1    Matthew     yes   14.5
+7         1      Laura      no    NaN
+8         2      Kevin      no    8.0
+9         1      Jonas     yes   19.0
+
+After converting index in a column:
+   index  attempts       name qualify  score
+0      0         1  Anastasia     yes   12.5
+1      1         3       Dima      no    9.0
+2      2         2  Katherine     yes   16.5
+3      3         3      James      no    NaN
+4      4         2      Emily      no    9.0
+5      5         3    Michael     yes   20.0
+6      6         1    Matthew     yes   14.5
+7      7         1      Laura      no    NaN
+8      8         2      Kevin      no    8.0
+9      9         1      Jonas     yes   19.0
+
+Hiding index:
+index  attempts       name qualify  score
+    0         1  Anastasia     yes   12.5
+    1         3       Dima      no    9.0
+    2         2  Katherine     yes   16.5
+    3         3      James      no    NaN
+    4         2      Emily      no    9.0
+    5         3    Michael     yes   20.0
+    6         1    Matthew     yes   14.5
+    7         1      Laura      no    NaN
+    8         2      Kevin      no    8.0
+    9         1      Jonas     yes   19.0
+
+
+
+	
+Explanation:
+
+The above code first creates a Pandas DataFrame 'df' from the 'exam_data' dictionary.
+
+df.reset_index(level=0, inplace=True): This line resets the index of the DataFrame by moving the current index to a new column and creating a new integer index.
+
+Finally, it prints the DataFrame to the console as a string, without the index.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+34. Write a Pandas program to set a given value for particular cell in DataFrame using index value.
+
+Sample data:
+Original DataFrame
+attempts name qualify score
+0 1 Anastasia yes 12.5
+1 3 Dima no 9.0
+2 2 Katherine yes 16.5
+3 3 James no NaN
+4 2 Emily no 9.0
+5 3 Michael yes 20.0
+6 1 Matthew yes 14.5
+7 1 Laura no NaN
+8 2 Kevin no 8.0
+9 1 Jonas yes 19.0
+Set a given value for particular cell in the DataFrame
+attempts name qualify score
+0 1 Anastasia yes 12.5
+1 3 Dima no 9.0
+2 2 Katherine yes 16.5
+3 3 James no NaN
+4 2 Emily no 9.0
+5 3 Michael yes 20.0
+6 1 Matthew yes 14.5
+7 1 Laura no NaN
+8 2 Kevin no 10.2
+9 1 Jonas yes 19.0
+
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+df = pd.DataFrame(exam_data)
+print("Original DataFrame")
+print(df)
+print("\nSet a given value for particular cell in the DataFrame")
+df.set_value(8, 'score', 10.2)
+print(df)
+
+
+
+
+Sample Output:
+
+ Original DataFrame
+   attempts       name qualify  score
+0         1  Anastasia     yes   12.5
+1         3       Dima      no    9.0
+2         2  Katherine     yes   16.5
+3         3      James      no    NaN
+4         2      Emily      no    9.0
+5         3    Michael     yes   20.0
+6         1    Matthew     yes   14.5
+7         1      Laura      no    NaN
+8         2      Kevin      no    8.0
+9         1      Jonas     yes   19.0
+
+Set a given value for particular cell in the DataFrame
+   attempts       name qualify  score
+0         1  Anastasia     yes   12.5
+1         3       Dima      no    9.0
+2         2  Katherine     yes   16.5
+3         3      James      no    NaN
+4         2      Emily      no    9.0
+5         3    Michael     yes   20.0
+6         1    Matthew     yes   14.5
+7         1      Laura      no    NaN
+8         2      Kevin      no   10.2
+9         1      Jonas     yes   19.0
+
+
+
+                 
+Explanation:
+
+The above code first creates a Pandas DataFrame 'df' from the 'exam_data' dictionary.
+
+df.set_value(8, 'score', 10.2): The set_value() function is used to modify the value of the cell in the 8th row and 'score' column to 10.2.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+35. Write a Pandas program to count the NaN values in one or more columns in DataFrame.
+
+Sample data:
+Original DataFrame
+attempts name qualify score
+0 1 Anastasia yes 12.5
+1 3 Dima no 9.0
+2 2 Katherine yes 16.5
+3 3 James no NaN
+4 2 Emily no 9.0
+5 3 Michael yes 20.0
+6 1 Matthew yes 14.5
+7 1 Laura no NaN
+8 2 Kevin no 8.0
+9 1 Jonas yes 19.0
+Number of NaN values in one or more columns:
+2
+
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+df = pd.DataFrame(exam_data)
+print("Original DataFrame")
+print(df)
+print("\nNumber of NaN values in one or more columns:")
+print(df.isnull().values.sum())
+
+
+
+
+Sample Output:
+
+      Original DataFrame
+   attempts       name qualify  score
+0         1  Anastasia     yes   12.5
+1         3       Dima      no    9.0
+2         2  Katherine     yes   16.5
+3         3      James      no    NaN
+4         2      Emily      no    9.0
+5         3    Michael     yes   20.0
+6         1    Matthew     yes   14.5
+7         1      Laura      no    NaN
+8         2      Kevin      no    8.0
+9         1      Jonas     yes   19.0
+
+Number of NaN values in one or more columns:
+2            
+
+
+
+Explanation:
+
+The above code creates a pandas DataFrame ‘df’ from a dictionary ‘exam_data’ containing information about some exam scores.
+
+df.isnull().values.sum(): This code uses the isnull() function to check which values in the DataFrame are null or NaN, and returns a DataFrame containing the same shape as ‘df’ with True for missing values and False for non-missing values. The values attribute is used to extract the values of the resulting DataFrame and the sum() function is applied to the values to get the total count of missing values in the original DataFrame.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+36. Write a Pandas program to drop a list of rows from a specified DataFrame.
+
+Sample data:
+Original DataFrame
+col1 col2 col3
+0 1 4 7
+1 4 5 8
+2 3 6 9
+3 4 7 0
+4 5 8 1
+New DataFrame after removing 2nd & 4th rows:
+col1 col2 col3
+0 1 4 7
+1 4 5 8
+3 4 7 0
+
+
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+d = {'col1': [1, 4, 3, 4, 5], 'col2': [4, 5, 6, 7, 8], 'col3': [7, 8, 9, 0, 1]}
+df = pd.DataFrame(d)
+print("Original DataFrame")
+print(df)
+print("New DataFrame after removing 2nd & 4th rows:")
+df = df.drop(df.index[[2,4]])
+print(df)
+
+
+
+
+Sample Output:
+
+Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     4     5     8
+2     3     6     9
+3     4     7     0
+4     5     8     1
+New DataFrame after removing 2nd & 4th rows:
+   col1  col2  col3
+0     1     4     7
+1     4     5     8
+3     4     7     0    
+
+
+          
+Explanation:
+
+The above code creates a Pandas DataFrame ‘df’ using a Python dictionary ‘d’. The DataFrame has three columns: 'col1', 'col2', and 'col3'.
+
+df = df.drop(df.index[[2,4]]): This code drops rows with indices 2 and 4 using the drop() method with the index parameter set to a list of indices to drop.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+37. Write a Pandas program to reset index in a given DataFrame.
+
+
+
+Sample data:
+Original DataFrame
+attempts name qualify score
+0 1 Anastasia yes 12.5
+1 3 Dima no 9.0
+2 2 Katherine yes 16.5
+3 3 James no NaN
+4 2 Emily no 9.0
+5 3 Michael yes 20.0
+6 1 Matthew yes 14.5
+7 1 Laura no NaN
+8 2 Kevin no 8.0
+9 1 Jonas yes 19.0
+After removing first and second rows
+attempts name qualify score
+2 2 Katherine yes 16.5
+3 3 James no NaN
+4 2 Emily no 9.0
+5 3 Michael yes 20.0
+6 1 Matthew yes 14.5
+7 1 Laura no NaN
+8 2 Kevin no 8.0
+9 1 Jonas yes 19.0
+Reset the Index:
+index attempts name qualify score
+0 2 2 Katherine yes 16.5
+1 3 3 James no NaN
+2 4 2 Emily no 9.0
+3 5 3 Michael yes 20.0
+4 6 1 Matthew yes 14.5
+5 7 1 Laura no NaN
+6 8 2 Kevin no 8.0
+7 9 1 Jonas yes 19.0
+
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+df = pd.DataFrame(exam_data)
+print("Original DataFrame")
+print(df)
+print("\nAfter removing first and second rows")
+df = df.drop([0, 1])
+print(df)
+print("\nReset the Index:")
+df = df.reset_index()
+print(df)
+
+
+
+
+Output:
+
+  Original DataFrame
+   attempts       name qualify  score
+0         1  Anastasia     yes   12.5
+1         3       Dima      no    9.0
+2         2  Katherine     yes   16.5
+3         3      James      no    NaN
+4         2      Emily      no    9.0
+5         3    Michael     yes   20.0
+6         1    Matthew     yes   14.5
+7         1      Laura      no    NaN
+8         2      Kevin      no    8.0
+9         1      Jonas     yes   19.0
+
+After removing first and second rows
+   attempts       name qualify  score
+2         2  Katherine     yes   16.5
+3         3      James      no    NaN
+4         2      Emily      no    9.0
+5         3    Michael     yes   20.0
+6         1    Matthew     yes   14.5
+7         1      Laura      no    NaN
+8         2      Kevin      no    8.0
+9         1      Jonas     yes   19.0
+
+Reset the Index:
+   index  attempts       name qualify  score
+0      2         2  Katherine     yes   16.5
+1      3         3      James      no    NaN
+2      4         2      Emily      no    9.0
+3      5         3    Michael     yes   20.0
+4      6         1    Matthew     yes   14.5
+5      7         1      Laura      no    NaN
+6      8         2      Kevin      no    8.0
+7      9         1      Jonas     yes   19.0       
+
+
+         
+Explanation:
+
+The said code first creates a Pandas DataFrame df from the dictionary ‘exam_data’. The DataFrame contains information about students' names, scores, number of attempts and whether they qualify or not.
+
+df = df.drop([0, 1]): This code drops the rows with index 0 and 1 from the DataFrame using the drop() method.
+
+df = df.reset_index(): This code resets the index using the reset_index() method, which creates a new column called "index" with the index values before resetting.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+38. Write a Pandas program to divide a DataFrame in a given ratio.
+
+Sample data:
+Original DataFrame:
+0 1
+0 0.316147 -0.767359
+1 -0.813410 -2.522672
+2 0.869615 1.194704
+3 -0.892915 -0.055133
+4 -0.341126 0.518266
+5 1.857342 1.361229
+6 -0.044353 -1.205002
+7 -0.726346 -0.535147
+8 -1.350726 0.563117
+9 1.051666 -0.441533
+
+70% of the said DataFrame:
+0 1
+8 -1.350726 0.563117
+2 0.869615 1.194704
+5 1.857342 1.361229
+6 -0.044353 -1.205002
+3 -0.892915 -0.055133
+1 -0.813410 -2.522672
+0 0.316147 -0.767359
+
+30% of the said DataFrame:
+0 1
+4 -0.341126 0.518266
+7 -0.726346 -0.535147
+9 1.051666 -0.441533
+
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+df = pd.DataFrame(np.random.randn(10, 2))
+print("Original DataFrame:")
+print(df)
+part_70 = df.sample(frac=0.7,random_state=10)
+part_30 = df.drop(part_70.index)
+print("\n70% of the said DataFrame:")
+print(part_70)
+print("\n30% of the said DataFrame:")
+print(part_30)
+
+
+
+Output:
+
+Original DataFrame:
+          0         1
+0  0.316147 -0.767359
+1 -0.813410 -2.522672
+2  0.869615  1.194704
+3 -0.892915 -0.055133
+4 -0.341126  0.518266
+5  1.857342  1.361229
+6 -0.044353 -1.205002
+7 -0.726346 -0.535147
+8 -1.350726  0.563117
+9  1.051666 -0.441533
+
+70% of the said DataFrame:
+          0         1
+8 -1.350726  0.563117
+2  0.869615  1.194704
+5  1.857342  1.361229
+6 -0.044353 -1.205002
+3 -0.892915 -0.055133
+1 -0.813410 -2.522672
+0  0.316147 -0.767359
+
+30% of the said DataFrame:
+          0         1
+4 -0.341126  0.518266
+7 -0.726346 -0.535147
+9  1.051666 -0.441533  
+
+
+
+                
+Explanation:
+
+The above code first generates a Pandas DataFrame df with 10 rows and 2 columns filled with random numbers using NumPy.
+
+part_70 = df.sample(frac=0.7,random_state=10): This code creates a new DataFrame 'part_70' by sampling 70% of the rows from 'df' using the sample method. The 'frac' parameter specifies the fraction of the rows to be sampled, while the random_state parameter is used to ensure that the same set of rows is always sampled if the code is run again with the same random_state value.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+40. Write a Pandas program to shuffle a given DataFrame rows.
+
+
+Sample data:
+Original DataFrame:
+attempts name qualify score
+0 1 Anastasia yes 12.5
+1 3 Dima no 9.0
+2 2 Katherine yes 16.5
+3 3 James no NaN
+4 2 Emily no 9.0
+5 3 Michael yes 20.0
+6 1 Matthew yes 14.5
+7 1 Laura no NaN
+8 2 Kevin no 8.0
+9 1 Jonas yes 19.0
+New DataFrame:
+attempts name qualify score
+5 3 Michael yes 20.0
+0 1 Anastasia yes 12.5
+9 1 Jonas yes 19.0
+6 1 Matthew yes 14.5
+7 1 Laura no NaN
+1 3 Dima no 9.0
+3 3 James no NaN
+4 2 Emily no 9.0
+8 2 Kevin no 8.0
+2 2 Katherine yes 16.5
+
+
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+df = pd.DataFrame(exam_data)
+print("Original DataFrame:")
+print(df)
+df = df.sample(frac=1)
+print("\nNew DataFrame:")
+print(df)
+
+
+
+
+Output:
+
+Original DataFrame:
+   attempts       name qualify  score
+0         1  Anastasia     yes   12.5
+1         3       Dima      no    9.0
+2         2  Katherine     yes   16.5
+3         3      James      no    NaN
+4         2      Emily      no    9.0
+5         3    Michael     yes   20.0
+6         1    Matthew     yes   14.5
+7         1      Laura      no    NaN
+8         2      Kevin      no    8.0
+9         1      Jonas     yes   19.0
+
+New DataFrame:
+   attempts       name qualify  score
+5         3    Michael     yes   20.0
+0         1  Anastasia     yes   12.5
+9         1      Jonas     yes   19.0
+6         1    Matthew     yes   14.5
+7         1      Laura      no    NaN
+1         3       Dima      no    9.0
+3         3      James      no    NaN
+4         2      Emily      no    9.0
+8         2      Kevin      no    8.0
+2         2  Katherine     yes   16.5
+
+
+
+               
+Explanation:
+
+The said code first creates a Pandas DataFrame df from the dictionary ‘exam_data’. The DataFrame contains information about students' names, scores, number of attempts and whether they qualify or not.
+
+df = df.sample(frac=1): This code shuffles the rows of the Pandas DataFrame df randomly using the sample method with frac=1, which means to sample all rows. It essentially reorders the rows of the DataFrame randomly.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+41. Write a Pandas program to convert DataFrame column type from string to datetime.
+
+
+Sample data:
+String Date:
+0 3/11/2000
+1 3/12/2000
+2 3/13/2000
+dtype: object
+Original DataFrame (string to datetime):
+0
+0 2000-03-11
+1 2000-03-12
+2 2000-03-13
+
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+s = pd.Series(['3/11/2000', '3/12/2000', '3/13/2000'])
+print("String Date:")
+print(s)
+r = pd.to_datetime(pd.Series(s))
+df = pd.DataFrame(r)
+print("Original DataFrame (string to datetime):")
+print(df)
+Sample Output:
+
+ String Date:
+0    3/11/2000
+1    3/12/2000
+2    3/13/2000
+dtype: object
+Original DataFrame (string to datetime):
+           0
+0 2000-03-11
+1 2000-03-12
+2 2000-03-13   
+
+
+
+
+          
+Explanation:
+
+The above code first creates a Pandas Series object s containing three strings that represent dates in 'month/day/year' format.
+
+r = pd.to_datetime(pd.Series(s)): This line uses the pd.to_datetime() method to convert each string date into a Pandas datetime object, and then create a new Pandas Series object ‘r’ containing these datetime objects.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+42. Write a Pandas program to rename a specific column name in a given DataFrame.
+
+
+
+Sample data:
+Original DataFrame
+col1 col2 col3
+0 1 4 7
+1 2 5 8
+2 3 6 9
+New DataFrame after renaming second column:
+col1 Column2 col3
+0 1 4 7
+1 2 5 8
+2 3 6 9
+
+
+
+
+
+Python Code :
+
+import pandas as pd
+d = {'col1': [1, 2, 3], 'col2': [4, 5, 6], 'col3': [7, 8, 9]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+df=df.rename(columns = {'col2':'Column2'})
+print("New DataFrame after renaming second column:")
+print(df)
+Sample Output:
+
+    Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     2     5     8
+2     3     6     9
+New DataFrame after renaming second column:
+   col1  Column2  col3
+0     1        4     7
+1     2        5     8
+2     3        6     9
+
+
+
+
+              
+Explanation:
+
+The above code first creates a dataframe ‘df’ with three columns 'col1', 'col2' and 'col3', and three rows with some values.
+
+df=df.rename(columns = {'col2':'Column2'}): This code renames the 'col2' column to 'Column2' using the rename method of Pandas. The new dataframe ‘df’ now has columns 'col1', 'Column2' and 'col3' with the same values as before, except for the renamed column 'Column2'. The original column name 'col2' is no longer present in the dataframe.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+43. Write a Pandas program to get a list of a specified column of a DataFrame.
+
+
+Sample data:
+Powered by
+Original DataFrame
+col1 col2 col3
+0 1 4 7
+1 2 5 8
+2 3 6 9
+Col2 of the DataFrame to list:
+[4, 5, 6]
+
+
+
+
+
+Python Code :
+
+import pandas as pd
+d = {'col1': [1, 2, 3], 'col2': [4, 5, 6], 'col3': [7, 8, 9]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+col2_list = df["col2"].tolist()
+print("Col2 of the DataFrame to list:")
+print(col2_list)
+
+
+
+Output:
+
+ Powered by 
+Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     2     5     8
+2     3     6     9
+Col2 of the DataFrame to list:
+[4, 5, 6]                 
+
+
+
+
+Explanation:
+
+The above code creates a dictionary ‘d’ containing 3 columns with some sample data, then uses the pd.DataFrame() function from pandas to create a DataFrame ‘df’ from this dictionary.
+
+col2_list = df["col2"].tolist(): This line of code extracts the column named col2 from the DataFrame df using df["col2"], and converts it into a Python list using the tolist() method. The resulting col2_list variable contains the values of the col2 column in a list format.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+44. Write a Pandas program to create a DataFrame from a Numpy array and specify the index column and column headers.
+
+
+Python Code :
+
+import pandas
+import numpy
+dtype = [('Column1','int32'), ('Column2','float32'), ('Column3','float32')]
+values = numpy.zeros(15, dtype=dtype)
+index = ['Index'+str(i) for i in range(1, len(values)+1)]
+df = pandas.DataFrame(values, index=index)
+print(df)
+
+
+
+Output:
+
+          Column1  Column2  Column3
+Index1         0      0.0      0.0
+Index2         0      0.0      0.0
+Index3         0      0.0      0.0
+Index4         0      0.0      0.0
+Index5         0      0.0      0.0
+Index6         0      0.0      0.0
+Index7         0      0.0      0.0
+Index8         0      0.0      0.0
+Index9         0      0.0      0.0
+Index10        0      0.0      0.0
+Index11        0      0.0      0.0
+Index12        0      0.0      0.0
+Index13        0      0.0      0.0
+Index14        0      0.0      0.0
+Index15        0      0.0      0.0             
+
+  
+  
+Explanation:
+
+dtype = [('Column1','int32'), ('Column2','float32'), ('Column3','float32')]: This code creates a Pandas DataFrame with 15 rows and 3 columns, named 'Column1', 'Column2', and 'Column3', respectively. The data type of the columns are set to be 'int32', 'float32', and 'float32', respectively.
+
+values = numpy.zeros(15, dtype=dtype): This code creates a NumPy structured array with 15 rows and 3 fields using numpy.zeros function. numpy.zeros function initializes an array with zeros of given shape and data type.
+
+index = ['Index'+str(i) for i in range(1, len(values)+1)]: This code sets the index for the DataFrame using a list comprehension. Here, the index is a list of strings starting from "Index1" to "Index15".
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+45. Write a Pandas program to find the row for where the value of a given column is maximum.
+
+
+
+Python Code :
+
+import pandas as pd
+d = {'col1': [1, 2, 3, 4, 7], 'col2': [4, 5, 6, 9, 5], 'col3': [7, 8, 12, 1, 11]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+print("Row where col1 has maximum value:")
+print(df['col1'].argmax())
+print("Row where col2 has maximum value:")
+print(df['col2'].argmax())
+print("Row where col3 has maximum value:")
+print(df['col3'].argmax())
+
+
+
+Output:
+
+    Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     2     5     8
+2     3     6    12
+3     4     9     1
+4     7     5    11
+Row where col1 has maximum value:
+4
+Row where col2 has maximum value:
+3
+Row where col3 has maximum value:
+2              
+
+
+
+
+Explanation:
+
+The above code creates a pandas DataFrame 'df' with three columns - 'col1', 'col2', and 'col3'. The code then uses the 'argmax()' function to find the index of the maximum value in each column.
+
+Therefore -
+
+The first 'print' statement returns the index of the row that has the maximum value in 'col1'.
+The second 'print' statement returns the index of the row that has the maximum value in 'col2'.
+The third 'print' statement returns the index of the row that has the maximum value in 'col3'.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+46. Write a Pandas program to check whether a given column is present in a DataFrame or not.
+
+
+
+Python Code :
+
+import pandas as pd
+d = {'col1': [1, 2, 3, 4, 7], 'col2': [4, 5, 6, 9, 5], 'col3': [7, 8, 12, 1, 11]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+if 'col4' in df.columns:
+  print("Col4 is present in DataFrame.")
+else:
+  print("Col4 is not present in DataFrame.")
+if 'col1' in df.columns:
+  print("Col1 is present in DataFrame.")
+else:
+  print("Col1 is not present in DataFrame.")
+
+
+
+
+Output:
+
+Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     2     5     8
+2     3     6    12
+3     4     9     1
+4     7     5    11
+Col4 is not present in DataFrame.
+Col1 is present in DataFrame.                
+
+
+
+
+Explanation:
+
+The above code first creates a Pandas DataFrame ‘df’ with three columns named col1, col2, and col3 and five rows of data.
+
+The code then checks if the column 'col4' is present in the DataFrame using the in operator with the columns attribute of the DataFrame. Since 'col4' is not one of the DataFrame columns, the output will be "Col4 is not present in DataFrame."
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+47. Write a Pandas program to get the specified row value of a given DataFrame.
+
+
+
+Python Code :
+
+import pandas as pd
+d = {'col1': [1, 2, 3, 4, 7], 'col2': [4, 5, 6, 9, 5], 'col3': [7, 8, 12, 1, 11]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+print("Value of Row1")
+print(df.iloc[0])
+print("Value of Row4")
+print(df.iloc[3])
+
+
+
+
+Output:
+
+Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     2     5     8
+2     3     6    12
+3     4     9     1
+4     7     5    11
+Value of Row1
+col1    1
+col2    4
+col3    7
+Name: 0, dtype: int64
+Value of Row4
+col1    4
+col2    9
+col3    1
+Name: 3, dtype: int64     
+
+
+
+
+Explanation:
+
+The above code first creates a Pandas DataFrame df using a dictionary ‘d’ with three columns 'col1', 'col2', and 'col3', and five rows of data.
+
+df.iloc[0]: This line selects the first row of the DataFrame df using the .iloc indexer, which selects rows by their integer position. Since the first row has an integer position of 0, this will select the first row of the DataFrame.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+48. Write a Pandas program to get the datatypes of columns of a DataFrame.
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+df = pd.DataFrame(exam_data)
+print("Original DataFrame:")
+print(df)
+print("Data types of the columns of the said DataFrame:")
+print(df.dtypes)
+
+
+
+Output:
+
+Original DataFrame:
+   attempts       name qualify  score
+0         1  Anastasia     yes   12.5
+1         3       Dima      no    9.0
+2         2  Katherine     yes   16.5
+3         3      James      no    NaN
+4         2      Emily      no    9.0
+5         3    Michael     yes   20.0
+6         1    Matthew     yes   14.5
+7         1      Laura      no    NaN
+8         2      Kevin      no    8.0
+9         1      Jonas     yes   19.0
+Data types of the columns of the said DataFrame:
+attempts      int64
+name         object
+qualify      object
+score       float64
+dtype: object                  
+
+
+
+Explanation:
+
+In the above code, a Pandas DataFrame named 'df' is created using a dictionary of lists 'exam_data' containing columns 'name', 'score', 'attempts', and 'qualify'.
+
+print(df.dtypes): This code prints the data types of each column of the DataFrame df.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+49. Write a Pandas program to append data to an empty DataFrame.
+
+Sample data:
+Original DataFrame:
+After appending some data:
+col1 col2
+0 0 0
+1 1 1
+2 2 2
+
+
+
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+df = pd.DataFrame()
+data = pd.DataFrame({"col1": range(3),"col2": range(3)})
+print("After appending some data:")
+df = df.append(data)
+print(df)
+
+
+
+
+Output:
+
+After appending some data:
+   col1  col2
+0     0     0
+1     1     1
+2     2     2   
+
+
+
+      
+Explanation:
+
+The above code creates an empty Pandas DataFrame ‘df’, then creates another DataFrame called ‘data’ with two columns, ‘col1’ and ‘col2’, containing values from 0 to 2.
+
+df = df.append(data): Here the DataFrame ‘data’ is appended to the ‘df’ DataFrame using the append() method. The resulting DataFrame, ‘df’, has the same columns as data and contains the values from data.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+50. Write a Pandas program to sort a given DataFrame by two or more columns.
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+df = pd.DataFrame(exam_data)
+print("Original DataFrame:")
+print(df)
+print("\nSort the above DataFrame on attempts, name:")
+df = df.sort_values(['attempts', 'name'], ascending=[True, True])
+print(df)
+
+
+
+Output:
+
+Original DataFrame:
+   attempts       name qualify  score
+0         1  Anastasia     yes   12.5
+1         3       Dima      no    9.0
+2         2  Katherine     yes   16.5
+3         3      James      no    NaN
+4         2      Emily      no    9.0
+5         3    Michael     yes   20.0
+6         1    Matthew     yes   14.5
+7         1      Laura      no    NaN
+8         2      Kevin      no    8.0
+9         1      Jonas     yes   19.0
+
+Sort the above DataFrame on attempts, name:
+   attempts       name qualify  score
+0         1  Anastasia     yes   12.5
+9         1      Jonas     yes   19.0
+7         1      Laura      no    NaN
+6         1    Matthew     yes   14.5
+4         2      Emily      no    9.0
+2         2  Katherine     yes   16.5
+8         2      Kevin      no    8.0
+1         3       Dima      no    9.0
+3         3      James      no    NaN
+5         3    Michael     yes   20.0       
+
+
+
+     
+Explanation:
+
+The above code creates a Pandas DataFrame df using the dictionary exam_data. The DataFrame has four columns named name, score, attempts, and qualify.
+
+df = df.sort_values(['attempts', 'name'], ascending=[True, True]): Here the sort_values() method is used to sort the DataFrame based on two columns ‘attempts’ and ‘name’. The ascending parameter is set to [True, True] to indicate that the sorting should be done in ascending order for both columns. This will result in the DataFrame being sorted first by the ‘attempts’ column in ascending order, and then within each group of attempts, the ‘name‘ column will be sorted in ascending order as well. The sorted DataFrame is stored back into ‘df’.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+51. Write a Pandas program to convert the datatype of a given column(floats to ints).
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9.1, 16.5, 12.77, 9.21, 20.22, 14.5, 11.34, 8.8, 19.13],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+df = pd.DataFrame(exam_data)
+print("Original DataFrame:")
+print(df)
+print("\nData types of the columns of the said DataFrame:")
+print(df.dtypes)
+print("\nNow change the Data type of 'score' column from float to int:")
+df.score = df.score.astype(int)
+print(df)
+print("\nData types of the columns of the DataFrame now:")
+print(df.dtypes)
+
+
+
+Output:
+
+Original DataFrame:
+   attempts       name qualify  score
+0         1  Anastasia     yes  12.50
+1         3       Dima      no   9.10
+2         2  Katherine     yes  16.50
+3         3      James      no  12.77
+4         2      Emily      no   9.21
+5         3    Michael     yes  20.22
+6         1    Matthew     yes  14.50
+7         1      Laura      no  11.34
+8         2      Kevin      no   8.80
+9         1      Jonas     yes  19.13
+
+Data types of the columns of the said DataFrame:
+attempts      int64
+name         object
+qualify      object
+score       float64
+dtype: object
+
+Now change the Data type of 'score' column from float to int:
+   attempts       name qualify  score
+0         1  Anastasia     yes     12
+1         3       Dima      no      9
+2         2  Katherine     yes     16
+3         3      James      no     12
+4         2      Emily      no      9
+5         3    Michael     yes     20
+6         1    Matthew     yes     14
+7         1      Laura      no     11
+8         2      Kevin      no      8
+9         1      Jonas     yes     19
+
+Data types of the columns of the DataFrame now:
+attempts     int64
+name        object
+qualify     object
+score        int64
+dtype: object             
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+52. Write a Pandas program to remove infinite values from a given DataFrame.
+
+
+
+Python Code :
+
+import pandas as pd
+import numpy as np
+df = pd.DataFrame([1000, 2000, 3000, -4000, np.inf, -np.inf])
+print("Original DataFrame:")
+print(df)
+print("Removing infinite values:")
+df = df.replace([np.inf, -np.inf], np.nan)
+print(df)
+
+
+
+Output:
+
+Original DataFrame:
+             0
+0  1000.000000
+1  2000.000000
+2  3000.000000
+3 -4000.000000
+4          inf
+5         -inf
+Removing infinite values:
+        0
+0  1000.0
+1  2000.0
+2  3000.0
+3 -4000.0
+4     NaN
+5     NaN           
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+53. Write a Pandas program to insert a given column at a specific column index in a DataFrame.
+
+
+
+Python Code :
+
+import pandas as pd
+d = {'col2': [4, 5, 6, 9, 5], 'col3': [7, 8, 12, 1, 11]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+new_col = [1, 2, 3, 4, 7]  
+# insert the said column at the beginning in the DataFrame
+idx = 0
+df.insert(loc=idx, column='col1', value=new_col)
+print("\nNew DataFrame")
+print(df)
+
+
+Output:
+
+Original DataFrame
+   col2  col3
+0     4     7
+1     5     8
+2     6    12
+3     9     1
+4     5    11
+
+New DataFrame
+   col1  col2  col3
+0     1     4     7
+1     2     5     8
+2     3     6    12
+3     4     9     1
+4     7     5    11       
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+54. Write a Pandas program to convert a given list of lists into a Dataframe.
+
+
+
+Python Code :
+
+import pandas as pd
+my_lists = [['col1', 'col2'], [2, 4], [1, 3]]
+# sets the headers as list
+headers = my_lists.pop(0) 
+print("Original list of lists:")
+print(my_lists)
+df = pd.DataFrame(my_lists, columns = headers)
+print("New DataFrame")
+print(df)
+
+
+
+Output:
+
+Original list of lists:
+[[2, 4], [1, 3]]
+New DataFrame
+   col1  col2
+0     2     4
+1     1     3    
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+55. Write a Pandas program to group by the first column and get second column as lists in rows.
+
+
+
+Python Code :
+
+import pandas as pd
+df = pd.DataFrame( {'col1':['C1','C1','C2','C2','C2','C3','C2'], 'col2':[1,2,3,3,4,6,5]})
+print("Original DataFrame")
+print(df)
+df = df.groupby('col1')['col2'].apply(list)
+print("\nGroup on the col1:")
+print(df)
+
+
+
+Output:
+
+Original DataFrame
+  col1  col2
+0   C1     1
+1   C1     2
+2   C2     3
+3   C2     3
+4   C2     4
+5   C3     6
+6   C2     5
+
+Group on the col1:
+col1
+C1          [1, 2]
+C2    [3, 3, 4, 5]
+C3             [6]
+Name: col2, dtype: object
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+56. Write a Pandas program to get column index from column name of a given DataFrame.
+
+
+
+Python Code :
+
+import pandas as pd
+d = {'col1': [1, 2, 3, 4, 7], 'col2': [4, 5, 6, 9, 5], 'col3': [7, 8, 12, 1, 11]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+print("\nIndex of 'col2'")
+print(df.columns.get_loc("col2"))
+
+
+Output:
+
+Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     2     5     8
+2     3     6    12
+3     4     9     1
+4     7     5    11
+
+Index of 'col2'
+1
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+57. Write a Pandas program to count number of columns of a DataFrame.
+
+
+
+Python Code :
+
+import pandas as pd
+d = {'col1': [1, 2, 3, 4, 7], 'col2': [4, 5, 6, 9, 5], 'col3': [7, 8, 12, 1, 11]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+print("\nNumber of columns:")
+print(len(df.columns))
+
+
+
+Output:
+
+Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     2     5     8
+2     3     6    12
+3     4     9     1
+4     7     5    11
+
+Number of columns:
+3   
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+58. Write a Pandas program to select all columns, except one given column in a DataFrame.
+
+
+
+Python Code :
+
+import pandas as pd
+d = {'col1': [1, 2, 3, 4, 7], 'col2': [4, 5, 6, 9, 5], 'col3': [7, 8, 12, 1, 11]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+print("\nAll columns except 'col3':")
+df = df.loc[:, df.columns != 'col3']
+print(df)
+
+
+
+Output:
+
+Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     2     5     8
+2     3     6    12
+3     4     9     1
+4     7     5    11
+
+All columns except 'col3':
+   col1  col2
+0     1     4
+1     2     5
+2     3     6
+3     4     9
+4     7     5
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+59. Write a Pandas program to get first n records of a DataFrame.
+
+
+
+Python Code :
+
+import pandas as pd
+d = {'col1': [1, 2, 3, 4, 7, 11], 'col2': [4, 5, 6, 9, 5, 0], 'col3': [7, 5, 8, 12, 1,11]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+print("\nFirst 3 rows of the said DataFrame':")
+df1 = df.head(3)
+print(df1)
+
+
+
+Output:
+
+Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     2     5     5
+2     3     6     8
+3     4     9    12
+4     7     5     1
+5    11     0    11
+
+First 3 rows of the said DataFrame':
+   col1  col2  col3
+0     1     4     7
+1     2     5     5
+2     3     6     8
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+60. Write a Pandas program to get last n records of a DataFrame.
+
+
+
+Python Code :
+
+import pandas as pd
+d = {'col1': [1, 2, 3, 4, 7, 11], 'col2': [4, 5, 6, 9, 5, 0], 'col3': [7, 5, 8, 12, 1,11]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+print("\nLast 3 rows of the said DataFrame':")
+df1 = df.tail(3)
+print(df1)
+
+
+Output:
+
+Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     2     5     5
+2     3     6     8
+3     4     9    12
+4     7     5     1
+5    11     0    11
+
+Last 3 rows of the said DataFrame':
+   col1  col2  col3
+3     4     9    12
+4     7     5     1
+5    11     0    11
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

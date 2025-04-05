@@ -1,0 +1,58 @@
+
+
+List-Based Programs:
+
+Reverse a list.
+Find the largest and smallest elements in a list.
+Sort a list in ascending and descending order.
+Merge two sorted lists.
+Remove duplicates from a list.
+Find the frequency of elements in a list.
+Rotate a list by a given number of positions.
+Find the second largest element in a list.
+Check if a list is a palindrome.
+Flatten a nested list.
+Find the intersection of two lists.
+Find the union of two lists.
+Split a list into chunks of a given size.
+Find the cumulative sum of a list.
+Generate all subsets of a list.
+Find the longest increasing subsequence in a list.
+Remove all occurrences of a specific element from a list.
+Find the product of all elements in a list.
+Find the common elements in multiple lists.
+Find the difference between two lists.
+
+Dictionary-Based Programs:
+Create a dictionary from two lists (keys and values).
+Merge two dictionaries.
+Find the key with the maximum value in a dictionary.
+Sort a dictionary by keys or values.
+Count the frequency of characters in a string using a dictionary.
+Group elements of a list based on a condition using a dictionary.
+Convert a dictionary to a list of tuples and vice versa.
+Check if a key exists in a dictionary.
+Remove a key-value pair from a dictionary.
+Find the sum of all values in a dictionary.
+Invert a dictionary (swap keys and values).
+Find the intersection of two dictionaries.
+Find the difference between two dictionaries.
+Create a nested dictionary.
+Update a dictionary with another dictionary.
+Find the common keys in multiple dictionaries.
+Count the frequency of words in a text using a dictionary.
+Create a dictionary from a list with default values.
+Find the key with the minimum value in a dictionary.
+Filter a dictionary based on a condition.
+
+Combined List and Dictionary Programs:
+Convert a list of dictionaries into a single dictionary.
+Group a list of dictionaries by a specific key.
+Sort a list of dictionaries by a specific key.
+Find the maximum and minimum values in a list of dictionaries.
+Convert a dictionary of lists into a list of dictionaries.
+Flatten a dictionary with nested lists.
+Create a dictionary from a list of tuples.
+Find the frequency of elements in a list using a dictionary.
+Create a dictionary of lists from a list of dictionaries.
+Find the unique keys in a list of dictionaries.
