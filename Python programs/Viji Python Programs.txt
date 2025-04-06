@@ -1,0 +1,814 @@
+
+                                            List-Based Programs
+											====================
+Find the second largest num in the list
+========================================
+
+Using sort method  -> Changes the original list
+------------------
+num = [1,4,6,73,2,10,66,7,8]
+
+new_list = num.sort(reverse=True)
+
+print(num[1])
+
+Using Sorted method -> returns new sorted list and original remains same
+--------------------
+num = [1,4,6,73,2,10,66,7,8]
+
+new_list = sorted(num, reverse = True)
+
+print(new_list[1])
+
+
+Without any method using quick sort
+====================================
+def quick_sort(num):
+    if len(num) <= 1:
+        return num
+    pivot = num[(len(num)//2)]
+    left_val = [x for x in num if x < pivot]
+    mid_val = [x for x in num if x== pivot]
+    right_val = [x for x in num if x>pivot]
+    
+    return quick_sort(left_val) + mid_val + quick_sort(right_val)
+    
+sorted_list = quick_sort([1,4,6,73,2,10,66,7,8])
+print(f"sorted list:{sorted_list}")
+print(f"second largest number is:{sorted_list[-2]}")
+
+
+OUTPUT
+-------
+sorted list:[1, 2, 4, 6, 7, 8, 10, 66, 73]
+second largest number is:66
+
+
+Find the largest and smallest elements in a list.
+==================================================
+num = [1,4,6,73,2,10,66,7,8]
+
+largest = num[0]
+smallest = num[0]
+
+for i in num:
+    if i > largest:
+        largest = i
+    if i < smallest:
+        smallest = i
+        
+print(f"largest number is: {largest}")
+print(f"smallest number is: {smallest}")
+
+
+Sort a list in ascending and descending order.
+===============================================
+num = [1,4,6,73,2,10,66,7,8]
+
+def quick_sort(num):
+    if len(num) <= 1:
+        return num
+    pivot = num[(len(num)//2)]
+    left_val = [x for x in num if x < pivot]
+    mid_val = [x for x in num if x== pivot]
+    right_val = [x for x in num if x>pivot]
+    
+    return quick_sort(left_val) + mid_val + quick_sort(right_val)
+    
+sorted_list = quick_sort([1,4,6,73,2,10,66,7,8])
+print(f"sorted list in ascending order:{sorted_list}")
+print(f"sorted list in descending order:{sorted_list[::-1]}")
+
+
+Merge two sorted lists
+=======================
+
+list1 = [2,4,6,8]
+list2 = [1,3,5,7,9,11]
+def merge_sort(list1,list2):
+    result = []
+    i,j=0,0
+    while i<len(list1) and j<len(list2):
+        if list1[i] < list2[j]:
+            result.append(list1[i])
+            i += 1
+        else:
+            result.append(list2[j])
+            j += 1
+    
+    while i<len(list1):
+            result.append(list1[i])
+            i += 1
+    
+    while j<len(list2):
+            result.append(list2[j])
+            j += 1
+            
+    return result
+
+merged_list = merge_sort(list1,list2)
+print(merged_list)
+            
+			
+OUTPUT    -> [1, 2, 3, 4, 5, 6, 7, 8, 9, 11]
+-------
+
+
+Remove duplicates from a list.
+================================
+list1 = [2,4,6,8,4,3,1,2,10,9,6,2]
+
+def duplicate(num):
+    result = []
+    for i in num:
+        if i not in result:
+            result.append(i)
+    return result
+
+org_list = duplicate(list1)
+print(org_list)
+
+
+Find the frequency of elements in a list.
+==========================================
+list1 = [2,4,6,8,4,3,1,2,10,9,6,2]
+
+
+def frequency(num):
+    freq={}
+    for i in num:
+        if i not in freq:
+            freq[i] = 1
+        else:
+            freq[i] += 1
+    return freq
+    
+freq_char = frequency(list1)
+print(freq_char)
+
+OUTPUT -> {2: 3, 4: 2, 6: 2, 8: 1, 3: 1, 1: 1, 10: 1, 9: 1}
+
+USING LIST
+===========
+
+list1 = [2,4,6,8,4,3,1,2,10,9,6,2]
+
+def frequency(num):
+    freq=[]
+    for i in num:
+        found = False
+        for j in freq:
+            if j[0] == i:
+                j[1] += 1
+                found = True
+                break
+            
+        if not found:
+            freq.append([i,1])
+            
+    return freq
+    
+freq_char = frequency(list1)
+print(freq_char)
+
+            
+OUTPUT -> [[2, 3], [4, 2], [6, 2], [8, 1], [3, 1], [1, 1], [10, 1], [9, 1]]
+
+
+Check if a list is a palindrome.
+=================================
+list1 = [2,4,6,4,2]
+
+def palindrome(list1):
+    if list1 == list1[::-1]:
+        return f"given list is palindrome:{list1}"
+    else:
+        return None
+
+check = palindrome(list1)
+print(check)
+
+OUTPUT -> given list is palindrome:[2, 4, 6, 4, 2]
+
+def palindrome(num):
+    for i in range(len(num)//2):
+        if num[i] != num[(len(num) - 1 - i)]:
+            return False
+    return True
+
+print(palindrome([2,4,6,4,2]))
+print(palindrome([2,4,6,5,4,2]))
+
+OUTPUT -> True
+          False
+		  
+
+num = [[2,3],[[4,5,6]],8,[9,10]]
+
+
+Flatten a nested list
+======================
+def flatten_list(num):
+    result = []
+    for item in num:
+        if isinstance(item,list):
+            result.extend(flatten_list(item))
+        else:
+            result.append(item)
+    return result
+ 
+print(flatten_list(num))
+
+Find the intersection of two lists.
+====================================
+lst1 = [1,2,3,4,5]
+lst2 = [1,4,6,7,2]
+
+result=[]
+def intersection(lst1,lst2):
+    for i in lst1:
+        for j in lst2:
+            if i == j:
+                result.append(i)
+    return result
+
+print(intersection(lst1,lst2))
+
+OUTPUT -> [1, 2, 4]
+
+
+Find the union of two lists
+============================
+lst1 = [1,2,3,4,5]
+lst2 = [1,4,6,7,2]
+
+for ele in lst2:
+    if ele not in lst1:
+        lst1.append(ele)
+
+print(lst1) 
+
+
+OUTPUT -> [1, 2, 3, 4, 5, 6, 7]
+
+
+Split a list into chunks of a given size
+==========================================
+lst = [1,2,3,4,5,6,7,8,9]
+
+def chunk_list(lst,chunksize):
+    return [lst[i:i+chunksize] for i in range(0,len(lst),chunksize)]
+    
+print(chunk_list(lst,4))
+
+OUTPUT -> [[1, 2, 3, 4], [5, 6, 7, 8], [9]]
+
+
+Find the cumulative sum of a list.
+====================================
+lst = [1,2,3,4,5,6,7,8,9]
+
+def sum_list(lst):
+    rslt = []
+    total = 0
+    for i in lst:  
+        total += i
+        rslt.append(total)
+    return rslt    
+        
+print(sum_list(lst))
+
+OUTPUT -> [1, 3, 6, 10, 15, 21, 28, 36, 45]
+
+OR
+
+lst = [1,2,3,4,5,6,7,8,9]
+
+from itertools import accumulate
+
+cumulative_sum = list(accumulate(lst))
+print(cumulative_sum)
+
+OUTPUT -> [1, 3, 6, 10, 15, 21, 28, 36, 45]
+
+
+Remove all occurrences of a specific element from a list
+=========================================================
+lst = [1,2,3,4,5,6,7,8,9,2,4,5,1,9,7,1,3,4,2]
+
+def remove_occ(lst , num):
+    for i in lst:
+        if i == num:
+            lst.remove(i)
+    return lst
+        
+print(remove_occ(lst,1))
+
+
+Find the product of all elements in a list
+===========================================
+lst = [1,2,3,4,5,6,7,8,9]
+
+def product(lst):
+    total =1
+    for i in lst:
+        total *= i
+    return total
+
+print(product(lst))
+
+
+Find the common elements in multiple lists
+===========================================
+lst1 = [1,2,3,4,7,6]
+lst2 = [9,5,6,2,1,10,11,3]
+
+def common_ele(*args):
+    rslt = []
+    for i in lst1:
+        for j in lst2:
+            if i == j:
+                rslt.append(i)
+    return rslt
+    
+print(common_ele(lst1,lst2))
+
+OUTPUT -> [1, 2, 3, 6]
+
+
+Find the difference between two lists
+======================================
+lst1 = [1,2,3,4,7,6]
+lst2 = [9,5,6,2,1,10,11,3]
+
+def diff(lst1,lst2):
+    rslt =[]
+    for i in lst1:
+        if i not in lst2:
+            rslt.append(i)
+    return rslt
+
+print(diff(lst1,lst2))
+
+
+Fibonacci series
+=================
+def fibonacci(n):
+    if n<=0:
+        return 0
+    elif n ==1:
+        return 1
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
+    
+rslt = fibonacci(9)
+print(rslt)
+
+                                                                        Dictionary Programs
+																		===================
+Serialize and deserialize string
+=================================
+import pickle
+
+data = {'viji':25,"john":20,"steve":27}
+
+serialize_str = pickle.dumps(data)
+
+print(serialize_str)
+
+
+deserialize_str = pickle.loads(serialize_str)
+
+print(deserialize_str)
+
+
+Merge two dictionaries.
+========================
+d1 = {'name':"viji","age":25}
+d2 = {"nae":"sharath", "ae":27}
+
+d1.update(d2)
+
+print(d1)
+
+
+Sort a dictionary by keys or values
+====================================
+my_dict = {'apple': 3, 'banana': 1, 'cherry': 5, 'date': 2}
+
+#Sorted by keys
+sorted_dict = dict(sorted(my_dict.items()))
+print(sorted_dict)
+
+#Sorted by values
+sorted_dict = dict(sorted(my_dict.items(), key=lambda item:item[1]))
+print(sorted_dict)
+
+
+Count the frequency of characters in a string using a dictionary.
+=================================================================
+string = "abracadabra"
+
+freq = {}
+for i in string:
+    if i in freq:
+        freq[i] +=1
+    else:
+        freq[i] = 1
+    
+print(freq)
+
+freq = {char: sum(1 for i in string if i == char) for char in string}
+print(freq)
+
+
+Group elements of a list based on a condition using a dictionary.
+=================================================================
+input = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+words = ["apple", "banana", "apricot", "blueberry", "cherry"]
+
+grouped_dict = {"even":[],"odd":[]}
+
+for i in input:
+    if i %2 == 0:
+        grouped_dict["even"].append(i)
+    else:
+        grouped_dict["odd"].append(i)
+        
+print(grouped_dict)
+
+grouped_str = {}
+
+for i in words:
+    key = i[0]
+    if key in grouped_str:
+        grouped_str[key].append(i)
+    else:
+        grouped_str[key] = [i]
+    
+print(grouped_str)
+
+
+Convert a dictionary to a list of tuples and vice versa.
+=========================================================
+my_dict = {'apple': 3, 'banana': 1, 'cherry': 5, 'date': 2}
+
+print(list(my_dict.items()))
+
+print(dict(my_dict))
+
+
+Check if a key exists in a dictionary
+======================================
+my_dict = {'apple': 3, 'banana': 1, 'cherry': 5, 'date': 2}
+
+key = "apple"
+if key in my_dict:
+        print("exists")
+else:
+        print("Not exists")
+		
+		
+Remove a key-value pair from a dictionary.
+==========================================
+my_dict = {'apple': 3, 'banana': 1, 'cherry': 5, 'date': 2}
+
+to_remove ="cherry"
+
+#del my_dict["cherry"]
+#print(my_dict)
+
+for i in list(my_dict.keys()):
+    if i == to_remove:
+        my_dict.pop(i)
+print(my_dict)
+
+
+Find the sum of all values in a dictionary
+===========================================
+my_dict = {'apple': 3, 'banana': 1, 'cherry': 5, 'date': 2}
+
+total = 0
+for i in list(my_dict.values()):
+    total = total + i
+
+print(total)
+
+
+Invert a dictionary (swap keys and values)
+===========================================
+my_dict = {'apple': 3, 'banana': 1, 'cherry': 5, 'date': 2}
+
+rslt = dict(zip(my_dict.values(),my_dict.keys()))
+print(rslt)
+
+
+Find the intersection of two dictionaries.
+==========================================
+dict1 = {'a': 1, 'b': 2, 'c': 3}
+dict2 = {'b': 2, 'c': 4, 'd': 5}
+
+rslt = {}
+for i in dict1.items():
+    for j in dict2.items():
+        if i == j:
+            rslt.update({i[0]:j[1]})
+print(rslt)
+
+
+rslt = {k:v for k,v in dict1.items() if k in dict2 and dict1[k] == dict2[k]}
+print(rslt)
+dict1 = {'a': 1, 'b': 2, 'c': 3}
+dict2 = {'b': 2, 'c': 4, 'd': 5}
+
+rslt = {}
+for i in dict1.items():
+    for j in dict2.items():
+        if i == j:
+            rslt.update({i[0]:j[1]})
+print(rslt)
+
+Dictionary comprehension
+--------------------------
+rslt = {k:v for k,v in dict1.items() if k in dict2 and dict1[k] == dict2[k]}
+print(rslt)
+
+O/P -> {'b': 2}
+
+
+Find the difference between two dictionaries
+==============================================
+dict1 = {'a': 1, 'b': 2, 'c': 3}
+dict2 = {'b': 2, 'c': 4, 'd': 5}
+
+
+rslt1= {k:v for k,v in dict1.items() if k not in dict2}
+
+rslt2 = {k:v for k,v in dict2.items() if k not in dict1}
+
+comb = {k: (dict1[k],dict2[k]) for k in dict2 if k in dict1 and dict1[k] != dict2[k]}
+
+rslt = {**rslt1,**rslt2,**comb}
+print(rslt)
+
+
+Create a nested dictionary
+===========================
+student = { 
+    "viji" : {"age":25,"course":["bio","csc"]},
+    "sharath" : {"age" :27, "course":["csc","mat"]}
+    }
+    
+print(student["viji"]["age"])
+
+
+Find the common keys in multiple dictionaries
+==============================================
+dict1 = {'a': 1, 'b': 2, 'c': 3}
+dict2 = {'b': 2, 'c': 4, 'd': 5}
+dict3 = {'c': 7, 'd': 8, 'e': 9}
+
+common_keys = set(dict1.keys()) & set(dict2.keys()) & set(dict3.keys())
+print(common_keys)
+
+
+Find the key with the minimum value in a dictionary.
+=====================================================
+dict2 = {'b': 2, 'c': 9, 'd': 1}
+
+if dict2:
+    min_key = min(dict2 , key=dict2.get)
+    print(min_key)
+
+O/P -> d
+
+
+Filter a dictionary based on a condition
+=========================================
+my_dict = {'apple': 5, 'banana': 2, 'cherry': 8, 'date': 3}
+
+for k,v in my_dict.items():
+    if v>3:
+        print({k:v})
+        
+Dictionary comprehension
+-------------------------
+filtered_dict = {k:v for k,v in my_dict.items() if v>3}
+print(filtered_dict)
+
+
+O/P -> 
+{'apple': 5}
+{'cherry': 8}
+{'apple': 5, 'cherry': 8}
+
+
+
+Convert a list of dictionaries into a single dictionary
+========================================================
+list_of_dicts = [
+    {'a': 1, 'b': 2},
+    {'c': 3, 'd': 4},
+    {'e': 5, 'f': 6}
+]
+
+new_dict = {}
+for i in list_of_dicts:
+    new_dict.update(i)
+
+print(new_dict)
+
+O/P -> {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6}
+
+
+Group a list of dictionaries by a specific key
+===============================================
+
+defaultdict(list) creates a dictionary where each new key will automatically have an empty list as its default value.
+
+data = [
+    {'name': 'Alice', 'department': 'HR'},
+    {'name': 'Bob', 'department': 'IT'},
+    {'name': 'Charlie', 'department': 'HR'},
+    {'name': 'David', 'department': 'IT'},
+    {'name': 'Eva', 'department': 'Finance'}
+]
+
+from collections import defaultdict
+
+d1 = defaultdict(list)
+for item in data:
+    d1[item['department']].append(item)
+    
+print(dict(d1))
+    
+	
+O/P -> 
+{'HR': [{'name': 'Alice', 'department': 'HR'}, {'name': 'Charlie', 'department': 'HR'}], 
+ 'IT': [{'name': 'Bob', 'department': 'IT'}, {'name': 'David', 'department': 'IT'}], 
+ 'Finance': [{'name': 'Eva', 'department': 'Finance'}]}
+
+
+Sort a list of dictionaries by a specific key. Using BUBBLE Sort
+==================================================================
+data = [
+    {'name': 'Bob', 'age': 30},
+    {'name': 'David', 'age': 28},
+    {'name': 'Alice', 'age': 25},
+    {'name': 'Charlie', 'age': 22}
+]
+
+def bubble_sort(data,key):
+    n = len(data)
+    for i in range(n):
+        for j in range(0,n-i-1):
+            if data[j][key] > data[j+1][key]:
+                data[j],data[j+1] = data[j+1],data[j]
+    return data
+
+sorted_data = bubble_sort(data,'age')
+print(sorted_data)
+
+O/P ->
+
+[{'name': 'Charlie', 'age': 22}, {'name': 'Alice', 'age': 25}, {'name': 'David', 'age': 28}, {'name': 'Bob', 'age': 30}]
+
+
+Find the maximum and minimum values in a list of dictionaries
+==============================================================
+data = [
+    {'name': 'Bob', 'age': 30},
+    {'name': 'David', 'age': 28},
+    {'name': 'Alice', 'age': 25},
+    {'name': 'Charlie', 'age': 22}
+]
+
+max_val = data[0]
+min_val = data[0]
+
+for person in data:
+    if person['age'] > max_val['age']:
+        max_val = person
+    if person['age'] < max_val['age']:
+        min_val = person
+        
+print("Minimum value",min_val)
+print("Maximum value",max_val)
+
+O/P -> 
+Minimum value {'name': 'Charlie', 'age': 22}
+Maximum value {'name': 'Bob', 'age': 30}
+
+
+Convert a dictionary of lists into a list of dictionaries
+==========================================================
+data = {
+    'name': ['Alice', 'Bob', 'Charlie'],
+    'age': [25, 30, 22],
+    'city': ['New York', 'Los Angeles', 'Chicago']
+}
+
+
+result = [dict(zip(data.keys(),values)) for values in data.values()]
+print(result)
+
+O/P ->
+
+[
+ {'name': 'Alice', 'age': 'Bob', 'city': 'Charlie'}, 
+ {'name': 25, 'age': 30, 'city': 22}, 
+ {'name': 'New York', 'age': 'Los Angeles', 'city': 'Chicago'}
+]
+
+
+data = [
+    {'name': 'Alice', 'age': 25, 'city': 'New York'},
+    {'name': 'Bob', 'age': 30, 'city': 'Los Angeles'},
+    {'name': 'Charlie', 'age': 22, 'city': 'Chicago'}
+]
+
+
+Create a dictionary of lists from a list of dictionaries
+==========================================================
+result = {}
+for item in data:
+    for key,val in item.items():
+        result.setdefault(key,[]).append(val)
+        
+print(result)
+
+O/P ->
+{'name': ['Alice', 'Bob', 'Charlie'], 
+ 'age': [25, 30, 22], 
+ 'city': ['New York', 'Los Angeles', 'Chicago']}
+ 
+ 
+Find the unique keys in a list of dictionaries
+===============================================
+data = [
+    {'name': 'Alice', 'age': 25},
+    {'name': 'Bob', 'city': 'New York'},
+    {'age': 30, 'country': 'USA'}
+]
+
+unique_key = set()
+
+for item in data:
+    unique_key.update(item.keys())
+
+print(unique_key)
+
+O/P ->
+{'name', 'country', 'age', 'city'}
+
+
+BINARY SEARCH
+==============
+arr = [2, 4, 6, 7, 9, 11, 15, 20]
+
+def binary_search(arr,target):
+    left,right = 0,len(arr)+1
+    while left <= right:
+        mid = (left+right)//2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid +1 
+        elif arr[mid] > target:
+            right = mid-1
+    return -1
+    
+target = 6
+find_val = binary_search(arr,target)
+print(f"Target value {target} found at index: {find_val}")
+
+O/P -> Target value 6 found at index: 2
+
+
+Anagram
+========
+s1 = "Listen"
+s2 = "Silent"
+
+def anagrams(s1,s2):
+    s1 = s1.replace(" ", "").lower()
+
+    s2 = s2.replace(" ", "").lower()
+    
+    s1 = list(s1)
+    s2 = list(s2)
+
+    if len(s1) != len(s2):
+        return False
+    
+    for char in s1:
+        if char in s2:
+            s2.remove(char)
+            
+    return len(s2)  == 0
+
+if anagrams(s1,s2):
+    print("yes")
+else:
+    print("No")
