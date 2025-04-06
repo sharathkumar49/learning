@@ -1,0 +1,786 @@
+
+
+1. Class and Static Methods:
+
+Program: Create a class Employee with instance attributes name and salary. Add a class attribute count to keep track of the number of employees. Implement a static method to display the total number of employees.
+
+
+class Employee:
+    count = 0
+
+    def __init__(self, name, salary):
+        self.name = name
+        self.salary = salary
+        Employee.count += 1
+
+    @staticmethod
+    def display_count():
+        print(f"Total Employees: {Employee.count}")
+
+emp1 = Employee("John", 50000)
+emp2 = Employee("Jane", 60000)
+Employee.display_count()
+
+
+
+
+
+2. Multiple Inheritance:
+
+Program: Create two base classes Person and Employee. The Person class should have attributes name and age, and the Employee class should have attributes employee_id and salary. Create a derived class Manager that inherits from both Person and Employee and add an attribute department.
+
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+class Employee:
+    def __init__(self, employee_id, salary):
+        self.employee_id = employee_id
+        self.salary = salary
+
+class Manager(Person, Employee):
+    def __init__(self, name, age, employee_id, salary, department):
+        Person.__init__(self, name, age)
+        Employee.__init__(self, employee_id, salary)
+        self.department = department
+
+    def display(self):
+        print(f"Name: {self.name}, Age: {self.age}, ID: {self.employee_id}, Salary: {self.salary}, Department: {self.department}")
+
+mgr = Manager("Alice", 35, "M123", 80000, "HR")
+mgr.display()
+
+
+
+3. Property Decorators:
+
+Program: Create a class Rectangle with attributes length and width. Use property decorators to calculate and return the area and perimeter of the rectangle.
+
+class Rectangle:
+    def __init__(self, length, width):
+        self.length = length
+        self.width = width
+
+    @property
+    def area(self):
+        return self.length * self.width
+
+    @property
+    def perimeter(self):
+        return 2 * (self.length + self.width)
+
+rect = Rectangle(10, 5)
+print(f"Area: {rect.area}")
+print(f"Perimeter: {rect.perimeter}")
+
+
+
+
+
+4. Custom Exception Handling:
+
+Program: Create a custom exception NegativeValueError. Write a program that raises this exception if a negative value is assigned to the balance attribute of a BankAccount class.
+
+
+class NegativeValueError(Exception):
+    pass
+
+class BankAccount:
+    def __init__(self, balance):
+        self._balance = balance
+
+    @property
+    def balance(self):
+        return self._balance
+
+    @balance.setter
+    def balance(self, value):
+        if value < 0:
+            raise NegativeValueError("Balance cannot be negative")
+        self._balance = value
+
+try:
+    account = BankAccount(100)
+    account.balance = -50
+except NegativeValueError as e:
+    print(e)
+
+
+
+5. Composition:
+
+Program: Create a class Engine with an attribute horsepower. Create a class Car that has an Engine object as an attribute. Implement a method in Car to display the car's horsepower.
+
+
+class Engine:
+    def __init__(self, horsepower):
+        self.horsepower = horsepower
+
+class Car:
+    def __init__(self, make, model, horsepower):
+        self.make = make
+        self.model = model
+        self.engine = Engine(horsepower)
+
+    def display_horsepower(self):
+        print(f"The {self.make} {self.model} has {self.engine.horsepower} horsepower.")
+
+car = Car("Toyota", "Camry", 301)
+car.display_horsepower()
+
+
+
+
+6. Aggregation:
+
+Program: Create a class Book with attributes title and author. Create a class Library that contains a list of Book objects. Implement methods to add a book to the library and display all books.
+
+
+class Book:
+    def __init__(self, title, author):
+        self.title = title
+        self.author = author
+
+class Library:
+    def __init__(self):
+        self.books = []
+
+    def add_book(self, book):
+        self.books.append(book)
+
+    def display_books(self):
+        for book in self.books:
+            print(f"Title: {book.title}, Author: {book.author}")
+
+library = Library()
+book1 = Book("1984", "George Orwell")
+book2 = Book("To Kill a Mockingbird", "Harper Lee")
+library.add_book(book1)
+library.add_book(book2)
+library.display_books()
+
+
+
+
+
+7. Method Resolution Order (MRO):
+
+Program: Create three classes A, B, and C where B and C inherit from A, and D inherits from both B and C. Implement a method in each class and demonstrate the method resolution order.
+
+
+class A:
+    def method(self):
+        print("Method from class A")
+
+class B(A):
+    def method(self):
+        print("Method from class B")
+
+class C(A):
+    def method(self):
+        print("Method from class C")
+
+class D(B, C):
+    pass
+
+obj = D()
+obj.method()
+print(D.__mro__)
+
+
+
+
+8. Metaclasses:
+
+Program: Create a metaclass Meta that modifies the creation of classes to add a class attribute created_by with a default value. Use this metaclass to create a class Person.
+
+
+class Meta(type):
+    def __new__(cls, name, bases, dct):
+        dct['created_by'] = 'Meta'
+        return super().__new__(cls, name, bases, dct)
+
+class Person(metaclass=Meta):
+    def __init__(self, name):
+        self.name = name
+
+p = Person("Alice")
+print(f"Person created by: {Person.created_by}")
+
+
+
+
+
+9. Descriptors:
+
+Program: Create a descriptor class Value that manages the setting and getting of an attribute with validation. Use this descriptor in a class Product to ensure the price is always positive.
+
+
+class Value:
+    def __init__(self):
+        self._value = None
+
+    def __get__(self, instance, owner):
+        return self._value
+
+    def __set__(self, instance, value):
+        if value < 0:
+            raise ValueError("Value must be positive")
+        self._value = value
+
+class Product:
+    price = Value()
+
+    def __init__(self, price):
+        self.price = price
+
+try:
+    p = Product(100)
+    print(f"Product price: {p.price}")
+    p.price = -50
+except ValueError as e:
+    print(e)
+
+
+
+
+10. Abstract Base Classes (ABC):
+
+Program: Create an abstract base class Vehicle with an abstract method drive(). Implement two derived classes Car and Bike that provide specific implementations of the drive() method.
+
+from abc import ABC, abstractmethod
+
+class Vehicle(ABC):
+    @abstractmethod
+    def drive(self):
+        pass
+
+class Car(Vehicle):
+    def drive(self):
+        print("Driving a car")
+
+class Bike(Vehicle):
+    def drive(self):
+        print("Riding a bike")
+
+car = Car()
+bike = Bike()
+car.drive()
+bike.drive()
+
+
+
+11. Singleton Pattern:
+
+Program: Implement the Singleton design pattern in Python to ensure that a class Singleton has only one instance.
+
+
+class Singleton:
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super().__new__(cls, *args, **kwargs)
+        return cls._instance
+
+s1 = Singleton()
+s2 = Singleton()
+print(s1 is s2)  # Output: True
+
+
+
+12. Factory Method Pattern:
+
+Program: Implement the Factory Method design pattern to create objects of different classes (Dog and Cat) based on input.
+
+
+class Animal:
+    def speak(self):
+        pass
+
+class Dog(Animal):
+    def speak(self):
+        return "Bark"
+
+class Cat(Animal):
+    def speak(self):
+        return "Meow"
+
+class AnimalFactory:
+    @staticmethod
+    def create_animal(animal_type):
+        if animal_type == "dog":
+            return Dog()
+        elif animal_type == "cat":
+            return Cat()
+        else:
+            return None
+
+animal = AnimalFactory.create_animal("dog")
+print(animal.speak())
+animal = AnimalFactory.create_animal("cat")
+print(animal.speak())
+
+
+
+
+
+15. Observer Pattern:
+
+Program: Implement the Observer design pattern where Subject maintains a list of observers and notifies them of any state changes. Create a WeatherStation class as the subject and Display classes as observers.
+
+
+class Observer:
+    def update(self, temperature):
+        pass
+
+class WeatherStation:
+    def __init__(self):
+        self._observers = []
+        self._temperature = None
+
+    def add_observer(self, observer):
+        self._observers.append(observer)
+
+    def remove_observer(self, observer):
+        self._observers.remove(observer)
+
+    def notify_observers(self):
+        for observer in self._observers:
+            observer.update(self._temperature)
+
+    def set_temperature(self, temperature):
+        self._temperature = temperature
+        self.notify_observers()
+
+class Display(Observer):
+    def update(self, temperature):
+        print(f"Temperature updated to: {temperature}")
+
+weather_station = WeatherStation()
+display1 = Display()
+display2 = Display()
+
+weather_station.add_observer(display1)
+weather_station.add_observer(display2)
+
+weather_station.set_temperature(25)
+weather_station.set_temperature(30)
+
+
+
+16. Decorator Pattern:
+
+Program: Implement the Decorator design pattern to add functionality to an existing class Coffee. Create decorators Milk and Sugar to add respective functionalities.
+
+
+class Coffee:
+    def cost(self):
+        return 5
+
+class MilkDecorator:
+    def __init__(self, coffee):
+        self._coffee = coffee
+
+    def cost(self):
+        return self._coffee.cost() + 2
+
+class SugarDecorator:
+    def __init__(self, coffee):
+        self._coffee = coffee
+
+    def cost(self):
+        return self._coffee.cost() + 1
+
+coffee = Coffee()
+coffee_with_milk = MilkDecorator(coffee)
+coffee_with_milk_and_sugar = SugarDecorator(coffee_with_milk)
+
+print(f"Cost of coffee: {coffee.cost()}")
+print(f"Cost of coffee with milk: {coffee_with_milk.cost()}")
+print(f"Cost of coffee with milk and sugar: {coffee_with_milk_and_sugar.cost()}")
+
+
+
+17. State Pattern:
+
+Program: Implement the State design pattern to manage the state of a TrafficLight object. Create states Red, Yellow, and Green with their respective behaviors.
+
+
+class TrafficLightState:
+    def change(self, light):
+        pass
+
+class RedState(TrafficLightState):
+    def change(self, light):
+        print("Changing to Green")
+        light.state = GreenState()
+
+class YellowState(TrafficLightState):
+    def change(self, light):
+        print("Changing to Red")
+        light.state = RedState()
+
+class GreenState(TrafficLightState):
+    def change(self, light):
+        print("Changing to Yellow")
+        light.state = YellowState()
+
+class TrafficLight:
+    def __init__(self):
+        self.state = RedState()
+
+    def change(self):
+        self.state.change(self)
+
+light = TrafficLight()
+light.change()
+light.change()
+light.change()
+light.change()
+
+
+
+18. Prototype Pattern:
+
+Program: Implement the Prototype design pattern to create clones of an existing object. Create a Shape class with a method to clone itself.
+
+import copy
+
+class Shape:
+    def __init__(self, shape_type):
+        self.shape_type = shape_type
+
+    def clone(self):
+        return copy.deepcopy(self)
+
+shape1 = Shape("Circle")
+shape2 = shape1.clone()
+
+print(f"Shape1 type: {shape1.shape_type}")
+print(f"Shape2 type: {shape2.shape_type}")
+
+
+
+19. Chain of Responsibility Pattern:
+
+Program: Implement the Chain of Responsibility design pattern to handle a request through a chain of handlers. Create handlers Handler1, Handler2, and Handler3 to process a request.
+
+
+class Handler:
+    def __init__(self, successor=None):
+        self._successor = successor
+
+    def handle(self, request):
+        if self._successor:
+            self._successor.handle(request)
+
+class Handler1(Handler):
+    def handle(self, request):
+        if request == "Request1":
+            print("Handler1 handled the request")
+        else:
+            super().handle(request)
+
+class Handler2(Handler):
+    def handle(self, request):
+        if request == "Request2":
+            print("Handler2 handled the request")
+        else:
+            super().handle(request)
+
+class Handler3(Handler):
+    def handle(self, request):
+        if request == "Request3":
+            print("Handler3 handled the request")
+        else:
+            super().handle(request)
+
+handler_chain = Handler1(Handler2(Handler3()))
+handler_chain.handle("Request2")
+handler_chain.handle("Request3")
+handler_chain.handle("Request1")
+
+
+
+
+20. Encapsulation and Data Hiding:
+
+Program: Create a class Student with private attributes name and grade. Implement getter and setter methods to access and modify these attributes.
+
+class Student:
+    def __init__(self, name, grade):
+        self.__name = name
+        self.__grade = grade
+
+    def get_name(self):
+        return self.__name
+
+    def set_name(self, name):
+        self.__name = name
+
+    def get_grade(self):
+        return self.__grade
+
+    def set_grade(self, grade):
+        self.__grade = grade
+
+student = Student("John", "A")
+print(student.get_name())
+student.set_grade("B")
+print(student.get_grade())
+
+
+
+21. Polymorphism with Inheritance:
+
+Program: Create a base class Shape with a method area(). Create derived classes Circle and Square that override the area() method.
+
+import math
+
+class Shape:
+    def area(self):
+        pass
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return math.pi * self.radius ** 2
+
+class Square(Shape):
+    def __init__(self, side):
+        self.side = side
+
+    def area(self):
+       2
+
+shapes = [Circle(5), Square(4)]
+for shape in shapes:
+    print(f"Area: {shape.area()}")
+
+
+
+22. Composition:
+
+Program: Create a class Battery with an attribute capacity. Create a class ElectricCar that has a Battery object as an attribute. Implement a method in ElectricCar to display the battery capacity.
+
+class Battery:
+    def __init__(self, capacity):
+        self.capacity = capacity
+
+ElectricCar:
+    def __init__(self, make, model, capacity):
+        self.make = make
+        self.model = model
+        self.battery = Battery(capacity)
+
+    def display_battery_capacity(self):
+        print(f"The {self.make} {self.model} has a battery capacity of {self.battery.capacity} kWh.")
+
+car = ElectricCar("Tesla", "Model S", 100)
+car.display_battery_capacity()
+
+
+
+
+
+24. Strategy Pattern:
+
+Program: Implement the Strategy design pattern to define a family of algorithms and make them interchangeable. Create a Payment class with different payment strategies (CreditCard, PayPal).
+
+class PaymentStrategy:
+    def pay(self, amount):
+        pass
+
+class CreditCardPayment(PaymentStrategy):
+    def pay(self, amount):
+        print(f"Paid {amount} using Credit Card")
+
+class PayPalPayment(PaymentStrategy):
+    def pay(self, amount):
+        print(f"Paid {amount} using PayPal")
+
+class Payment:
+    def __init__(self, strategy):
+        self.strategy = strategy
+
+    def execute_payment(self, amount):
+        self.strategy.pay(amount)
+
+payment = Payment(CreditCardPayment())
+payment.execute_payment(100)
+payment = Payment(PayPalPayment())
+payment.execute_payment(200)
+
+
+
+25. Builder Pattern:
+
+Program: Implement the Builder design pattern to construct a complex object step by step. Create a House class with attributes like walls, roof, and windows. Use a HouseBuilder to construct the house.
+
+
+class House:
+    def __init__(self):
+        self.walls = None
+        self.roof = None
+        self.windows = None
+
+    def __str__(self):
+        return f"House with {self.walls} walls, {self.roof} roof, and {self.windows} windows"
+
+class HouseBuilder:
+    def __init__(self):
+        self.house = House()
+
+    def build_walls(self, walls):
+        self.house.walls = walls
+        return self
+
+    def build_roof(self, roof):
+        self.house.roof = roof
+        return self
+
+    def build_windows(self, windows):
+        self.house.windows = windows
+        return self
+
+    def get_house(self):
+        return self.house
+
+builder = HouseBuilder()
+house = builder.build_walls("brick").build_roof("tile").build_windows("double-glazed").get_house()
+print(house)
+
+
+
+
+
+26. Mediator Pattern:
+
+Program: Implement the Mediator design pattern to facilitate communication between objects. Create a ChatRoom class as the mediator and User classes that communicate through the chat room.
+
+class ChatRoom:
+    def show_message(self, user, message):
+        print(f"[{user.name}]: {message}")
+
+class User:
+    def __init__(self, name, chat_room):
+        self.name = name
+        self.chat_room = chat_room
+
+    def send_message(self, message):
+        self.chat_room.show_message(self, message)
+
+chat_room = ChatRoom()
+user1 = User("Alice", chat_room)
+user2 = User("Bob", chat_room)
+
+user1.send_message("Hello, Bob!")
+user2.send_message("Hi, Alice!")
+
+
+
+
+
+
+27. Command Pattern:
+
+Program: Implement the Command design pattern to encapsulate a request as an object. Create commands LightOnCommand and LightOffCommand to control a Light object.
+
+
+class Light:
+    def on(self):
+        print("Light is ON")
+
+    def off(self):
+        print("Light is OFF")
+
+class Command:
+    def execute(self):
+        pass
+
+class LightOnCommand(Command):
+    def __init__(self, light):
+        self.light = light
+
+    def execute(self):
+        self.light.on()
+
+class LightOffCommand(Command):
+    def __init__(self, light):
+        self.light = light
+
+    def execute(self):
+        self.light.off()
+
+class RemoteControl:
+    def __init__(self):
+        self.command = None
+
+    def set_command(self, command):
+        self.command = command
+
+    def press_button(self):
+        self.command.execute()
+
+light = Light()
+light_on = LightOnCommand(light)
+light_off = LightOffCommand(light)
+
+remote = RemoteControl()
+remote.set_command(light_on)
+remote.press_button()
+remote.set_command(light_off)
+remote.press_button()
+
+
+
+28. Visitor Pattern:
+
+Program: Implement the Visitor design pattern to perform operations on elements of an object structure. Create a ComputerPart hierarchy with Keyboard, Monitor, and Mouse classes, and a ComputerPartVisitor to define operations.
+
+
+class ComputerPartVisitor:
+    def visit_keyboard(self, keyboard):
+        pass
+
+    def visit_monitor(self, monitor):
+        pass
+
+    def visit_mouse(self, mouse):
+        pass
+
+class ComputerPart:
+    def accept(self, visitor):
+        pass
+
+class Keyboard(ComputerPart):
+    def accept(self, visitor):
+        visitor.visit_keyboard(self)
+
+class Monitor(ComputerPart):
+    def accept(self, visitor):
+        visitor.visit_monitor(self)
+
+class Mouse(ComputerPart):
+    def accept(self, visitor):
+        visitor.visit_mouse(self)
+
+class ComputerPartDisplayVisitor(ComputerPartVisitor):
+    def visit_keyboard(self, keyboard):
+        print("Displaying Keyboard")
+
+    def visit_monitor(self, monitor):
+        print("Displaying Monitor")
+
+    def visit_mouse(self, mouse):
+        print("Displaying Mouse")
+
+parts = [Keyboard(), Monitor(), Mouse()]
+visitor = ComputerPartDisplayVisitor()
+
+for part in parts:
+    part.accept(visitor)

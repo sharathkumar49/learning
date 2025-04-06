@@ -25,7 +25,7 @@ knowing other methods to reverse string can prove to be useful. This article dis
 def rev(str):
     s = ''
     for i in str:
-      s = i + s   #have a note here
+      s = i + s   # upcoming character  + string that already exists
     return s
 
 value = input("Enter the string: ")
@@ -36,10 +36,19 @@ Explanation : In above code, we call a function to reverse a string, which itera
 intelligently join each character in the beginning so as to obtain the reversed string.
 '''
 
+# 3. Using range
+def rev(str):
+    s = ''
+    for i in range(len(str)-1, -1,-1):
+        s += str[i]
+    return s
+
+value = input("Enter the string: ")
+finalvalue = rev(value)
+print(finalvalue)
 
 
-
-# 3. Using recursion
+# 4. Using recursion
 # Python code to reverse a string
 # using recursion
 def reverse(s):
@@ -65,7 +74,7 @@ to the end of the sliced string.
 
 
 
-#4. Using stack
+#5. Using stack
 '''
 Reversing a string using a stack is a fun exercise that demonstrates how stacks work.
 Here's a simple Python code snippet to show you how it can be done:

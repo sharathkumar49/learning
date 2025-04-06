@@ -1,6 +1,7 @@
 #using the loops in python, we can print different patterns in python
-
+# using for loop
 # Function to demonstrate printing pattern
+print("\nusing for loops(i, j), left most pattern")
 def pypattern(n):
 	
 	for i in range(0, n):  #outer loop to handle number of rows, n in this case
@@ -17,7 +18,7 @@ pypattern(n)
 
 
 
-
+print("\nusing stack, left most pattern")
 #Another Approach: 
 #Using List, this could be done in a simpler way
 # Function to demonstrate printing pattern
@@ -34,7 +35,7 @@ n = 5
 pypart(n)
 
 
-
+print("\n using for loops(i,j), rightmost pattern")
 #Function to demonstrate printing pattern
 #For more clarification, visit patternsprogramconceptexplained file
 def pypart2(n):
@@ -59,7 +60,7 @@ pypart2(n)
 
 
 
-
+print("\ncentralized pattern")
 
 # Function to demonstrate printing pattern triangle
 def triangle(n):

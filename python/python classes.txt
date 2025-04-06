@@ -10,7 +10,8 @@ Here when I say data and functions, which means it is attributes and methods.
 A class in Python is a blueprint for creating objects. Objects represent real-world entities with specific attributes (data) and behaviors (methods). Classes provide a way to organize code, encapsulate data, and implement object-oriented programming (OOP) concepts.
 
 
-class A:
+
+class A():
 	def __init__(self, name):
 		self.nm = name
 		
@@ -18,8 +19,9 @@ class A:
 	def skill():
 		pass
 		
-a = A()
+a = A() # 897437597  --> a 
 
+b = A()  
 a.nm
 a.skill()
 		
@@ -60,6 +62,7 @@ Now, as you see, instances of a class are unique, so the instance variables also
 
 
 class Employee:
+
 	pass
 	
 	
