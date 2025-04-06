@@ -812,3 +812,24 @@ if anagrams(s1,s2):
     print("yes")
 else:
     print("No")
+	
+
+Rotate the list
+=================
+def rotate_list(lst, k):
+    k = k % len(lst)
+    return lst[-k:] + lst[:-k]
+OR  return lst[-k:] + lst[:n+1]
+
+# Example usage
+numbers = [1, 2, 3, 4, 5]
+k = 2
+print(rotate_list(numbers, k))  # Output: [4, 5, 1, 2, 3]
+
+Rotate the string
+==================
+txt = "hello"
+n=3
+print(txt[-n:]+txt[:-n])
+
+O/P -> llohe
