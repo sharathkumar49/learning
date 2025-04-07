@@ -69,7 +69,7 @@ def triangle(n):
 
 	for i in range(0, n): # outer loop to handle number of rows
 	
-		for j in range(0, k):  # inner loop to handle number spaces values changing acc. to requirement
+		for j in range(0, k):  # inner loop to handle number of spaces values, changing acc. to requirement
 			print(end=" ")
 
 		k = k - 1  #decrementing k after each loop

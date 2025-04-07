@@ -109,3 +109,200 @@ def is_palindrome(s):
 # Example usage
 string = "radar"
 print(f"Is '{string}' a palindrome?", is_palindrome(string))
+
+
+
+5. Find the Length of the Longest Substring Without Repeating Characters:
+
+def length_of_longest_substring(s):
+    char_index = {}
+    max_length = start = 0
+    for i, char in enumerate(s):
+        if char in char_index and char_index[char] >= start:
+            start = char_index[char] + 1
+        char_index[char] = i
+        max_length = max(max_length, i - start + 1)
+    return max_length
+
+# Example usage
+string = "abcabcbb"
+print(length_of_longest_substring(string))  # Output: 3
+
+
+
+
+
+6. Find the Intersection of Two Arrays:
+
+def array_intersection(arr1, arr2):
+    return list(set(arr1) & set(arr2))
+
+# Example usage
+array1 = [1, 2, 2, 1]
+array2 = [2, 2]
+print(array_intersection(array1, array2))  # Output: [2]
+
+
+
+
+
+7. Check if a Number is a Power of Two:
+
+def is_power_of_two(n):
+    return n > 0 and (n & (n - 1)) == 0
+
+# Example usage
+number = 16
+print(is_power_of_two(number))  # Output: True
+
+
+
+
+
+8. Find the First Non-Repeating Character in a String:
+
+def first_non_repeating_char(s):
+    char_count = {}
+    for char in s:
+        char_count[char] = char_count.get(char, 0) + 1
+    for char in s:
+        if char_count[char] == 1:
+            return char
+    return None
+
+# Example usage
+string = "swiss"
+print(first_non_repeating_char(string))  # Output: "w"
+
+
+
+
+9. Check if Two Strings are Rotations of Each Other:
+
+def are_rotations(s1, s2):
+    return len(s1) == len(s2) and s2 in s1 + s1
+
+# Example usage
+string1 = "ABCD"
+string2 = "CDAB"
+print(are_rotations(string1, string2))  # Output: True
+
+
+
+
+10. Find the Missing Number in a List:
+
+def find_missing_number(lst, n):
+    return n * (n + 1) // 2 - sum(lst)
+
+# Example usage
+numbers = [1, 2, 4, 5, 6]
+n = 6
+print(find_missing_number(numbers, n))  # Output: 3
+
+
+
+
+
+11. Find the Longest Common Prefix:
+
+def longest_common_prefix(strs):
+    if not strs:
+        return ""
+    prefix = strs[0]
+    for s in strs[1:]:
+        while s[:len(prefix)] != prefix and prefix:
+            prefix = prefix[:-1]
+    return prefix
+
+# Example usage
+strings = ["flower", "flow", "flight"]
+print(longest_common_prefix(strings))  # Output: "fl"
+
+
+
+
+12. Check if a List is Sorted:
+
+def is_sorted(lst):
+    return all(lst[i] <= lst[i + 1] for i in range(len(lst) - 1))
+
+# Example usage
+numbers = [1, 2, 3, 4, 5]
+print(is_sorted(numbers))  # Output: True
+
+
+
+
+13. Check if a String is a Valid Parentheses Sequence:
+
+def is_valid_parentheses(s):
+    stack = []
+    mapping = {")": "(", "}": "{", "]": "["}
+    for char in s:
+        if char in mapping:
+            top_element = stack.pop() if stack else '#'
+            if mapping[char] != top_element:
+                return False
+        else:
+            stack.append(char)
+    return not stack
+
+# Example usage
+string = "({[]})"
+print(is_valid_parentheses(string))  # Output: True
+
+
+
+
+
+14. Find the Intersection of Two Lists:
+
+def intersection(lst1, lst2):
+    return list(set(lst1) & set(lst2))
+
+# Example usage
+list1 = [1, 2, 3, 4]
+list2 = [3, 4, 5, 6]
+print(intersection(list1, list2))  # Output: [3, 4]
+
+
+
+
+15. Generate All Subsets of a Set:
+
+def subsets(s):
+    result = [[]]
+    for elem in s:
+        result.extend([x + [elem] for x in result])
+    return result
+
+# Example usage
+set_elements = [1, 2, 3]
+print(subsets(set_elements))  # Output: [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]
+
+
+
+
+16. Check if a Number is Armstrong:
+
+def is_armstrong(n):
+    num_str = str(n)
+    num_len = len(num_str)
+    return n == sum(int(digit) ** num_len for digit in num_str)
+
+# Example usage
+number = 153
+print(is_armstrong(number))  # Output: True
+
+
+
+17. Anagram Check:
+
+def are_anagrams(s1, s2):
+    return sorted(s1) == sorted(s2)
+
+# Example usage
+string1 = "listen"
+string2 = "silent"
+print(are_anagrams(string1, string2))  # Output: True
