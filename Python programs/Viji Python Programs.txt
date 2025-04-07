@@ -937,7 +937,6 @@ A singleton class in Python is a design pattern that ensures a class has only on
 
 class Singleton:
     _instance = None
-
     def __new__(cls, *args, **kwargs):
         if not cls._instance:
             cls._instance = super().__new__(cls)
@@ -1029,3 +1028,93 @@ Metaclass Approach: The SingletonMeta metaclass overrides the __call__ method to
 
 
 Both approaches achieve the same goal of ensuring a single instance of the class. You can choose the one that best fits your coding style and requirements.
+
+
+Explain how to implement a stack or queue in Python.
+======================================================
+
+STACK - LIFO (Last In First Out)
+------
+class Stack:
+    def __init__(self):
+        self.stack = []
+
+    def push(self, item):
+        """Push an item onto the stack."""
+        self.stack.append(item)
+
+    def pop(self):
+        """Pop an item from the stack. Returns None if stack is empty."""
+        if not self.is_empty():
+            return self.stack.pop()
+        else:
+            print("Stack is empty!")
+            return None
+
+    def peek(self):
+        """Return the top item without removing it."""
+        if not self.is_empty():
+            return self.stack[-1]
+        else:
+            print("Stack is empty!")
+            return None
+
+    def is_empty(self):
+        """Check if the stack is empty."""
+        return len(self.stack) == 0
+
+    def size(self):
+        """Return the size of the stack."""
+        return len(self.stack)
+
+# Example Usage
+stack = Stack()
+stack.push(10)
+stack.push(20)
+stack.push(30)
+
+print(stack.pop())  # Output: 30
+print(stack.peek())  # Output: 20
+print(stack.size())  # Output: 2
+
+QUEUE  - FIFO (First In First out)
+------
+class Queue:
+    def __init__(self):
+        self.queue = []
+
+    def enqueue(self, item):
+        """Add an item to the end of the queue."""
+        self.queue.append(item)
+
+    def dequeue(self):
+        """Remove an item from the front of the queue. Returns None if empty."""
+        if not self.is_empty():
+            return self.queue.pop(0)
+        else:
+            print("Queue is empty!")
+            return None
+
+    def peek(self):
+        """Return the front item without removing it."""
+        if not self.is_empty():
+            return self.queue[0]
+        else:
+            print("Queue is empty!")
+            return None
+
+    def is_empty(self):
+        return len(self.queue) == 0
+
+    def size(self):
+        return len(self.queue)
+
+# Example Usage
+queue = Queue()
+queue.enqueue(10)
+queue.enqueue(20)
+queue.enqueue(30)
+
+print(queue.dequeue())  # Output: 10
+print(queue.peek())     # Output: 20
+print(queue.size())     # Output: 2
