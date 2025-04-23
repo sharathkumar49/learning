@@ -1,0 +1,91 @@
+
+
+To Learn:
+---------
+
+
+Learn what is schema
+
+learn env, venv, pipenv
+
+Jinja templating, django default templating
+
+Django data models
+
+Django field types -> https://docs.djangoproject.com/en/5.0/ref/models/fields/
+https://www.geeksforgeeks.org/django-model-data-types-and-fields-list/
+
+date time field (auto_now_add, auto_now)
+
+in field option --> choice field
+
+one-to-one relationship --> in the child class --> the column value key field from parent class should be set 'primary_key = True'
+
+related_name, reverse relationship
+related_name = '+' --> tells django not to create the reverse relationship
+
+circular dependency or circular relationship and how to solve them
+
+ContentType
+
+ content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+ object_id = models.PositiveIntegerField()
+ content_object = GenericForeignKey()
+ 
+ 
+Inner class Meta --> class Meta (explore)
+
+django model metadata  --> https://docs.djangoproject.com/en/5.0/ref/models/options/
+
+
+
+
+Django ORM --> learn about Managers and QuerySets
+.Objects. --> manager --> interface 
+
+queryset get evaluated --> iterate, converting it in to list, accessing a single element  --> lazily evaluated
+
+Learn Building complex query using Django ORM
+
+queryset api  --> https://docs.djangoproject.com/en/5.0/ref/models/querysets/
+
+
+
+Learn select_related, prefetch_related very well
+also learn chaining select_related with prefetch_related
+
+
+
+django database functions -->  https://docs.djangoproject.com/en/5.0/ref/models/database-functions/
+
+
+learn about contentTypes in django
+
+
+Django ModelAdmin --> https://docs.djangoproject.com/en/5.0/ref/contrib/admin/  --> ModelAdmin options
+
+
+Django validators --> https://docs.djangoproject.com/en/5.0/ref/validators/ 
+
+
+url conf in django
+
+
+resource -- object -- model -- entity 
+
+
+https://www.django-rest-framework.org/  
+  apiguide --> serializer fields
+               Generic Views
+
+
+
+change detection mechanism doesn't work sometimes. you need to restart the server. 
+
+httpstatuses
+
+nested routers --> https://github.com/alanjds/drf-nested-routers
+
+read doc django-filters -->  https://django-filter.readthedocs.io/en/stable/
+
+

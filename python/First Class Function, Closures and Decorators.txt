@@ -1,9 +1,11 @@
 
 
+
+
 first-class functions:
 ======================
 
-"A programming language is said to have first class functions if it treats functions as first-class citizens." 
+A programming language is said to have first class functions if it treats functions as first-class citizens, which allows them to be used and manipulated just like any other data type (e.g., integers, strings).
 
 
 First-class Citizen(Programming):
@@ -14,13 +16,16 @@ First-class Citizen(Programming):
 So, that means that we should be able to treat functions just like any other object or variable.
 
 
-assigning a function to a variable:
-------------------------------------
+
+Key Characteristics of First-Class Functions:
+---------------------------------------------
+1. assigning a function to a variable:
+
 def square(x):
 	return x * x
 	
 	
-f = square
+f = square  # square function which is waiting to be executed  
 
 print(square)   # <function square at 0x101278950> --->  represents the function 
 
@@ -28,12 +33,12 @@ print(square)   # <function square at 0x101278950> --->  represents the function
 f(5) # 25
 
 
-we assigned a function to a variable. But, we can also pass functions as arguments and return functions as the result of other functions. And by the way, if a function accepts other functions as arguments or returns functions as their result, that's what you call a higher order function. (map, reduce, filter)
+we assigned a function to a variable. But, we can also pass functions as arguments and return functions as the result of other functions. And by the way, if a function accepts other functions as arguments or returns functions as their result, that's what you call it as a higher order function. (map, reduce, filter)
 
 
-1. passing a function as an argument to another function: (map function)
+2. passing a function as an argument to another function: (map function)
 
-
+##
 def map(func, arg_list):
 	result = []
 	for i in arg_list:
@@ -45,10 +50,21 @@ squares = map(square, [1, 2, 3, 4, 5, 6])
 print(square) # [1, 4, 9, 16, 25, 36]
 
 
+##
+def greet(name):
+	return f"Hello, {name}!"
 
-2. to return a function from another function: 
+def call_function(func, name):
+	return func(name)
+
+print(call_function(greet, "Bob"))  # Output: Hello, Bob!
+ 
 
 
+
+3. To return a function from another function: 
+
+##
 def logger(msg):
 
 	def log_message():
@@ -62,12 +78,43 @@ print(log_hi)  # <function logger.<locals>.log_message at 0x000002AF58FAA0E0>
 log_hi() # log: hi
 
 
-So, one thing important to point out here is that from this step to when we executed the function at this step, that it remembered our initial message that we passed in to this initial logger function. Now this is what we call a closure.
+So, one thing important to point out here is that from this step ---> def logger(msg): ---> to when we executed the function at this step -->print('log:', msg)-->, it remembered our 'msg' variable we passed in to the initial logger function. Now this is what we call a closure.
+
+
+##
+def outer_function():
+	def inner_function():
+		return "Inner function!"
+	return inner_function
+
+my_func = outer_function() # <function outer_function.<locals>.inner_function at 0x0000019B582DEEF0> --> this is inner_function, which is ready to be executed
+print(my_func())  # Inner function!
+
+
+
+
+
+4. Storing in Data Structures: Functions can be stored in data structures like lists, dictionaries, etc.
+
+ def add(x, y):
+     return x + y
+
+ def subtract(x, y):
+     return x - y
+
+ operations = {
+     "add": add,
+     "subtract": subtract
+ }
+
+ print(operations"add")       # Output: 8
+ print(operations"subtract")  # Output: 2
+ ```
+
 
 
 Other use cases of returning a function from another function:
-
-
+--------------------------------------------------------------
 def html_tag(tag):
 
     def wrap_text(msg):
@@ -77,7 +124,7 @@ def html_tag(tag):
 
 
 
-print_h1 = html_tag('h1')
+print_h1 = html_tag('h1') # wrap_text function, which is waiting to be executed 
 print_h1('Test Headline!')    # <h1>Test Headline!</h1>
 print_h1('Another Headline!') # <h1>Another Headline!</h1>
 
@@ -86,13 +133,60 @@ print_p('Test Paragraph!')    # <p>Test Paragraph!</p>
 
 
 
-======================================================================================================================================================================================
+
+
+Benefits of First-Class Functions:
+----------------------------------
+Higher-Order Functions: Functions that take other functions as arguments or return them as results, enabling powerful abstractions.
+Functional Programming: Facilitates functional programming paradigms, making code more modular and reusable.
+Callbacks and Event Handling: Useful in scenarios like event handling, where functions need to be passed around and executed at a later time.
+
+
+Example: 
+Here's an example of a higher-order function that uses first-class functions to apply a given operation to a list of numbers:
+
+def apply_operation(numbers, operation):
+    return [operation(number) for number in numbers]
+
+def square(x):
+    return x * x
+
+def cube(x):
+    return x * x * x
+
+numbers = [1, 2, 3, 4, 5]
+print(apply_operation(numbers, square))  # Output: [1, 4, 9, 16, 25]
+print(apply_operation(numbers, cube))    # Output: [1, 8, 27, 64, 125]
+
+
+
+In this case, apply_operation is a higher-order function because it accepts a function (operation) as a parameter and uses it within its body. Functions like square and cube are passed to apply_operation to perform specific operations on the list of numbers.
+
+
+
+=====================================================================================================================================================================
 
 Closures:
 ---------
 
 
 Wikipedia:  “A closure is a record storing a function together with an environment: a mapping associating each free variable of the function with the value or storage location to which the name was bound when the closure was created. A closure, unlike plain functions, allows the function to access those captured variables through the closure’s reference to them, even when the function is invoked outside their scope.”
+
+
+Python closures are a powerful feature that allows functions to capture and remember the values from their enclosing scope even after that scope has finished executing. Let's dive into the details.
+
+
+What is a Closure?
+A closure is a function object that remembers values in enclosing scopes even if they are not present in memory. Closures are created when a nested function references a value from its enclosing function.
+
+or 
+
+A closure is an inner function that remembers and has access to variable in the local scope in which it was created in the outer function  even after the outer has finished executing. 
+
+
+How Do Closures Work?
+Closures are formed by nested functions. The inner function can access variables from the outer function, and it "remembers" these variables even after the outer function has finished executing.
+
 
 
 
@@ -105,16 +199,46 @@ def outer_func():
 	return inner_func
 	
 
-	
-my_func = outer_func()
+my_func = outer_func()  #inner_func which is waiting to be executed 
 print(my_func)  # <function outer_func.<locals>.inner_func at 0x000001BCC963A0E0>
 print(my_func.__name__)  # inner_func
 my_func() #Hi 
 
 
-The inner_func can access the 'message' variable, this is what we call free variable, because it is not defined inside the inner_func, but still we have access to this 'message' variable
+The inner_func can access the 'message' variable, which is what we call free variable, because it is not defined inside the inner_func, but still we have access to this 'message' variable
 
-1.
+
+
+
+
+
+
+
+
+Here's a simple example to illustrate closures:
+
+def outer_function(x):
+    def inner_function(y):
+        return x + y
+    return inner_function
+
+# Create a closure
+closure = outer_function(10)  
+
+# Call the closure
+print(closure(5))  # Output: 15
+print(closure(20)) # Output: 30
+
+
+outer_function defines a variable x and an inner_function that uses x.
+inner_function is returned by outer_function, creating a closure.
+The closure closure remembers the value of x (which is 10) even after outer_function has finished executing.
+
+
+
+
+
+
 def outer_func(msg):
 	message = msg
 	
@@ -132,16 +256,37 @@ hi_func() # hi
 hello_func() # hello 
 
 
-a closure closes over the free variables from their environment. 
+and more advanced, 
+
+def outer_func(msg):
+	def inner_func():
+		print(msg)
+	
+	return inner_func  # returns the inner_func waiting to be executed, someone needs to trigger it
+	
+	
+hi_func = outer_func("hi")
+hello_func = outer_func("hello")
 
 
-2.
-def html_tag(tag){
-  def wrap_text(msg){
-    print(f'<{tag}>{msg}</{tag}>')
-  }
-  return wrap_text
-}
+hi_func() # hi 
+hello_func() # hello 
+
+
+
+Remember, a closure closes over the free variables from their environment. 
+
+
+
+
+
+
+def html_tag(tag):
+	def wrap_text(msg):
+		print(f'<{tag}>{msg}</{tag}>')
+	return wrap_text
+
+
 
 print_h1 = html_tag('h1')
 
@@ -154,6 +299,7 @@ print_p('Test Paragraph!')  # <p>Test Paragraph!</p>
 
 
 The html_tag is a outer function and wrap_text is a inner function. 
+
 
 
 
@@ -180,16 +326,16 @@ def add(x, y):
 def sub(x, y):
     return x-y
 
-add_logger = logger(add)
-sub_logger = logger(sub)
+add_logger = logger(add)  # log_func --> holding add 
+sub_logger = logger(sub)  # log_func --> holding sub 
 
-add_logger(3, 3)
+add_logger(3, 3)    # executes log_func --> add(3,3)
 add_logger(4, 5)
 
 sub_logger(10, 5)
 sub_logger(20, 10)
 
-======================================================================================================================================================================================
+=====================================================================================================================================================================
 
 Decorators:
 -----------
@@ -226,7 +372,7 @@ bye_func()
 
 
 
-So, decorators are very similar to what we've already done here. 
+So, decorators are very similar to what we've already done here in previous program. 
 
 Okay, so what is a decorator? A decorator is just a function that takes another function as an argument, adds some kind of functionality, and then returns another function. All of this without altering the source code of the original function that you passed in.
 
@@ -244,31 +390,35 @@ bye_func()
 
 
 
-Okay, now what if I instead of 'printing a message' that we pass in, 'we execute some function' that we pass in. And that's what a decorator does. 
+Okay, now instead of taking a msg variable and printing it, we can pass some function and execute it. And that's what a decorator does. 
+
 
 def decorator_function(original_function):
 	def wrapper_function():
-		return original_function() # executing the origianl_function and returning the same
-	return wrapper_function # returning the wrapper function which is waiting to be executed
-
-
-
-
+		return original_function() # 2. executing the origianl_function and returning it
+	return wrapper_function # 1. returning the wrapper function which is waiting to be executed
 
 
 	
 def display():
 	print('display function ran')
 	
+
 	
-decorated_display = decorator_function(display)
+decorated_display = decorator_function(display)  
 print(decorated_display.__name__) # wrapper_function
 decorated_display() # 'display function ran'
 
 
 
 
-Okay, so now that we have a basic decorator example here, why would we want to do something like this? So, decorating our functions allows us to easily add functionality to our existing functions by adding that functionality inside of our wrapper. 
+
+
+Okay, so now that we have a basic decorator example here, 
+why would we want to do something like this? 
+So, decorating our functions allows us to easily add functionality to our existing functions by adding that functionality inside of our wrapper. 
+
+
 
 
 def decorator_function(original_function):
@@ -297,20 +447,51 @@ display()
 
 
 
-So even though those syntaces(one by passing the display function in decorator_function normally and other by using decorators) are functionally the same, I think using decorators syntax is little bit easier to read, especially whenever we chain multiple decorators together.
+
+
+
+How Do Decorators Work?
+Decorators are functions that take another function as an argument and return a new function that adds some kind of functionality. Here's a basic example:
+
+def my_decorator(func):
+    def wrapper():
+        print("Something is happening before the function is called.")
+        func()
+        print("Something is happening after the function is called.")
+    return wrapper
+
+@my_decorator
+def say_hello():
+    print("Hello!")
+
+
+# Usage
+say_hello()
+
+
+
+
+
+
+
+
+
+So even though these syntaces(one by passing the display function in decorator_function normally and other by using decorators) are functionally the same, I think using decorators syntax is little bit easier to read, especially whenever we chain multiple decorators together.
 
 
 so, if we put the decorator symbol above the function, it's technically equal to,
 display = decorator_function(display)
 
 
-So, instead of using the above statement, we are using the decorator instead. 
+So, instead of using the above statement, we are using the decorator instead. i.e.  @decorated_function above display function
 
 
 
 
 What if original_function take some arguments: 
 ----------------------------------------------
+
+Consider that we have changed the display function which accepts some arguments: 
 
 def display_info(name, age):
 	print('display _info ran with arguments ({}, {})'.format(name, age))
@@ -319,7 +500,7 @@ display_info('steve', 27)
 
 
 
-if we apply decortor to the display_info and run it, we would get an error saying 
+Now, if we apply decorator to the display_info and run it, we would get an error saying 
 "TypeError: decorator_function.<locals>.wrapper_function() takes 0 positional arguments but 2 were given"
 
 So, what we need is we need to be able to pass any number of positional or keyword arguments to our wrapper and wrapper to have it execute our original function with those arguments. 
@@ -337,11 +518,17 @@ def decorator_function(original_function):
 decorated_display = decorator_function(display)
 decorated_display()
 	
+
+
+
+
+
+
 	
 Classes as Decorators:
 ----------------------
 
-greet(
+
 
 class decorator_class(object):
 
@@ -368,15 +555,15 @@ display_info()
 
 
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 More examples:
 --------------
+import logging
+logging.basicConfig(filename='{}.log'.format(orig_func.__name__), level=logging.INFO)
+
 
 def my_logger(orig_func):
-    import logging
-    logging.basicConfig(filename='{}.log'.format(orig_func.__name__), level=logging.INFO)
-
     def wrapper(*args, **kwargs):
         logging.info(
             'Ran with args: {}, and kwargs: {}'.format(args, kwargs))
@@ -431,11 +618,13 @@ display_info('Tom', 22)
 Chaining the decorators:
 ------------------------
 
-so, the decorator means, for the my_timer say
+
+for the my_timer, we can say, behind the scenes -->
 
 display_info = my_timer(display_info)
 
-And, for the stacked version means, 
+
+And, for the stacked version means, behind the scenes -->
 
 display_info = my_logger(my_timer(display_info))
 
@@ -443,7 +632,7 @@ display_info = my_logger(my_timer(display_info))
 
 
 
-print the out name of display_info after the my_timer function has been called:
+you can check what function is being invoked by printing the out name of display_info after the my_timer function has been called:
 
 display_info = my_timer(display_info)
 print(display_info.__name__)  # wrapper
@@ -506,12 +695,13 @@ def display_info(name, age):
 display_info('Tom', 22)
 
 
-======================================================================================================================================================================================
+=====================================================================================================================================================================
 
 Decorators with Arguments: 
 ---------------------------
 
-
+Basic Decorator:
+A basic decorator is a function that takes another function as an argument and returns a new function that adds some kind of functionality.
 
 def decorator_function(original_function):
     def wrapper_function(*args, **kwargs):
@@ -527,8 +717,105 @@ def display_info(name, age):
     print('display_info ran with arguments ({}, {})'.format(name, age))
 
 
+
 display_info('John', 25)
 display_info('Travis', 30)
+
+
+
+
+
+Decorator with Arguments:
+-------------------------
+When you want to pass arguments to a decorator, you need to add another layer of function definitions. Here's how you can do it:
+
+def decorator_with_args(arg1, arg2):
+    def my_decorator(func):
+        def wrapper(*args, **kwargs):
+            print(f"Decorator arguments: {arg1}, {arg2}")
+            return func(*args, **kwargs)
+        return wrapper
+    return my_decorator
+
+
+@decorator_with_args("Hello", "World")
+def say_hello(name):
+    print(f"Hello, {name}!")
+
+
+
+
+say_hello("Alice")
+
+
+
+Explanation:
+------------
+1. decorator_with_args(arg1, arg2): This is the outer function that takes the decorator arguments.
+2. my_decorator(func): This is the actual decorator function that takes the function to be decorated as an argument.
+3. wrapper(*args, **kwargs): This is the inner function that wraps the original function, allowing you to add extra behavior before and after the function call. It also passes any arguments and keyword arguments to the original function.
+
+
+When you use @decorator_with_args("Hello", "World"), Python calls decorator_with_args("Hello", "World"), which returns my_decorator. Then, my_decorator is applied to say_hello.
+
+
+
+Here's a step-by-step breakdown:
+
+1. decorator_with_args("Hello", "World"): This call returns the my_decorator function.
+2. my_decorator(say_hello): This call returns the wrapper function, which is now the new say_hello.
+
+So, the final assignment is:
+say_hello = decorator_with_args("Hello", "World")(say_hello)
+
+
+When you call say_hello("Alice"), it actually calls the wrapper function inside the decorator, which prints the decorator arguments and then calls the original say_hello function.
+
+
+
+
+
+
+
+Practical Example: 
+Let's look at a more practical example where a decorator with arguments is used to log function calls with different log levels:
+
+
+def log(level):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            print(f"[{level}] Calling {func.__name__}")
+            result = func(*args, **kwargs)
+            print(f"[{level}] {func.__name__} returned {result}")
+            return result
+        return wrapper
+    return decorator
+
+@log("INFO")
+def add(a, b):
+    return a + b
+
+@log("DEBUG")
+def multiply(a, b):
+    return a * b
+
+add(2, 3)
+multiply(4, 5)
+
+
+
+
+
+In this example, the log decorator takes a level argument and uses it to print log messages before and after the function call.
+
+
+
+
+
+
+
+
+
 
 
 
@@ -558,10 +845,6 @@ if __name__ == "__main__":
 
 
 
-
-
-
-
 # Decorators
 
 
@@ -583,3 +866,38 @@ def display_info(name, age):
 
 display_info('John', 25)
 display_info('Travis', 30)
+
+
+
+
+
+
+solve this: 
+
+
+def instances_count(cls):
+    cls.instance_count = 0
+    original__init__ = cls.__init__   
+    def new__init__(self,*args,**kwargs):
+        cls.instance_count += 1
+        original__init__(self,*args,**kwargs)
+    cls.__init__ = new__init__   
+    return cls
+
+
+    
+@instances_count
+class employee:
+    def __init__(self,name,position):
+        self.name = name
+        self.position = position
+		
+		
+		
+                                                                                																	  													
+def create_employee():
+	   emp_1 = employee("Viji","Doctor")
+	   emp_2 = employee("V","singer")
+	   print ("Number employee instances created %s"%(employee.instance_count))  2
+       
+create_employee()

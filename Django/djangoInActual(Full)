@@ -1,186 +1,382 @@
-To Learn:
----------
 
 
-Learn what is schema
+Prerequisites:
+--------------
+For starters, you need to know Python. You need to know the basics of Python, as well as object-oriented programming concepts such as classes, inheritance, polymorphism, and so on. You should also know the basics of relational databases, so you should be familiar with concepts such as tables, columns, primary and foreign keys, relationships, and so on.
 
-learn env, venv, pipenv
 
-Jinja templating, django default templating
+Here we're talking about using Python and Django to build and deploy the back-end for an e-commerce application (say like Amazon)
 
-Django data models
 
-Django field types -> https://docs.djangoproject.com/en/5.0/ref/models/fields/
-https://www.geeksforgeeks.org/django-model-data-types-and-fields-list/
 
-date time field (auto_now_add, auto_now)
 
-in field option --> choice field
 
-one-to-one relationship --> in the child class --> the column value key field from parent class should be set 'primary_key = True'
+What is Django?
+---------------
+Django is a free and open source framework for building web applications with Python. 
+It's not the only web framework for Python, but it's the most popular one. Because it helps us build a website in less time with fewer lines of code. That's why a lot of companies like YouTube, Instagram, Spotify, and Dropbox use Django in their tech stack.
 
-related_name, reverse relationship
-related_name = '+' --> tells django not to create the reverse relationship
+Django is what we call a batteries included framework, which means It comes with a lot of features out of the box, so we don't have to code them from scratch.
 
-circular dependency or circular relationship and how to solve them
 
-ContentType
+The Feature includes: 
+admin interface(admin interface for the database for managing our data), which is a huge time saver.
+It also has an object relational mapper or ORM that abstracts the database so we can query or persist data without writing a lot of SQL code. 
+It also comes with an authentication package for identifying users. It also has a package for caching data and much, much more. 
 
- content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
- object_id = models.PositiveIntegerField()
- content_object = GenericForeignKey()
- 
- 
-Inner class Meta --> class Meta (explore)
 
-django model metadata  --> https://docs.djangoproject.com/en/5.0/ref/models/options/
+So, since Django offers all these amazing features, we can focus on our application and its requirements. We don't have to reinvent the wheel and code all these features from scratch. 
 
 
+If ever you come up with Django is a piece of crap because it's old and bloated with so many features. Well, saying a framework is better than Django because it's faster is kind of like saying a Ferrari is better than a truck, because it's faster. What if you want to move something? You're not going to use your Ferrari for that, right? So a wise software engineer doesn't pick up a framework merely based on its performance. There are so many other things you need to take into account like the maturity of the framework, how stable it is from one version to another, its learning curve, the size of the community and so on.
 
 
-Django ORM --> learn about Managers and QuerySets
-.Objects. --> manager --> interface 
+Django has been around for a long time and it has a huge community. So there are tons of Django packages built by the community that you can reuse in your applications. Also, If you get stuck, there's always someone out there to help you. 
 
-queryset get evaluated --> iterate, converting it in to list, accessing a single element  --> lazily evaluated
 
-Learn Building complex query using Django ORM
+Now, Regarding Django features. yes, Django comes with a lot of features, but you don't have to use or even learn all of them, because all these features are optional.
 
-queryset api  --> https://docs.djangoproject.com/en/5.0/ref/models/querysets/
 
 
 
-Learn select_related, prefetch_related very well
-also learn chaining select_related with prefetch_related
 
+How the Web Works?
+------------------
 
+So, Django is a framework for building web applications with python.
 
-django database functions -->  https://docs.djangoproject.com/en/5.0/ref/models/database-functions/
+Now, let's talk about some of the fundamental concepts you need to understand to build web applications. Let's say we're going to build an online store and publish it at 'dancooper.com'. Now this website is going to have two parts or two applications. A frontend and a backend. The frontend is the part that is loaded inside a web browser on a client machine. It's the part that the user sees and interacts with(also referred as UI). The backend is the part that runs on a web server and is responsible for data processing, validating business rules, and so on. 
 
 
-learn about contentTypes in django
+Now let's imagine that Alice wants to visit our website. So she points her browser to 'dancoop.com' 
+This address is also called a URL, which is short for Uniform Resource Locator. It's basically a way to locate a resource on our internet. A resource can be a webpage, an image, a video, a PDF, and so on. So Alice types 'dancoop.com' in her browser and presses enter. At this moment, her browser sends a request to the web server that hosts our website and says, "hey, Alice wants to see the homepage". So,  the web server should take this request, process it, and return a response back to the client. This data exchange is defined by a protocol called HTTP, which is short for Hypertext Transfer Protocol. It defines how clients and servers can communicate. So this is the big picture. As Alice navigates our website, for each page, her browser sends an HTTP request to the server and receives an HTTP response. 
 
 
-Django ModelAdmin --> https://docs.djangoproject.com/en/5.0/ref/contrib/admin/  --> ModelAdmin options
+Front End (client)               Back End (Server)
 
 
-Django validators --> https://docs.djangoproject.com/en/5.0/ref/validators/ 
+Client --- Request ----> Server
 
+Client <-- Response ---- Server
 
-url conf in django
+The Response can be html, or can be only the data that is needed to build the webpage
 
+Now, as part of building the backend for this website, we need to decide how we're going to respond to clients. One option is to generate the requested page on the server and return it to the client. We can use HTML for that. HTML is short for hypertext markup language. It's a simple language for representing web pages and their content. Every web page we have seen on our internet is built using HTML. So, one option is to generate the page on the server and return an HTML document to the client. The other option is to return only the data needed on the requested page and have the client generate the page. So instead of putting a complete page or a complete HTML document in an HTTP response, we only return the data like the list of products. 
+Now, what is the difference? Well, if we push this responsibility to the client, we can free up the server so it can serve more clients. Our application will be more scalable. That's why over the past few years, this approach has become more trendy and is now considered the industry best practice. These days, we have tools like React, Angular, and Vue for generating web pages on the client. These are all client-side tools that are used by front-end developers. In contrast, we have server-side tools for building backends. Django falls in this category, so you should not compare Django with, let's say, React. You may compare Django with other server-side frameworks like ASP.NET Core, which is used by C# developers, Express, used by JavaScript developers, and so on. 
 
-resource -- object -- model -- entity 
+So,  if we push the responsibility of generating web pages to the client, the server essentially becomes a gateway to the data. On the server, we can provide endpoints that the client can talk to to get or save various pieces of data. For example, we can provide one endpoint to get the list of products and another endpoint to get the list of orders someone has placed. Now, all these endpoints together represent the interface that clients use to talk to the server. In technical terms, we say the server provides an API or an application programming interface to clients. This API is essentially like the buttons on a remote control. All these buttons together represent the interface or the API we use to interact with the TV.
 
+So in this course, our focus will be on using Django to build an API for our online store. Client applications can use this API to get or save the data. How these clients are built is irrelevant here. We can use React, Angular, or even plain JavaScript. That falls under front-end development, which has nothing to do with Django. Once we build this API, if you know front-end development, you can always build a client app that talks to this API. 
 
-https://www.django-rest-framework.org/  
-  apiguide --> serializer fields
-               Generic Views
 
 
 
-change detection mechanism doesn't work sometimes. you need to restart the server. 
 
-httpstatuses
 
-nested routers --> https://github.com/alanjds/drf-nested-routers
 
-read doc django-filters -->  https://django-filter.readthedocs.io/en/stable/
+Some of the concepts redefined below:
+-------------------------------------
 
+1. Gateway:
+When they refer to the server as a "gateway," they mean that the server acts as an intermediary or interaction point between the client (like a web browser or mobile app) and the data stored on the server. The server processes requests from the client, retrieves the necessary data, and sends it back to the client. Think of it as a bridge that connects the client to the data.
 
+2. Endpoint:
+An endpoint is a specific URL or path on the server where clients can send requests to perform certain actions, like retrieving or saving data. Each endpoint corresponds to a particular function or resource. For example, in an e-commerce website like Amazon, you might have endpoints like:
 
+/products to get a list of products
+/orders to get a list of orders
+/users to get user information
 
 
-Django import statements:
----------------------------
+3. API (Application Programming Interface):
+An API is a collection of endpoints that together provide a way for clients to interact with the server. Each endpoint is part of the API, but the API itself is the whole set of endpoints. So, you can think of the API as the remote control with multiple buttons (endpoints), each button performing a specific function.
 
-from django.shortcuts import render (default - Views.py - to render html)
-  eg: return render(request, 'hello.html')
-  eg: return render(request, 'hello.html', {'name': 'Mosh'})
-from django.http import HttpResponse (Views.py)  
-  eg: return HttpResponse('Hello World')
-  
-from django.urls import path (in apps urls.py)
-from django.urls import path, include (in project urls.py)
 
-from django.db import models (default - models.py)
 
+Real-World Example: Amazon Website
+-----------------------------------
+Let's use Amazon as an example to illustrate these concepts:
 
-from django.contrib.contenttypes.models import ContentType ( models.py - to define generic relationship, to find the content_type)
-from django.contrib.contenttypes.fields import GenericForeignKey
+Gateway: The Amazon server acts as a gateway to the data stored in its databases. When you browse products, place orders, or check your account details, your browser (client) sends requests to the Amazon server.
 
-from django.contrib.auth.models import User
+Endpoints: Amazon's server has various endpoints for different actions:
 
-from django.core.exceptions import ObjectDoesNotExist(views.py --> queryset,if we don't get the object we're looking for)
+/products: When you search for products, your browser sends a request to this endpoint to get a list of products.
+/orders: When you check your order history, your browser sends a request to this endpoint to get a list of your orders.
+/cart: When you add items to your cart, your browser sends a request to this endpoint to update your cart.
 
-from django.db.models import Q, F, Func, ExpressionWrapper (Q - to combine the conditions using OR Operator, F - to represent a particular field)
 
+API: All these endpoints together form Amazon's API. The API allows your browser to interact with Amazon's server to perform various actions like searching for products, placing orders, and updating your cart.
 
-from django.db.models.aggregates import Count, Max, Min
 
-from django.db.models import Value 
+RESTful APIs: 
+-------------
+RESTful APIs are a popular way to design web services that allow clients to interact with servers. Let's break it down:
 
-from django.db.models.functions import Concat
+REST (Representational State Transfer):
+REST is an architectural style for designing networked applications. It relies on a stateless, client-server communication model and uses standard HTTP methods. Here are the key principles:
 
-from django.contrib.contenttypes.models import ContentType (in views.py)
-from store.models import Product
-from tags.model import taggedItem 
+1. Stateless: Each request from a client to a server must contain all the information needed to understand and process the request. The server does not store any client context between requests.
+2. Client-Server: The client and server are separate entities that communicate over a network. The client requests resources, and the server provides them.
+3. Uniform Interface: RESTful APIs use a consistent and standardized way to interact with resources. This includes using standard HTTP methods like GET, POST, PUT, DELETE, etc.
+4. Resource-Based: Everything is considered a resource, and each resource is identified by a unique URL.
 
 
-from django.db import transaction
-from django.db import connection
+RESTful API:
+A RESTful API is an API that adheres to the principles of REST. It allows clients to interact with resources on a server using standard HTTP methods. Here are the main components:
 
+1. Endpoints: URLs that represent resources. For example, /products, /orders, /users.
+2. HTTP Methods: Standard methods used to perform actions on resources:
+	GET: Retrieve data from the server (e.g., get a list of products).
+	POST: Send data to the server to create a new resource (e.g., place a new order).
+	PUT: Update an existing resource on the server (e.g., update user information).
+	DELETE: Remove a resource from the server (e.g., delete an order).
 
-from django.utils.html import format_html, urlencode ( in admin.py)
-from django.urls import reverse( in admin.py)
 
-from django.contrib import admin, messages
+Real-World Example: Amazon Website
+Let's use Amazon again to illustrate RESTful APIs:
 
+Endpoint: /products
+	GET: Retrieve a list of products.
+	POST: Add a new product to the catalog (typically used by administrators).
+	
+Endpoint: /orders
+	GET: Retrieve a list of orders placed by a user.
+	POST: Place a new order.
+	
+Endpoint: /users
+	GET: Retrieve user information.
+	PUT: Update user information.
 
-from django.core.validators import MinValueValidator
 
-from django.contrib.contenttypes.admin import GenericTabularInline, GenericStackedInline
+Example Request and Response:
 
+Here's an example of a GET request to retrieve a list of products:
 
+Request:
+GET /products HTTP/1.1
+Host: api.amazon.com
 
-#rest_framework
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+Response:
+[
+  {
+    "id": 1,
+    "name": "Laptop",
+    "price": 999.99
+  },
+  {
+    "id": 2,
+    "name": "Smartphone",
+    "price": 499.99
+  }
+]
 
-from rest_framework import serializers
-from rest_framework import status
 
-from django.shortcuts import get_object_or_404
 
-from decimal import Decimal
+In this example, the client sends a GET request to the /products endpoint, and the server responds with a JSON array of products.
 
-from rest_framework.views import APIView
-from rest_framework.mixins import ListModelMixin, CreateModelMixin
 
-from rest_framework.viewsets import ModelViewSet
 
-from rest_framework.routers import SimpleRouter
+Process Flow: 
+-------------
+Some key components:
+Web Browser: This is the application Alice uses to access the internet (e.g., Chrome, Firefox, Safari). It sends requests to web servers and displays the responses.
+Web Server: This is a computer that hosts websites and serves web pages to clients (browsers). It processes requests and sends back responses.
+URL (Uniform Resource Locator): This is the address Alice types into her browser to locate a resource on the internet.
 
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.filters import SearchFilter, OrderingFilter
 
-from rest_framework.pagination import PageNumberPagination
+Steps from Request to Response:
 
+1. Alice Types the URL:
+Alice types dancoop.com into her browser and presses enter.
 
+2. DNS Lookup:	
+The browser needs to find the IP address of dancoop.com. It sends a request to a DNS (Domain Name System) server to get the IP address associated with the domain name.
+	
+3. Browser Sends HTTP Request:
+With the IP address, the browser sends an HTTP request to the web server hosting dancoop.com. This request might look like:
 
+GET / HTTP/1.1
+Host: dancoop.com
 
+4. Web Server Receives Request:
+The web server receives the request and processes it. It determines that Alice wants to see the homepage.
 
+5. Server Processes Request:
+The server retrieves the necessary files (HTML, CSS, JavaScript) to build the homepage. It might also query a database if dynamic content is needed.
 
+6. Server Sends HTTP Response:
+The server sends an HTTP response back to the browser. This response includes the HTML content of the homepage:
+HTTP/1.1 200 OK
+Content-Type: text/html
 
+<html>
+<head>
+  <title>DanCoop</title>
+</head>
+<body>
+  <h1>Welcome to DanCoop!</h1>
+</body>
+</html>
 
+7. Browser Receives Response:
+The browser receives the response and starts rendering the HTML content. It may also make additional requests for resources like images, CSS files, and JavaScript files.
 
- 
-from django.contrib.auth.models import AbstractUser
+8. Rendering the Page:
+The browser processes the HTML, CSS, and JavaScript to display the homepage to Alice. As she navigates the site, the browser continues to send HTTP requests for other pages and resources.
 
 
-======================================================================================================================================================================================
 
-Django :
----------
+Real-World Example: Amazon Website
+Let's apply this to Amazon:
+
+1. Alice Types amazon.com:
+Alice types amazon.com into her browser.
+
+2, DNS Lookup:
+The browser finds the IP address for amazon.com.
+
+3. Browser Sends HTTP Request:
+The browser sends a request to the Amazon web server:
+GET / HTTP/1.1
+Host: amazon.com
+
+4. Web Server Receives Request:
+The Amazon server processes the request and retrieves the homepage content.
+
+5. Server Sends HTTP Response:
+The server sends back the HTML, CSS, and JavaScript for the homepage.
+
+6. Browser Receives Response:
+The browser receives the response and starts rendering the Amazon homepage.
+
+7. Rendering the Page:
+The browser displays the homepage, and as Alice navigates, it continues to send requests for other pages and resources.
+
+
+
+
+Process Flow in the context of API:
+-----------------------------------
+
+When interacting with an API, the flow is similar to the process of visiting a website, but instead of requesting web pages, the client requests data or performs actions on the server. Let's break down the steps:
+
+
+Steps from Request to Response with an API:
+
+1. Client Sends API Request:
+The client (which could be a web browser, mobile app, or another server) sends an HTTP request to the API endpoint. For example, to get a list of products, the request might look like:
+GET /api/products HTTP/1.1
+Host: api.dancoop.com
+
+2. API Server Receives Request:
+The API server receives the request and processes it. It identifies the endpoint (/api/products) and the action (GET).
+
+3. Server Processes Request:
+The server retrieves the necessary data from its database or other storage. It might perform some business logic to filter or format the data.
+
+4. Server Sends API Response:
+The server sends an HTTP response back to the client. This response typically includes data in a format like JSON or XML:
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    "id": 1,
+    "name": "Laptop",
+    "price": 999.99
+  },
+  {
+    "id": 2,
+    "name": "Smartphone",
+    "price": 499.99
+  }
+]
+
+
+5. Client Receives Response:
+The client receives the response and processes the data. If it's a web application, it might use JavaScript to update the UI with the new data.
+
+
+
+Real-World Example: Amazon API
+Let's apply this to Amazon's API:
+
+1. Client Sends API Request:
+Alice's mobile app sends a request to Amazon's API to get a list of products:
+GET /api/products HTTP/1.1
+Host: api.amazon.com
+
+2. API Server Receives Request:
+Amazon's API server receives the request and identifies the endpoint (/api/products).
+
+3. Server Processes Request:
+The server retrieves the list of products from its database.
+
+4. Server Sends API Response:
+The server sends back a JSON response with the product data:
+
+[
+  {
+    "id": 1,
+    "name": "Laptop",
+    "price": 999.99
+  },
+  {
+    "id": 2,
+    "name": "Smartphone",
+    "price": 499.99
+  }
+]
+
+
+5.Client Receives Response:
+Alice's mobile app receives the response and displays the list of products to her.
+
+
+Summary
+Client: Sends an HTTP request to the API endpoint.
+API Server: Receives the request, processes it, and retrieves the necessary data.
+Server: Sends an HTTP response with the data.
+Client: Receives the response and processes the data.
+
+
+API Server:
+An API server is a server that hosts an API. It processes requests from clients, performs the necessary actions (like retrieving or updating data), and sends back responses. The API server is responsible for handling the logic and data management required to fulfill the client's requests.
+
+API Endpoint:
+An API endpoint is a specific URL or path on the API server where clients can send requests to perform certain actions. Each endpoint corresponds to a particular function or resource. For example, /api/products might be an endpoint for retrieving a list of products.
+
+Relationship Between API Server and Endpoints:
+API Server: The physical or virtual server that hosts the API and processes requests.
+API Endpoints: Specific URLs on the API server that clients interact with to perform actions.
+
+
+Example: Amazon API
+Let's use Amazon's API as an example:
+
+API Server: Amazon has servers that host its API. These servers handle requests from clients (like web browsers or mobile apps).
+
+API Endpoints: Amazon's API server has various endpoints for different actions:
+	/api/products: Endpoint to get a list of products.
+	/api/orders: Endpoint to get a list of orders.
+	/api/users: Endpoint to get user information.
+	
+When Alice's mobile app sends a request to api.amazon.com/api/products, the API server at api.amazon.com processes the request and sends back the response with the product data.
+
+Summary
+API Server: Hosts the API and processes requests.
+API Endpoints: Specific URLs on the API server where clients send requests.
+
+
+
+Setting Up the Development Environment:
+---------------------------------------
+
+install python 
+
+check python version in the terminal/cmd prompt --> python --version
+
 
 pip install django / pipenv install django(if you want to use pipenv)
 
