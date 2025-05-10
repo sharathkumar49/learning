@@ -1,0 +1,79 @@
+
+
+### General Django Framework
+1. **What is the Django MVT architecture? How is it different from MVC?**
+2. **Explain Django's request-response cycle.**
+3. **How does Django handle sessions? What are the different types of session backends available in Django?**
+4. **What are Django signals, and how are they used? Can you give a practical example?**
+5. **How do you implement middleware in Django? Provide a use case.**
+6. **Explain Django's ORM. How does it differ from raw SQL or other ORMs like SQLAlchemy?**
+7. **What is the purpose of `manage.py` and `django-admin.py`?**
+
+### Advanced Topics
+8. **How do you optimize database queries in Django? Provide examples of tools or techniques like `select_related` and `prefetch_related`.**
+9. **What are custom managers in Django, and when should you use them?**
+10. **Explain how Django handles migrations. What are the limitations of the migration framework?**
+11. **What is the difference between `@staticmethod`, `@classmethod`, and regular methods in Django models?**
+12. **How can you implement caching in Django? What are the different types of caches supported?**
+13. **How do you use `FormView`, `ModelForm`, or `Form` for complex forms?**
+14. **What are Django's generic views, and how do they differ from function-based views?**
+
+### Security
+15. **How does Django prevent SQL Injection, XSS, and CSRF attacks?**
+16. **What are the secure deployment practices for a Django application?**
+17. **Explain the use of Django's `SECURE_*` settings for HTTPS security.**
+18. **How do you handle user authentication and authorization in Django?**
+
+### Deployment and Scalability
+19. **How do you set up a Django project for production?**
+20. **What is WSGI, and how does Django use it?**
+21. **Explain the use of Django with ASGI for handling asynchronous requests.**
+22. **How would you scale a Django application to handle high traffic? Discuss load balancing, caching, and database optimization.**
+
+### Specific Django Features
+23. **What is the purpose of the `sites` framework in Django?**
+24. **How do you handle file uploads in Django?**
+25. **What is the purpose of the `contenttypes` framework?**
+26. **How do you implement custom user models in Django?**
+27. **Explain how you would use Django Rest Framework (DRF) to build APIs. What are serializers, and how do they work?**
+
+### Troubleshooting and Debugging
+28. **How do you debug slow queries in Django?**
+29. **What tools do you use to monitor and debug Django applications in production?**
+30. **Explain a difficult bug you encountered in Django and how you resolved it.**
+
+### Integrations
+31. **How do you integrate third-party applications into a Django project?**
+32. **What is Celery, and how do you use it with Django for task queues?**
+33. **How would you implement real-time features like chat or notifications in Django?**
+
+### Testing
+34. **How do you write unit tests and integration tests in Django?**
+35. **What is the purpose of Django's `TestCase`, and how does it differ from Python's `unittest`?**
+36. **How do you use tools like factories or fixtures to create test data in Django?**
+
+
+
+
+What experience do you have with Django, and how have you applied it to real-world projects? Can you describe your understanding of Django's MVT (Model-View-Template) architecture and how it works? How do you handle data migrations in Django? What tools or packages have you used to optimize Django's performance, and how did you implement them? How do you secure Django applications against common vulnerabilities, such as cross-site scripting (XSS) attacks or SQL injection attacks? What is your experience with integrating Django with front-end frameworks like React or Angular? Have you worked with Django Rest Framework (DRF) for building RESTful APIs, and can you give an example of a project where you used DRF? How do you handle user authentication and authorization in Django, and have you worked with any third-party packages for this purpose? Have you worked with Django's built-in admin interface, and can you give an example of how you customized it for a specific project? How do you test Django applications, and what tools or frameworks have you used for testing?
+
+
+
+Q: Design models for storing categories of a e-commerce website.
+
+Categories will have recursive sub categories i.e the sub categories once again have sub categories and so on...
+
+Each sub category belongs to a single parent category
+
+A: Use a single category model with a foreign key to self.
+
+
+
+Which of those inheritance styles are considered best practice? Which are likely to be used in an older app?
+
+https://docs.djangoproject.com/en/4.1/topics/db/models/#model-inheritance
+
+
+
+
+https://github.com/Devinterview-io/django-interview-questions

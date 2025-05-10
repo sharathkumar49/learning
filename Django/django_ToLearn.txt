@@ -4,6 +4,8 @@ To Learn:
 ---------
 
 
+
+
 Learn what is schema
 
 learn env, venv, pipenv
@@ -89,3 +91,26 @@ nested routers --> https://github.com/alanjds/drf-nested-routers
 read doc django-filters -->  https://django-filter.readthedocs.io/en/stable/
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+select related and prefetch related in detail
+middleware
+mixins

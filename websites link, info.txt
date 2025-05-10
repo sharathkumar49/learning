@@ -1,0 +1,9 @@
+python:
+
+
+
+Django:
+
+Simple is better than complex
+
+https://simpleisbetterthancomplex.com/
