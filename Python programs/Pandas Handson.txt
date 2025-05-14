@@ -1,0 +1,2200 @@
+
+
+POINTS TO BE REMEMBERED
+========================
+df.loc['color'] = [...]	Adds a row labeled 'color'
+df['color'] = [...]	Adds a column named 'color' ✅
+
+If you’re just removing one column and don’t need it anymore, df.drop(['attempts'], axis=1) is perfectly fine. 
+But if you also want to keep that column (like maybe for analysis or storing elsewhere), then df.pop('attempts') would be the way to go.
+
+
+df.replace('James','Suresh'))
+df['name'] = df['name'].replace('James','Suresh')
+
+df.replace(...)	Entire DataFrame	Yes	Slower for single column
+df['name'] = ...	Only 'name' column	No (modifies in place)	Faster and better for targeted changes
+
+
+GROUPBY
+========
+groupby is used to split your DataFrame into groups based on some column(s), so you can then apply some operation (like sum, mean, count, etc.) to each group.
+
+🧠 Think of it like:
+Split → Apply → Combine
+
+🤔 Why pd.set_option(...) and not df.set_option(...)?
+========================================================
+Because **set_option()** is a global pandas setting, not something specific to one DataFrame (df).
+
+🧠 Here's the idea:
+df is just a variable that holds a specific DataFrame.
+
+But pd is the pandas library itself — and that's where the display settings live.
+
+
+🏁 Bonus Challenge (Common in EY/UST assessments):
+
+# Given a DataFrame df:
+# Find the second highest salary in the 'salary' column.
+
+df = pd.DataFrame({'employee': ['A', 'B', 'C', 'D'],
+                   'salary': [5000, 7000, 6000, 7000]})
+How would you write code to get the second highest unique salary?
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+df = pd.DataFrame({'employee': ['A', 'B', 'C', 'D'],
+                   'salary': [5000, 7000, 6000, 7000]})
+				   
+unique_val = df.sort_values(['salary'],ascending=False).drop_duplicates(subset='salary',keep='first')
+
+If the interviewer asks “what if there are less than 2 unique salaries?” — handle it safely:
+=============================================================================================
+if len(unique_val) >= 2:
+      print("Second Highest salary is: ", unique_val.iloc[1])
+else:
+     print("Not enough Unique values")
+	 
+OR:
+
+import pandas as pd
+import numpy as np
+
+df = pd.DataFrame({'employee': ['A', 'B', 'C', 'D'],
+                   'salary': [5000, 7000, 6000, 7000]})
+
+df.sort_values(['salary'], ascending=False, inplace=True)
+df1 = df.drop_duplicates(subset='salary',keep='first')
+print(df1)
+filt = df1.iloc[1]
+print(filt)
+
+OUTPUT
+-------
+Second Highest salary is: 
+ employee       C
+salary      6000
+Name: 2, dtype: object
+
+
+Explain the difference between NaN, None, and 0 in a DataFrame.
+================================================================
+1. NaN (Not a Number)
+✅ Comes from the NumPy library.
+
+Used to represent missing or undefined numerical data.
+
+Data type: float
+
+It's the standard "missing" marker in pandas DataFrames.
+
+import numpy as np
+import pandas as pd
+
+df = pd.DataFrame({'A': [1, 2, np.nan]})
+print(df)
+
+     A
+0  1.0
+1  2.0
+2  NaN
+
+
+🧠 2. None
+✅ Built-in Python object.
+
+Represents null or no value.
+
+In pandas, if you insert None into a numeric column, it's automatically converted to NaN.
+
+In object-type columns, None is preserved as-is.
+
+df = pd.DataFrame({'A': [1, 2, None]})
+print(df)
+
+     A
+0  1.0
+1  2.0
+2  NaN   ← pandas converts None → NaN in numeric columns
+
+df = pd.DataFrame({'A': ['apple', 'banana', None]})
+print(df)
+
+        A
+0   apple
+1  banana
+2    None   ← Here, it's kept as Python's None (object type)
+
+`
+🧠 3. 0 (Zero)
+✅ Just a regular numeric value.
+
+Means "zero", not missing.
+
+Type: int or float, depending on context.
+
+
+df = pd.DataFrame({'A': [1, 0, 5]})
+print(df)
+css
+Copy
+Edit
+   A
+0  1
+1  0
+2  5
+🟡 This row with 0 is not missing, it’s just "zero".
+
+
+======================================================================================================================================================================================
+🧠 1. apply() – For Series & DataFrames
+------------------------------------------
+Use: Apply a function along an axis (rows or columns) of a DataFrame, or on a Series.
+
+Works on: Both DataFrame and Series.
+
+✅ Example with Series:
+
+s = pd.Series([1, 2, 3])
+s.apply(lambda x: x**2)  # Output: [1, 4, 9]
+✅ Example with DataFrame:
+
+df = pd.DataFrame({'a': [1, 2], 'b': [3, 4]})
+df.apply(sum, axis=0)  # sum columns → [4, 7]
+df.apply(sum, axis=1)  # sum rows    → [4, 6]
+
+
+🔁 2. applymap() – Only for DataFrames
+---------------------------------------
+Use: Apply a function to each element of a DataFrame.
+
+Works on: Only DataFrames.
+
+✅ Example:
+python
+Copy
+Edit
+df = pd.DataFrame({'a': [1, 2], 'b': [3, 4]})
+df.applymap(lambda x: x * 10)
+# Output: all elements multiplied by 10
+🟡 Use this when you want to apply a function element-wise to a DataFrame.
+
+
+🔄 3. map() – Only for Series
+-------------------------------
+Use: Map values of a Series using a function, dict, or Series.
+
+Works on: Only Series (not DataFrame).
+
+✅ Example with function:
+
+s = pd.Series([1, 2, 3])
+s.map(lambda x: x * 100)  # Output: [100, 200, 300]
+✅ Example with dict (value replacement):
+python
+Copy
+Edit
+s = pd.Series(['cat', 'dog', 'rabbit'])
+s.map({'cat': 'meow', 'dog': 'woof'})
+# Output: ['meow', 'woof', NaN]
+
+
+♻️ 4. replace() – Series & DataFrames
+---------------------------------------
+Use: Replace values with others — more flexible than map() for replacing multiple values.
+
+Works on: Both Series and DataFrames.
+
+✅ Example for Series:
+
+s = pd.Series(['a', 'b', 'c'])
+s.replace({'a': 1, 'b': 2})  # Output: [1, 2, 'c']
+✅ Example for DataFrame:
+python
+Copy
+Edit
+df = pd.DataFrame({'col1': [1, 2], 'col2': [3, 1]})
+df.replace(1, 100)  # Replaces all 1s with 100
+⚡ Summary Table
+
+Function	Input Type	Applies To	    Use Case
+apply()	    Series/DF	Rows/Columns	Row-wise or column-wise ops
+applymap()	DataFrame	Each element	Element-wise function (DF only)
+map()	    Series	    Each element	Transform values via function/dict
+replace()	Series/DF	Values	        Replace specific values
+
+pivot() function
+=================
+The pivot() function in pandas is used to reshape data — it's like rearranging your DataFrame so that columns become rows or vice versa. It’s particularly handy when you want to organize your data with one column as the index, another as columns, and a third as values.
+
+DataFrame.pivot(index=None, columns=None, values=None)
+
+SOLUTION
+---------
+import pandas as pd
+
+data = {
+    'Date': ['2023-01-01', '2023-01-01', '2023-01-02', '2023-01-02'],
+    'City': ['New York', 'Los Angeles', 'New York', 'Los Angeles'],
+    'Temperature': [30, 25, 28, 27]
+}
+
+df = pd.DataFrame(data)
+print(df)
+Output:
+
+         Date         City  Temperature
+0  2023-01-01     New York           30
+1  2023-01-01  Los Angeles           25
+2  2023-01-02     New York           28
+3  2023-01-02  Los Angeles           27
+
+🔁 Using pivot():
+
+pivot_df = df.pivot(index='Date', columns='City', values='Temperature')
+print(pivot_df)
+
+Output:
+City        Los Angeles  New York
+Date                             
+2023-01-01           25        30
+2023-01-02           27        28
+Now the rows are dates, the columns are cities, and the values are temperatures.
+
+
+
+
+==========================================================================================================================================================================================================
+
+1. Creating a DataFrame from a Dictionary
+
+Write a Pandas program to create a dataframe from a dictionary and display it.
+
+Sample data: {'X':[78,85,96,80,86], 'Y':[84,94,89,83,86],'Z':[86,97,96,72,83]}
+
+
+SOLUTION
+---------
+
+import pandas as pd
+data = {'X':[78,85,96,80,86], 'Y':[84,94,89,83,86],'Z':[86,97,96,72,83]}
+df = pd.DataFrame(data)
+print(df)
+
+==========================================================================================================================================================================================================
+
+2. DataFrame with Specified Index Labels
+
+Write a Pandas program to create and display a DataFrame from a specified dictionary data which has the index labels.
+
+Sample Python dictionary data and list labels:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'n
+o', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data, index = labels)
+print(df)
+
+==========================================================================================================================================================================================================
+
+3. DataFrame Basic Summary Information
+
+Write a Pandas program to display a summary of the basic information about a specified DataFrame and its data.
+
+Sample Python dictionary data and list labels:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data, index = labels)
+print(df.info())
+
+OUTPUT
+-------
+<class 'pandas.core.frame.DataFrame'>
+Index: 10 entries, a to j
+Data columns (total 4 columns):
+ #   Column    Non-Null Count  Dtype  
+---  ------    --------------  -----  
+ 0   name      10 non-null     object 
+ 1   score     8 non-null      float64
+ 2   attempts  10 non-null     int64  
+ 3   qualify   10 non-null     object 
+dtypes: float64(1), int64(1), object(2)
+memory usage: 400.0+ bytes
+None
+
+
+SELECTING First 3 rows alone
+
+import pandas as pd
+import numpy as np
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data, index = labels)
+print(df.head(3))
+
+
+OUTPUT
+-------
+        name  score  attempts qualify
+a  Anastasia   12.5         1     yes
+b       Dima    9.0         3      no
+c  Katherine   16.5         2     yes
+
+==========================================================================================================================================================================================================
+5. Selecting 'name' and 'score' Columns
+
+Write a Pandas program to select the 'name' and 'score' columns from the following DataFrame.
+
+Sample Python dictionary data and list labels:
++
+]
+
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data, index = labels)
+filt = df.iloc[:,[0,1]]
+print(filt)
+
+OUTPUT
+-------
+        name  score
+a  Anastasia   12.5
+b       Dima    9.0
+c  Katherine   16.5
+d      James    NaN
+e      Emily    9.0
+f    Michael   20.0
+g    Matthew   14.5
+h      Laura    NaN
+i      Kevin    8.0
+j      Jonas   19.0
+
+==========================================================================================================================================================================================================
+6. Selecting Specific Columns and Rows
+
+Write a Pandas program to select the specified columns and rows from a given data frame.
+
+Sample Python dictionary data and list labels:
+Select 'name' and 'score' columns in rows 1, 3, 5, 6 from the following data frame.
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data, index = labels)
+filt = df.iloc[[1,3,5,6],[1,3]]
+print(filt)
+
+
+OUTPUT
+-------
+   score qualify
+b    9.0      no
+d    NaN      no
+f   20.0     yes
+g   14.5     yes
+
+==========================================================================================================================================================================================================
+7. Selecting Rows Where Attempts > 2
+
+Write a Pandas program to select the rows where the number of attempts in the examination is greater than 2.
+
+Sample Python dictionary data and list labels:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data, index = labels)
+filt = df.loc[df["attempts"] > 2]
+print(filt)
+
+OUTPUT
+-------
+      name  score  attempts qualify
+b     Dima    9.0         3      no
+d    James    NaN         3      no
+f  Michael   20.0         3     yes
+
+==========================================================================================================================================================================================================
+8. Counting Rows and Columns
+
+Write a Pandas program to count the number of rows and columns of a DataFrame.
+
+Sample Python dictionary data and list labels:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data, index = labels)
+filt = list(df.shape)
+print("Number of rows :",filt[0] )
+print("Number of columns :",filt[1] )
+
+
+OUTPUT
+-------
+Number of rows : 10
+Number of columns : 4
+
+==========================================================================================================================================================================================================
+9. Selecting Rows with Missing Score
+
+Write a Pandas program to select the rows where the score is missing, i.e. is NaN.
+
+Sample DataFrame:
+Sample Python dictionary data and list labels:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data, index = labels)
+print(df[df["score"].isnull()])
+
+
+OUTPUT
+-------
+    name  score  attempts qualify
+d  James    NaN         3      no
+h  Laura    NaN         1      no
+
+==========================================================================================================================================================================================================
+10. Selecting Rows Where Score is Between 15 and 20
+
+Write a Pandas program to select the rows the score is between 15 and 20 (inclusive).
+
+Sample Python dictionary data and list labels:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data, index = labels)
+print(df[df['score'].between(15,20)])
+
+
+OUTPUT
+-------
+        name  score  attempts qualify
+c  Katherine   16.5         2     yes
+f    Michael   20.0         3     yes
+j      Jonas   19.0         1     yes
+
+==========================================================================================================================================================================================================
+11. Selecting Rows with Attempts < 2 and Score > 15
+
+Write a Pandas program to select the rows where number of attempts in the examination is less than 2 and score greater than 15.
+
+Sample Python dictionary data and list labels:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data, index = labels)
+print(df[(df['attempts']<2) & (df['score']>15)])
+
+OUTPUT
+-------
+    name  score  attempts qualify
+j  Jonas   19.0         1     yes
+
+==========================================================================================================================================================================================================
+12. Changing the Score in a Specific Row
+
+Write a Pandas program to change the score in row 'd' to 11.5.
+
+Sample Python dictionary data and list labels:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data, index = labels)
+print("Before",df)
+df.loc['d',"score"] = 11.5
+print("\n After", df)
+
+
+OUTPUT
+-------
+Before   name  score  attempts qualify
+a  Anastasia   12.5         1     yes
+b       Dima    9.0         3      no
+c  Katherine   16.5         2     yes
+d      James    NaN         3      no
+e      Emily    9.0         2      no
+f    Michael   20.0         3     yes
+g    Matthew   14.5         1     yes
+h      Laura    NaN         1      no
+i      Kevin    8.0         2      no
+j      Jonas   19.0         1     yes
+
+ After     name  score  attempts qualify
+a  Anastasia   12.5         1     yes
+b       Dima    9.0         3      no
+c  Katherine   16.5         2     yes
+d      James   11.5         3      no
+e      Emily    9.0         2      no
+f    Michael   20.0         3     yes
+g    Matthew   14.5         1     yes
+h      Laura    NaN         1      no
+i      Kevin    8.0         2      no
+j      Jonas   19.0         1     yes
+
+11.5
+
+==========================================================================================================================================================================================================
+13. Summing Examination Attempts
+
+Write a Pandas program to calculate the sum of the examination attempts by the students.
+
+Sample Python dictionary data and list labels:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data, index = labels)
+print(sum(df['attempts']))
+
+OUTPUT
+-------
+19
+
+==========================================================================================================================================================================================================
+14. Calculating the Mean of Scores
+
+Write a Pandas program to calculate the mean of all students' scores. Data is stored in a dataframe.
+
+Sample Python dictionary data and list labels:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data, index = labels)
+print(df['score'].mean())
+
+
+OUTPUT
+-------
+13.5625
+
+==========================================================================================================================================================================================================
+15. Appending and Deleting a New Row
+
+Write a Pandas program to append a new row 'k' to data frame with given values for each column. Now delete the new row and return the original DataFrame.
+
+Sample Python dictionary data and list labels:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+Values for each column will be:
+name : "Suresh", score: 15.5, attempts: 1, qualify: "yes", label: "k"
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data, index = labels)
+
+df.loc['k'] = [1, 'Suresh', 'yes', 15.5]
+print("After adding new row")
+print(df)
+
+df = df.drop('k')
+print("\n After deleting the row")
+print(df)
+
+
+OUTPUT
+------
+After adding new row
+        name   score attempts qualify
+a  Anastasia    12.5        1     yes
+b       Dima     9.0        3      no
+c  Katherine    16.5        2     yes
+d      James     NaN        3      no
+e      Emily     9.0        2      no
+f    Michael    20.0        3     yes
+g    Matthew    14.5        1     yes
+h      Laura     NaN        1      no
+i      Kevin     8.0        2      no
+j      Jonas    19.0        1     yes
+k          1  Suresh      yes    15.5
+
+ After deleting the row
+        name score attempts qualify
+a  Anastasia  12.5        1     yes
+b       Dima   9.0        3      no
+c  Katherine  16.5        2     yes
+d      James   NaN        3      no
+e      Emily   9.0        2      no
+f    Michael  20.0        3     yes
+g    Matthew  14.5        1     yes
+h      Laura   NaN        1      no
+i      Kevin   8.0        2      no
+j      Jonas  19.0        1     yes
+
+
+==========================================================================================================================================================================================================
+16. Sorting the DataFrame by Multiple Columns
+
+Write a Pandas program to sort the DataFrame first by 'name' in descending order, then by 'score' in ascending order.
+
+Sample Python dictionary data and list labels:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+Values for each column will be:
+name : "Suresh", score: 15.5, attempts: 1, qualify: "yes", label: "k"
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data, index = labels)
+df.loc['k'] = ["Suresh", 15.5, 1, "yes"]
+print(df.sort_values(['name','score'],ascending=[False,True]))
+
+OUTPUT
+-------
+        name  score  attempts qualify
+k     Suresh   15.5         1     yes
+f    Michael   20.0         3     yes
+g    Matthew   14.5         1     yes
+h      Laura    NaN         1      no
+i      Kevin    8.0         2      no
+c  Katherine   16.5         2     yes
+j      Jonas   19.0         1     yes
+d      James    NaN         3      no
+e      Emily    9.0         2      no
+b       Dima    9.0         3      no
+a  Anastasia   12.5         1     yes
+
+==========================================================================================================================================================================================================
+17. Replacing Column Values (qualify)
+
+Write a Pandas program to replace the 'qualify' column contains the values 'yes' and 'no' with True and False.
+
+Sample Python dictionary data and list labels:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+SOLUTION
+----------
+import pandas as pd
+import numpy as np
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data, index = labels)
+df = df.replace(['yes','no'],['True','False'])
+print(df)
+
+OUTPUT
+------
+        name  score  attempts qualify
+a  Anastasia   12.5         1    True
+b       Dima    9.0         3   False
+c  Katherine   16.5         2    True
+d      James    NaN         3   False
+e      Emily    9.0         2   False
+f    Michael   20.0         3    True
+g    Matthew   14.5         1    True
+h      Laura    NaN         1   False
+i      Kevin    8.0         2   False
+j      Jonas   19.0         1    True
+
+==========================================================================================================================================================================================================
+18. Changing a Specific Name Value
+
+Write a Pandas program to change the name 'James' to 'Suresh' in name column of the DataFrame.
+
+Sample Python dictionary data and list labels:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+--> Want to change in entire dataframe
+
+df = pd.DataFrame(exam_data, index = labels)
+print("Before changes")
+print(df)
+print("\n After changes")
+print(df.replace('James','Suresh'))
+
+OR -> If want to change the specific column
+
+df['name'] = df['name'].replace('James','Suresh')
+
+SOLUTION
+---------
+Before changes
+        name  score  attempts qualify
+a  Anastasia   12.5         1     yes
+b       Dima    9.0         3      no
+c  Katherine   16.5         2     yes
+d      James    NaN         3      no
+e      Emily    9.0         2      no
+f    Michael   20.0         3     yes
+g    Matthew   14.5         1     yes
+h      Laura    NaN         1      no
+i      Kevin    8.0         2      no
+j      Jonas   19.0         1     yes
+
+ After changes
+        name  score  attempts qualify
+a  Anastasia   12.5         1     yes
+b       Dima    9.0         3      no
+c  Katherine   16.5         2     yes
+d     Suresh    NaN         3      no
+e      Emily    9.0         2      no
+f    Michael   20.0         3     yes
+g    Matthew   14.5         1     yes
+h      Laura    NaN         1      no
+i      Kevin    8.0         2      no
+j      Jonas   19.0         1     yes
+
+==========================================================================================================================================================================================================
+If you’re just removing one column and don’t need it anymore, this is perfectly fine. But if you also want to keep that column (like maybe for analysis or storing elsewhere), then df.pop('attempts') would be the way to go.
+
+19. Deleting a Column from the DataFrame
+
+Write a Pandas program to delete the 'attempts' column from the DataFrame.
+
+Sample DataFrame:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+SOLUTION
+--------
+import pandas as pd
+import numpy as np
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data, index = labels)
+df = df.drop(['attempts'],axis=1)
+print(df)
+
+df.pop('attempts')
+
+
+OUTPUT
+-------
+       name  score  attempts qualify
+a  Anastasia   12.5         1     yes
+b       Dima    9.0         3      no
+c  Katherine   16.5         2     yes
+d      James    NaN         3      no
+e      Emily    9.0         2      no
+f    Michael   20.0         3     yes
+g    Matthew   14.5         1     yes
+h      Laura    NaN         1      no
+i      Kevin    8.0         2      no
+j      Jonas   19.0         1     yes
+
+
+AFTER:
+        name  score qualify
+a  Anastasia   12.5     yes
+b       Dima    9.0      no
+c  Katherine   16.5     yes
+d      James    NaN      no
+e      Emily    9.0      no
+f    Michael   20.0     yes
+g    Matthew   14.5     yes
+h      Laura    NaN      no
+i      Kevin    8.0      no
+j      Jonas   19.0     yes
+
+==========================================================================================================================================================================================================
+df.loc['color'] = [...]	Adds a row labeled 'color'
+df['color'] = [...]	Adds a column named 'color' ✅
+
+20. Inserting a New Column
+
+Write a Pandas program to insert a new column in existing DataFrame.
+
+Sample Python dictionary data and list labels:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data, index = labels)
+color = ['Red','Blue','Orange','Red','White','White','Blue','Green','Green','Red']
+df['color'] = color
+print(df)
+
+
+OUTPUT
+-------
+        name  score  attempts qualify   color
+a  Anastasia   12.5         1     yes     Red
+b       Dima    9.0         3      no    Blue
+c  Katherine   16.5         2     yes  Orange
+d      James    NaN         3      no     Red
+e      Emily    9.0         2      no   White
+f    Michael   20.0         3     yes   White
+g    Matthew   14.5         1     yes    Blue
+h      Laura    NaN         1      no   Green
+i      Kevin    8.0         2      no   Green
+j      Jonas   19.0         1     yes     Red
+
+==========================================================================================================================================================================================================
+21. Iterating Over DataFrame Rows
+
+Write a Pandas program to iterate over rows in a DataFrame.
+
+Sample Python dictionary data and list labels:
+exam_data = [{'name':'Anastasia', 'score':12.5}, {'name':'Dima','score':9}, {'name':'Katherine','score':16.5}]
+
+Expected Output:
+Anastasia 12.5                                                         
+Dima 9.0                                                               
+Katherine 16.5
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+exam_data = [{'name':'Anastasia', 'score':12.5}, {'name':'Dima','score':9}, {'name':'Katherine','score':16.5}]
+
+df = pd.DataFrame(exam_data)
+print(df)
+print("\n After iterating:")
+for i,r in df.iterrows():
+    print(r['name'],r['score'])
+	
+OUTPUT
+-------
+        name  score
+0  Anastasia   12.5
+1       Dima    9.0
+2  Katherine   16.5
+
+ After iterating:
+Anastasia 12.5
+Dima 9.0
+Katherine 16.5
+
+==========================================================================================================================================================================================================
+22. Getting List from Column Headers
+
+Write a Pandas program to get list from DataFrame column headers.
+
+Sample Python dictionary data and list labels:
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+df = pd.DataFrame(exam_data, index = labels)
+print(df)
+print(list(df.columns.values))
+
+
+OUTPUT
+-------
+        name  score  attempts qualify
+a  Anastasia   12.5         1     yes
+b       Dima    9.0         3      no
+c  Katherine   16.5         2     yes
+d      James    NaN         3      no
+e      Emily    9.0         2      no
+f    Michael   20.0         3     yes
+g    Matthew   14.5         1     yes
+h      Laura    NaN         1      no
+i      Kevin    8.0         2      no
+j      Jonas   19.0         1     yes
+
+['name', 'score', 'attempts', 'qualify']
+
+==========================================================================================================================================================================================================
+23. Renaming DataFrame Columns
+
+Write a Pandas program to rename columns of a given DataFrame
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+d = {'col1': [1, 2, 3], 'col2': [4, 5, 6], 'col3': [7, 8, 9]}
+
+df = pd.DataFrame(d)
+print(df)
+print(df.rename(columns={'col1':'Column1','col2':'Column2','col3':'Column3'}))
+
+
+OUTPUT
+-------
+   col1  col2  col3
+0     1     4     7
+1     2     5     8
+2     3     6     9
+
+   Column1  Column2  Column3
+0        1        4        7
+1        2        5        8
+2        3        6        9
+
+==========================================================================================================================================================================================================
+24. Selecting Rows Based on Column Values
+
+Write a Pandas program to select rows from a given DataFrame based on values in some columns.
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+d = {'col1': [1, 4, 3, 4, 5], 'col2': [4, 5, 6, 7, 8], 'col3': [7, 8, 9, 0, 1]}
+
+df = pd.DataFrame(d)
+print(df)
+print(df[df['col1']==4])
+
+OR
+
+print(df.loc[df['col1'] == 4])
+
+OUTPUT
+-------
+   col1  col2  col3
+0     1     4     7
+1     4     5     8
+2     3     6     9
+3     4     7     0
+4     5     8     1
+
+   col1  col2  col3
+1     4     5     8
+3     4     7     0
+
+   col1  col2  col3
+1     4     5     8
+3     4     7     0
+
+==========================================================================================================================================================================================================
+25. Changing the Order of DataFrame Columns
+
+Write a Pandas program to change the order of a DataFrame columns.
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+d = {'col1': [1, 4, 3, 4, 5], 'col2': [4, 5, 6, 7, 8], 'col3': [7, 8, 9, 0, 1]}
+
+df = pd.DataFrame(d)
+print(df)
+print("\n")
+print(df[['col3','col2','col1']])
+
+OUTPUT
+-------
+   col1  col2  col3
+0     1     4     7
+1     4     5     8
+2     3     6     9
+3     4     7     0
+4     5     8     1
+
+
+   col3  col2  col1
+0     7     4     1
+1     8     5     4
+2     9     6     3
+3     0     7     4
+4     1     8     5
+=========================================================================================================================================================================================================
+26. Add One Row to a DataFrame
+
+Write a Pandas program to add one row in an existing DataFrame.
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+d = {'col1': [1, 4, 3, 4, 5], 'col2': [4, 5, 6, 7, 8], 'col3': [7, 8, 9, 0, 1]}
+df = pd.DataFrame(d)
+print(df)
+df1 = {'col1':10, 'col2':11, 'col3':12}
+df = df._append(df1, ignore_index=True)
+print("\n After adding new row")
+print(df)
+
+
+OUTPUT
+-------
+   col1  col2  col3
+0     1     4     7
+1     4     5     8
+2     3     6     9
+3     4     7     0
+4     5     8     1
+
+ After adding new row
+   col1  col2  col3
+0     1     4     7
+1     4     5     8
+2     3     6     9
+3     4     7     0
+4     5     8     1
+5    10    11    12
+
+=========================================================================================================================================================================================================
+27. Write DataFrame to CSV (Tab Separator)
+
+Write a Pandas program to write a DataFrame to CSV file using tab separator.
+
+SOLUTION
+--------
+import pandas as pd
+import numpy as np
+
+d = {'col1': [1, 4, 3, 4, 5], 'col2': [4, 5, 6, 7, 8], 'col3': [7, 8, 9, 0, 1]}
+df = pd.DataFrame(d)
+print(df)
+df.to_csv('new_file.csv', sep = '\t', index=False)
+new_df = pd.read_csv('new_file.csv')
+print(new_df)
+
+=========================================================================================================================================================================================================
+28. City Wise Count
+
+Write a Pandas program to count city wise number of people from a given of data set (city, name of the person).
+
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+df = pd.DataFrame({'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+'city': ['California', 'Los Angeles', 'California', 'California', 'California', 'Los Angeles', 'Los Angeles', 'Georgia', 'Georgia', 'Los Angeles']})
+print(df)
+print("\n After changes")
+group = df.groupby('city').size().reset_index(name = "Number of people")
+print(group)
+
+OUTPUT
+-------
+        name         city
+0  Anastasia   California
+1       Dima  Los Angeles
+2  Katherine   California
+3      James   California
+4      Emily   California
+5    Michael  Los Angeles
+6    Matthew  Los Angeles
+7      Laura      Georgia
+8      Kevin      Georgia
+9      Jonas  Los Angeles
+
+ After changes
+          city  Number of people
+0   California                 4
+1      Georgia                 2
+2  Los Angeles                 4
+
+=========================================================================================================================================================================================================
+29. Delete Rows by Column Value
+
+Write a Pandas program to delete DataFrame row(s) based on given column value.
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+d = {'col1': [1, 4, 3, 4, 5], 'col2': [4, 5, 6, 7, 8], 'col3': [7, 8, 9, 0, 1]}
+df = pd.DataFrame(data=d)
+
+df1 = df[df['col2']!=5]
+print(df1)
+
+OUTPUT
+-------
+   col1  col2  col3
+0     1     4     7
+2     3     6     9
+3     4     7     0
+4     5     8     1
+
+=========================================================================================================================================================================================================
+30. Widen Output Display
+
+Write a Pandas program to widen output display to see more columns.
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+
+d = {'col1': [1, 4, 3, 4, 5], 'col2': [4, 5, 6, 7, 8], 'col3': [7, 8, 9, 0, 1]}
+df = pd.DataFrame(data=d)
+pd.set_option("display.max_rows" ,500)
+pd.set_option("display.max_columns" ,500)
+pd.set_option("display.width" ,1000)
+print(df)
+
+OUTPUT
+------
+   col1  col2  col3
+0     1     4     7
+1     4     5     8
+2     3     6     9
+3     4     7     0
+4     5     8     1
+=========================================================================================================================================================================================================
+31. Select Row by Integer Index
+
+Write a Pandas program to select a row of series/dataframe by given integer index.
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+d = {'col1': [1, 4, 3, 4, 5], 'col2': [4, 5, 6, 7, 8], 'col3': [7, 8, 9, 0, 1]}
+df = pd.DataFrame(data=d)
+print(df)
+print(df.iloc[[2]])
+
+
+OUTPUT
+-------
+   col1  col2  col3
+0     1     4     7
+1     4     5     8
+2     3     6     9
+3     4     7     0
+4     5     8     1
+
+   col1  col2  col3
+2     3     6     9
+
+=========================================================================================================================================================================================================
+32. Replace NaN with Zeros
+
+Write a Pandas program to replace all the NaN values with Zero's in a column of a dataframe.
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+df = pd.DataFrame(exam_data)
+print(df)
+result = df.fillna(0)
+print("\nAfter changing: \n", result)
+
+
+OUTPUT
+-------
+        name  score  attempts qualify
+0  Anastasia   12.5         1     yes
+1       Dima    9.0         3      no
+2  Katherine   16.5         2     yes
+3      James    NaN         3      no
+4      Emily    9.0         2      no
+5    Michael   20.0         3     yes
+6    Matthew   14.5         1     yes
+7      Laura    NaN         1      no
+8      Kevin    8.0         2      no
+9      Jonas   19.0         1     yes
+
+After changing: 
+         name  score  attempts qualify
+0  Anastasia   12.5         1     yes
+1       Dima    9.0         3      no
+2  Katherine   16.5         2     yes
+3      James    0.0         3      no
+4      Emily    9.0         2      no
+5    Michael   20.0         3     yes
+6    Matthew   14.5         1     yes
+7      Laura    0.0         1      no
+8      Kevin    8.0         2      no
+9      Jonas   19.0         1     yes
+
+=========================================================================================================================================================================================================
+33. Convert Index to Column
+
+Write a Pandas program to convert index in a column of the given dataframe.
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5,9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+df = pd.DataFrame(exam_data)
+print("Original DataFrame")
+print(df)
+df.reset_index(level=0, inplace = True)
+print(df)
+print(df.to_string(index= False))
+
+OUTPUT
+-------
+Original DataFrame
+        name  score  attempts qualify
+0  Anastasia   12.5         1     yes
+1       Dima    9.0         3      no
+2  Katherine   16.5         2     yes
+3      James    NaN         3      no
+4      Emily    9.0         2      no
+5    Michael   20.0         3     yes
+6    Matthew   14.5         1     yes
+7      Laura    NaN         1      no
+8      Kevin    8.0         2      no
+9      Jonas   19.0         1     yes
+   index       name  score  attempts qualify
+0      0  Anastasia   12.5         1     yes
+1      1       Dima    9.0         3      no
+2      2  Katherine   16.5         2     yes
+3      3      James    NaN         3      no
+4      4      Emily    9.0         2      no
+5      5    Michael   20.0         3     yes
+6      6    Matthew   14.5         1     yes
+7      7      Laura    NaN         1      no
+8      8      Kevin    8.0         2      no
+9      9      Jonas   19.0         1     yes
+ index      name  score  attempts qualify
+     0 Anastasia   12.5         1     yes
+     1      Dima    9.0         3      no
+     2 Katherine   16.5         2     yes
+     3     James    NaN         3      no
+     4     Emily    9.0         2      no
+     5   Michael   20.0         3     yes
+     6   Matthew   14.5         1     yes
+     7     Laura    NaN         1      no
+     8     Kevin    8.0         2      no
+     9     Jonas   19.0         1     yes
+
+
+=========================================================================================================================================================================================================
+34. Set Value in Cell by Index
+
+Write a Pandas program to set a given value for particular cell in DataFrame using index value.
+
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+df = pd.DataFrame(exam_data)
+print("Before changing the value\n",df)
+
+
+df._set_value(8, "score", 10.2)
+print("\nAfter changing the value\n", df)
+
+
+OUTPUT
+-------
+Before changing the value
+         name  score  attempts qualify
+0  Anastasia   12.5         1     yes
+1       Dima    9.0         3      no
+2  Katherine   16.5         2     yes
+3      James    NaN         3      no
+4      Emily    9.0         2      no
+5    Michael   20.0         3     yes
+6    Matthew   14.5         1     yes
+7      Laura    NaN         1      no
+8      Kevin    8.0         2      no
+9      Jonas   19.0         1     yes
+
+After changing the value
+         name  score  attempts qualify
+0  Anastasia   12.5         1     yes
+1       Dima    9.0         3      no
+2  Katherine   16.5         2     yes
+3      James    NaN         3      no
+4      Emily    9.0         2      no
+5    Michael   20.0         3     yes
+6    Matthew   14.5         1     yes
+7      Laura    NaN         1      no
+8      Kevin   10.2         2      no
+9      Jonas   19.0         1     yes
+
+=========================================================================================================================================================================================================
+35. Count NaN Values
+
+Write a Pandas program to count the NaN values in one or more columns in DataFrame.
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+df = pd.DataFrame(exam_data)
+print(df)
+
+print("\nNumber of NaN values: ",df.isnull().values.sum())
+
+
+OUTPUT
+-------
+        name  score  attempts qualify
+0  Anastasia   12.5         1     yes
+1       Dima    9.0         3      no
+2  Katherine   16.5         2     yes
+3      James    NaN         3      no
+4      Emily    9.0         2      no
+5    Michael   20.0         3     yes
+6    Matthew   14.5         1     yes
+7      Laura    NaN         1      no
+8      Kevin    8.0         2      no
+9      Jonas   19.0         1     yes
+
+Number of NaN values:  2
+
+===================================================================================================================================================================================================================================
+
+36. Drop Rows from DataFrame
+
+Write a Pandas program to drop a list of rows from a specified DataFrame.
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+d = {'col1': [1, 4, 3, 4, 5], 'col2': [4, 5, 6, 7, 8], 'col3': [7, 8, 9, 0, 1]}
+df = pd.DataFrame(d)
+print(df.drop(df.index[[2,4]]))
+
+OUTPUT
+-------
+Before changes:
+     col1  col2  col3
+0     1     4     7
+1     4     5     8
+2     3     6     9
+3     4     7     0
+4     5     8     1
+After changes:
+     col1  col2  col3
+0     1     4     7
+1     4     5     8
+3     4     7     0
+
+===================================================================================================================================================================================================================================
+37. Reset DataFrame Index
+
+Write a Pandas program to reset index in a given DataFrame.
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+df = pd.DataFrame(exam_data)
+print("Original dataframe\n ",df)
+df.drop(df.index[[0,1]],inplace=True)
+print("\nAfter dropping first two rows:\n ", df)
+print("\n After resetting the index:\n ",df.reset_index())
+
+OUTPUT
+-------
+Original dataframe
+          name  score  attempts qualify
+0  Anastasia   12.5         1     yes
+1       Dima    9.0         3      no
+2  Katherine   16.5         2     yes
+3      James    NaN         3      no
+4      Emily    9.0         2      no
+5    Michael   20.0         3     yes
+6    Matthew   14.5         1     yes
+7      Laura    NaN         1      no
+8      Kevin    8.0         2      no
+9      Jonas   19.0         1     yes
+
+After dropping first two rows:
+          name  score  attempts qualify
+2  Katherine   16.5         2     yes
+3      James    NaN         3      no
+4      Emily    9.0         2      no
+5    Michael   20.0         3     yes
+6    Matthew   14.5         1     yes
+7      Laura    NaN         1      no
+8      Kevin    8.0         2      no
+9      Jonas   19.0         1     yes
+
+ After resetting the index:
+     index       name  score  attempts qualify
+0      2  Katherine   16.5         2     yes
+1      3      James    NaN         3      no
+2      4      Emily    9.0         2      no
+3      5    Michael   20.0         3     yes
+4      6    Matthew   14.5         1     yes
+5      7      Laura    NaN         1      no
+6      8      Kevin    8.0         2      no
+7      9      Jonas   19.0         1     yes
+
+===================================================================================================================================================================================================================================
+39. Combine Two Series
+
+Write a Pandas program to combining two series into a DataFrame.
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+s1 = pd.Series(['100', '200', 'python', '300.12', '400'])
+s2 = pd.Series(['10', '20', 'php', '30.12', '40'])
+print("Data Series:")
+df = pd.concat([s1,s2],axis=1)
+print(df)
+
+OUTPUT
+-------
+Data Series:
+        0      1
+0     100     10
+1     200     20
+2  python    php
+3  300.12  30.12
+4     400     40
+
+===================================================================================================================================================================================================================================
+40. Shuffle DataFrame Rows
+
+Write a Pandas program to shuffle a given DataFrame rows.
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+df = pd.DataFrame(exam_data)
+print("Original DataFrame:")
+print(df)
+df = df.sample(frac=1)
+print("\nNew DataFrame:")
+print(df)
+
+OUTPUT
+-------
+Original DataFrame:
+        name  score  attempts qualify
+0  Anastasia   12.5         1     yes
+1       Dima    9.0         3      no
+2  Katherine   16.5         2     yes
+3      James    NaN         3      no
+4      Emily    9.0         2      no
+5    Michael   20.0         3     yes
+6    Matthew   14.5         1     yes
+7      Laura    NaN         1      no
+8      Kevin    8.0         2      no
+9      Jonas   19.0         1     yes
+
+New DataFrame:
+        name  score  attempts qualify
+4      Emily    9.0         2      no
+9      Jonas   19.0         1     yes
+7      Laura    NaN         1      no
+1       Dima    9.0         3      no
+6    Matthew   14.5         1     yes
+0  Anastasia   12.5         1     yes
+3      James    NaN         3      no
+8      Kevin    8.0         2      no
+5    Michael   20.0         3     yes
+2  Katherine   16.5         2     yes
+
+===================================================================================================================================================================================================================================
+41. String to Datetime
+
+Write a Pandas program to convert DataFrame column type from string to datetime.
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+s = pd.Series(['3/11/2000', '3/12/2000', '3/13/2000'])
+print("String Date:")
+print(s)
+r = pd.to_datetime(pd.Series(s))
+df = pd.DataFrame(r)
+print("\nAfter changing:\n ",df)
+
+OUTPUT
+-------
+String Date:
+0    3/11/2000
+1    3/12/2000
+2    3/13/2000
+dtype: object
+
+After changing:
+             0
+0 2000-03-11
+1 2000-03-12
+2 2000-03-13
+
+===================================================================================================================================================================================================================================
+42. Rename Specific Column
+
+Write a Pandas program to rename a specific column name in a given DataFrame.
+
+SOLUTION
+---------
+import pandas as pd
+d = {'col1': [1, 2, 3], 'col2': [4, 5, 6], 'col3': [7, 8, 9]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+print(df.rename(columns={"col2":"column2"}))
+
+OUTPUT
+-------
+Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     2     5     8
+2     3     6     9
+   col1  column2  col3
+0     1        4     7
+1     2        5     8
+2     3        6     9
+
+===================================================================================================================================================================================================================================
+43. Column to List
+
+Write a Pandas program to get a list of a specified column of a DataFrame.
+
+import pandas as pd
+d = {'col1': [1, 2, 3], 'col2': [4, 5, 6], 'col3': [7, 8, 9]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+r = df.iloc[:,1]
+print("Col2 of the DataFrame to list:")
+print(list(r))
+
+
+OR
+
+print("\nAnother method \n",df['col2'].tolist())
+
+OUTPUT
+-------
+Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     2     5     8
+2     3     6     9
+Col2 of the DataFrame to list:
+[4, 5, 6]
+
+Another method 
+ [4, 5, 6]
+
+
+===================================================================================================================================================================================================================================
+45. Row with Maximum Value
+
+Write a Pandas program to find the row for where the value of a given column is maximum.
+
+SOLUTION
+---------
+import pandas as pd
+d = {'col1': [1, 2, 3, 4, 7], 'col2': [4, 5, 6, 9, 5], 'col3': [7, 8, 12, 1, 11]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+df = df.iloc[:,0:3]
+print(df.max())
+
+
+OR
+
+print("Row where col1 has maximum value:")
+print(df['col1'].argmax())
+print("Row where col2 has maximum value:")
+print(df['col2'].argmax())
+print("Row where col3 has maximum value:")
+print(df['col3'].argmax())
+
+OUTPUT
+-------
+Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     2     5     8
+2     3     6    12
+3     4     9     1
+4     7     5    11
+col1     7
+col2     9
+col3    12
+dtype: int64
+
+===================================================================================================================================================================================================================================
+46. Check Column Presence
+
+Write a Pandas program to check whether a given column is present in a DataFrame or not.
+
+SOLUTION
+---------
+import pandas as pd
+d = {'col1': [1, 2, 3, 4, 7], 'col2': [4, 5, 6, 9, 5], 'col3': [7, 8, 12, 1, 11]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+
+if "col4" in df.columns:
+    print("col4 is present in the dataframe")
+else:
+    print("col4 is not present in the dataframe")
+if "col1" in df.columns:
+    print("col1 is present in the dataframe")
+else:
+    print("col1 is not present in the dataframe")
+	
+OUTPUT
+-------
+Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     2     5     8
+2     3     6    12
+3     4     9     1
+4     7     5    11
+col4 is not present in the dataframe
+col1 is present in the dataframe
+
+===================================================================================================================================================================================================================================
+47. Get Row Value
+
+Write a Pandas program to get the specified row value of a given DataFrame.
+
+SOLUTION
+---------
+import pandas as pd
+d = {'col1': [1, 2, 3, 4, 7], 'col2': [4, 5, 6, 9, 5], 'col3': [7, 8, 12, 1, 11]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+print("Value of Row1")
+print(df.iloc[0])
+print("Value of Row4")
+print(df.iloc[3])
+    
+OUTPUT
+-------
+Original DataFrame
+   col1  col2  col3
+0     1     4     7
+1     2     5     8
+2     3     6    12
+3     4     9     1
+4     7     5    11
+Value of Row1
+col1    1
+col2    4
+col3    7
+Name: 0, dtype: int64
+Value of Row4
+col1    4
+col2    9
+col3    1
+Name: 3, dtype: int64
+
+===================================================================================================================================================================================================================================
+
+48. Get Column DataTypes
+
+Write a Pandas program to get the datatypes of columns of a DataFrame.
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+df = pd.DataFrame(exam_data)
+print("Original DataFrame:")
+print(df)
+print("Data types of the columns of the said DataFrame:")
+print(df.dtypes)
+
+OUTPUT
+-------
+Original DataFrame:
+        name  score  attempts qualify
+0  Anastasia   12.5         1     yes
+1       Dima    9.0         3      no
+2  Katherine   16.5         2     yes
+3      James    NaN         3      no
+4      Emily    9.0         2      no
+5    Michael   20.0         3     yes
+6    Matthew   14.5         1     yes
+7      Laura    NaN         1      no
+8      Kevin    8.0         2      no
+9      Jonas   19.0         1     yes
+Data types of the columns of the said DataFrame:
+name         object
+score       float64
+attempts      int64
+qualify      object
+dtype: object
+
+===================================================================================================================================================================================================================================
+49. Append Data to Empty DataFrame
+
+Write a Pandas program to append data to an empty DataFrame.
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+df = pd.DataFrame()
+print("Original DataFrame:")
+print(df)
+data = pd.DataFrame({"col1":range(3),"col2":range(3)})
+print("After appending some data:")
+print(pd.DataFrame(data))
+
+OUTPUT
+-------
+Original DataFrame:
+Empty DataFrame
+Columns: []
+Index: []
+After appending some data:
+   col1  col2
+0     0     0
+1     1     1
+2     2     2
+
+===================================================================================================================================================================================================================================
+50. Sort DataFrame by Multiple Columns
+
+Write a Pandas program to sort a given DataFrame by two or more columns.
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9, 16.5, np.nan, 9, 20, 14.5, np.nan, 8, 19],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+df = pd.DataFrame(exam_data)
+print(df.sort_values(["name","attempts"]))
+
+OUTPUT
+-------
+        name  score  attempts qualify
+0  Anastasia   12.5         1     yes
+1       Dima    9.0         3      no
+4      Emily    9.0         2      no
+3      James    NaN         3      no
+9      Jonas   19.0         1     yes
+2  Katherine   16.5         2     yes
+8      Kevin    8.0         2      no
+7      Laura    NaN         1      no
+6    Matthew   14.5         1     yes
+5    Michael   20.0         3     yes
+
+===================================================================================================================================================================================================================================
+51. Convert Column DataType
+
+Write a Pandas program to convert the datatype of a given column (floats to ints).
+
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+exam_data = {'name': ['Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'],
+        'score': [12.5, 9.1, 16.5, 12.77, 9.21, 20.22, 14.5, 11.34, 8.8, 19.13],
+        'attempts': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+        'qualify': ['yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes']}
+df = pd.DataFrame(exam_data)
+print("Original DataFrame:")
+print(df)
+print("\nData types of the columns of the said DataFrame:")
+print(df.dtypes)
+print("\nNow change the Data type of 'score' column from float to int:")
+df['score'] = df['score'].astype(int)
+print("\nData types of the columns of the DataFrame now:")
+print(df.dtypes)
+
+OUTPUT
+-------
+Original DataFrame:
+        name  score  attempts qualify
+0  Anastasia  12.50         1     yes
+1       Dima   9.10         3      no
+2  Katherine  16.50         2     yes
+3      James  12.77         3      no
+4      Emily   9.21         2      no
+5    Michael  20.22         3     yes
+6    Matthew  14.50         1     yes
+7      Laura  11.34         1      no
+8      Kevin   8.80         2      no
+9      Jonas  19.13         1     yes
+
+Data types of the columns of the said DataFrame:
+name         object
+score       float64
+attempts      int64
+qualify      object
+dtype: object
+
+Now change the Data type of 'score' column from float to int:
+
+Data types of the columns of the DataFrame now:
+name        object
+score        int64
+attempts     int64
+qualify     object
+dtype: object
+
+===================================================================================================================================================================================================================================
+52. Remove Infinite Values
+
+Write a Pandas program to remove infinite values from a given DataFrame.
+
+SOLUTION
+---------
+import pandas as pd
+import numpy as np
+df = pd.DataFrame([1000, 2000, 3000, -4000, np.inf, -np.inf])
+print("Original DataFrame:\n",df)
+df = df.replace([np.inf,-np.inf],np.nan)
+print("\n After changes\n",df)
+
+OUTPUT
+-------
+Original DataFrame:
+         0
+0  1000.0
+1  2000.0
+2  3000.0
+3 -4000.0
+4     inf
+5    -inf
+
+ After changes
+         0
+0  1000.0
+1  2000.0
+2  3000.0
+3 -4000.0
+4     NaN
+5     NaN
+===================================================================================================================================================================================================================================
+53. Insert Column at Specific Index
+
+Write a Pandas program to insert a given column at a specific column index in a DataFrame.
+
+SOLUTION
+---------
+import pandas as pd
+d = {'col2': [4, 5, 6, 9, 5], 'col3': [7, 8, 12, 1, 11]}
+df = pd.DataFrame(data=d)
+print("Original DataFrame")
+print(df)
+new_col = [1,2,3,4,5]
+idx = 0
+df.insert(loc=idx, column = "col1", value=new_col)
+print(df)
+
+OUTPUT
+-------
+Original DataFrame
+   col2  col3
+0     4     7
+1     5     8
+2     6    12
+3     9     1
+4     5    11
+   col1  col2  col3
+0     1     4     7
+1     2     5     8
+2     3     6    12
+3     4     9     1
+4     5     5    11
+
+===================================================================================================================================================================================================================================
+54. Convert List of Lists into DataFrame
+
+Write a Pandas program to convert a given list of lists into a Dataframe.
+
+SOLUTION
+---------
+import pandas as pd
+my_lists = [['col1', 'col2'], [2, 4], [1, 3]]
+
+headers = my_lists.pop(0)
+df = pd.DataFrame(my_lists, columns=headers)
+print(df)
+
+OUTPUT
+-------
+   col1  col2
+0     2     4
+1     1     3
+
+===================================================================================================================================================================================================================================
+
+

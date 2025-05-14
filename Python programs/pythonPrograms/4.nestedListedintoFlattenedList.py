@@ -13,4 +13,3 @@ flat_list = flatten_list(nested_list)
 print("Flattened list:", flat_list)
 
 
-new_list =
