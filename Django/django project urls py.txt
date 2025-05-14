@@ -1,0 +1,52 @@
+
+
+5. What is the role of the urls.py file in a Django project?
+In Django, the urls.py file plays a key role in routing and mapping URLs to views. Each app typically has its own urls.py for modular URL handling.
+
+Global URLs vs. App URLs:
+-------------------------
+Global (project.urls): The project's main urls.py generally includes paths to various apps.
+Local (app.urls): Each app's urls.py handles its specific URL mappings.
+
+
+URL Patterns:
+-------------
+Every urls.py file uses URL patterns, defined with path() or re_path().
+
+path(): For simple text-based URLs.
+re_path(): For complex URLs using regular expressions.
+
+
+Passing URLs to Views
+----------------------
+The path() function's view argument typically points to the corresponding view function. You can also send additional data, like query parameters or URL segments.
+
+Example: path():
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('articles/2023/', views.special_case_2003),
+]
+
+In the example, the URL pattern directs any request to /articles/2023/ to the special_case_2003 view.
+
+
+
+Example: path() with Parameters:
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('articles/<int:year>/', views.year_archive),
+]
+
+Here, the URL pattern sends any matching URL (like /articles/2022/) and the extracted year to the year_archive view.
+
+
+
+URL Handling Best Practices:
+----------------------------
+Consistency: Follow a clear and standardized URL structure.
+Namespacing: Employ app namespaces to avoid URL name clashes.
+Template Integration: Use reverse() and redirect() to decouple URLs from views.

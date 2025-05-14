@@ -57,12 +57,17 @@ json
 
 📌 Real-Life Example: Viewing an Order in Django
 Imagine you have an e-commerce platform where customers place orders. When a user visits https://example.com/orders/1/, the request-response cycle follows:
-
-1️⃣ User visits /orders/1/ in their browser. 2️⃣ Django URL dispatcher finds OrderDetailView based on urls.py. 3️⃣ The view queries the database to retrieve order details. 4️⃣ Django sends a JSON response back to the browser. 5️⃣ The browser displays the order details to the user.
+1.User visits /orders/1/ in their browser. 
+2.Django URL dispatcher finds OrderDetailView based on urls.py. 
+3.The view queries the database to retrieve order details. 
+4.Django sends a JSON response back to the browser. 
+5.The browser displays the order details to the user.
 
 🚀 Effect: ✔ The user retrieves their order details automatically using Django’s request-response cycle.
 
 📌 Key Takeaways
-✔ Django receives a request, finds the correct URL pattern, calls the view, and returns a response. ✔ Views handle logic, querying the database and preparing responses. ✔ Responses are returned as HTML (for web apps) or JSON (for APIs). ✔ Django ensures a structured request-response cycle, making applications scalable.
+✔ Django receives a request, finds the correct URL pattern, calls the view, and returns a response. 
+✔ Views handle logic, querying the database and preparing responses. 
+✔ Responses are returned as HTML (for web apps) or JSON (for APIs). 
+✔ Django ensures a structured request-response cycle, making applications scalable.
 
-🚀 Next steps: Learning about Django Middleware, which processes requests before reaching views!

@@ -114,3 +114,5 @@ read doc django-filters -->  https://django-filter.readthedocs.io/en/stable/
 select related and prefetch related in detail
 middleware
 mixins
+django orm fully
+django select_related and prefetch_related

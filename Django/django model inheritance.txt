@@ -1,0 +1,73 @@
+
+
+Describe the concept of model inheritance in Django.
+Model inheritance in Django allows you to create new models based on existing ones, leading to efficient code reuse and structured data management.
+
+
+
+Model Inheritance Types:
+------------------------
+Abstract Base Classes Inheritance: The parent model (defined as abstract) serves purely as a template and isn't used to create any database tables on its own.
+Multi-Table Inheritance: This approach creates separate database tables for the parent model and each of its child models, maintaining a one-to-one relationship.
+
+
+Common Inheritance Patterns:
+---------------------------
+STI - Single Table Inheritance
+MTI - Multi-Table Inheritance
+Concrete Classes vs. Abstract Base Classes
+
+Inheritance in Relational Databases:
+In relational databases, inheritance is handled via table relationships. Django supports both the STI and MTI strategies.
+
+
+
+Code Example: Abstract Base Class
+---------------------------------
+Here is the Django code:
+
+from django.db import models
+
+class CommonInfo(models.Model):
+    # This acts as an abstract base class.
+    name = models.CharField(max_length=100)
+    age = models.PositiveIntegerField()
+
+    class Meta:
+        # Set 'abstract' to True to make this an abstract base class.
+        abstract = True
+
+
+class Student(CommonInfo):
+    # Inherits fields 'name' and 'age' from CommonInfo.
+    student_id = models.CharField(primary_key=True, max_length=10)
+	
+The CommonInfo model here is an abstract base class. It's not directly instantiated in the database but provides fields like name and age for any model that inherits from it.
+
+The Student model inherits from CommonInfo and therefore shares its fields in addition to its own, like student_id.
+
+The generated SQL for Student will include fields name, age, and student_id.
+
+
+
+
+Code Example: Multi-Table Inheritance :
+--------------------------------------
+Here is the Django code:
+
+from django.db import models
+
+class Place(models.Model):
+    name = models.CharField(max_length=50)
+    address = models.CharField(max_length=80)
+
+class Restaurant(Place):
+    serves_hot_dogs = models.BooleanField(default=False)
+    serves_pizza = models.BooleanField(default=False)
+	
+	
+This results in two tables: one for Place with fields name and address, and another for Restaurant with additional fields serves_hot_dogs and serves_pizza. The Restaurant table has a one-to-one relationship with the Place table.
+
+
+
+(need more infor on this, like sti, mti, concrete classes and abstract classes)

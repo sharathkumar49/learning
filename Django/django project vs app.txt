@@ -1,0 +1,153 @@
+
+Django project vs app:
+----------------------
+
+What is a Django project and how is it different from a Django app?
+Django Project is the high-level umbrella under which you build a web application. It encompasses multiple components such as settings, URLs, and can host several apps.
+
+In contrast, a Django App is a standalone module designed to serve a specific functionality or business area, following the concept of "application" as a group of related features.
+
+Key Components of a Django Project:
+-----------------------------------  
+Settings: Configuration options for the project and its apps.
+URLs: Defines the endpoint mappings using urls.py.
+WSGI/ASGI: Entry points for the web server to serve the project, handling HTTP and WebSocket requests, respectively.
+
+Key Components of a Django App
+Models: Data layer, defining data structures using models.py.
+Views: Business logic and request-response handler.
+Templates (optional): Presentation layer, housing HTML and rendering logic.
+URLs: Endpoint mappings for the app, known as "scoped URLs".
+
+
+Code Example: Project and App Structure
+Here is the folder structure.
+
+myproject/     # Django Project
+    manage.py  # Project Management Utility
+    myproject/ # Project Directory
+        settings.py
+        urls.py
+        wsgi.py
+        asgi.py
+    myapp1/    # Django App 1
+    myapp2/    # Django App 2
+    ...
+	
+	
+It shows the typical structure where a project contains one or more apps.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Django Project and App Overview
+-------------------------------
+In Django, a project is the overarching container for your web application, while an app is a modular component within the project that performs a specific function or feature. A project can contain multiple apps, and apps can be reused across different projects.
+
+
+Django Project Structure:
+-------------------------
+When you create a Django project using the django-admin startproject command, it generates a directory structure like this:
+
+
+myproject/
+    manage.py
+    myproject/
+        __init__.py
+        settings.py
+        urls.py
+        asgi.py
+        wsgi.py
+
+
+Key Components of a Project
+---------------------------
+1. manage.py:
+   - A command-line utility to interact with the project.
+   - Used for tasks like running the development server, applying migrations, and creating apps.
+
+2. settings.py:
+   - The main configuration file for the project.
+   - Contains settings like database configuration, installed apps, middleware, templates, and more.
+
+3. urls.py:
+   - The URL configuration file for the project.
+   - Maps URLs to views using Django's URL dispatcher.
+
+4. asgi.py and wsgi.py:
+   - Entry points for ASGI (Asynchronous Server Gateway Interface) and WSGI (Web Server Gateway Interface) servers.
+   - Used to deploy the project.
+
+5. __init__.py:
+   - Marks the directory as a Python package.
+
+
+
+Django App Structure:
+---------------------
+When you create an app using the python manage.py startapp command, it generates a directory structure like this:
+
+
+myapp/
+    __init__.py
+    admin.py
+    apps.py
+    migrations/
+        __init__.py
+    models.py
+    tests.py
+    views.py
+
+
+Key Components of an App:
+------------------------
+1. __init__.py:
+   - Marks the directory as a Python package.
+
+2. admin.py:
+   - Used to register models with the Django admin interface.
+
+3. apps.py:
+   - Contains the app configuration class (e.g., CoreConfig in your example).
+   - Used to define app-specific settings and initialization code.
+
+4. migrations/:
+   - Contains migration files for database schema changes.
+   - Each migration file represents a change to the database schema.
+
+5. models.py:
+   - Defines the data models (database tables) for the app.
+
+6. tests.py:
+   - Contains unit tests for the app.
+
+7. views.py:
+   - Contains the logic for handling HTTP requests and returning responses.
+
+
+
+How Projects and Apps Work Together:
+- A project is a collection of settings and configurations that tie together multiple apps.
+- An app is a modular component that provides specific functionality (e.g., user authentication, blog, e-commerce).
+- Apps are added to the INSTALLED_APPS list in the project's settings.py to make them part of the project.
+
+
+
+Brief About Components in Your Example
+In your apps.py file, the CoreConfig class is defined for the core app. Here's how it fits into the project:
+
+1. default_auto_field:
+   - Specifies the default primary key type for models in the app.
+
+2. name:
+   - Specifies the full Python path to the app (core).
+
+3. ready():
+   - This method is used to run initialization code when the app is loaded.
+   - In your case, it imports core.signals.handlers, which likely contains signal handlers for the app.
+
+
+
+ Summary
+- A Django project is the overall container for your web application, while an app is a modular component that provides specific functionality.
+- The project structure includes files like settings.py, urls.py, and manage.py, while the app structure includes files like models.py, views.py, and apps.py.
+- The apps.py file in your example is used to configure the core app and initialize signal handlers when the app is loaded.

@@ -1,0 +1,77 @@
+
+
+Explain the difference between a ForeignKey and a ManyToManyField in Django models
+In Django models, relationships can be established using either a ForeignKey or a ManyToManyField, each serving a unique purpose.
+
+ForeignKey:
+-----------
+A ForeignKey sets up a many-to-one relationship. It's used when each record in the current model needs to be associated with exactly one record in another model.
+
+Example:
+A Book has one Publisher.
+This is represented by a ForeignKey in the Book model pointing to the Publisher model.
+
+Code Example (ForeignKey):
+from django.db import models
+
+class Publisher(models.Model):
+    name = models.CharField(max_length=100)
+
+class Book(models.Model):
+    title = models.CharField(max_length=100)
+    publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
+
+
+
+
+ManyToManyField:
+----------------
+A ManyToManyField is used when a record in one model can be associated with multiple records in another, and vice versa.
+
+Many-to-Many Relationship:
+It facilitates a many-to-many relationship where multiple records in one model can be linked to multiple records in another.
+
+Example:
+A Student can enroll in multiple Courses, and a Course can have multiple students enrolled.
+This many-to-many relationship is represented using a ManyToManyField with an intermediary table.
+
+Code Example (ManyToManyField):
+from django.db import models
+
+class Course(models.Model):
+    name = models.CharField(max_length=100)
+
+class Student(models.Model):
+    name = models.CharField(max_length=100)
+    courses = models.ManyToManyField(Course)
+	
+	
+	
+ManyToManyField with Additional Fields (through):
+-------------------------------------------------
+Sometimes, the relationship between the two models needs to have additional fields. ManyToManyField allows you to specify a custom intermediary model using the through parameter.
+
+Here is an example:
+You have a Music Library and want to associate Songs with Playlists, but you also want to track the order of the songs in each playlist.
+
+You would use a model like PlaylistSong as the intermediary model.
+
+class Playlist(models.Model):
+    name = models.CharField(max_length=100)
+
+class Song(models.Model):
+    title = models.CharField(max_length=100)
+    playlists = models.ManyToManyField(Playlist, through='PlaylistSong')
+    
+class PlaylistSong(models.Model):
+    song = models.ForeignKey(Song, on_delete=models.CASCADE)
+    playlist = models.ForeignKey(Playlist, on_delete=models.CASCADE)
+    order = models.IntegerField()
+    # Possibly other fields like 'added_by' and 'date_added'
+	
+	
+Here, the PlaylistSong model contains the additional order field to track the song's order in the playlist.
+
+
+
+(need to check that sometime manytomany relationship has an attribute from code with mosh)
