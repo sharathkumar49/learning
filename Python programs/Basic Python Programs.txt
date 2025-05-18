@@ -1,0 +1,300 @@
+
+Certainly! Here's a Python coding challenge in an interview-style format focused on classes and objects:
+
+ Coding Challenge: Bank Account Management System
+
+# Problem Statement:
+You are required to design a simple Bank Account Management System using Python classes. The system should allow users to:
+1. Create a new bank account.
+2. Deposit money into their account.
+3. Withdraw money from their account.
+4. Display account details.
+
+# Requirements:
+1. Implement a class named 'BankAccount' with the following attributes:
+   - 'account_holder' (string): Name of the account holder.
+   - 'account_number' (integer): Unique account number.
+   - 'balance' (float): Current balance in the account.
+
+2. Implement the following methods in the class:
+   - 'deposit(amount: float)': Adds the specified amount to the balance.
+   - 'withdraw(amount: float)': Deducts the specified amount from the balance, ensuring that sufficient funds are available.
+   - 'display_details()': Displays the account holder's name, account number, and current balance.
+
+3. Ensure proper validation:
+   - The initial balance should not be negative.
+   - Withdrawals should not exceed the available balance.
+   - Deposits should be a positive value.
+
+# Example Usage:
+'''python
+# Creating a new bank account
+account1 = BankAccount("Alice", 101, 5000)
+
+# Depositing money
+account1.deposit(1500)
+
+# Withdrawing money
+account1.withdraw(2000)
+
+# Displaying account details
+account1.display_details()
+'''
+
+# Expected Output (Example Run):
+'''
+Account Holder: Alice
+Account Number: 101
+Current Balance: 4500.0
+'''
+
+ Bonus Challenge:
+Enhance the 'BankAccount' class by implementing:
+- A 'transfer_funds(receiver: BankAccount, amount: float)' method to allow fund transfers between accounts.
+- A method to generate a unique account number automatically instead of manually assigning one.
+
+Would you like me to refine it further or add more complexity? 🚀
+
+
+SOLUTION 
+=========
+
+class BankAccount:
+    _account_no = 100
+    total_acc = 0
+    def __init__(self,name,balance: float):
+        self.name = name
+        self.acc_no = BankAccount._account_no
+        BankAccount._account_no += 1
+        self.balance = balance
+        BankAccount.total_acc += 1
+        
+    def deposit(self,amount: float):
+        if amount > 0:
+            self.balance += amount
+            return self.balance
+        else:
+            print("Amount should be postive")
+    
+    def withdraw(self,amount: float):
+        if self.balance > amount:
+            self.balance -= amount
+            return self.balance
+        else:
+            print("Insufficient funds")
+    
+    def check_balance(self,amount:float):
+        return self.balance
+    
+    def display_details(self):
+        return f"{self.name}:{self.acc_no} with balance {self.balance} "
+        
+    def transfer_funds(self,receiver,amount):
+        if amount > 0 and amount <= self.balance:
+            self.withdraw(amount)
+            receiver.deposit(amount)
+            return f"Transferred ₹{amount:.2f} from {self.acc_no} to {receiver.acc_no}."
+        else:
+            print("Transfer amount is invalid or insufficient funds.")
+    
+    @classmethod
+    def number_of_acc(cls):
+        return f"Number of accounts created : {BankAccount.total_acc}"
+        
+        
+account1 = BankAccount("Alice", 5000)
+
+print(account1.deposit(1500))
+
+# Withdrawing money
+print(account1.withdraw(2000))
+
+# Displaying account details
+print(account1.display_details())
+
+account2 = BankAccount("Bob", 3000)
+account1.transfer_funds(account2, 1000)
+print(account1.display_details())
+print(account2.display_details())
+print(BankAccount.number_of_acc())
+    
+
+Output
+=======
+6500
+4500
+Alice:100 with balance 4500 
+Alice:100 with balance 3500 
+Bob:101 with balance 4000 
+Number of accounts created : 2
+
+====================================================================================================================================================================================================================================
+1. Classes and OOP
+Implement a simple class with attributes and methods
+
+Inheritance and method overriding
+
+Use of @property decorators for getters/setters
+
+Class vs instance variables
+
+Magic methods (__str__, __repr__, __eq__, etc.)
+
+
+SOLUTION
+=========
+class Student:
+    num_of_stds = 0
+    def __init__(self,name,age):
+        self.name = name
+        self.age = age
+        Student.num_of_stds += 1
+    
+    def display(self):
+        return f"Student {self.name} with age {self.age}"
+    
+    @property
+    def email(self):
+        return f"{self.name}@gmail.com"
+    
+    @email.setter
+    def email(self,mail_id):
+        name = mail_id.split("@")[0]
+        self.name = name
+    
+    @email.deleter
+    def email(self):
+        print("Deleted")
+        self.name = None
+        
+
+class Department(Student):
+    def __init__(self,name,age,major):
+        super().__init__(name,age)
+        self.major = major
+    
+    def display(self):
+        return f"Student {self.name} with age {self.age} in {self.major} department"
+    
+    def total_students(self):
+        return f"Number of students are {Student.num_of_stds}"
+    
+    def __str__(self):
+        return f"{self.name} - {self.age} in {self.major}"
+    
+    def __repr__(self):
+        return f"Here Student({self.name}-{self.age} in {self.major}"
+    
+    def __eq__(self,other):
+        return self.age == other.age 
+    
+    def __add__(self,other):
+        return self.name + other.name
+    
+    def __len__(self):
+        return len(self.name)
+
+std1 = Department("Viji",25,"Doctor")
+std2 = Department("sharath",27,"Engineer")
+print("Student details: ",std1.display())
+print(std1.total_students())
+print(std1)
+print(std2)
+print("Checking dunder method of equality __eq__ : ",std1 == std2)
+print("Checking dunder method of __add__: ",std1 + std2)
+print("Checking dunder method of __len__: ",len(std1))
+
+print("Email id of std1: ",std1.email)
+print("Email id of std1: ",std2.email)
+std1.email = "Corey@gmail.com"
+print("Afer changing Email id of std1: ",std1.email)
+del std1.email
+
+
+OUTPUT 
+=======
+Student details:  Student Viji with age 25 in Doctor department
+Number of students are 2
+Viji - 25 in Doctor
+sharath - 27 in Engineer
+Checking dunder method of equality __eq__ :  False
+Checking dunder method of __add__:  Vijisharath
+Checking dunder method of __len__:  4
+Email id of std1:  Viji@gmail.com
+Email id of std1:  sharath@gmail.com
+Afer changing Email id of std1:  Corey@gmail.com
+Deleted
+
+====================================================================================================================================================================================================================================
+2. File Handling
+
+2. File Handling
+Reading from and writing to files
+
+Working with CSV and JSON files
+
+Context managers (with statement)
+
+SOLUTION
+=========
+# Text File Operations
+with open("data.txt", "w") as f:
+    f.write("Hello world")
+
+with open("data.txt", "a") as f:
+    f.write("\nAdded a new line")
+
+lines = ["Line1\n", "Line2\n", "Line3\n"]
+with open("data.txt", "w") as f:
+    f.writelines(lines)
+
+with open("data.txt", "r") as f:
+    content = f.read()
+    print("Using read():\n", content)
+
+with open("data.txt", "r") as f:
+    content = f.readlines()
+    print("Using readlines():", content)
+
+# CSV File Operations
+import csv
+
+with open("data.csv", "w", newline="") as f:
+    writer = csv.writer(f)
+    writer.writerow(["name", "age"])
+    writer.writerow(["viji", "25"])
+    writer.writerow(["sri", "29"])
+
+with open("data.csv", "r") as f:
+    reader = csv.reader(f)
+    for row in reader:
+        print("CSV Row:", row)
+
+# JSON File Operations
+import json
+
+data = {"name": "vg", "age": 25}
+
+with open("data.json", "w") as f:
+    json.dump(data, f)  # ✅ use dump, not dumps
+
+with open("data.json", "r") as f:
+    loaded = json.load(f)  # ✅ use load, not loads
+    print("JSON Data:", loaded)
+
+
+OUTPUT
+=======
+Using read():
+Line1
+Line2
+Line3
+
+Using readlines(): ['Line1\n', 'Line2\n', 'Line3\n']
+CSV Row: ['name', 'age']
+CSV Row: ['viji', '25']
+CSV Row: ['sri', '29']
+JSON Data: {'name': 'vg', 'age': 25}
+
+====================================================================================================================================================================================================================================
+

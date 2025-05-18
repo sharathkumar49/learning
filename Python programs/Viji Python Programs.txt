@@ -219,6 +219,24 @@ def flatten_list(num):
  
 print(flatten_list(num))
 
+WITHOUT RECURSIVE FUNCTION
+---------------------------
+num = [[2,3],[[4,5,6]],8,[9,10]]
+
+def flatten(num):
+    result = []
+    stack = [num]
+    
+    while stack:
+        current = stack.pop()
+        if isinstance(current,list):
+            stack.extend(reversed(current))
+        else:
+            result.append(current)
+    return result
+
+print(flatten(num))
+
 Find the intersection of two lists.
 ====================================
 lst1 = [1,2,3,4,5]
@@ -296,7 +314,7 @@ Remove all occurrences of a specific element from a list
 =========================================================
 lst = [1,2,3,4,5,6,7,8,9,2,4,5,1,9,7,1,3,4,2]
 
-def remove_occ(lst , num):
+def remove_occ(lst ,num):
     for i in lst:
         if i == num:
             lst.remove(i)
@@ -364,6 +382,13 @@ def fibonacci(n):
 rslt = fibonacci(9)
 print(rslt)
 
+def fibonacci(n):
+    a,b = 0,1
+    for _ in range(n):
+        print(a, end=" ")
+        a,b = b,a+b
+    
+fibonacci(12)
                                                                         Dictionary Programs
 																		===================
 Serialize and deserialize string
@@ -653,10 +678,10 @@ O/P ->
 Sort a list of dictionaries by a specific key. Using BUBBLE Sort
 ==================================================================
 data = [
-    {'name': 'Bob', 'age': 30},
-    {'name': 'David', 'age': 28},
-    {'name': 'Alice', 'age': 25},
-    {'name': 'Charlie', 'age': 22}
+    {'name': 'Bob', 'age': 30},   25
+    {'name': 'David', 'age': 28},  22
+    {'name': 'Alice', 'age': 25},  28
+    {'name': 'Charlie', 'age': 22} 30
 ]
 
 def bubble_sort(data,key):
@@ -710,16 +735,10 @@ data = {
 }
 
 
-result = [dict(zip(data.keys(),values)) for values in data.values()]
-print(result)
+rslt = [dict(zip(data.keys(),row)) for row in zip(*data.values())]
+print(rslt)
 
 O/P ->
-
-[
- {'name': 'Alice', 'age': 'Bob', 'city': 'Charlie'}, 
- {'name': 25, 'age': 30, 'city': 22}, 
- {'name': 'New York', 'age': 'Los Angeles', 'city': 'Chicago'}
-]
 
 
 data = [
@@ -835,8 +854,54 @@ print(txt[-n:]+txt[:-n])
 O/P -> llohe
 
 
+Return All Number Pairs That Add to Target
+===========================================
+num = [3, 1, 4, 6, 2, 5]
+target = 7
+
+def two_nums(num,target):
+    seen = set() 
+    rslt = []  
+    for num in num:
+        complement = target - num
+        if complement in seen:
+            rslt.append((complement,num))
+        seen.add(num)
+    return rslt
+
+print(two_nums(num,target))
+
+OR
+
+nums = [2, 7, 11, 15]
+target = 9
+
+def sum_of_nums(nums,target):
+    seen = {}
+    
+    for i,n in enumerate(nums):
+        complement = target - n 
+        if complement in seen:
+            return [seen[complement],i]
+        seen[n] = i
+    return []
+
+print(sum_of_nums(nums,target))
+
+OUTPUT -> [0, 1]
 
 
+Sum of digits of a number
+==========================
+n = 1234
+
+def sum_digit(n):
+    if n == 0:
+        return 0
+    else:
+        return (n%10 + sum_digit(n//10))
+
+print(sum_digit(n))
 
 python decorator with both time and logging functionality:
 ==========================================================
@@ -1120,102 +1185,432 @@ print(queue.peek())     # Output: 20
 print(queue.size())     # Output: 2
 
 
-PRIME OR NOT
-=============
-def prime(n):
-    if n <=1:
-        return False
-    if n == 2:
-        return True
-    if n % 2 == 0:
-        return False
-    for i in range(3,int(n**0.5)+1,2):
-        if n % i == 0:
-            return False
-    return True
- 
-num = [2, 3, 4, 17, 19, 20, 23, 25, 29] 
-for i in num:
-    print(f"{i} : {prime(i)}")
-	
-O/P:
-2 is prime: True
-3 is prime: True
-4 is prime: False
-17 is prime: True
-19 is prime: True
-20 is prime: False
-23 is prime: True
-25 is prime: False
-29 is prime: True
+20. Find the number of digits in an integer
+============================================
+Input: 12345
+Output: 5
+
+SOL:
+num = 12345
+
+count = 0
+while num !=0:
+    num //= 10
+    print(num)
+    count += 1
+
+print(count)
+
+Create an iterator that returns numbers, starting with 1, and each sequence will increase by one (returning 1,2,3,4,5 etc.):
+=============================================================================================================================
+
+class MyNumbers:
+  def __iter__(self):
+    self.a = 1
+    return self
+
+  def __next__(self):
+    x = self.a
+    self.a += 1
+    return x
+
+myclass = MyNumbers()
+myiter = iter(myclass)
+
+print(next(myiter))
+print(next(myiter))
+print(next(myiter))
+print(next(myiter))
+print(next(myiter))
 
 
-Can you explain custom exception handling in Python?
-=====================================================
-def divide(a, b):
-    if b == 0:
-        raise MyCustomError("You can't divide by zero!")
-    return a / b
 
+StopIteration
+The example above would continue forever if you had enough next() statements, or if it was used in a for loop.
+
+To prevent the iteration from going on forever, we can use the StopIteration statement.
+
+In the __next__() method, we can add a terminating condition to raise an error if the iteration is done a specified number of times:
+
+Example
+Stop after 20 iterations:
+
+class MyNumbers:
+  def __iter__(self):
+    self.a = 1
+    return self
+
+  def __next__(self):
+    if self.a <= 20:
+      x = self.a
+      self.a += 1
+      return x
+    else:
+      raise StopIteration
+
+myclass = MyNumbers()
+myiter = iter(myclass)
+
+for x in myiter:
+  print(x)
+  
+-----------------------------------------------------------------------------------
+
+ITERATOR
+=========
+class customrange:
+    def __init__(self,start,end):
+        self.current = start
+        self.end = end
+    
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self.current < self.end:
+            num = self.current
+            self.current += 1
+            return num
+        else:
+            raise StopIteration
+    
+
+for i in customrange(0,5):
+    print(i)
+    
 try:
-    result = divide(10, 0)
-except MyCustomError as e:
-    print(f"Error: {e}")
-
-
-
-Explain the concept of asyncio and await in Python.
-====================================================
-import asyncio
-
-async def say_hello():
-    print("Hello")
-    await asyncio.sleep(2)
-    print("World")
-
-asyncio.run(say_hello())
+    itr = customrange(0,5)
+    print(next(itr))
+    print(next(itr))
+    print(next(itr))
+    print(next(itr))
+    print(next(itr))
+    print(next(itr))
+except StopIteration:
+    print("Exhausted")
 
 OUTPUT
-======
-Hello...
-(2-second pause)
-World!
+=======
+0
+1
+2
+3
+4
 
-Given an array of integers, find the two numbers that sum up to a specific target.
-====================================================================================
-def sums(nums,target):
-    seen = {} # {1:0,3:1,2:2,1:4}
-    for i, num in enumerate(nums):
-        print(seen)
-        comp = target - num
-        
-        if comp in seen:
-            return [seen[comp],i]
-    
-        seen[num] = i
-    
-    return None
-    
-    
-    
-nums = [1,3,5,7]
-target = 8
+0
+1
+2
+3
+4
+Exhausted
+	
 
-rslt = sums(nums,target)
+GENERATOR
+==========
+def custom_range(start,end):
+    while start < end:
+        yield start
+        start += 1
+
+for i in custom_range(0,5):
+    print(i)
+    
+gen = custom_range(0,5)
+try:
+    print(next(gen))
+    print(next(gen))
+    print(next(gen))
+    print(next(gen))
+    print(next(gen))
+    print(next(gen))
+    print(next(gen))
+except StopIteration:
+    print("Generator is exhausted.")
+    
+OUTPUT
+=======
+0
+1
+2
+3
+4
+
+0
+1
+2
+3
+4
+Generator is exhausted.
+
+
+1. Find all digits in a string
+Input: "abc123def456"
+Output: ['123', '456']
+
+SOLUTION
+=========
+import re
+txt = "abc123def456"
+pattern = r"[0-9]{3,}"
+rslt = re.findall(pattern,txt)
 print(rslt)
 
-OUTPUT -> [1, 2]
+OUTPUT
+=======
+['123', '456']
 
 
-Write a Python program to find the missing number in an array.
-================================================================
+2. Extract all words starting with capital letters
+Input: "Alice and Bob are Friends"
+Output: ['Alice', 'Bob', 'Friends']
 
-def missing_num(nums,n):
-    expected_num = n * (n+1)//2
-    actual_num =  sum(nums)
+SOLUTION
+=========
+import re
+
+txt = "Alice and Bob are Friends"
+pattern = r"[A-Z]+[a-z]*"
+rslt = re.findall(pattern,txt)
+print(rslt)
+
+OUTPUT
+=======
+['Alice', 'Bob', 'Friends']
+
+3. Replace all spaces with hyphens
+Input: "Python is awesome"
+Output: "Python-is-awesome"
+
+SOLUTION
+=========
+import re
+
+txt = "Python is awesome"
+rslt = re.sub(r"\s","-",txt)
+print(rslt)
+
+OUTPUT    -> Python-is-awesome
+=======
+
+
+
+4. Validate an email address
+Input: "user@example.com"
+Output: True (if matched), or False (if not matched)
+
+SOLUTION
+=========
+import re
+
+txt = "user@example.com"
+pattern = r"[a-z]+@[a-z]+\.[a-z]{3,}"
+
+rslt = re.match(pattern,txt)
+print(rslt)
+
+if rslt:
+    print("True")
+else:
+    print("False")
+	
+OUTPUT
+=======
+<re.Match object; span=(0, 16), match='user@example.com'>
+True
+
+5. Extract domain name from URL
+Input: "https://www.example.com/path"
+Output: "example.com"
+
+SOLUTION
+=========
+import re
+
+txt = "https://www.example.com/path"
+
+pattern = r"[w]{3}\.[a-z]+\.[a-z]{3,}"
+
+rslt = re.search(pattern,txt)
+print(rslt)
+
+print((rslt).group(0))
+
+
+OUTPUT
+=======
+<re.Match object; span=(8, 23), match='www.example.com'>
+print((rslt).group(0))
+
+
+6. Find all phone numbers in a text
+Input: "Call me at 9876543210 or 1234567890"
+Output: ['9876543210', '1234567890']
+
+SOLUTION
+=========
+import re
+
+txt = "Call me at 9876543210 or 1234567890"
+
+pattern = r"[0-9]{10}"
+rslt = re.findall(pattern,txt)
+print(rslt)
+
+OUTPUT    -> ['9876543210', '1234567890']
+=======
+
+
+7. Split a sentence into words using regex
+Input: "Hello, world! Python is great."
+Output: ['Hello', 'world', 'Python', 'is', 'great']
+
+SOLUTION
+=========
+import re
+
+txt = "Hello, world! Python is great."
+
+pattern = r"[A-Za-z]+"
+rslt = re.findall(pattern,txt)
+print(rslt)
+
+OUTPUT   -> ['Hello', 'world', 'Python', 'is', 'great']
+=======
+
+8. Remove all non-alphanumeric characters
+Input: "Python@#3.9 is $cool!"
+Output: "Python39iscool"
+
+SOLUTION
+=========
+import re
+
+txt = "Python@#3.9 is $cool!"
+
+pattern = r"[^A-Za-z0-9]*"
+rslt = re.sub(pattern,"",txt)
+print(rslt)
+
+OUTPUT  -> Python39iscool
+
+
+Check if a string is a rotation of another
+===========================================
+
+Input: "abcd", "cdab"
+Output: True
+
+SOLUTION
+========
+s1= "abcd"
+s2= "cdab"
+
+if len(s1) == len(s2) and s2 in (s1+s1):
+    print("True")
+else:
+    print("False")
+	
+
+Longest substring without repeating characters
+================================================
+
+Input: "abcabcbb"
+Output: 3 (substring: "abc")
+
+
+s = "abcabcbb"
+def longest_unique_substring(s):
+    seen = set()
+    left = 0
+    max_len = 0
+
+    for right in range(len(s)):
+        while s[right] in seen:
+            seen.remove(s[left])
+            left += 1
+        seen.add(s[right])
+        max_len = max(max_len, right - left + 1)
     
-    return expected_num - actual_num
+    return max_len
+
+print(longest_unique_substring("abcabcbb"))
+
+
+
+String Compression
+===================
+Input: "aaabbcc" → Output: "a3b2c2"
+
+SOLUTION
+=========
+s = "aaabbcc"
+
+count = 1
+compressed = ""
+
+for i in range(1,len(s)):
+    if s[i] == s[i-1]:
+        count += 1
+    else:
+        compressed = compressed + s[i-1] + str(count)
+        count = 1
+
+compressed = compressed + s[-1]+ str(count)
+
+print(compressed)
     
-nums = [1,2,3,5,6]
-n=6
-print(missing_num(nums,n)) # O/P => 4
+
+Check if a string is a valid palindrome ignoring non-alphanumerics
+===================================================================
+
+Input: "A man, a plan, a canal: Panama" → Output: True
+
+
+SOLUTION
+=========
+s = "A man, a plan, a canal: Panama"
+
+import re
+
+rslt = re.sub(r"[^a-zA-Z]+","",s)
+
+if rslt.lower() == rslt[::-1].lower():
+    print(rslt.lower())
+    print(rslt[::-1].lower())
+    print("True")
+else:
+    print("False")
+	
+OUTPUT
+=======
+amanaplanacanalpanama
+amanaplanacanalpanama
+True
+
+
+Valid Parentheses
+===================
+Input: "({[]})" → Output: True
+
+SOLUTION
+=========
+s = "({[]})"
+
+def is_valid(s):
+    stack = []
+    mapping = {"}":"{","]":"[",")":"("}
+    
+    for char in s:
+        print(stack)
+        if char in mapping.values():
+            stack.append(char)
+        elif char in mapping:
+            if not stack or stack[-1] != mapping[char]:
+                return False
+            stack.pop()
+        else:
+            continue
+    return not stack
+    
+print(is_valid("({[]})"))  -> True
+print(is_valid("({[})"))   -> False

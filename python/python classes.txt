@@ -90,7 +90,7 @@ print(emp2.email)
 
 
 
-Let's say that we want to set all of these information (fname, lname, email, pay) for each employee the momentthey're created rather than doing manually.
+Let's say that we want to set all of these information (fname, lname, email, pay) for each employee the moment they're created rather than doing manually.
 
 That's where we use __init__method. 
 
@@ -225,7 +225,7 @@ class Employee:
 
     @classmethod
     def set_raise_amt(cls, amount):
-        cls.raise_amt = amount self
+        cls.raise_amt = amount 
 
 
 emp_1 = Employee('Corey', 'Schafer', 50000)
