@@ -15,8 +15,24 @@ In this course, I'll be teaching you SQL with MySQL.
 
 Installing MySql on Mac and Installing MySQL on Windows:
 
+In this tutorial I'm going to show you how to install mysql on your computer now here I'm using a Mac so first I will show you how to install my skills on a Mac computer and then I' will show you how to install it on Windows. So if you're a Windows user, feel free to skip this tutorial now open up your browser and head over to mysql.com. Then go to the downloads page and scroll down to the bottom. Here you should see mysql Community Edition. This is absolutely free and we're going to use that throughout this course so let's go ahead with that. Now on this page click on mysql communi to Server. 
+And then on this page you should see available releases for macos. So in this list download the first item which is a DMG archive. All right now. On the next page click on no thanks. Just start my download all right. As you can see we are getting a DMG file which is basically a set of Wizard. All right now the DMG is downloaded, so let's open it and then double click on this package. Let well launch an installation Wizard which is pretty easy to use, so simply click until and again and again. I agree with the license agreement and install my skill. It's going to ask for your password. This is the password that use to log into your computer. So let's put that here alright now. Here we need to set a password for the root or the admin user, so click next and in this box type a complex password. All right now let's finish the installation. 
+And into your computer's password one more time and were done. That was super easy and sweet alright. We installed mysql Community Server. Now we need a graphical tool to connect to the server and manage our databases. So back to the downloads page one more time scroll to the bottom and go to mysql Community Edition. And on this page somewhere you should see mysql Workbench. This is a graphical tool that we use to connect to our database server, so let's go ahead and download this as well. Now once again on this page we need to download a DMG archive so download and again we have to say no. We don't want to log in or sign up, so let's just go ahead and download the DMG. 
+And then open it all right. You're going to see something like this, so simply drag this my skill Workbench and drop it onto the applications fold there. So let's go ahead with that. Now it's going to copy this into the applications folder Beautiful. So we're done with the installation that was super easy. Now press command and space and search for mysql Workbench there you go, let's open it now the first time we get this message because this is an application that we have downloaded from the Internet. So we need to tell Mac that we trust this. Let's go ahead with that. So this is mysql Workbench. Now by default, you should see a connection here. If you don't see that you need to create it. Let me show you how to do that. So for this demo, I'm going to right. Click this and delete this connection. 
+All right now let's create a connection from scratch, so click on this plus icon on this page. Give this connection a name. Let's say local instance. Now the connection method that we're going to use is TCPIP, which is set by default. The host name is 1. 27.1, which is the address of the local machine and the port is 3003 and six. This is the default port for mysql server, that is the username of the admin. Now we need to enter the password. This is the password that we set during the installation, so click on store in keychain and in this box type the password for the MOS skill server right. And finally let's test the connection ok. We successfully connected to MOS skill server on the local machine. Beautiful. Let's click ok and here we have a connection on the homepage of myscul Workbench. Every time we open mycul Workbench, we use this connection to connect to our local server. All right we're done with the installation of macule on a Mac. Next I will talk about installing mysql on a Windows computer so feel free to skip that tutorial. 
+
+In this tutorial I'm going to show you how to install mysql on Windows. Open up your browser and head over to mysql.com. Then go to the downloads page. Now here scroll down to the bottom. We're going to use mysql communityition which is absolutely free. So let's go with this. Now select my SQL Community Server and then scroll down. So here you should see something like this. Mysql Installer for Windows. This is the recommended method for installing mysql on Windows. So click on this al right on the next page. Scroll down and download the first installer here on the next page. Scroll down and click on no thanks. Just start my download. Otherwise you have to create an account and login which is unnecessary for following this course. So let's go with this and save this file to our computer and then run it. 
+All right we're going to use this setup wizard to install mysql on our computer. This is very easy. All you have to do is to click next, but there are a couple of places where you need to enter a password. Let me show you so on the first page for the setup type we're going to use the developer default setup. Go to the next page. Now here we're getting a little warning because this installation wizard wants to install the connector for Python 3.7. But I don't have Python on this machine. So that's why I'm getting this warning now on your machine. You might or you might not get this error. It doesn't really matter. Just click next and one more time. So here are the products that are going to get installed. The first one is mysql Server, the second one is mysql workbench. This is the graphical tool that we use to connect to our database server and manage our databases. You're going to see that soon, so click on Execute. Now this is going to take about five to ten minutes, so I'm going to pause the recording. 
+All right all the products are installed. Beautiful. Let's go to the next page and again here on the group replication page. Also click on next on the next page, which is about networking. Leave all the default settings, so let's go to the next page. Now we should set a password for the root or the admin user, so click on next. Add in this box. Type A password for the admin user. 
+All right and then let's go to the next page once again leave all the default settings and click on next and execute one more time. 
+All right and now let's finish the installation once again. We have to click on next and then finish one more time. Theres so many steps now here's the page where you need to enter the admin password, so the page is called Connect to Server. You can see the username is Root, which represents the admin user in this box. Enter the password that you said earlier. Then click on check ok. Connection was successful. Beautiful. Let's go to the next page and click on execute and finally finish there you go. We have one more step next now. Finally after all these steps, the installation is complete. Now this is going to start mysql Workbench, which is the graphical tool we use to manage our databases and run SQL queries. So click on finish. So now we have a command prompt window where we can type instructions to talk to our myscul server. We don't really need this, so close it and here's mysql Workbench. Now the first time you open this page by default, you should see a connection here. If you don't see it, click on this plus icon. 
+Indus page give this connection and name. Let's say local instance. Now leave all the settings to their default value. But here for the password click on store ingot. And in this box type the password that you set for the admin user. So I'm going to put that here. Ok. Now click ones. Connection all right. We successfully connected to the myscule server on this computer. All right. Then click on ok. Now we click on this connection to connect to our database server AL right. So here's the interface that you'll be using throughout those courses. On the left side we have the navigator panel, in the middle we have the query editor, which we can resize. This is where we're going to write our SQL queries, and on the right side we have SQL additions. So we're done with the installation of my skill on our computer. Next I'm going to show you how to create the databases for this course. 
+
+
+
+
+
 Creating the Databases:
-(Have to paste the diagrams)
 In this tutorial I'm going to show you how to create the databases for this course. So here I've got MySQL Workbench open, let me quickly give you an overview of this interface because the first time you open it, it might appear a little bit intimidating, but actually it's not that difficult. So here on the top we've got this toolbar with these buttons for creating a new tab for writing SQL code, as well as opening a SQL file. And next to that we've got a bunch of buttons for creating a database, creating new tables, and so on. On the left side we've got the navigator panel with two tabs, administration and schemas. We use the administration tab to do administrative work such as starting or stopping our server, importing or exporting data, and so on. 
 The schemas tab shows the databases that we have in the current database server. So currently we only have one database that is sys, and this is the database that MySQL uses internally to do its work. Now in the middle we've got this query editor window, this is where we write our sql code, so we'll be spending most of our time in this course in this window. And on the right side we've got another panel with two tabs, context help, and snippets. Now chances are this interface might look slightly different on windows, but what I'm showing you here is almost identical with what we have on windows. So don't get hung up if it looks slightly different on your machine, it doesn't really matter. 
 Now up here we've got these buttons for showing or hiding these panels, so to clean this interface, I'm going to hide this panel on the right side, as well as the panel on the bottom. That is better. Now to create the databases for this course, download the zip file I've attached below this video. When you extract this zip file, you're going to see a bunch of sql files like this. So the main one that you'll be using in this tutorial is called create databases dot sql. So this file contains all the sql code to create all the databases that we need in this course. Now we also have individual files for creating individual databases, I just added these files in case you need to recreate one of these databases in the future, but for now don't worry about them. 
@@ -53,12 +69,7 @@ What you’ll be learning:
 
 
 The SELECT Statement:
- 
- 
- 
- 
- 
- 
+  
 In this tutorial I'm going to show you how to retrieve data from a single table. Now look at the navigator panel. Currently none of our databases is displayed in bold. That means none of these databases is selected for querying. So the first step to write a query to get data from a database is to select a database. The query that we'll write will be executed against that database. In this demo we're going to use the SQL store database. So we type out use SQL on the line store. Now use is a keyword in the sql language, and that's the reason it's displayed in blue. Now sql is not a case sensitive language, and that means we can use uppercase or lowercase characters, it doesn't really matter, but as a best practice, we should capitalize the sql keywords and use lowercase characters for anything else. 
 So now let's go ahead and execute this query, alright, look the sql store database is now displayed in bold. Now in mysql workbench you can also select a database by double clicking that, so now I double clicked sql invoicing and it's the current database. Now if we run this query again, the sql store database becomes selected. Alright, now let's write our first query to retrieve all the customers in this database. So after the use statement we're going to use the select statement. Here's the basic syntax or basic structure of the select statement. we type out select, in front of that we specify the columns that we want to retrieve. For example, we can retrieve the customer id column, as well as the first name column, or we can retrieve all columns using an asterisk. 
 Now after that we use the from clause, and this is where we specify the table that we want to query. In this case, the customers table. So this is the simplest query to select all the customers in a given table. Now whenever you have multiple SQL statements, you need to terminate each statement using a semicolon. So look we have a red underline here that indicates an error, if you hover your mouse here you can see this tooltip saying select is not valid at this position. Because we didn't terminate the first statement with a semicolon. Okay? Now let's execute this query one more time, once again we can click on this button here, or we can use a shortcut. So look at the query menu on the top, the first item is execute. 
@@ -79,13 +90,7 @@ So that's all for this tutorial, in the next tutorial we'll explore the select c
 
 
 
-The SELECT clause:
- 
- 
- 
-   
- 
- 
+The SELECT clause: 
 In this tutorial we're going to look at the select clause in detail. So since our current database is sql store, to clean things up I'm going to remove the first statement, you don't really need it now, also I'm going to delete these two comments, we just want to focus on the select clause. Alright, so what can we do with this select clause? Well, in the last tutorial you learned that if we use an asterisk this will return all the columns. Alternatively, we can specify the columns that we want, and this is helpful in situations where you have a big table with so many columns and perhaps millions of records. If you want to bring back all that data, that's going to put a lot of pressure on the database server, in this case, MySQL, as well as the network. 
 So that's when we explicitly specify the columns that we want to get. Let's say we want to get the first name and last name columns. Execute the query, as you can see, we only get these two columns, and they're in the same order as specified here. So if we change the order and put the last name first, and execute the query again, now you can see the last name column comes first. Now let's add a new column to the end, let's get the points for each customer as well, run the query, so these are the points for each customer, which are calculated based on their shopping. Now let's say we want to get these points and put them in a mathematical formula to calculate the discount that we can give to each customer. 
 So here we can use an arithmetic expression. Let's say points plus 10. This is an arithmetic expression. So now if you execute this query, for the first record you can see that their points will end up being 2283. Let's run the query one more time. There you go. Now we can put the original points column here for clarity. So points comma points plus Let's run the query one more time, now you can see the original points, and next to that you can see the value that we're going to use to calculate the discount. And here we're using the plus operator, which is for addition, we also have multiplication, division, subtraction, and modular, which is the remainder of the division. So let's change this to something more complex. 
@@ -113,12 +118,6 @@ Now where do we want to select these columns from? From the products table, so f
 
 
 The WHERE Clause:
- 
- 
- 
- 
- 
- 
 In this tutorial we're going to look at the where clause in SQL. So earlier I told you that we use the where clause to filter data. For example, let's say we only want to get the customers with points greater than 3000. So here in the where clause we can type out a condition like this. Points greater than 3000. When we execute this query, the query execution engine in MySQL is going to iterate over all the customers in the customers table. For each customer it's going to evaluate this condition. If this condition is true, it will return that customer in the result set. So, let's go ahead and execute this, and here's the result, as you can see, we have only two customers with points greater than 3000. 
 So this is what we call the greater than operator, which is one of the comparison operators in SQL. Let me show you the complete list of comparison operators. So, We have greater than greater than or equal to we have less than less than or equal to here's the equality operator and For not equality. We can use an exclamation followed by an equal sign or Something like this. So both these are not equal operators. Let me show you a few examples of these operators so I'm going to delete all this and bring back the previous query and Let's say we want to get only the customers in the state of Virginia. So we can change our condition to something like this. Where state equals Virginia. 
 Note that I've put Virginia in quotes because this is what we call a string. A string is a sequence of characters. So whenever you're dealing with a sequence of characters or basically textual data, you need to enclose your values with either single or double quotes. But quite often by convention we use single quotes. So let's execute this query, and here's the result, you can see we only have these two customers with id 1 and 2, who are located in Virginia. And it doesn't matter if we use uppercase or lowercase characters, so if we type out va in lowercase, and execute the query, we get the exact same result. Now what if we want to get all the customers outside of the state of Virginia? 
@@ -128,15 +127,11 @@ So look at the orders table, see what columns do we have there, and based on tha
 So for the purpose of this exercise, this is a valid solution. Now let's execute this query and see what we get. So we have only one order, order id 1, that is placed in the current year.
 
 
-The AND, OR and NOT Operators:
- 
- 
- 
- 
- 
- 
- 
 
+
+
+
+The AND, OR and NOT Operators: 
 In this tutorial I'm going to show you how to combine multiple search conditions when filtering data. So let's say we want to get all the customers that are born after January 1st, 1990, who also happen to have more than 1000 points. So this is where we use the and operator. So we type out and, and after we type out another condition, like points greater than 1000. Now when we execute this query, we only get customers who have both these conditions. Let's take a look. So execute, we only have two customers, and if you look, both these people are born after 1990, and they have more than a thousand points. So this is the and operator. When we use this operator, both these conditions should be true. 
 In contrast to the and operator, we have the or operator. So with or, if at least one of these conditions is true, that row will be returned in the result set. Let's take a look. Now we execute this query again, instead of two records we have quite a few records. So for example, we have this person who is not born after 1990, but if you look at their points they have more than a thousand points. So any customer records that satisfies at least one of these conditions will be returned. Now let's take this to the next level. Let's say we want to get customers who are either born after 1990, or they should have at least a thousand points and live in Virginia. 
 So this is how we do this. We type out and, and then we add another condition, state equals Virginia. Let's execute this query and see what we get. We only get four records, so these are the customers that are born either after 1990, or they have more than a thousand points and live in Virginia. If you look at the first customer here, this person is not born after 1990, But you can see that she lives in Virginia and she has more than a thousand points. So the last two conditions are true for this customer. Now when combining multiple logical operators, you need to be aware of the order of these operators. So earlier I talked about the order of arithmetic operators, I told you that multiplication have a higher order than addition and subtraction. 
@@ -164,12 +159,6 @@ of that item. And then we can compare it with 30. So, let's go ahead and write t
 
 
 The IN Operator:
- 
- 
- 
- 
- 
-
 In this tutorial I'm going to show you how to use the in operator in SQL. So as an example let's say we want to get the customers that are located in Virginia or Florida or Georgia. One way to write this query is like this. So where state equals Virginia or state equals Georgia or state equals Florida. Now people who are new to the SQL language or programming in general find this expression a little bit strange. They ask, mosh, why can't we write this expression like this? Where state equals Virginia or Georgia or Florida. Here's the reason, we use the or operator to combine multiple conditions. So here we have a condition or an expression more accurately, but on the right side of this or operator we have a string. 
 In sql we cannot combine a string with a boolean expression that produces a boolean value, which can be true or false. So that is why we have to write our query like this. So we have multiple expressions or multiple conditions, and we're combining them using the or operator. So now if we execute this query, we get these customers here, but there is a shorter and cleaner way to get the same result. Instead of combining multiple conditions using the or operator, we can use the in operator. So where state is in, and then in parenthesis we add the values, like Virginia comma Florida comma Georgia and the order doesn't matter. This query is exactly equivalent to what we had earlier. But as you can see, it's shorter and easier to understand. 
 So let's execute it. Look, we get the exact same result. Now here we can also use the not operator. Let's say we want to get the customers outside of these states. So we can use where state not in this list. Now if we execute this query, we get customers who are located in Colorado, Texas, and so on. So use the in operator when you want to compare an attribute with a list of values. Now here's your exercise. I want you to write a query to get the products where their quantity in stock equals to one of these values. 49, 38, and 72. So pause the video, do this exercise, and then come back and continue watching. Alright, this is pretty easy, so we do a select star to get all the columns from the products table where quantity in stock, in, we use the in operator to compare this attribute with these values, 49, 38, and 72, let's execute the query, we get only two records, because we don't have a product with quantity in stock equal to 72.
@@ -186,10 +175,7 @@ So let's execute it. Look, we get the exact same result. Now here we can also us
 
 
 
-The BETWEEN Operator:
- 
- 
- 
+The BETWEEN Operator: 
 In this tutorial we're going to look at the between operator in sql. So let's say we want to get the customers who have more than 1000 and less than 3000 points. What made this query is like this, where points greater than 1000, well more accurately greater than or equal to 1000, and points less than or equal to 3000. When we execute this query we get, how many? We get 4 people that satisfy this criteria. Now whenever you're comparing an attribute with a range of values, you can use the between operator, and this makes your code shorter and cleaner. So we can rewrite this expression like this, where points between 1000 and 3000. This is exactly equivalent to what we had before, so these range values are also inclusive. 
 That means points is going to be greater than or equal to 1000 or less than or equal to 3000. Let's execute the query, we get the exact same result. Alright, now as an exercise, I want you to write a query to get the customers that are born between January 1st 1990 and January 1st 2000. Alright, so we start with select star from customers where birth, underline date, between, so what matters here is that we can use the between operator for date values as well, it's not limited to using numbers. So we're birth date between, now we need to supply two date values. So as I told you before, the format for dates is four digits for the year, so 1990, two digits for the month, and two digits for the day. 
 So the birth date should be between this value and, here's the second value, 2019, 0, 1, and 0, 1. Let's execute this query, we get only 3 people who match this criteria.
@@ -205,17 +191,6 @@ So the birth date should be between this value and, here's the second value, 201
 
 
 The LIKE Operator:
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
 In this tutorial I'm going to show you how to retrieve rows that match a specific string pattern. For example, let's say we only want to get the customers whose last name start with b. So here in the where clause, we type out where last name, this is where we use the like operator, and right after that we add a string pattern. So we want to get the customers whose last name start with b, and we have any number of characters after b. So use the percent sign to indicate any number of characters. You might have one character after b or no characters or 10 characters, with this pattern, we get all the customers whose last names start with b. And also it doesn't matter if it's an uppercase or a lowercase b. So let's execute this query, there you go. 
 So we only have 3 customers whose last names start with b. As another example, let's say we only want to get the customers whose last names start with brush. So we change our pattern to brush percent. Now let's execute the query, we only get this one customer here. Now this percent sign doesn't have to be at the end of the pattern, it can be anywhere. For example, let's say we want to search for customers who have a b in their last name, whether it's at the beginning, in the middle, or at the end. So we change our pattern to percent b percent. This pattern means we can have any number of characters before or after b. let's execute the query, these are the customers who have a b somewhere in their last name. 
 It doesn't matter if b is at the beginning or in the middle or at the end. Let's look at another example. I want to get all the customers whose last name end with y. So here's the pattern we use, let's execute this query, and we have 5 customers whose last name ends with a y. So this is how we use the percent sign. Now we also have an underscore, and that matches a single character. So with this pattern, we get customers whose last name is exactly two characters long, we don't care what the first character is, but the second character should be y. Let's execute this query, obviously we don't have any customers whose last name matches this pattern, but if we change this pattern to 5 underscores, so 1, 2, 3, 4, 5, followed by a y, 
@@ -233,23 +208,7 @@ So we simply prefix like with not. Now if we execute this query one more time, w
 
 
 
-The REGEXP Operator:
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+The REGEXP Operator: 
 In the last tutorial you learned about the like operator in SQL. So as another example, let's say we want to search for the customers who have the word field in their last name. So we type out a where clause like this, where last name, like percent field percent. So the word field can be anywhere in the last name. Let's execute this query, we get only one customer, beautiful. Now we also have another operator in MySQL, that is reg exp, which is short for regular expression, and regular expressions are extremely powerful when it comes to searching for strings. So they allow us to search for more complex patterns. Here's an example, if I want to rewrite this last where clause, using a regular expression, it looks like this. 
 Where, last name, reg exp, now here in our string pattern, we don't have to type out the percent signs, we only type out filled. So what we have on line 4 is exactly identical to what we have on line 3. Let's execute this query, we get the same result, beautiful. Now here in regular expressions we have additional characters that we don't have when we use the like operator. For example, we can use the caret sign to indicate the beginning of a string. So, if I put a caret just before the word filled, that means our last name must start with filled. Obviously if we execute this query we don't get anyone that matches this criteria, so we use the caret sign to represent the beginning of a string. 
 We also have a dollar sign to represent the end of a string. So this pattern means the last name must end with filled. Let's execute this query, we get the same result as before. Now we can also search for multiple words here, for example, let's say we want to find the customers who have the words filled or mac in their last name. So we use a pipe, a vertical bar, and type out another pattern. Let's execute this query. So here we have two customers, one of them has the word mac, the other has the word field in their last name. Now we can take this to the next level. Let's say we want to find the customers who have the words field, or mac, or rows in their last name. 
@@ -283,11 +242,6 @@ So we have b followed by r or u. That's one way. The other way is to use a verti
 
 
 The IS NULL Operator:
- 
- 
- 
-
-
 In this tutorial I'm going to show you how to look for records that miss an attribute. For example, if we select all the customers in our database, we can see that the customer with id 5 doesn't have a phone number. So if you look closely here, you can see the value null. Null means the absence of a value. Now let's say we want to search for all the customers who don't have a phone. Perhaps we want to send them an email and say, hey, your phone is missing in our system. So how can we get these customers? That is very easy. we use the is null operator. So, in the where clause, we type out where phone is null. Now let's execute this query, we only get one customer who doesn't have a phone, now here we can also use the not operator to get the customers who do have a phone. 
 So we change the condition to is not null. Let's execute the query, now in the query results, every customer does have a phone number. For this exercise, I want you to write a query to get the orders that are not shipped yet. This is a very useful query that is used in a lot of real applications. For example, let's say you're an admin for an online shop, you want to see the orders that are not shipped yet, so you can follow them up. So write a query to get these orders. So here we have the orders table, let's have a quick look at the data in this table. Alright. So if you pay close attention, you see some of these orders don't have a shipped date. 
 And these orders also don't have a shipper id, which is a unique number for identifying the shippers. So any order that misses a value for the ship date or shipper id is considered an order that is not shipped. So let's go ahead and write a query to get these orders. So back to our query editor, select star from orders where shipped underline date is null. You could also write shipper id is null, they're both equally correct. So let's execute this query and we should get 5 orders. Orders 1, 3, 4, 6, and 8.
@@ -301,17 +255,6 @@ And these orders also don't have a shipper id, which is a unique number for iden
 
 
 The ORDER BY Clause:
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
 In this tutorial I'm going to show you how to sort data in your SQL queries. So here we have a query to select all the customers from the customers table, if you look at the query result, you can see that our customers are sorted by their id. So we have customers 1, 2, 3, 4, and so on. This is the default sort column. But we can always change this using the order by clause. But first, let me explain why the customer id column is the default sort column. So first I'm going to open up the navigator panel, on the left side here is the customers table, now let's click on this middle icon here that looks like a tool. This opens up our customers table in the design mode, so here we can change our columns, we can add new columns, or remove existing ones, or change their name or order and so on. 
 Now if you pay close attention, you can see a yellow key just before customer id. This means that this column is the primary key column for this table. So in relational databases, every table should have a primary key column, and the values in that column should uniquely identify the records in that table. So back to our query window, you can see that the values in this column uniquely identify each customer. So the customer id column is the primary key column in this table, and that is why when we write a query against this table, our customers are sorted by their id by default. Now, let me show you how to sort customers by a different column. So, here in the order by clause, we type out the name of another column, like first name. 
 Let's execute the query, now we can see our customers are no longer sorted by their id, instead, they're sorted by their first name in ascending order. Now if you want to reverse the sort order, simply type out desc, which is short for descending. Now, you're sorting these customers in descending order. Okay? We can also sort data by multiple columns, for example, let's say first we want to sort our customers based on their state, and then within each state we want to sort them by their first name. So, we type out multiple columns here, state, and first name. Let's execute the query, now you can see that the first state we have here is California, followed by Colorado, and now here in Florida we have two customers 
@@ -333,12 +276,6 @@ this is what we get, now for clarity I would like to add another column in the r
 
 
 The LIMIT Clause:
- 
- 
- 
- 
- 
-
 In this tutorial I'm going to show you how to limit the number of records returned from your query. For example, when we execute this query, we get all the customers in the customer table. So we have 10 customers here. Now, what if you only want to get the first 3 customers? That's where we use the limit clause. Let me show you. So, after from, we type out limit 3, and this will return only the first 3 customers. Now if the argument that we pass here is greater than the number of records that our query produces, we'll get all the records in the query result. For example, if I pass 300 here, obviously we don't have 300 customers in this table. So when we execute this query, we'll get all the 10 customers in this table. 
 So this is how the limit clause works. Now here we can optionally supply an offset, and this is very useful in situations where we want to paginate the data. For example, let's say we have a website, and on this website we have a webpage for the user to see all the customers in the database. Now for simplicity let's imagine we want to show only 3 customers per page. So, what are the customers that we're going to have on page 1? We're going to have customers 1, 2, 3. Now, let's say we want to write a query to retrieve the customers on page 3. How can we do that? Well, we want to skip the first 6 records and then pick 3 records, right? 
 So we change our limit clause to something like this. Limit 6 and 3. So 6 is what we call an offset, and that basically tells mysql to skip the first 6 records and then pick 3 records. Let's execute this query, Alright, now we get customers seven eight and nine Now for your exercise I want you to get the top three loyal customers. These are the customers that have more points than everyone else All right first we select everything from the customers table Now we need to order customers by their points in descending order. So, if you look at the query result, you can see that customers are sorted by their loyalty. So the most loyal customers come first. Now we want to pick only the first three customers. 
@@ -355,13 +292,6 @@ And that's where we use the limit clause. So limit 3. Let's execute this query, 
 
 
 Inner Joins:
-
- 
- 
- 
- 
- 
-
 So far we have only selected columns from a single table. But in the real world, we quite often select columns from multiple tables, and that's what I'm going to show you over the next few tutorials. So, on the left side, if you look at our orders table, let's select all the data here, in this table we're using the customer ID column to identify the customer that has placed each order. Now as I told you before, we don't store customers information here, like their phone number, their email, their address, because this information can change in the future. And if a given customer has placed multiple orders, then we'll have to come back and change multiple records. We don't want to do that. That's why we have separate tables for customers and orders. 
 Now in this tutorial, I'm going to show you how to select the orders in the orders table, but instead of showing the customer id, show the full name for each customer. So let's go back to our query window. Alright, so, you want to select everything from the orders table, Now we should combine the columns in this table with the columns in the customers table. That is where we use the join keyword. Now here we can optionally type inner join, because in SQL we have two types of join, inner join and outer join. We'll look at outer joins later in this section. So for now we're only using an inner join, and this inner keyword is actually optional, so we don't have to type it. 
 So, we want to join the orders table with the customers table. Now, on what basis do we want to join these tables? Well, here in the customers table we have this customer id column. So if we put these two tables next to each other, we want to line up the records such that the customer ids are equal. That is where we use the on phrase. So after on we type out a condition. Here's the condition we need to type out. Orders.customer underline id should be equal to customers.customer customer id, now this is getting outside of the screen, so let me break up this line, that's better, so with this query we're telling mysql that hey, whenever you're joining the orders table with the customers table, make sure that the customer id column in the orders table equals the customer id column in the customers table. 
@@ -375,10 +305,12 @@ Next we want to select quantity, and finally unit price. Now actually here we ha
 So because we have the unit price column in two places, in this case we should pick it from the order items table because this is the price at the time of placing the order. Now let's execute the query, so here's the final result.
 
 
-Joining Across Databases:
- 
- 
- 
+
+
+
+
+
+Joining Across Databases: 
 In the real world when you work as a developer or a database administrator, quite often you'll have to work with multiple databases. In this tutorial, I'm going to show you how to combine columns from tables across multiple databases. That's pretty easy. So in the SQL store database, we have these tables that you're fairly familiar with. Now, imagine this products table was not here. Now, if you look at the SQL inventory database, you can see here we have another products table, This products table is exactly the same as the products table that we have in the SQL store database. So it has the same columns and the same data. But technically this is not a good design. You don't want to have the same table repeated in multiple places. 
 But for this demo, let's just imagine that we don't have the products table here, so we want to join the order items table with the products table in the SQL inventory database. Let's get started. So, select everything from order items table, let's give it an alias straight away. We want to join this with the products table. This products table is part of the SQL inventory database. So we'll have to prefix this with the name of its database. So we type out SQL inventory dot. Now once again we can give this an alias like p, then type out our join condition, so oi dot product id should be the same as p dot product id. Let's run the query, there you go. So we successfully joined tables across multiple databases. 
 Now, note that we're prefixing the products table with the name of its database, because the current database that we're writing this query against is the SQL store database. Take a look, in the navigator panel, the SQL store database is displayed in bold. Because earlier, we wrote the use statement to select a database, that was SQL store. Now, what if we select the sql inventory database? Let's see what happens. So, SQL inventory. Now, because we have multiple statements, we have to terminate this with a semicolon. Now, we want to select everything from the order items table, but we don't have this table inside of this database. So now we'll have to prefix this table with the name of its database. That is sql underline store. 
@@ -404,11 +336,6 @@ Let's execute the query. Okay, everything works beautifully. So here's the lesso
 
 
 Self Joins:
- 
- 
- 
- 
-
 SQL we can also join a table with itself. Let me show you an example Take a look at this database sequel HR In this database we have these two tables employees and offices. Let's take a look at the data in the employees table There you go, so here we have these columns employee ID first name last name their job title salary and reports to This is the idea of the manager for this person or this employee. Now once again, we don't want to repeat the manager's information here, like their phone number, their address, because this information can change in the future. So we are only using their identifier or their id to refer to them in this table. Now where can we find the information about this manager? 
 Well, this manager is actually an employee of the same organization. So, look at this example, the manager id is 37270. Now if you look on the left side, here's the idea of that manager, which is another employee. Now who's the manager for this employee? Let's take a look. We don't have any values here, so the value for this cell is null. So this employee doesn't have a manager, and that means they are the CEO. So now let's go ahead and write a query to join this table with itself, so we can select the name of each employee and their manager. Back to our query window, first we need to select the sql database. Next we select everything from the employees table, we give it an alias like e, now we need to join this table with itself. 
 So once again we type out employees, but we need a different alias. What should we call this alias? Well, we want to join this table with itself so we can find the managers, right? So we can use m as a short for managers. Now let's type out our join condition, So from the employees table, we need to join the reports underline 2 column to the managers table, which is basically the employees table itself, and what column? That is employee underline id. Now let's execute this query and see what we get. So, we see all the columns from the employees table repeated, the first set of columns represent information about the employees, and then after that we have information about the manager. In this case, we have only one manager in this table. 
@@ -423,12 +350,7 @@ We can improve this query by giving an alias to this column, because it doesn't 
 
 
 
-Joining Multiple Tables:
- 
- 
- 
- 
-  
+Joining Multiple Tables:  
 In this tutorial I'm going to show you how to join more than two tables when writing a query. For example, back to our SQL store database, look at the orders table. Now you know how to write a query to join this table with the customers table to return information about the customer who placed each order. But here we also have another column, status, which is similar to the customer id column. So the name of the statuses are not stored in this table, they're somewhere else in the order statuses table. let's have a quick look here, so our orders can be either processed, shipped, or delivered. And these are the identifiers for each of these statuses. Now back to our orders table, in the status column we store the order status id. 
 So now we should write a query to join the orders table with two tables, the customers table and order statuses table. The result of this query is going to look like this. So for each order we see the order id, the date, the first and last name of the customer, and finally the status of the order. This is a beautiful report we can create for our users. So let me show you how to write this query. Back to our query editor, first we need to select the sql store database, now we need to select everything from the orders table, let's give it an alias, next we need to join this with the customers table. On o.customerId should be equal to to see that customer id. 
 Nothing new so far, exactly like before. Now here we can write another join keyword, to join the orders table with order statuses table. So we type out order statuses, and also we give it an alias like os, what is our join condition? Well, back in the orders table, here we have this status column. So the value in this column should be equal to to the order status id column in order status table. Right? So back to the query, so order table dot status should be equal to order statuses dot order status id. Make sure to get the name right, don't have a typo, otherwise you're going to get an error. So this is how we can join three tables. Now in the real world, as you work on more complex problems, you will end up joining even ten tables. 
@@ -437,12 +359,13 @@ Alright, for your exercise, take a look at this SQL Invoicing database. here. We
 Produce a report that shows the payments with more details such as the name of the client and the payment method. Alright, first we need to use the sql invoicing database. Now we can select everything from the payments table which we call p, next we need to join this with the client table which we call c, on p.clientId should be equal to c.clientId. Let me double check the column name to make sure I got it right. So back to the payments table, the column is called clientId. You also have a column called payment method that we should join to the payment method id column of the payment methods table. So back to the query, once again we use a join statement here, join with payment methods, we give it an alias pm on p.payment underline method should be equal to pm.payment method id. 
 Make sure to type it out correctly, otherwise you're going to get an error. So let's go ahead and execute the query up to this point, there you go, Finally, let's handpick the columns that make the most sense so From the payments table, let's select a date followed by invoice ID What else do we have here? So we have client ID invoice ID date amount and payment method I'm gonna pick the amount column from here as well. So back to the query P dot amount now we need to add information about the client and let's take a look at this table, clients, so here we have columns like name, address, city, and so on. All we need here is the name column. So back to the query, from the clients table, let's select the name column, and finally from the payment method table, let's select, what is that column called? 
 It's called name. So back to the query, pm.name. So here's the end result, Now we can put these columns in any order that we want, it doesn't really matter, let's execute the query and make sure everything works. So, on this date, for this invoice, we have a payment for this amount by this client using a credit card.
-Compound Join Conditions:
- 
- 
- 
- 
 
+
+
+
+
+
+Compound Join Conditions:
 all the examples you have seen so far, we use a single column to uniquely identify the rows in a given table. For example, in the customers table, we have this customer id column which uniquely identifies the rows in this table. But there are times that we cannot use a single column to uniquely identify records in a given table. For example, look at the order items table. In this table we have columns like order id, product id, and so on. Now if you look at the data, you can see that the values in the order id column are repeated, they're duplicated. You have 2, 2, 2, 6, 6, and so on. So we cannot use this column on its own to uniquely identify each record. 
 The same is true for the product id. The values in this column are also duplicated. So in this table, we use the combination of the values in both these columns to uniquely identify each order item. As an example, in this order we have three items for products 1, 4, and 6, and for each product we have the quantity and unit price. So if we use the combination of the values in both these columns, we can uniquely identify each order item. In other words, we don't have two records for order id 2 and product id 1. We only have a single record for that item. Right? Now let's open this table in the design mode. So over here, click on this middle icon that looks like a tool, 
 Note that this yellow key that represents the primary key exists on both these columns. This is what we call a composite primary key. A composite primary key contains more than one column. Now, why does this matter? Well, when you have a table with a composite primary key, you need to learn how to join that table with other tables. For example, here we have this table order item notes that we use to keep notes for each order item. Let's take a look at the data here. So we have this column note id, which uniquely identifies the records in this table, next to that we have order id and product id, you learn that the combination of these two columns uniquely represent an order item. 
@@ -453,28 +376,15 @@ So, oin.order id. But this is not enough, we should also join these tables based
 
 
 Implicit Join Syntax:
- 
+
 In this tutorial I'm going to talk about the implicit join syntax in MySQL. So here we have a basic inner join, we're selecting everything from the orders table, joining it with customers table on orders.customerId equal to customers.customerId. Pretty basic. There is another way to write this query using implicit join syntax. Let me show you how that works. So, we select everything from Now here we can type out multiple table names. So, orders, customers. And we can also give them an alias, so c and o. And then we move this join condition to the where clause. So I'm going to copy this from here, type out a where clause, and paste the condition. These two queries are equivalent. What we have here is called implicit join syntax. 
 Now even though mysql supports this syntax, it's something that I suggest you not to use, because if you accidentally forget to type out the where clause, you will get a cross join. Let me show you what I mean. So first I'm going to delete the first query, and execute this, so we get 10 records because we have 10 orders in this database. So far so good. But what happens if we accidentally forget to type out the where clause. Instead of 10 records, we're going to get probably 100 records. Because every record in the order table is now joined with every record in the customers table. This is what we call a cross join. Now later in this section I'm going to talk about cross joins in more detail, but what I want to point out in this tutorial is that it's better to use the explicit join syntax, so we use join, because this syntax 
 you to type out the join condition. If you simply join orders with customers without typing the join condition, you're going to get a syntax error. So to recap, be aware of the implicit join syntax, but write all your joins using the explicit syntax.
+
+
+
+
 Outer Joins:
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-Exercise:
- 
- 
- 
- 
-
 Earlier in this section I told you that in SQL we have two types of joins, inner joins and outer joins. Now so far you have only seen examples of inner joins. And I also told you that this inner keyword is optional. So whenever you type out a join, you're using an inner join. In this tutorial we're going to look at outer joins and the problems they solve. So, let's start by writing a query that uses an inner join, and then we'll convert that inner join to an outer join. So, select everything from the customers table, join it with the orders table, on c.customerId should be equal to o.customerId. Pretty basic, right? Now for clarity, let's pick a few columns from these two tables. 
 So from the customers table, I want to pick customerId, and first name, and from the orders table, I want to pick order Now finally, let's sort the result so we can clearly see what we get. So order by c.customer id. Let's execute this query and see what we get. So, here's the result. For customer number 2 called ines or ines, whatever, we have two orders, order 4 and order 7. Similarly for customer number 5, we have two orders and so on. Now there's something missing in this result. We only see customers who have an order in our system. These are customers 2, 5, 6, 7, 8, and 10. But if you look at the customers table, you can see that we have other customers like customer number 1, customer number 3, and so on. 
 Now currently we don't have any orders for these customers, and that's the reason we don't see them in this result set. But what if you want to see all the customers whether they have an order or not? That's when we use an outer join. Let me show you how that works. So back to our query. The reason we only saw customers who have an order was because of this join condition. When joining these two tables, we are only returning records that match this condition. So for a given customer, if we do have an order, that record is returned. But as you saw a second ago, some of our customers don't have an order. So for those customers, this condition is not valid. And that is the reason they are not returned in the result set. 

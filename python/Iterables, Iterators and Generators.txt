@@ -3,9 +3,7 @@ Iterables:
 ----------
 
 what does it means, a iterable? 
-
 it means it is something that can be looped over
-
 for example a list is iterable because we can loop over a list 
 
 nums = [1, 2, 3]
@@ -23,13 +21,9 @@ List aren't the only things that we can loop over, we can also loop over tuples,
 
 
 So, what's actually going in the background? How can we tell something that we can loop over or not or another way to ask this is how can we tell if something is iterable:
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 So, it something is iterable, it needs to have a special method called __iter__()(dunder iter or double underscore iter)
-
-
 if you check your list, it would be having '__iter__' method
-
 
 To look the methods and attributes available to a specific object, we can simply use builtin 'dir' function:
 

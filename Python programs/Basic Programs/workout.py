@@ -1,14 +1,32 @@
+class Employee:
 
-source = {1:'a', 2:'b', 3:'c',4:'a', 5:'a', 6:'d', 7: 'e', 8:'b', 9:'c'}
-#output = {'a': [1,4,5], 'b': [2,8], 'c': [3,9], 'd': [6], 'e': [7]}
+    def __init__(self, first, last, pay, receiver_accnt):
+        self.first = first
+        self.last = last
+        self.email = first + '.' + last + '@email.com'
+        self.pay = pay
+        self.receiver_accnt = receiver_accnt
 
-output = {}
+    def fullname(self):
+        return '{} {}'.format(self.first, self.last)
 
-for k,v in source.items():
-   if v in output:
-     output[v].append(k)
-   else:
-    output.update({v :[k]})
+    def amount(self, amount):
+        return self.pay + amount
 
 
-print(output)
+    def transer_funds(self, amount):
+        self.receiver = 'vinoth'
+        self.pay -amount
+        print("sending amount to {}")
+
+
+5000
+
+emp_1 = Employee('Corey', 'Schafer', 50000, 'lavanya')
+emp_2 = Employee('Test', 'Employee', 60000)
+
+
+print(emp_1.amount(1000))  # Employee.amount(emp_1, 1000)
+
+
+print(emp_1.__dict__)

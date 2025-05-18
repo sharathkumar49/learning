@@ -1,0 +1,547 @@
+
+
+sharathkumar49: Django Fundamentals
+
+  What is Django and what are its key features?
+  Explain the MTV (Model-Template-View) architecture pattern in Django.
+  What is a Django project and how is it different from a Django app?
+  Describe the purpose of the settings.py file in a Django project.
+  What is the role of the urls.py file in a Django project?
+  Explain the concept of Django's ORM (Object-Relational Mapping).
+  What is a Django model and how is it defined?
+  Describe the purpose of Django's admin interface.
+  What is a Django view and how is it created?
+    Explain the concept of URL patterns in Django.
+
+
+Django Models and Database
+
+    What is a database migration in Django and why is it important?
+    Explain the difference between a ForeignKey and a ManyToManyField in Django models.
+    How do you define a custom model field in Django?
+    What is a QuerySet in Django and how is it used?
+    Describe the concept of model inheritance in Django.
+    What is a Django model manager and how is it used?
+    Explain the purpose of the Meta class in Django models.
+    How do you perform database queries using Django's ORM?
+    What is the difference between select_related) and prefetch_related() in Django queries?
+Describe the concept of database transactions in Django.
+
+
+Django Views and Templates
+
+    What is a Django template and how is it rendered?
+    Explain the concept of context in Django templates.
+    How do you pass data from a view to a template in Django?
+    What are Django template tags and filters?
+    Describe the purpose of the {% block %} tag in Django templates.
+    What is a Django form and how is it created?
+    Explain the difference between a function-based view and a class-based view in Django.
+    How do you handle file uploads in Django views?
+    What is the purpose of the @login_required decorator in Django views?
+    Describe the concept of view inheritance in Django.
+
+
+Django URL Routing and Middleware
+
+    What is URL routing in Django and how is it configured?
+    Explain the concept of named URL patterns in Django.
+    How do you capture URL parameters in Django views?
+    What is Django middleware and how is it used?
+    Describe the purpose of the CSRF middleware in Django.
+What is the difference between process_request) and process_response) in Django middleware?
+    How do you create a custom middleware in Django?
+    Explain the concept of URL namespaces in Django.
+    What is the purpose of the include() function in Django URL configuration?
+    Describe the concept of URL redirection in Django.
+
+
+Django Authentication and Authorization
+
+    What is the Django authentication system and how does it work?
+    Explain the difference between authentication and authorization in Django.
+    How do you create a custom user model in Django?
+    What is the purpose of the @permission_required decorator in Django views?
+    Describe the concept of user sessions in Django.
+    What is the role of the Django User model?
+    Explain the purpose of the login() and logout) functions in Django authentication.
+    How do you implement password reset functionality in Django?
+What is the difference between the is_authenticated and is_anonymous attributes of a Django user?
+    Describe the concept of user groups and permissions in Django.
+
+
+Django Testing and Debugging
+
+    What is the Django testing framework and how is it used?
+    Explain the difference between unit tests and integration tests in Django.
+    How do you create a test case in Django?
+    What is the purpose of the assertContains() method in Django testing?
+    Describe the concept of test fixtures in Django.
+    What is the Django debug toolbar and how is it used?
+    Explain the purpose of the Django logging framework.
+    How do you handle exceptions and errors in Django views?
+    What is the difference between the DEBUG and ALLOWED_HOSTS settings in Django?
+    Describe the concept of Django test client and its usage.
+
+
+Django Deployment and Performance
+
+    What are the steps involved in deploying a Django application?
+    Explain the concept of WSGI (Web Server Gateway Interface) in Django deployment.
+    How do you handle static files in a Django production environment?
+    What is Django caching and how is it implemented?
+    Describe the concept of load balancing in Django deployment.
+    What is the purpose of the Django security middleware?
+    Explain the concept of database connection pooling in Django.
+    How do you optimize Django database queries for better performance?
+    What is the role of a reverse proxy server in Django deployment?
+    Describe the concept of horizontal scaling in Django applications.
+
+    These are the questions I have found on each sections in Django. I just want you to go through each of these section and add many questions as much as possible(30 to 40 questions likely). Currently it is having 10 questions on each section. Generate all possible questions on each section which more sufficient to take django interview at any level. Also, if necessary add any extra section followed by question on that section. For example, you can have separate section for django rest api framework and its request response cycle, mixins, viewsets under that. 
+
+GitHub Copilot: ### **Django Fundamentals**
+
+1. What is Django, and why is it considered a high-level web framework?
+2. Explain the MTV (Model-Template-View) architecture pattern in Django.
+3. What is the difference between a Django project and a Django app?
+4. How do you create a new Django project and app?
+5. What is the purpose of the settings.py file in a Django project?
+6. How does Django handle configuration for different environments (e.g., development, production)?
+7. What is the role of the `urls.py` file in a Django project?
+8. Explain the concept of Django's ORM (Object-Relational Mapping).
+9. What is the purpose of the manage.py file in a Django project?
+10. How does Django handle static files and media files?
+11. What is the purpose of the `wsgi.py` and `asgi.py` files in a Django project?
+12. How does Django handle internationalization and localization?
+13. What is the purpose of the `INSTALLED_APPS` setting in Django?
+14. How does Django handle security features like CSRF, XSS, and SQL injection prevention?
+15. What is the difference between synchronous and asynchronous views in Django?
+16. How does Django handle URL resolution and reverse URL mapping?
+17. What is the purpose of the `BASE_DIR` variable in settings.py?
+18. How do you enable debugging in Django, and what is the role of the `DEBUG` setting?
+19. What is the purpose of the `ALLOWED_HOSTS` setting in Django?
+20. How does Django handle middleware, and what is its role in request/response processing?
+
+---
+
+### **Django Models and Database**
+
+1. What is a database migration in Django, and why is it important?
+2. How do you create and apply migrations in Django?
+3. Explain the difference between `ForeignKey`, `OneToOneField`, and `ManyToManyField` in Django models.
+4. How do you define a custom model field in Django?
+5. What is a QuerySet in Django, and how is it used?
+6. How do you filter, order, and limit QuerySets in Django?
+7. What is the purpose of the `Meta` class in Django models?
+8. How do you perform raw SQL queries in Django?
+9. What is the difference between `select_related()` and `prefetch_related()` in Django queries?
+10. How do you handle database transactions in Django?
+11. What is the purpose of the `save()` method in Django models?
+12. How do you define default values for model fields in Django?
+13. What is the purpose of the `unique_together` and `constraints` options in the `Meta` class?
+14. How do you use the `get_or_create()` and `update_or_create()` methods in Django?
+15. What is the difference between `objects.all()` and `objects.filter()` in Django?
+16. How do you implement soft deletes in Django models?
+17. What is the purpose of the `default_related_name` option in Django models?
+18. How do you use custom managers in Django models?
+19. What is the difference between abstract models and proxy models in Django?
+20. How do you handle model inheritance in Django?
+21. How do you use the `F` and `Q` objects in Django queries?
+22. What is the purpose of the `db_index` option in Django model fields?
+23. How do you handle database migrations for large datasets in Django?
+24. What is the purpose of the `auto_now` and `auto_now_add` options in Django model fields?
+25. How do you use the `annotate()` and `aggregate()` methods in Django queries?
+26. What is the difference between `values()` and `values_list()` in Django QuerySets?
+27. How do you handle database connection pooling in Django?
+28. What is the purpose of the `defer()` and `only()` methods in Django QuerySets?
+29. How do you use the `bulk_create()` and `bulk_update()` methods in Django?
+30. How do you handle database sharding in Django?
+
+---
+
+### **Django Views and Templates**
+
+1. What is a Django view, and how is it created?
+2. What is the difference between a function-based view (FBV) and a class-based view (CBV) in Django?
+3. How do you pass data from a view to a template in Django?
+4. What is a Django template, and how is it rendered?
+5. What are Django template tags and filters?
+6. How do you use the `{% block %}` and `{% extends %}` tags in Django templates?
+7. What is the purpose of the `context` in Django templates?
+8. How do you handle file uploads in Django views?
+9. What is the purpose of the `@login_required` decorator in Django views?
+10. How do you handle form submissions in Django views?
+11. What is the difference between `render()`, `redirect()`, and `HttpResponse()` in Django views?
+12. How do you use the `get_context_data()` method in class-based views?
+13. What is the purpose of the `dispatch()` method in Django views?
+14. How do you handle AJAX requests in Django views?
+15. What is the purpose of the `TemplateView` class in Django?
+16. How do you use mixins in Django class-based views?
+17. What is the purpose of the `FormView` class in Django?
+18. How do you handle pagination in Django views?
+19. What is the purpose of the `ListView` and `DetailView` classes in Django?
+20. How do you use the `get_object()` method in Django views?
+21. What is the purpose of the `Http404` exception in Django views?
+22. How do you handle custom error pages in Django?
+23. What is the purpose of the `csrf_exempt` decorator in Django views?
+24. How do you use the `JsonResponse` class in Django views?
+25. What is the purpose of the `reverse_lazy` function in Django views?
+26. How do you handle multiple forms in a single Django view?
+27. What is the purpose of the `UpdateView` and `DeleteView` classes in Django?
+28. How do you handle file downloads in Django views?
+29. What is the purpose of the `PermissionRequiredMixin` in Django views?
+30. How do you use the `TemplateResponse` class in Django?
+
+---
+
+### **Django URL Routing and Middleware**
+
+1. What is URL routing in Django, and how is it configured?
+2. How do you capture URL parameters in Django views?
+3. What is the purpose of the `include()` function in Django URL configuration?
+4. Explain the concept of named URL patterns in Django.
+5. How do you use URL namespaces in Django?
+6. What is Django middleware, and how is it used?
+7. How do you create custom middleware in Django?
+8. What is the purpose of the CSRF middleware in Django?
+9. What is the difference between `process_request()` and `process_response()` in Django middleware?
+10. How do you handle URL redirection in Django?
+11. What is the purpose of the `reverse()` function in Django?
+12. How do you enforce trailing slashes in Django URLs?
+13. What is the purpose of the `CommonMiddleware` in Django?
+14. How do you handle cross-origin requests in Django?
+15. What is the purpose of the `X-Frame-Options` header in Django middleware?
+16. How do you handle subdomains in Django URL routing?
+17. What is the purpose of the `APPEND_SLASH` setting in Django?
+18. How do you handle custom error pages for 404 and 500 errors in Django?
+19. What is the purpose of the `StaticFilesMiddleware` in Django?
+20. How do you handle URL normalization in Django?
+
+---
+
+### **Django REST Framework (DRF)**
+
+1. What is Django REST Framework (DRF), and why is it used?
+2. What is the difference between function-based views and class-based views in DRF?
+3. What is a serializer in DRF, and how is it used?
+4. How do you create a custom serializer in DRF?
+5. What is the purpose of the `APIView` class in DRF?
+6. How do you use generic views in DRF?
+7. What is the purpose of viewsets in DRF?
+8. How do you use routers in DRF?
+9. What is the difference between `ModelSerializer` and `Serializer` in DRF?
+10. How do you handle authentication in DRF?
+11. What is the purpose of permissions in DRF?
+12. How do you create custom permissions in DRF?
+13. What is the purpose of throttling in DRF?
+14. How do you handle pagination in DRF?
+15. What is the difference between `Response` and `HttpResponse` in DRF?
+16. How do you handle file uploads in DRF?
+17. What is the purpose of the `@api_view` decorator in DRF?
+18. How do you use mixins in DRF views?
+19. What is the purpose of the `BrowsableAPIRenderer` in DRF?
+20. How do you handle nested serializers in DRF?
+21. What is the purpose of the `HyperlinkedModelSerializer` in DRF?
+22. How do you handle versioning in DRF?
+23. What is the purpose of the `SchemaGenerator` in DRF?
+24. How do you use the `APIView` class to handle GET and POST requests?
+25. What is the purpose of the `DefaultRouter` in DRF?
+
+---
+
+### **Additional Sections**
+
+#### **Django Signals**
+1. What are Django signals, and how are they used?
+2. How do you create custom signals in Django?
+3. What is the purpose of the `post_save` and `pre_save` signals in Django?
+4. How do you disconnect signals in Django?
+
+#### **Django Channels**
+1. What is Django Channels, and how does it enable real-time communication?
+2. How do you set up WebSocket connections in Django Channels?
+3. What is the purpose of the `ASGI` server in Django Channels?
+
+This expanded list of questions covers a wide range of topics, making it suitable for Django interviews at any level.
+
+sharathkumar49: Good, Thank you so much. Now Generate sections like 'Django ORM', 'Building a Data Model' and add 30-40 possible questions on each section and in the 'Django REST Framework' section, add more possible questions for Building RESTful APIs with Django REST Framework, Advanced API Concepts and so on. 
+Note: As I said before, the generated question should be fit for django interviews at any level
+
+GitHub Copilot: ### **Django ORM (Object-Relational Mapping)**
+
+1. What is Django ORM, and how does it work?
+2. How do you define a model in Django?
+3. What is the purpose of the `objects` attribute in Django models?
+4. How do you perform CRUD operations using Django ORM?
+5. What is a QuerySet in Django, and how is it lazy?
+6. How do you filter QuerySets in Django?
+7. What is the difference between `filter()` and `exclude()` in Django ORM?
+8. How do you use the `get()` method in Django ORM, and what happens if no record is found?
+9. What is the purpose of the `all()` method in Django ORM?
+10. How do you use the `order_by()` method in Django ORM?
+11. What is the difference between `values()` and `values_list()` in Django QuerySets?
+12. How do you use the `annotate()` and `aggregate()` methods in Django ORM?
+13. What is the purpose of the `distinct()` method in Django ORM?
+14. How do you use the `count()` method in Django ORM?
+15. What is the difference between `select_related()` and `prefetch_related()` in Django ORM?
+16. How do you perform raw SQL queries in Django ORM?
+17. What is the purpose of the `F` object in Django ORM?
+18. How do you use the `Q` object for complex queries in Django ORM?
+19. How do you handle database transactions in Django ORM?
+20. What is the purpose of the `bulk_create()` and `bulk_update()` methods in Django ORM?
+21. How do you use the `exists()` method in Django ORM?
+22. What is the purpose of the `only()` and `defer()` methods in Django ORM?
+23. How do you use the `update()` method in Django ORM?
+24. What is the difference between `save()` and `update()` in Django ORM?
+25. How do you use the `delete()` method in Django ORM?
+26. What is the purpose of the `get_or_create()` and `update_or_create()` methods in Django ORM?
+27. How do you handle relationships in Django ORM (e.g., ForeignKey, ManyToManyField)?
+28. What is the purpose of the `related_name` attribute in Django relationships?
+29. How do you use the `through` attribute in ManyToMany relationships in Django ORM?
+30. How do you optimize database queries in Django ORM?
+31. What is the purpose of the `db_index` option in Django model fields?
+32. How do you use the `extra()` method in Django ORM?
+33. What is the purpose of the `iterator()` method in Django QuerySets?
+34. How do you handle database migrations in Django ORM?
+35. What is the purpose of the `Meta` class in Django models?
+36. How do you use the `unique_together` and `constraints` options in Django models?
+37. How do you implement soft deletes in Django ORM?
+38. What is the purpose of the `default_related_name` option in Django models?
+39. How do you use the `select_for_update()` method in Django ORM?
+40. How do you handle database sharding in Django ORM?
+
+---
+
+### **Building a Data Model**
+
+1. What is a Django model, and how is it defined?
+2. How do you define fields in a Django model?
+3. What are the different field types available in Django models?
+4. How do you set default values for model fields in Django?
+5. What is the purpose of the `primary_key` attribute in Django models?
+6. How do you define a custom model field in Django?
+7. What is the purpose of the `unique` attribute in Django model fields?
+8. How do you define relationships in Django models (e.g., ForeignKey, OneToOneField, ManyToManyField)?
+9. What is the purpose of the `related_name` attribute in Django relationships?
+10. How do you use the `through` attribute in ManyToMany relationships?
+11. What is the purpose of the `verbose_name` and `help_text` attributes in Django model fields?
+12. How do you define choices for a model field in Django?
+13. What is the purpose of the `blank` and `null` attributes in Django model fields?
+14. How do you use the `db_index` attribute in Django models?
+15. What is the purpose of the `Meta` class in Django models?
+16. How do you define custom table names in Django models?
+17. What is the purpose of the `unique_together` and `constraints` options in Django models?
+18. How do you use the `ordering` option in the `Meta` class?
+19. What is the purpose of the `abstract` attribute in Django models?
+20. How do you implement model inheritance in Django?
+21. What is the difference between abstract models and proxy models in Django?
+22. How do you define a custom manager for a Django model?
+23. What is the purpose of the `save()` method in Django models?
+24. How do you override the `save()` method in Django models?
+25. How do you define a `get_absolute_url()` method in Django models?
+26. What is the purpose of the `str()` method in Django models?
+27. How do you use the `auto_now` and `auto_now_add` attributes in Django model fields?
+28. How do you handle file uploads in Django models?
+29. What is the purpose of the `ImageField` and `FileField` in Django models?
+30. How do you use the `choices` attribute in Django model fields?
+31. How do you handle migrations for model changes in Django?
+32. What is the purpose of the `default_auto_field` setting in Django?
+33. How do you use the `DecimalField` and `FloatField` in Django models?
+34. How do you define a custom database table name for a Django model?
+35. What is the purpose of the `index_together` option in Django models?
+36. How do you use the `validators` attribute in Django model fields?
+37. How do you handle model validation in Django?
+38. What is the purpose of the `to_field` attribute in Django relationships?
+39. How do you use the `limit_choices_to` attribute in Django relationships?
+40. How do you implement soft deletes in Django models?
+
+---
+
+### **Django REST Framework (DRF)**
+
+#### **Building RESTful APIs with Django REST Framework**
+
+1. What is Django REST Framework (DRF), and why is it used?
+2. How do you create a simple API endpoint using DRF?
+3. What is the purpose of serializers in DRF?
+4. How do you create a custom serializer in DRF?
+5. What is the difference between `Serializer` and `ModelSerializer` in DRF?
+6. How do you handle validation in DRF serializers?
+7. What is the purpose of the `APIView` class in DRF?
+8. How do you use generic views in DRF?
+9. What is the purpose of viewsets in DRF?
+10. How do you use routers in DRF?
+11. How do you handle authentication in DRF?
+12. What is the purpose of permissions in DRF?
+13. How do you create custom permissions in DRF?
+14. How do you handle pagination in DRF?
+15. What is the difference between `Response` and `HttpResponse` in DRF?
+16. How do you handle file uploads in DRF?
+17. How do you use the `@api_view` decorator in DRF?
+18. What is the purpose of the `BrowsableAPIRenderer` in DRF?
+19. How do you handle nested serializers in DRF?
+20. How do you implement filtering in DRF?
+
+#### **Advanced API Concepts**
+
+21. What is the purpose of throttling in DRF?
+22. How do you handle versioning in DRF?
+23. What is the purpose of the `HyperlinkedModelSerializer` in DRF?
+24. How do you use mixins in DRF views?
+25. How do you implement custom actions in DRF viewsets?
+26. What is the purpose of the `SchemaGenerator` in DRF?
+27. How do you handle API documentation in DRF?
+28. How do you use the `DefaultRouter` in DRF?
+29. How do you implement token-based authentication in DRF?
+30. What is the purpose of the `IsAuthenticated` permission in DRF?
+31. How do you use the `IsAdminUser` permission in DRF?
+32. How do you implement JWT authentication in DRF?
+33. How do you handle API versioning in DRF?
+34. What is the purpose of the `throttle_classes` attribute in DRF views?
+35. How do you use the `@action` decorator in DRF viewsets?
+36. How do you implement custom exception handling in DRF?
+37. How do you use the `ListSerializer` in DRF?
+38. How do you handle relationships in DRF serializers?
+39. How do you use the `context` attribute in DRF serializers?
+40. How do you optimize API performance in DRF?
+
+---
+
+These expanded sections provide a comprehensive list of questions for Django interviews at any level, covering fundamental concepts, advanced topics, and practical use cases.
+
+sharathkumar49: Thanks, Good to know. Is there anything that I need to cover in Django. Or any other specific sections along with the questions. Generate if there's anything other than these or let it be if the generated ones are sufficient.  
+
+GitHub Copilot: The sections and questions generated so far are comprehensive and cover a wide range of topics in Django, making them suitable for interviews at any level. However, there are a few **additional sections** that could be included to further enhance the coverage, especially for advanced use cases and specialized topics. Below are the additional sections and their corresponding questions:
+
+---
+
+### **Django Signals**
+
+1. What are Django signals, and how are they used?
+2. What is the purpose of the `post_save` and `pre_save` signals in Django?
+3. How do you connect a signal to a receiver function in Django?
+4. What is the purpose of the `post_delete` and `pre_delete` signals in Django?
+5. How do you disconnect signals in Django?
+6. What is the purpose of the `m2m_changed` signal in Django?
+7. How do you use the `request_finished` and `request_started` signals in Django?
+8. What is the purpose of the `class_prepared` signal in Django?
+9. How do you create custom signals in Django?
+10. How do you handle signals in a modular way using `@receiver` decorators?
+11. What are the potential pitfalls of using signals in Django?
+12. How do you test signals in Django?
+13. How do you use signals to send notifications in Django?
+14. What is the difference between synchronous and asynchronous signals in Django?
+15. How do you use signals to log changes in models?
+16. How do you use signals to update related models in Django?
+17. What is the purpose of the `post_migrate` signal in Django?
+18. How do you use signals to handle user authentication events in Django?
+19. How do you use signals to trigger email notifications in Django?
+20. How do you debug issues with Django signals?
+
+---
+
+### **Django Asynchronous Features**
+
+1. What is Django's support for asynchronous views?
+2. How do you define an asynchronous view in Django?
+3. What is the purpose of the `async_to_sync` and `sync_to_async` utilities in Django?
+4. How do you handle database queries in asynchronous views?
+5. What are the limitations of using asynchronous views in Django?
+6. How do you integrate Django with asynchronous frameworks like Django Channels?
+7. What is the purpose of the `ASGI` server in Django?
+8. How do you handle WebSocket connections in Django?
+9. What is the difference between WSGI and ASGI in Django?
+10. How do you use Django with asynchronous task queues like Celery?
+11. How do you handle long-running tasks in Django asynchronously?
+12. What is the purpose of the `async def` syntax in Django views?
+13. How do you test asynchronous views in Django?
+14. How do you use Django with real-time features like notifications or chat applications?
+15. How do you handle concurrency issues in Django asynchronous views?
+
+---
+
+### **Django Security**
+
+1. What are the common security features provided by Django?
+2. How does Django protect against SQL injection?
+3. What is CSRF, and how does Django's CSRF middleware work?
+4. How does Django protect against XSS (Cross-Site Scripting) attacks?
+5. What is the purpose of the `SECURE_SSL_REDIRECT` setting in Django?
+6. How do you enforce HTTPS in Django?
+7. What is the purpose of the `SECURE_HSTS_SECONDS` setting in Django?
+8. How does Django handle clickjacking protection?
+9. What is the purpose of the `X-Content-Type-Options` header in Django?
+10. How do you secure cookies in Django?
+11. What is the purpose of the `SESSION_COOKIE_SECURE` and `CSRF_COOKIE_SECURE` settings in Django?
+12. How do you implement user authentication securely in Django?
+13. What is the purpose of the `ALLOWED_HOSTS` setting in Django?
+14. How do you handle sensitive data like API keys and passwords in Django?
+15. How do you use Django's password validators to enforce strong passwords?
+16. What is the purpose of the `SECURE_BROWSER_XSS_FILTER` setting in Django?
+17. How do you prevent directory traversal attacks in Django?
+18. How do you secure file uploads in Django?
+19. What is the purpose of the `SECURE_REFERRER_POLICY` setting in Django?
+20. How do you use Django's `django-axes` package for brute force attack prevention?
+
+---
+
+### **Django Advanced Topics**
+
+1. How do you implement multi-tenancy in Django?
+2. What is the purpose of the `ContentType` framework in Django?
+3. How do you use Django's `GenericForeignKey`?
+4. How do you implement custom management commands in Django?
+5. What is the purpose of the `signals` framework in Django?
+6. How do you handle large file uploads in Django?
+7. How do you implement a custom template backend in Django?
+8. What is the purpose of the `django.contrib.sites` framework?
+9. How do you use Django with NoSQL databases like MongoDB?
+10. How do you implement a custom authentication backend in Django?
+11. How do you use Django with GraphQL?
+12. How do you implement a custom storage backend in Django?
+13. How do you handle multi-database setups in Django?
+14. What is the purpose of the `django.contrib.postgres` module?
+15. How do you use Django with third-party APIs?
+16. How do you implement a custom middleware in Django?
+17. How do you use Django with serverless architectures?
+18. How do you implement a custom admin action in Django?
+19. How do you use Django with Docker and Kubernetes?
+20. How do you implement a custom logging configuration in Django?
+
+---
+
+### **Django REST Framework (Expanded)**
+
+#### **Building RESTful APIs with Django REST Framework**
+
+1. How do you implement custom validation in DRF serializers?
+2. How do you handle nested relationships in DRF serializers?
+3. What is the purpose of the `HyperlinkedModelSerializer` in DRF?
+4. How do you use the `@action` decorator in DRF viewsets?
+5. How do you implement custom pagination in DRF?
+6. How do you handle file uploads in DRF?
+7. How do you implement token-based authentication in DRF?
+8. How do you use JWT authentication in DRF?
+9. How do you implement API versioning in DRF?
+10. How do you handle throttling in DRF?
+
+#### **Advanced API Concepts**
+
+11. How do you use the `ListSerializer` in DRF?
+12. How do you handle bulk updates in DRF?
+13. How do you implement custom exception handling in DRF?
+14. How do you use the `BrowsableAPIRenderer` in DRF?
+15. How do you implement API documentation in DRF?
+16. How do you use the `SchemaGenerator` in DRF?
+17. How do you handle WebSocket connections in DRF?
+18. How do you use DRF with GraphQL?
+19. How do you optimize API performance in DRF?
+20. How do you implement HATEOAS in DRF?
+
+---
+
+### **Conclusion**
+
+The sections and questions provided now cover **all major aspects of Django**, including **fundamentals**, **ORM**, **REST Framework**, **security**, **asynchronous features**, and **advanced topics**. These additions ensure that the list is comprehensive and suitable for interviews at any level, from beginner to advanced.
+
+If you feel any specific area needs further expansion, let me know!
