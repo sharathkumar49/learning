@@ -1,0 +1,440 @@
+
+
+program 1:
+coroutine.py:
+-------------
+import asyncio
+
+
+async def main():
+	print("Start of main corouting')
+	
+# main() # -> coroutine object	
+	
+#Run the main corouting
+aysncio.run(main())
+
+
+
+program 2: 
+coroutine.py:
+-------------
+import asyncio
+
+
+#Define a coroutine that simulates a time_consuming task
+async def fetch_data(delay):
+	print("Fetching data..")
+	await asyncio.sleep(delay) # Simulates an I/O operation with a sleep 
+	print("Data fetched")
+	return {"data": "Some data"} # Return some data 
+	
+	
+	
+#Define another coroutine that calls the first coroutine
+async def main():
+	print("Start of the main coroutine")
+	task = fetch_data(2)
+	#Await the fetch_data coroutine, pausing execution of main until fetch_data completes 
+	result = await task 
+	print(f"Received result: {result}")
+	print("End of main coroutine")
+	
+	
+#Run the main coroutine
+asyncio.run(main())
+
+
+Output:
+Start of the main coroutine
+Fetching data..
+Data fetched
+Received result: {'data': 'Some data'}
+End of main coroutine
+
+
+
+
+
+ 
+coroutine.py(changing the print statement): 
+-------------------------------------------
+import asyncio
+
+
+#Define a coroutine that simulates a time_consuming task
+async def fetch_data(delay):
+	print("Fetching data..")
+	await asyncio.sleep(delay) # Simulates an I/O operation with a sleep 
+	print("Data fetched")
+	return {"data": "Some data"} # Return some data 
+	
+	
+	
+#Define another coroutine that calls the first coroutine
+async def main():
+	print("Start of the main coroutine")
+	task = fetch_data(2)
+	print("End of main coroutine")
+	
+	#Await the fetch_data coroutine, pausing execution of main until fetch_data completes 
+	result = await task 
+	print(f"Received result: {result}")
+	
+	
+	
+#Run the main coroutine
+asyncio.run(main())
+
+
+Output:
+Start of the main coroutine
+End of main coroutine
+Fetching data..
+Data fetched
+Received result: {'data': 'Some data'}
+
+
+
+
+Program 3: 
+creating multiple corouting objects and awaiting them:
+------------------------------------------------------
+
+import asyncio
+
+#Define a coroutine that simulates a time_consuming task
+async def fetch_data(delay, id):
+	print("Fetching data....id:", id)
+	await asyncio.sleep(delay) # Simulates an I/O operation with a sleep 
+	print("Data fetched, id:", id)
+	return {"data": "Some data", "id": id} # Return some data 
+	
+	
+#Define another coroutine that calls the first coroutine
+async def main():
+
+	task1 = fetch_data(2, 1)
+	task2 = fetch_data(2, 2) 
+
+	result1 = await task1
+	print(f"Received result: {result1}")
+	
+	result2 = await task2
+	print(f"Received result: {result2}")
+	
+
+		
+#Run the main coroutine
+asyncio.run(main())
+
+Output:	
+Fetching data....id: 1
+Data fetched, id: 1
+Received result: {'data': 'Some data', 'id': 1}
+Fetching data....id: 2
+Data fetched, id: 2
+Received result: {'data': 'Some data', 'id': 2}	
+	
+	
+	
+	
+	
+	
+Creating tasks: 
+---------------
+basic_tasks.py:
+
+import asyncio
+
+async def fetch_data(id, sleep_time):
+	print(f"Coroutine {id} starting to fetch data.")
+	await asyncio.sleep(sleep_time) 
+	return {"id": id, "data": f"Sample data from corouting {id}"}
+	
+	
+async def main():
+	# Create tasks for running coroutines concurrently
+	task1 = asyncio.create_task(fetch_data(1, 2))
+	task2 = asyncio.create_task(fetch_data(2, 3))
+	task3 = asyncio.create_task(fetch_data(3, 1))
+
+	result1 = await task1
+	result2 = await task2
+	result3 = await task3
+
+	print(result1, result2, result3)
+
+		
+#Run the main coroutine
+asyncio.run(main())
+
+
+
+Output:
+Coroutine 1 starting to fetch data.
+Coroutine 2 starting to fetch data.
+Coroutine 3 starting to fetch data.
+{'id': 1, 'data': 'Sample data from corouting 1'} {'id': 2, 'data': 'Sample data from corouting 2'} {'id': 3, 'data': 'Sample data from corouting 3'} 
+
+
+
+
+
+
+
+Using asyncio.gather() function:
+
+
+gather_tasks.py:
+----------------
+import asyncio
+
+async def fetch_data(id, sleep_time):
+	print(f"Coroutine {id} starting to fetch data.")
+	await asyncio.sleep(sleep_time)   # Simulate a network request or IO operation 
+	# Return some data as a result 
+	return {"id": id, "data": f"Sample data from corouting {id}"}
+	
+	
+async def main():
+
+	# Run coroutines concurrently and gather their return values
+	results = await asyncio.gather(fetch_data(1,2), fetch_data(2, 1), fetch_data(3, 3))
+
+	# Process the results
+	for result in results:
+		print(f"Received result: {result}")
+
+
+		
+#Run the main coroutine
+asyncio.run(main())
+
+
+Output:
+Coroutine 1 starting to fetch data.
+Coroutine 2 starting to fetch data.
+Coroutine 3 starting to fetch data.
+Received result: {'id': 1, 'data': 'Sample data from corouting 1'}
+Received result: {'id': 2, 'data': 'Sample data from corouting 2'}
+Received result: {'id': 3, 'data': 'Sample data from corouting 3'}
+
+
+
+
+
+
+
+
+
+
+task_group.py:
+--------------
+import asyncio
+
+async def fetch_data(id, sleep_time):
+	print(f"Coroutine {id} starting to fetch data.")
+	await asyncio.sleep(sleep_time)   # Simulate a network request or IO operation 
+	# Return some data as a result 
+	return {"id": id, "data": f"Sample data from corouting {id}"}
+	
+	
+async def main():
+	tasks = []
+	async with asyncio.TaskGroup() as tg:
+		for i, sleep_time in enumerate([2, 1, 3], start=1):
+			task = tg.create_task(fetch_data(i, sleep_time))
+			tasks.append(task)
+			
+	# After the Task Group block, all tasks have completed 
+	results = [task.result() for task in tasks]
+	
+	for result in results:
+		print(f"Received result: {result}")
+
+		
+#Run the main coroutine
+asyncio.run(main())
+
+
+Output:
+Coroutine 1 starting to fetch data.
+Coroutine 1 starting to fetch data.
+Coroutine 2 starting to fetch data.
+Coroutine 3 starting to fetch data.
+Received result: {'id': 1, 'data': 'Sample data from corouting 1'}
+Received result: {'id': 2, 'data': 'Sample data from corouting 2'}
+Received result: {'id': 3, 'data': 'Sample data from corouting 3'}
+
+
+
+
+
+
+
+
+futures.py:
+-----------
+
+import asyncio
+
+async def set_future_result(future, value):
+	await asyncio.sleep(2)
+	# set the result of the future 
+	future.set_result(value)
+	print(f"Set the future's result to: {value}")
+	
+async def main():
+	#Create a future object 
+	loop = asyncio.get_running_loop()
+	future = loop.create_future()
+	
+	#Schedule setting the future's result
+	asyncio.create_task(set_future_result(future, "Future result is ready"))
+	
+	# Wait for the future's result
+	result = await future
+	print(f"Received the future's result: {result}")
+		
+#Run the main coroutine
+asyncio.run(main())
+
+Output:
+Set the future's result to: Future result is ready
+Received the future's result: Future result is ready
+
+
+
+
+
+
+
+
+
+
+Synchronization:
+----------------
+
+lock.py:
+import asyncio
+
+#A shared variable
+shared_resource = 0
+
+# An asyncio lock
+lock = asyncio.Lock()
+
+
+async def modify_shared_resource():
+	global shared_resource
+	async with lock:
+		# Critical section starts 
+		print(f"Resource before modification: {shared_resource}")
+		shared_resource += 1  # Modify  the shared resource 
+		await asyncio.sleep(1) # Simulate an IO operation 
+		print(f"Resource after modification: {shared_resource}")
+		# Critical section ends
+		
+		
+async def main():
+	await asyncio.gather(*(modify_shared_resource() for _ in range(5)))
+	
+#Run the main coroutine
+asyncio.run(main())	
+
+
+Output:
+Resource before modification: 0
+Resource after modification: 1
+Resource before modification: 1
+Resource after modification: 2
+Resource before modification: 2
+Resource after modification: 3
+Resource before modification: 3
+Resource after modification: 4
+Resource before modification: 4
+Resource after modification: 5
+
+
+
+
+
+
+
+
+Semaphore:
+----------
+sem.py:
+
+import asyncio
+
+
+async def access_resource(semaphore, resource_id):
+	async with semaphore:
+		# Simulate accessing a limited resource 
+		print(f"Accessing resource {resource_id}")
+		await asyncio.sleep(1) # Simulate work with the resource 
+		print(f"Releasing resource {resource_id}")
+		
+		
+async def main():
+	semaphore = asyncio.Semaphore(2) # Allow 2 concurrent accesses 
+	await asyncio.gather(*(access_resource(semaphore, i) for i in range(5)))
+	
+	
+#Run the main coroutine
+asyncio.run(main())	
+
+
+Output:
+Accessing resource 0
+Accessing resource 1
+Releasing resource 0
+Releasing resource 1
+Accessing resource 2
+Accessing resource 3
+Releasing resource 2
+Releasing resource 3
+Accessing resource 4
+Releasing resource 4
+
+
+
+
+
+
+
+
+event:
+------
+event.py:
+
+import asyncio
+
+async def waiter(event):
+	print("Waiting for the event to be set")
+	await event.wait()
+	print("event has been set, continuing execution")
+	
+	
+async def setter(event):
+	await asyncio.sleep(2) # Simulate doing some work 
+	event.set()
+	print("event has been set!")
+	
+	
+async def main():
+	event = asyncio.Event()
+	await asyncio.gather(waiter(event), setter(event))
+	
+
+#Run the main coroutine
+asyncio.run(main())	
+
+
+
+Output:
+Waiting for the event to be set
+event has been set!
+event has been set, continuing execution

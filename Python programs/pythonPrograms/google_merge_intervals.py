@@ -1,0 +1,15 @@
+# Google: Merge Intervals
+def merge(intervals):
+    intervals.sort(key=lambda x: x[0])
+    merged = []
+    for interval in intervals:
+        if not merged or merged[-1][1] < interval[0]:
+            merged.append(interval)
+        else:
+            merged[-1][1] = max(merged[-1][1], interval[1])
+    return merged
+
+if __name__ == "__main__":
+    n = int(input("Number of intervals: "))
+    intervals = [list(map(int, input().split())) for _ in range(n)]
+    print("Merged:", merge(intervals))

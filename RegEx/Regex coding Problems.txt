@@ -1,0 +1,576 @@
+1.
+
+You are given a string .
+Your task is to verify that  is a floating point number.
+
+In this task, a valid float number must satisfy all of the following requirements:
+
+ Number can start with +, - or . symbol.
+For example:
+✔
++4.50
+✔
+-1.0
+✔
+.5
+✔
+-.7
+✔
++.4
+✖
+ -+4.5
+
+ Number must contain at least  decimal value.
+For example:
+✖
+ 12.
+✔
+12.0  
+
+ Number must have exactly one . symbol.
+ Number must not give any exceptions when converted using .
+
+Input Format
+
+The first line contains an integer , the number of test cases.
+The next  line(s) contains a string .
+
+Constraints
+
+Output Format
+
+Output True or False for each test case.
+
+Sample Input 0
+
+4
+4.0O0
+-1.00
++4.54
+SomeRandomStuff
+Sample Output 0
+
+False
+True
+True
+False
+Explanation 0
+
+4.0O0: O is not a digit.
+-1.00: is valid.
++4.54: is valid.
+SomeRandomStuff: is not a number.
+
+
+SOLUTION
+---------
+import re
+
+n = int(input())
+pattern = r'^[+-]?\d*\.\d+$'
+
+for _ in range(n): 
+    N = input()
+    print(bool(re.match(pattern,N)))
+
+==========================================================================================================================================================================================================	
+2.
+
+re.findall()
+The expression re.findall() returns all the non-overlapping matches of patterns in a string as a list of strings.
+Code
+
+>>> import re
+>>> re.findall(r'\w','http://www.hackerrank.com/')
+['h', 't', 't', 'p', 'w', 'w', 'w', 'h', 'a', 'c', 'k', 'e', 'r', 'r', 'a', 'n', 'k', 'c', 'o', 'm']
+re.finditer()
+The expression re.finditer() returns an iterator yielding MatchObject instances over all non-overlapping matches for the re pattern in the string.
+Code
+
+>>> import re
+>>> re.finditer(r'\w','http://www.hackerrank.com/')
+<callable-iterator object at 0x0266C790>
+>>> map(lambda x: x.group(),re.finditer(r'\w','http://www.hackerrank.com/'))
+['h', 't', 't', 'p', 'w', 'w', 'w', 'h', 'a', 'c', 'k', 'e', 'r', 'r', 'a', 'n', 'k', 'c', 'o', 'm']
+Task
+You are given a string . It consists of alphanumeric characters, spaces and symbols(+,-).
+Your task is to find all the substrings of  that contains  or more vowels.
+Also, these substrings must lie in between  consonants and should contain vowels only.
+
+Note :
+Vowels are defined as: AEIOU and aeiou.
+Consonants are defined as: QWRTYPSDFGHJKLZXCVBNM and qwrtypsdfghjklzxcvbnm.
+
+Input Format
+
+A single line of input containing string .
+
+Constraints
+
+
+Output Format
+
+Print the matched substrings in their order of occurrence on separate lines.
+If no match is found, print -1.
+
+Sample Input
+
+rabcdeefgyYhFjkIoomnpOeorteeeeet
+Sample Output
+
+ee
+Ioo
+Oeo
+eeeee
+Explanation
+
+ee is located between consonant  and .
+Ioo is located between consonant  and .
+Oeo is located between consonant  and .
+eeeee is located between consonant  and .
+
+SOLUTION
+--------
+import re
+
+n = input()
+pattern = r'(?<=[qwrtypsdfghjklzxcvbnmQWRTYPSDFGHJKLZXCVBNM])([aeiouAEIOIU]{2,})(?=[qwrtypsdfghjklzxcvbnmQWRTYPSDFGHJKLZXCVBNM])'
+
+result = re.findall(pattern,n)
+
+if result:
+    for rslt in result:
+        print(rslt)
+else:
+    print("-1")
+
+==========================================================================================================================================================================================================	
+3.
+The re.sub() tool (sub stands for substitution) evaluates a pattern and, for each valid match, it calls a method (or lambda).
+The method is called for all matches and can be used to modify strings in different ways.
+The re.sub() method returns the modified string as an output.
+
+Learn more about .
+
+Transformation of Strings
+
+Code
+
+import re
+
+#Squaring numbers
+def square(match):
+    number = int(match.group(0))
+    return str(number**2)
+
+print re.sub(r"\d+", square, "1 2 3 4 5 6 7 8 9")
+Output
+
+1 4 9 16 25 36 49 64 81
+
+Replacements in Strings
+
+Code
+
+import re
+
+html = """
+<head>
+<title>HTML</title>
+</head>
+<object type="application/x-flash" 
+  data="your-file.swf" 
+  width="0" height="0">
+  <!-- <param name="movie"  value="your-file.swf" /> -->
+  <param name="quality" value="high"/>
+</object>
+"""
+
+print re.sub("(<!--.*?-->)", "", html) #remove comment
+Output
+
+<head>
+<title>HTML</title>
+</head>
+<object type="application/x-flash" 
+  data="your-file.swf" 
+  width="0" height="0">
+
+  <param name="quality" value="high"/>
+</object>
+Task
+
+You are given a text of  lines. The text contains && and || symbols.
+Your task is to modify those symbols to the following:
+
+&& → and
+|| → or
+Both && and || should have a space " " on both sides.
+
+Input Format
+
+The first line contains the integer, .
+The next  lines each contain a line of the text.
+
+Constraints
+
+
+Neither && nor || occur in the start or end of each line.
+
+Output Format
+
+Output the modified text.
+
+Sample Input
+
+11
+a = 1;
+b = input();
+
+if a + b > 0 && a - b < 0:
+    start()
+elif a*b > 10 || a/b < 1:
+    stop()
+print set(list(a)) | set(list(b)) 
+#Note do not change &&& or ||| or & or |
+#Only change those '&&' which have space on both sides.
+#Only change those '|| which have space on both sides.
+Sample Output
+
+a = 1;
+b = input();
+
+if a + b > 0 and a - b < 0:
+    start()
+elif a*b > 10 or a/b < 1:
+    stop()
+print set(list(a)) | set(list(b)) 
+#Note do not change &&& or ||| or & or |
+#Only change those '&&' which have space on both sides.
+#Only change those '|| which have space on both sides.    
+
+
+SOLUTION
+---------
+import re
+
+n = int(input())
+
+def replacer(match):
+    if match.group() == "&&":
+        return "and"
+    if match.group() == "||":
+        return "or"
+
+for i in range(n):
+    txt = input()
+    result = re.sub(r"(?<= )(&&|\|\|)(?= )",replacer,txt)
+    
+    print(result)
+    
+
+==========================================================================================================================================================================================================
+4.
+
+Task
+
+You are given a string .
+Your task is to find the first occurrence of an alphanumeric character in  (read from left to right) that has consecutive repetitions.
+
+Input Format
+
+A single line of input containing the string .
+
+Constraints
+
+
+Output Format
+
+Print the first occurrence of the repeating character. If there are no repeating characters, print -1.
+
+Sample Input
+
+..12345678910111213141516171820212223
+Sample Output
+
+1
+Explanation
+
+.. is the first repeating character, but it is not alphanumeric.
+1 is the first (from left to right) alphanumeric repeating character of the string in the substring 111.
+
+SOLUTION
+---------
+
+import re
+
+def validate(txt):
+    pattern = r'([A-Za-z0-9])\1'
+    
+    match = re.search(pattern,txt)
+    
+    if match:
+        print(match.group(1))
+    else:
+        print(-1)
+    
+
+txt = input()
+validate(txt)
+
+==========================================================================================================================================================================================================
+5.
+Task
+You are given a string . It consists of alphanumeric characters, spaces and symbols(+,-).
+Your task is to find all the substrings of  that contains  or more vowels.
+Also, these substrings must lie in between  consonants and should contain vowels only.
+
+Note :
+Vowels are defined as: AEIOU and aeiou.
+Consonants are defined as: QWRTYPSDFGHJKLZXCVBNM and qwrtypsdfghjklzxcvbnm.
+
+Input Format
+
+A single line of input containing string .
+
+Constraints
+
+
+Output Format
+
+Print the matched substrings in their order of occurrence on separate lines.
+If no match is found, print -1.
+
+Sample Input
+
+rabcdeefgyYhFjkIoomnpOeorteeeeet
+Sample Output
+
+ee
+Ioo
+Oeo
+eeeee
+Explanation
+
+ee is located between consonant  and .
+Ioo is located between consonant  and .
+Oeo is located between consonant  and .
+eeeee is located between consonant  and .
+
+SOLUTION
+---------
+import re
+
+n = input()
+pattern = r'(?<=[qwrtypsdfghjklzxcvbnmQWRTYPSDFGHJKLZXCVBNM])([aeiouAEIOIU]{2,})(?=[qwrtypsdfghjklzxcvbnmQWRTYPSDFGHJKLZXCVBNM])'
+
+result = re.findall(pattern,n)
+
+if result:
+    for rslt in result:
+        print(rslt)
+else:
+    print("-1")
+
+==========================================================================================================================================================================================================
+6.
+
+Concept
+
+A valid mobile number is a ten digit number starting with a  or .
+
+Regular expressions are a key concept in any programming language. A quick explanation with Python examples is available here. You could also go through the link below to read more about regular expressions in Python.
+
+https://developers.google.com/edu/python/regular-expressions
+
+Input Format
+
+The first line contains an integer , the number of inputs.
+ lines follow, each containing some string.
+
+Constraints
+
+
+
+Output Format
+
+For every string listed, print "YES" if it is a valid mobile number and "NO" if it is not on separate lines. Do not print the quotes.
+
+Sample Input
+
+2
+9587456281
+1252478965
+Sample Output
+
+YES
+NO
+
+SOLUTION
+---------
+import re
+
+n = int(input())
+pattern = r'^[789]\d{9}$'
+for _ in range(n):
+    s = input()
+    result = re.match(pattern,s)
+    if result:
+        print("YES")
+    else:
+        print("NO")
+		
+
+==========================================================================================================================================================================================================
+
+7.
+A valid postal code  have to fullfil both below requirements:
+
+ must be a number in the range from  to  inclusive.
+ must not contain more than one alternating repetitive digit pair.
+Alternating repetitive digits are digits which repeat immediately after the next digit. In other words, an alternating repetitive digit pair is formed by two equal digits that have just a single digit between them.
+
+For example:
+
+121426 # Here, 1 is an alternating repetitive digit.
+523563 # Here, NO digit is an alternating repetitive digit.
+552523 # Here, both 2 and 5 are alternating repetitive digits.
+Your task is to provide two regular expressions regex_integer_in_range and regex_alternating_repetitive_digit_pair. Where:
+
+regex_integer_in_range should match only integers range from  to  inclusive
+
+regex_alternating_repetitive_digit_pair should find alternating repetitive digits pairs in a given string.
+
+Both these regular expressions will be used by the provided code template to check if the input string  is a valid postal code using the following expression:
+
+(bool(re.match(regex_integer_in_range, P)) 
+and len(re.findall(regex_alternating_repetitive_digit_pair, P)) < 2)
+Input Format
+
+Locked stub code in the editor reads a single string denoting  from stdin and uses provided expression and your regular expressions to validate if  is a valid postal code.
+
+Output Format
+
+You are not responsible for printing anything to stdout. Locked stub code in the editor does that.
+
+Sample Input 0
+
+110000
+Sample Output 0
+
+False
+Explanation 0
+
+1 1 0000 : (0, 0) and (0, 0) are two alternating digit pairs. Hence, it is an invalid postal code.
+
+Note:
+A score of  will be awarded for using 'if' conditions in your code.
+You have to pass all the testcases to get a positive score.
+
+SOLUTION
+---------
+regex_integer_in_range = r"^[1-9]\d{5}$"	# Do not delete 'r'.
+regex_alternating_repetitive_digit_pair = r"(?=(\d)(\d)\1)"	# Do not delete 'r'.
+
+
+import re
+P = input()
+
+print (bool(re.match(regex_integer_in_range, P)) 
+and len(re.findall(regex_alternating_repetitive_digit_pair, P)) < 2)	
+
+
+==========================================================================================================================================================================================================
+8.
+
+CSS colors are defined using a hexadecimal (HEX) notation for the combination of Red, Green, and Blue color values (RGB).
+
+Specifications of HEX Color Code
+
+■ It must start with a '#' symbol.
+■ It can have  or  digits.
+■ Each digit is in the range of  to . ( and ).
+■  letters can be lower case. ( and  are also valid digits).
+
+Examples
+
+Valid Hex Color Codes
+#FFF 
+#025 
+#F0A1FB 
+
+Invalid Hex Color Codes
+#fffabg
+#abcf
+#12365erff
+You are given  lines of CSS code. Your task is to print all valid Hex Color Codes, in order of their occurrence from top to bottom.
+
+CSS Code Pattern
+
+Selector
+{
+	Property: Value;
+}
+Input Format
+
+The first line contains , the number of code lines.
+The next  lines contains CSS Codes.
+
+Constraints
+
+
+
+Output Format
+
+Output the color codes with '#' symbols on separate lines.
+
+Sample Input
+
+11
+#BED
+{
+    color: #FfFdF8; background-color:#aef;
+    font-size: 123px;
+    background: -webkit-linear-gradient(top, #f9f9f9, #fff);
+}
+#Cab
+{
+    background-color: #ABC;
+    border: 2px dashed #fff;
+}   
+Sample Output
+
+#FfFdF8
+#aef
+#f9f9f9
+#fff
+#ABC
+#fff
+Explanation
+
+#BED and #Cab satisfy the Hex Color Code criteria, but they are used as selectors and not as color codes in the given CSS.
+
+Hence, the valid color codes are:
+
+#FfFdF8
+#aef
+#f9f9f9
+#fff
+#ABC
+#fff
+
+Note: There are no comments ( // or /* */) in CSS Code.
+
+SOLUTION
+---------
+import re
+
+n = int(input())
+pattern = r'#[a-fA-F0-9]{3,6}(?=[\;\,\))]){1}'
+for _ in range(n):
+    s = input()
+    rslt = re.findall(pattern,s)
+    for i in rslt:
+        print(i)
+
+==========================================================================================================================================================================================================

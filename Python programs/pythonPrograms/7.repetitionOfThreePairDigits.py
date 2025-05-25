@@ -30,7 +30,6 @@ print ([(num, freq[num]) for num in range(1000) if freq[num] > 1])
 
 
 ## Method 2:
-
 inpStr = '123412345123456'
 freq = {}
 

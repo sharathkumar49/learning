@@ -8,7 +8,7 @@ def replace_custom(target: str, to_be_replaced: str, replace_with: str) -> str:
         print("inside for loop:", i)
         print(i,len(to_be_replaced) + i)
         if target[i:len(to_be_replaced) + i] == to_be_replaced:
-            new_target = '{}{}{}'.format(target[:i], replace_with, target[len(to_be_replaced) + i:])
+            new_target = '{}{}{}'.format(target[:i], replace_with, target[i + len(to_be_replaced):])
             return replace_custom(new_target, to_be_replaced, replace_with)
     return target
 

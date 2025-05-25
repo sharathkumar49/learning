@@ -1,8 +1,162 @@
 
-Arrays:
+Arrays – Detailed Notes:
+------------------------
+1. Introduction
+- Arrays are one of the most commonly used data structures in programming.
+- They allow you to store multiple values in a single variable, accessible by index.
+- Arrays are available in almost all programming languages (Python, Java, C++, etc.).
 
+
+2. Basic Usage Example (Python):
+stock_prices = [298, 305, 320, 301, 292]
+
+- 'stock_prices[0]' gives the price on day 1 (298).
+- 'stock_prices[2]' gives the price on day 3 (320).
+- Array indices start from 0 in most languages.
+
+
+
+3. Internal Memory Representation
+- Arrays are stored in RAM (Random Access Memory).
+- Each element is stored at a specific memory address.
+- Example (hexadecimal addresses):
+
+  0x00500 --> 298
+  0x00504 --> 305
+  0x00508 --> 320
+  0x0050A --> 301
+  0x0050F --> 292
+
+- Each integer typically takes 4 bytes (32 bits).
+- Example for 298:
+  - Binary: '00000000 00000000 00000001 00101010'
+  - Stored across 4 consecutive memory addresses.
+
+
+
+4. How Indexing Works Internally
+- The array variable points to the starting address (e.g., '0x00500').
+- To access 'stock_prices[2]', the address is calculated as:
+ 
+  address = base_address + (index * size_of_element)
+  e.g., 0x00500 + 2 * 4 = 0x00508
+  
+- This calculation is why array index lookup is very fast.
+
+
+
+5. Time Complexity of Array Operations
+- Index Lookup: O(1) (constant time)
+- Lookup by Value: O(n) (linear time, must check each element):
+  for i in range(len(stock_prices)):
+      if stock_prices[i] == 301:
+          return i
+ 
+- Traversal (printing all elements): O(n)
+  for price in stock_prices:
+      print(price)
+ 
+- Insertion at Index: O(n) (elements after the index must be shifted):
+  stock_prices.insert(1, 284)
+  
+- Deletion at Index: O(n) (elements after the index must be shifted):
+  stock_prices.remove(1)
+ 
+
+
+
+6. Static vs Dynamic Arrays
+
+Static Arrays:
+- Fixed size, declared at creation.
+- Example in Java:
+
+  int[] stock_prices = new int[5];
+
+- Cannot add more elements than the declared size.
+- Trying to access or insert beyond the size throws an exception (e.g., 'ArrayIndexOutOfBoundsException' in Java).
+
+Dynamic Arrays:
+- Size can grow as needed.
+- Example in Java:
+
+  ArrayList<Integer> stockPrices = new ArrayList<Integer>();
+  stockPrices.add(298);
+
+- In Python, lists are dynamic arrays.
+- When capacity is exceeded:
+  - A new, larger memory block is allocated (usually double the previous size).
+  - All elements are copied to the new block (overhead).
+  - This resizing follows geometric progression (e.g., 10 → 30 → 90, etc.).
+
+
+
+7. Memory Allocation in Dynamic Arrays
+- Initial capacity is set (e.g., 10).
+- When full, a new block is allocated with increased capacity (current capacity * 2).
+- All elements are copied to the new block.
+- This process repeats as the array grows.
+
+
+
+8. Data Types in Arrays
+- Arrays can store numbers, text, or complex objects.
+- Python lists can store mixed types (integers, strings, objects, etc.).
+  '''python
+  stock_prices = [2, 3, 4, 5]
+  stock_names = ["AAPL", "IBM", "TATA"]
+  stock_data = [{"ticker": "AAPL", "price": 298}, ...]
+  '''
+- In Java/C++, arrays are type-specific (e.g., 'int[]' can only store integers).
+
+
+
+
+9. Multidimensional Arrays
+- Arrays can be 2D, 3D, etc.
+- Example (2D array in Python):
+
+  matrix = [
+      [10, 20],
+      [30, 42]
+  ]
+  # Access 42: matrix[1][1]
+
+
+
+
+10. Key Points and Best Practices
+- Array index lookup is very fast (O(1)), but searching by value or inserting/deleting (except at the end) is slower (O(n)).
+- Dynamic arrays are more flexible but have resizing overhead.
+- Practice is essential to master arrays and their operations.
+- In interviews, be ready to discuss time complexity (Big O notation) for array operations.
+
+
+Extra Note:  
+- In Python, the list implementation is more complex (uses objects and references), but the above explanation gives a conceptual understanding.
+- In C++, dynamic arrays are called vectors ('std::vector').
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Arrays(Rough Notes):
 
 stock_prices = [298, 305, 320, 301, 292]
+
 
 
 stock_prices[0] <-- 298 <-- price on day 1

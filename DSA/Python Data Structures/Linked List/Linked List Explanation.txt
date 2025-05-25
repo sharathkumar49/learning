@@ -1,0 +1,162 @@
+Linked List – Detailed Notes:
+-----------------------------
+1. Why Linked List? (Problems with Arrays)
+- Arrays store elements in contiguous memory locations.
+- Insertion in Arrays (e.g., inserting 284 at index 1):
+  - All elements from index 1 onwards must be shifted right.
+  - For large arrays (e.g., millions of elements), this means millions of copy operations.
+  - Time Complexity: O(n)
+- Dynamic Arrays (e.g., Python lists):
+  - Internally allocate extra capacity (e.g., 5, 10, etc.).
+  - When capacity is full, a new larger memory block is allocated, and all elements are copied over.
+  - This adds overhead: not just shifting, but also memory allocation and copying.
+  - Not efficient for frequent insertions/deletions, especially at the beginning or middle.
+
+
+
+2. What is a Linked List?
+- A Linked List is a linear data structure where elements (nodes) are stored at random memory locations and linked using pointers.
+- Each Node contains:
+  - Data (the value)
+  - Next (reference to the next node)
+- The Linked List class maintains a reference to the head (first node).
+
+
+
+
+3. How Linked List Solves Array Problems
+- Insertion/Deletion: Only pointers/links are updated, no need to shift or copy elements.
+- No Pre-allocation: Memory is allocated as needed, no need to specify size in advance.
+- Efficient Insertions/Deletions: Especially at the beginning (O(1) time).
+
+
+
+
+4. Linked List Operations & Their Complexities
+
+| Operation                         | Array (Dynamic) | Linked List      |
+|-----------------------------------|-----------------|------------------|
+| Indexing (access by index)        | O(1)            | O(n)             |
+| Insert/Delete at Start            | O(n)            | O(1)             |
+| Insert/Delete at End              | O(1) amortized  | O(n)             |
+| Insert/Delete in Middle           | O(n)            | O(n)             |
+| Traversal (print all elements)    | O(n)            | O(n)             |
+| Access by Value                   | O(n)            | O(n)             |
+
+- Note: In arrays, accessing by index is fast (O(1)), but in linked lists, you must traverse from the head (O(n)).
+
+
+
+
+5. Types of Linked Lists:
+
+Singly Linked List:
+- Each node points to the next node.
+- Can only traverse in one direction (forward).
+
+Doubly Linked List:
+- Each node points to both the next and previous nodes.
+- Can traverse in both directions (forward and backward).
+- Useful for operations where you need to move back and forth (e.g., LRU cache).
+
+
+
+
+6. Advantages of Linked Lists:
+- Dynamic Size: Grows and shrinks as needed.
+- Efficient Insertions/Deletions: No shifting of elements.
+- No Predefined Memory Allocation: Utilizes memory as needed.
+- Doubly Linked List: Allows bi-directional traversal and easier node deletion.
+
+
+
+
+7. Disadvantages of Linked Lists:
+- No Direct Access: Must traverse from the head to access a node by index.
+- Extra Memory: Each node stores an extra pointer (next, and prev for doubly linked).
+- Cache Locality: Arrays are better for CPU cache performance due to contiguous memory.
+
+
+
+
+8. Implementation Details
+Node Class (Singly Linked List)
+
+class Node:
+    def __init__(self, data=None, next=None):
+        self.data = data
+        self.next = next
+
+
+LinkedList Class (Singly Linked List)
+- insert_at_beginning(data): Insert node at the start (O(1))
+- insert_at_end(data): Insert node at the end (O(n))
+- insert_at(index, data): Insert node at a specific index (O(n))
+- remove_at(index): Remove node at a specific index (O(n))
+- insert_values(data_list): Create a linked list from a list of values
+- get_length(): Return the length of the list (O(n))
+- print(): Print all elements
+
+Additional Methods (from Problems):
+- insert_after_value(data_after, data_to_insert): Insert after a node with a specific value
+- remove_by_value(data): Remove the first node with a specific value
+
+
+
+Node Class (Doubly Linked List):
+class Node:
+    def __init__(self, data=None, next=None, prev=None):
+        self.data = data
+        self.next = next
+        self.prev = prev
+
+
+
+DoublyLinkedList Class:
+- print_forward(): Print list from head to tail
+- print_backward(): Print list from tail to head
+- insert_at_beginning(data): Insert at start (update prev pointers)
+- insert_at_end(data): Insert at end (update prev pointers)
+- insert_at(index, data): Insert at index (update prev pointers)
+- remove_at(index): Remove at index (update prev pointers)
+- insert_values(data_list): Create list from values
+
+
+
+
+9. Example Usage:
+ll = LinkedList()
+ll.insert_values(["banana", "mango", "grapes", "orange"])
+ll.print()
+ll.insert_after_value("mango", "apple")  # insert apple after mango
+ll.print()
+ll.remove_by_value("orange")             # remove orange
+ll.print()
+
+
+
+
+10. Key Points & Best Practices:
+- Insertion at Beginning: O(1) in linked list, O(n) in array.
+- Insertion at End: O(n) in linked list (unless tail pointer is maintained), O(1) amortized in array.
+- Access by Index: O(1) in array, O(n) in linked list.
+- Traversal: Always O(n).
+- Doubly Linked List: Use when you need to traverse in both directions or delete nodes efficiently from both ends.
+- Practice: Implement all operations yourself to understand pointer manipulation.
+
+
+
+
+11. Exercises (from Tutorial):
+- Implement 'insert_after_value' and 'remove_by_value' in your LinkedList class.
+- Implement a DoublyLinkedList with forward and backward traversal.
+
+
+
+
+
+Extra Notes:
+- In Python, garbage collection handles memory cleanup, but in languages like C/C++, you must free memory manually.
+- Linked lists can store any data type, including complex objects.
+- For large datasets with frequent insertions/deletions (not at the end), linked lists are preferred over arrays.
+

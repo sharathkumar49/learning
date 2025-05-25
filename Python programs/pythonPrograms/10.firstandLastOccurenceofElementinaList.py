@@ -1,5 +1,5 @@
 
-def solution(array ,key):
+def solution(array, key):
     start_index = -1
     ending_index = -1
     if key not in array:

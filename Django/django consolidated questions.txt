@@ -99,15 +99,26 @@ Django Deployment and Performance
 
     These are the questions I have found on each sections in Django. I just want you to go through each of these section and add many questions as much as possible(30 to 40 questions likely). Currently it is having 10 questions on each section. Generate all possible questions on each section which more sufficient to take django interview at any level. Also, if necessary add any extra section followed by question on that section. For example, you can have separate section for django rest api framework and its request response cycle, mixins, viewsets under that. 
 
+
+
+
+
+
+
+
+
+
+Answer: 
+
 GitHub Copilot: ### **Django Fundamentals**
 
-1. What is Django, and why is it considered a high-level web framework?
-2. Explain the MTV (Model-Template-View) architecture pattern in Django.
-3. What is the difference between a Django project and a Django app?
-4. How do you create a new Django project and app?
-5. What is the purpose of the settings.py file in a Django project?
-6. How does Django handle configuration for different environments (e.g., development, production)?
-7. What is the role of the `urls.py` file in a Django project?
+1. What is Django, and why is it considered a high-level web framework?  done  
+2. Explain the MTV (Model-Template-View) architecture pattern in Django. done
+3. What is the difference between a Django project and a Django app? done
+4. How do you create a new Django project and app? done 
+5. What is the purpose of the settings.py file in a Django project? done
+6. How does Django handle configuration for different environments (e.g., development, production)? done
+7. What is the role of the `urls.py` file in a Django project? done
 8. Explain the concept of Django's ORM (Object-Relational Mapping).
 9. What is the purpose of the manage.py file in a Django project?
 10. How does Django handle static files and media files?
@@ -122,12 +133,12 @@ GitHub Copilot: ### **Django Fundamentals**
 19. What is the purpose of the `ALLOWED_HOSTS` setting in Django?
 20. How does Django handle middleware, and what is its role in request/response processing?
 
----
+
 
 ### **Django Models and Database**
 
-1. What is a database migration in Django, and why is it important?
-2. How do you create and apply migrations in Django?
+1. What is a database migration in Django, and why is it important? **done**
+2. How do you create and apply migrations in Django? **done**
 3. Explain the difference between `ForeignKey`, `OneToOneField`, and `ManyToManyField` in Django models.
 4. How do you define a custom model field in Django?
 5. What is a QuerySet in Django, and how is it used?
@@ -148,7 +159,7 @@ GitHub Copilot: ### **Django Fundamentals**
 20. How do you handle model inheritance in Django?
 21. How do you use the `F` and `Q` objects in Django queries?
 22. What is the purpose of the `db_index` option in Django model fields?
-23. How do you handle database migrations for large datasets in Django?
+23. How do you handle database migrations for large datasets in Django? **done**
 24. What is the purpose of the `auto_now` and `auto_now_add` options in Django model fields?
 25. How do you use the `annotate()` and `aggregate()` methods in Django queries?
 26. What is the difference between `values()` and `values_list()` in Django QuerySets?
@@ -302,7 +313,7 @@ GitHub Copilot: ### **Django ORM (Object-Relational Mapping)**
 31. What is the purpose of the `db_index` option in Django model fields?
 32. How do you use the `extra()` method in Django ORM?
 33. What is the purpose of the `iterator()` method in Django QuerySets?
-34. How do you handle database migrations in Django ORM?
+34. How do you handle database migrations in Django ORM? **done**
 35. What is the purpose of the `Meta` class in Django models?
 36. How do you use the `unique_together` and `constraints` options in Django models?
 37. How do you implement soft deletes in Django ORM?
@@ -344,7 +355,7 @@ GitHub Copilot: ### **Django ORM (Object-Relational Mapping)**
 28. How do you handle file uploads in Django models?
 29. What is the purpose of the `ImageField` and `FileField` in Django models?
 30. How do you use the `choices` attribute in Django model fields?
-31. How do you handle migrations for model changes in Django?
+31. How do you handle migrations for model changes in Django? **done**
 32. What is the purpose of the `default_auto_field` setting in Django?
 33. How do you use the `DecimalField` and `FloatField` in Django models?
 34. How do you define a custom database table name for a Django model?

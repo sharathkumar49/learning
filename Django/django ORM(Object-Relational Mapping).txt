@@ -1,6 +1,8 @@
 
 Explain the concept of Django's ORM (Object-Relational Mapping).
-Django's ORM bridges the gap between relational databases and Python objects. This integration allows you to perform database operations using high-level Pythonic methods, rather than direct SQL queries.
+Django's ORM bridges the gap between relational databases and Python objects. 
+This integration allows you to perform database operations using high-level Pythonic methods, rather than direct SQL queries.
+
 
 Core Components:
 The three fundamental components of Django's ORM are:

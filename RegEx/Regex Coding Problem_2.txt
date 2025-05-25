@@ -1,0 +1,461 @@
+
+
+
+9. Extracting Dates from Text
+
+Task:
+Given a string containing dates in the format 'DD-MM-YYYY', extract all valid dates. A valid date must have:
+- Day: 01 to 31
+- Month: 01 to 12
+- Year: 1900 to 2099
+
+Input Format:  
+A single line containing the text.
+
+Output Format:  
+Print each valid date found on a new line. If no valid date is found, print '-1'.
+
+Sample Input:  
+Today is 12-05-2023 and tomorrow is 32-13-2023 or 01-01-1999.
+
+
+Sample Output:  
+12-05-2023
+01-01-1999
+
+
+SOLUTION:
+import re
+
+text = input()
+pattern = r'\b(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-(19|20)\d{2}\b'
+matches = re.findall(pattern, text)
+if matches:
+    for m in re.finditer(pattern, text):
+        print(m.group())
+else:
+    print("-1")
+
+
+
+
+This regular expression (r'\b(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-(19|20)\d{2}\b') is used to match and validate dates in the format DD-MM-YYYY where:
+
+DD represents valid day numbers (01-31)
+MM represents valid month numbers (01-12)
+YYYY represents years from 1900 to 2099
+
+Breaking it Down:
+1. \b
+	This ensures word boundaries, meaning the match must be a standalone date and not part of a longer string.
+2. (0[1-9]|[12][0-9]|3[01]) → Day (01-31)
+	0[1-9] → Matches 01-09 (single-digit days with leading zero).
+	[12][0-9] → Matches 10-29 (double-digit days starting with 1 or 2).
+	3[01] → Matches 30 or 31.
+3. -(0[1-9]|1[0-2]) → Month (01-12)
+	0[1-9] → Matches months 01-09.
+	1[0-2] → Matches months 10-12.
+
+4. -(19|20)\d{2} → Year (1900-2099)
+	(19|20) → Ensures that the year starts with 19 (1900-1999) or 20 (2000-2099).
+	\d{2} → Matches any two digits after 19 or 20 (e.g., 19**76**, 20**25**).
+
+5. \b
+	Ensures the match ends at a word boundary (prevents partial matches).
+
+Example Matches:
+✔ 15-08-2025 (Valid) ✔ 01-01-1999 (Valid) ✔ 31-12-2099 (Valid) ✖ 32-12-2025 (Invalid, day 32 doesn't exist) ✖ 15-13-2025 (Invalid, month 13 doesn't exist) ✖ 20-06-1800 (Invalid, year is before 1900)
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+10. Password Strength Checker
+
+Task:  
+Given a list of passwords, print "Strong" if the password:
+- Is at least 8 characters long
+- Contains at least one uppercase letter, one lowercase letter, one digit, and one special character ('!@#$%^&*')
+
+Otherwise, print "Weak".
+
+Input Format:  
+First line: integer n (number of passwords)  
+Next n lines: each a password
+
+Sample Input:  
+3
+Password123!
+weakpass
+Str0ng@Pass
+
+
+Sample Output:  
+Strong
+Weak
+Strong
+
+
+SOLUTION:
+import re
+
+n = int(input())
+pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$'
+for _ in range(n):
+    pwd = input()
+    print("Strong" if re.match(pattern, pwd) else "Weak")
+
+
+
+
+
+Explanation: 
+This regular expression (r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$') is designed to validate a strong password by ensuring it meets multiple security criteria.
+
+Breaking It Down:
+1. ^ → Ensures the pattern starts at the beginning of the string.
+2. (?=.*[a-z]) → Requires at least one lowercase letter (a-z).
+3. (?=.*[A-Z]) → Requires at least one uppercase letter (A-Z).
+4. (?=.*\d) → Requires at least one digit (0-9).
+5. (?=.*[!@#$%^&*]) → Requires at least one special character from !@#$%^&*.
+6. .{8,}$ → Ensures the password is at least 8 characters long.
+7. $ → Ensures the pattern ends at the end of the string.
+
+Examples of Matches:
+✔ Valid Passwords:
+"Secure@123" ✅ (contains uppercase, lowercase, digit, special character, and 8+ chars)
+"Hello$World1" ✅ (meets all criteria)
+
+✖ Invalid Passwords:
+"Password" ❌ (missing digit and special character)
+"12345678" ❌ (only numbers, no letters or special characters)
+"Hello1" ❌ (too short and missing special character)
+
+
+---------
+what does it mean '?=.*' is every bracket, I don't understand
+
+Great question! Let’s break it down step by step. The (?=.*...) syntax in a regular expression is known as a positive lookahead.
+
+
+What Does (?=.*...) Mean?
+?= is a lookahead assertion, meaning it checks if a certain pattern exists without consuming characters (it doesn’t move the cursor forward in the string).
+.* means any characters (zero or more).
+Together, (?=.*X) ensures that X must appear somewhere in the string, but does not necessarily have to be at a specific position.
+
+
+How Each Lookahead Works in Your Regex
+In your password pattern:
+^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$
+
+
+Each bracketed condition must be present somewhere in the string:
+(?=.*[a-z]) → The password must contain at least one lowercase letter.
+(?=.*[A-Z]) → The password must contain at least one uppercase letter.
+(?=.*\d) → The password must contain at least one digit (0-9).
+(?=.*[!@#$%^&*]) → The password must contain at least one special character from !@#$%^&*.
+.{8,}$ → The password must be at least 8 characters long.
+
+
+
+How Lookaheads Work Together:
+Since lookaheads don’t consume characters, they all check independently whether the required elements exist anywhere in the string. The main regex pattern (.{8,}$) then ensures the length requirement.
+
+
+Example Valid Passwords:
+✔ "StrongP@ssword1" ✅ (contains lowercase, uppercase, digit, special character, and is 8+ chars) ✔ "A1b!cD2e" ✅ (contains all required elements)
+
+
+Example Invalid Passwords:
+✖ "password123" ❌ (missing uppercase and special character) ✖ "HELLO@WORLD" ❌ (missing lowercase and digit) ✖ "Short1!" ❌ (less than 8 characters)
+
+Would you like me to modify this regex to include additional requirements (like no spaces or specific character limits)? 🔐😊
+
+
+----------------------
+
+What does ^ $ means, does it mean the start and end of the pattern?
+Yes, exactly! In regular expressions, ^ and $ are anchors that define the start and end of a string, respectively.
+
+^ (Caret) → Start of the String:
+Ensures that the pattern must begin at the very start of the string.
+
+Example:
+import re
+pattern = r'^Hello'
+print(bool(re.match(pattern, "Hello world")))  # True
+print(bool(re.match(pattern, "Say Hello")))   # False (doesn’t start with "Hello")
+$ (Dollar Sign) → End of the String
+Ensures that the pattern must end at the very end of the string.
+
+Example:
+import re
+pattern = r'world$'
+print(bool(re.match(pattern, "Hello world")))  # True
+print(bool(re.match(pattern, "worldwide")))   # False (doesn’t end with "world")
+Together: ^...$
+When used together, ^...$ ensures the entire string must match the pattern exactly.
+
+Example:
+import re
+pattern = r'^\d{4}$'  # Match a 4-digit number exactly
+print(bool(re.match(pattern, "1234")))  # True
+print(bool(re.match(pattern, "12")))    # False (too short)
+print(bool(re.match(pattern, "12345"))) # False (too long)
+
+Without ^...$, "12345" would still match "1234" inside it, but the anchors force an exact match.
+
+
+-------------------
+
+what is the difference between these anchors and '\b'. Both behave the same, right?
+Good question! While ^ and $ seem similar to \b, they serve different purposes in regular expressions.
+
+1. Anchors: ^ and $:
+^ → Ensures the pattern starts at the beginning of the string.
+$ → Ensures the pattern ends at the end of the string.
+
+Example:
+import re
+
+pattern = r'^Hello$'  # Matches ONLY if the string is EXACTLY "Hello"
+
+print(bool(re.match(pattern, "Hello")))  # ✅ True
+print(bool(re.match(pattern, "Hello World")))  # ❌ False (extra text at the end)
+print(bool(re.match(pattern, "Say Hello")))  # ❌ False (extra text at the start)
+
+
+2. Word Boundary: \b
+\b is not about start or end of the string—it’s about word boundaries.
+A word boundary exists between a word character (a-z, A-Z, 0-9, _) and a non-word character (space, punctuation, etc.).
+
+
+Example:
+python
+import re
+
+pattern = r'\bHello\b'  # Matches "Hello" as a standalone word
+
+print(bool(re.search(pattern, "Hello World")))  # ✅ True (word exists separately)
+print(bool(re.search(pattern, "Say Hello")))  # ✅ True (word boundary exists)
+print(bool(re.search(pattern, "Hellothere")))  # ❌ False (no boundary, part of a bigger word)
+
+
+Key Differences:
+-------------------------------------------------------------------------------------------------------------------------------------
+Feature	            ^ and $ (Anchors)	                                       \b (Word Boundary)
+-------------------------------------------------------------------------------------------------------------------------------------
+Usage	            Matches start (^) or end ($) of the entire string	       Matches beginning or end of a word inside a string
+Scope	            Works on the entire string	                               Works inside the string on words
+Example Match	    "Hello" ✅	                                               "Hello World" ✅
+Example Non-Match	"Hello World" ❌	                                           "Hellothere" ❌
+
+
+So, while they seem similar, ^ and $ control the whole string’s position, while \b controls the boundary of individual words within a string.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+11. Extracting Hashtags from Tweets
+
+Task:  
+Given a string representing a tweet, extract all hashtags (words starting with '#' followed by alphanumeric characters and underscores).
+
+Input Format:  
+A single line containing the tweet.
+
+Output Format:  
+Print each hashtag found on a new line. If none, print '-1'.
+
+Sample Input:  
+Loving the #Python3 #regex challenges! #100DaysOfCode
+
+
+Sample Output:  
+
+#Python3
+#regex
+#100DaysOfCode
+
+
+SOLUTION:
+import re
+
+tweet = input()
+hashtags = re.findall(r'#\w+', tweet)
+if hashtags:
+    for tag in hashtags:
+        print(tag)
+else:
+    print("-1")
+
+
+
+
+
+
+
+12. Validating IPv4 Addresses
+
+Task:  
+Given n strings, print "Valid" if the string is a valid IPv4 address, else "Invalid".
+
+Input Format:  
+First line: integer n  
+Next n lines: each a string
+
+Sample Input:  
+3
+192.168.1.1
+256.100.50.0
+10.0.0.255
+
+
+Sample Output:  
+Valid
+Invalid
+Valid
+
+
+SOLUTION:
+import re
+
+n = int(input())
+pattern = r'^((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)$'
+for _ in range(n):
+    ip = input()
+    print("Valid" if re.match(pattern, ip) else "Invalid")
+
+
+
+
+
+Explanation:
+
+This regular expression (r'^((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)$') is designed to validate IPv4 addresses by ensuring they meet the correct numerical range and format.
+
+Breaking Down the Pattern:
+1. ^ → Ensures the match starts at the beginning of the string.
+
+2. ((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3} → This handles the first three octets (each followed by .):
+	25[0-5] → Matches 250-255.
+	2[0-4]\d → Matches 200-249.
+	1\d\d → Matches 100-199.
+	[1-9]?\d → Matches 0-99 (allows single digits).
+	{3} → Ensures that this pattern repeats three times, handling the first three octets (e.g., 192.168.1.).
+
+3. (25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)$ → This handles the fourth octet:
+	Uses the same numerical rules as above, but without the trailing dot.
+
+4. $ → Ensures the match ends at the end of the string.
+
+Valid Matches
+✔ 192.168.1.1 ✅ ✔ 255.255.255.255 ✅ ✔ 0.0.0.0 ✅ ✔ 127.0.0.1 ✅
+
+Invalid Matches
+✖ 256.100.200.50 ❌ (256 is out of range) ✖ 192.168.1.999 ❌ (999 is out of range) ✖ 192.168.1. ❌ (missing fourth octet) ✖ 192.168.1.1.1 ❌ (too many octets)
+
+
+---------------------
+
+Explain this particular part '[1-9]?\d)\.'
+
+Let's break down the pattern [1-9]?\d)\. step by step:
+
+1. [1-9]? → Optional Leading Digit (1-9)
+	? means zero or one occurrence of [1-9].
+	[1-9] allows digits 1-9 (but is optional).
+	This ensures single-digit numbers (0-9) or two-digit numbers (10-99) can be matched.
+
+2. \d → Any Digit (0-9)
+\d matches any single digit (0-9).
+Since [1-9]? is optional, this ensures numbers like:
+	0 ✅ (Valid)
+	9 ✅ (Valid)
+	25 ✅ (Valid)
+
+3. ) → Closing Parenthesis (Grouping)
+The pattern ([1-9]?\d) is part of a larger group used in the main regex.
+This helps structure the matching logic when combined with repetitions {3}.
+
+4. \. → Literal Dot (Period)
+\. matches exactly one dot (.).
+This ensures the format contains a dot between octets (e.g., 192.168.1.).
+The . is escaped (\.) because . in regex normally means "any character."
+
+
+
+How It Works Together
+This pattern ensures: ✔ Numbers from 0-99 (IPv4 valid octets) ✔ Properly formatted segments followed by a dot (.) ✔ Avoids leading zeros (e.g., "05" wouldn’t match, but "5" would)
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+13. Find Words with Double Letters.
+
+Task:  
+Given a sentence, print all words that contain two identical consecutive letters (e.g., "letter", "book").
+
+Input Format:  
+A single line containing the sentence.
+
+Output Format:  
+Print each matching word on a new line. If none, print '-1'.
+
+Sample Input:  
+I have a book and a pen in my bag.
+
+
+Sample Output:  
+book
+
+
+SOLUTION:
+import re
+
+sentence = input()
+words_with_double = re.findall(r'\b\w*([a-zA-Z])\1\w*\b', sentence)
+
+print(words_with_double)
+
+
+
+EXPLANATION: 
+
+Understanding Each Part:
+
+1️. \b → Word Boundary:
+	Ensures we match complete words instead of parts of words.
+
+2️. \w* → Any Number of Word Characters Before the Double Letter:
+	\w matches letters (a-z, A-Z), numbers (0-9), and underscores (_).
+	* means zero or more occurrences.
+	This allows words of any length before the repeated letter.
+
+3. ([a-zA-Z]) → Capturing a Letter:
+	([a-zA-Z]) captures any single letter (case-insensitive).
+	The parentheses () store this letter for later reference.
+
+4. \1 → The Same Letter Again:
+	\1 is a backreference, meaning it matches whatever was captured in ([a-zA-Z]).
+	Ensures that the same letter appears twice in a row (like oo in "book").
+
+5. \w* → Any Number of Word Characters After the Double Letter:
+	Allows more letters after the double letter.
+	Ensures the word continues beyond the repeated letter.
+
+6. \b → Ending Word Boundary:
+	Ensures the match stops at the end of the word.
+
+Examples of Matches:
+✔ "book" ✅ (oo appears together) ✔ "letter" ✅ (tt appears together) ✔ "success" ✅ (cc appears together) ✔ "mississippi" ✅ (ss, pp appear)
+
+✖ "single" ❌ (no double letter) ✖ "hello!" ❌ (ll exists but punctuation interferes with word boundary)

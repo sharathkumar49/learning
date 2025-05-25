@@ -3,7 +3,7 @@
 Python classes:
 ---------------
 
-OOP- (object oriented programming) - it will be useful to logically group our data and functions in a way that's easy to reuse and also easy to build upon further
+OOP - (object oriented programming) - it will be useful to logically group our data and functions in a way that's easy to reuse and also easy to build upon further
 
 Here when I say data and functions, which means it is attributes and methods. 
 
@@ -479,6 +479,7 @@ mgr_1.print_emps()
 Real life example --> HTTPException
 
 
+
 isinstance and issubclass builtin functions: 
 --------------------------------------------
 print(isinstance(mgr_1, Manager))  # True
@@ -552,7 +553,7 @@ https://docs.python.org/3/reference/datamodel.html#special-method-names
 
 reallife example datetime module
 
-======================================================================================================================================================================================
+=====================================================================================================================================================================
 
 property decorators:
 --------------------
