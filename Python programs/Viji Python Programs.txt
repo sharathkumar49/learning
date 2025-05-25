@@ -1,8 +1,8 @@
 
                                             List-Based Programs
 											====================
-Find the second largest num in the list
-========================================
+1.Find the second largest num in the list
+=========================================
 
 Using sort method  -> Changes the original list
 ------------------
@@ -20,9 +20,9 @@ new_list = sorted(num, reverse = True)
 
 print(new_list[1])
 
-
-Without any method using quick sort
-====================================
+===================================================================================================================================================================================================================================
+2.Without any method using quick sort
+=====================================
 def quick_sort(num):
     if len(num) <= 1:
         return num
@@ -43,9 +43,9 @@ OUTPUT
 sorted list:[1, 2, 4, 6, 7, 8, 10, 66, 73]
 second largest number is:66
 
-
-Find the largest and smallest elements in a list.
-==================================================
+===================================================================================================================================================================================================================================
+3.Find the largest and smallest elements in a list.
+====================================================
 num = [1,4,6,73,2,10,66,7,8]
 
 largest = num[0]
@@ -60,9 +60,9 @@ for i in num:
 print(f"largest number is: {largest}")
 print(f"smallest number is: {smallest}")
 
-
-Sort a list in ascending and descending order.
-===============================================
+===================================================================================================================================================================================================================================
+4.Sort a list in ascending and descending order.
+================================================
 num = [1,4,6,73,2,10,66,7,8]
 
 def quick_sort(num):
@@ -79,9 +79,9 @@ sorted_list = quick_sort([1,4,6,73,2,10,66,7,8])
 print(f"sorted list in ascending order:{sorted_list}")
 print(f"sorted list in descending order:{sorted_list[::-1]}")
 
-
-Merge two sorted lists
-=======================
+===================================================================================================================================================================================================================================
+5.Merge two sorted lists
+========================
 
 list1 = [2,4,6,8]
 list2 = [1,3,5,7,9,11]
@@ -113,8 +113,8 @@ print(merged_list)
 OUTPUT    -> [1, 2, 3, 4, 5, 6, 7, 8, 9, 11]
 -------
 
-
-Remove duplicates from a list.
+===================================================================================================================================================================================================================================
+6.Remove duplicates from a list.
 ================================
 list1 = [2,4,6,8,4,3,1,2,10,9,6,2]
 
@@ -128,8 +128,8 @@ def duplicate(num):
 org_list = duplicate(list1)
 print(org_list)
 
-
-Find the frequency of elements in a list.
+===================================================================================================================================================================================================================================
+7.Find the frequency of elements in a list.
 ==========================================
 list1 = [2,4,6,8,4,3,1,2,10,9,6,2]
 
@@ -174,8 +174,8 @@ print(freq_char)
             
 OUTPUT -> [[2, 3], [4, 2], [6, 2], [8, 1], [3, 1], [1, 1], [10, 1], [9, 1]]
 
-
-Check if a list is a palindrome.
+===================================================================================================================================================================================================================================
+8.Check if a list is a palindrome.
 =================================
 list1 = [2,4,6,4,2]
 
@@ -205,8 +205,8 @@ OUTPUT -> True
 
 num = [[2,3],[[4,5,6]],8,[9,10]]
 
-
-Flatten a nested list
+===================================================================================================================================================================================================================================
+9.Flatten a nested list
 ======================
 def flatten_list(num):
     result = []
@@ -237,8 +237,9 @@ def flatten(num):
 
 print(flatten(num))
 
-Find the intersection of two lists.
-====================================
+===================================================================================================================================================================================================================================
+10.Find the intersection of two lists.
+=======================================
 lst1 = [1,2,3,4,5]
 lst2 = [1,4,6,7,2]
 
@@ -269,9 +270,9 @@ print(lst1)
 
 OUTPUT -> [1, 2, 3, 4, 5, 6, 7]
 
-
-Split a list into chunks of a given size
-==========================================
+===================================================================================================================================================================================================================================
+11.Split a list into chunks of a given size
+============================================
 lst = [1,2,3,4,5,6,7,8,9]
 
 def chunk_list(lst,chunksize):
@@ -281,8 +282,9 @@ print(chunk_list(lst,4))
 
 OUTPUT -> [[1, 2, 3, 4], [5, 6, 7, 8], [9]]
 
+===================================================================================================================================================================================================================================
 
-Find the cumulative sum of a list.
+12.Find the cumulative sum of a list.
 ====================================
 lst = [1,2,3,4,5,6,7,8,9]
 
@@ -309,9 +311,10 @@ print(cumulative_sum)
 
 OUTPUT -> [1, 3, 6, 10, 15, 21, 28, 36, 45]
 
+===================================================================================================================================================================================================================================
 
-Remove all occurrences of a specific element from a list
-=========================================================
+13.Remove all occurrences of a specific element from a list
+============================================================
 lst = [1,2,3,4,5,6,7,8,9,2,4,5,1,9,7,1,3,4,2]
 
 def remove_occ(lst ,num):
@@ -322,9 +325,10 @@ def remove_occ(lst ,num):
         
 print(remove_occ(lst,1))
 
+===================================================================================================================================================================================================================================
 
-Find the product of all elements in a list
-===========================================
+14.Find the product of all elements in a list
+==============================================
 lst = [1,2,3,4,5,6,7,8,9]
 
 def product(lst):
@@ -335,9 +339,10 @@ def product(lst):
 
 print(product(lst))
 
+===================================================================================================================================================================================================================================
 
-Find the common elements in multiple lists
-===========================================
+15.Find the common elements in multiple lists
+==============================================
 lst1 = [1,2,3,4,7,6]
 lst2 = [9,5,6,2,1,10,11,3]
 
@@ -353,9 +358,10 @@ print(common_ele(lst1,lst2))
 
 OUTPUT -> [1, 2, 3, 6]
 
+===================================================================================================================================================================================================================================
 
-Find the difference between two lists
-======================================
+16.Find the difference between two lists
+=========================================
 lst1 = [1,2,3,4,7,6]
 lst2 = [9,5,6,2,1,10,11,3]
 
@@ -368,9 +374,10 @@ def diff(lst1,lst2):
 
 print(diff(lst1,lst2))
 
+===================================================================================================================================================================================================================================
 
-Fibonacci series
-=================
+17.Fibonacci series
+====================
 def fibonacci(n):
     if n<=0:
         return 0
@@ -382,6 +389,8 @@ def fibonacci(n):
 rslt = fibonacci(9)
 print(rslt)
 
+OR
+
 def fibonacci(n):
     a,b = 0,1
     for _ in range(n):
@@ -389,10 +398,12 @@ def fibonacci(n):
         a,b = b,a+b
     
 fibonacci(12)
+===================================================================================================================================================================================================================================
+                                                                       ====================
                                                                         Dictionary Programs
-																		===================
-Serialize and deserialize string
-=================================
+																	   =====================
+18.Serialize and deserialize string
+====================================
 import pickle
 
 data = {'viji':25,"john":20,"steve":27}
@@ -406,9 +417,10 @@ deserialize_str = pickle.loads(serialize_str)
 
 print(deserialize_str)
 
+===================================================================================================================================================================================================================================
 
-Merge two dictionaries.
-========================
+19.Merge two dictionaries.
+===========================
 d1 = {'name':"viji","age":25}
 d2 = {"nae":"sharath", "ae":27}
 
@@ -416,9 +428,10 @@ d1.update(d2)
 
 print(d1)
 
+===================================================================================================================================================================================================================================
 
-Sort a dictionary by keys or values
-====================================
+20.Sort a dictionary by keys or values
+=======================================
 my_dict = {'apple': 3, 'banana': 1, 'cherry': 5, 'date': 2}
 
 #Sorted by keys
@@ -429,9 +442,10 @@ print(sorted_dict)
 sorted_dict = dict(sorted(my_dict.items(), key=lambda item:item[1]))
 print(sorted_dict)
 
+===================================================================================================================================================================================================================================
 
-Count the frequency of characters in a string using a dictionary.
-=================================================================
+21.Count the frequency of characters in a string using a dictionary.
+=====================================================================
 string = "abracadabra"
 
 freq = {}
@@ -446,9 +460,10 @@ print(freq)
 freq = {char: sum(1 for i in string if i == char) for char in string}
 print(freq)
 
+===================================================================================================================================================================================================================================
 
-Group elements of a list based on a condition using a dictionary.
-=================================================================
+22.Group elements of a list based on a condition using a dictionary.
+====================================================================
 input = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 words = ["apple", "banana", "apricot", "blueberry", "cherry"]
@@ -474,18 +489,20 @@ for i in words:
     
 print(grouped_str)
 
+===================================================================================================================================================================================================================================
 
-Convert a dictionary to a list of tuples and vice versa.
-=========================================================
+23.Convert a dictionary to a list of tuples and vice versa.
+===========================================================
 my_dict = {'apple': 3, 'banana': 1, 'cherry': 5, 'date': 2}
 
 print(list(my_dict.items()))
 
 print(dict(my_dict))
 
+===================================================================================================================================================================================================================================
 
-Check if a key exists in a dictionary
-======================================
+24.Check if a key exists in a dictionary
+=========================================
 my_dict = {'apple': 3, 'banana': 1, 'cherry': 5, 'date': 2}
 
 key = "apple"
@@ -494,9 +511,10 @@ if key in my_dict:
 else:
         print("Not exists")
 		
-		
-Remove a key-value pair from a dictionary.
-==========================================
+===================================================================================================================================================================================================================================
+	
+25.Remove a key-value pair from a dictionary.
+============================================
 my_dict = {'apple': 3, 'banana': 1, 'cherry': 5, 'date': 2}
 
 to_remove ="cherry"
@@ -509,9 +527,10 @@ for i in list(my_dict.keys()):
         my_dict.pop(i)
 print(my_dict)
 
+===================================================================================================================================================================================================================================
 
-Find the sum of all values in a dictionary
-===========================================
+26.Find the sum of all values in a dictionary
+==============================================
 my_dict = {'apple': 3, 'banana': 1, 'cherry': 5, 'date': 2}
 
 total = 0
@@ -520,17 +539,19 @@ for i in list(my_dict.values()):
 
 print(total)
 
+===================================================================================================================================================================================================================================
 
-Invert a dictionary (swap keys and values)
-===========================================
+27.Invert a dictionary (swap keys and values)
+==============================================
 my_dict = {'apple': 3, 'banana': 1, 'cherry': 5, 'date': 2}
 
 rslt = dict(zip(my_dict.values(),my_dict.keys()))
 print(rslt)
 
+===================================================================================================================================================================================================================================
 
-Find the intersection of two dictionaries.
-==========================================
+28.Find the intersection of two dictionaries.
+=============================================
 dict1 = {'a': 1, 'b': 2, 'c': 3}
 dict2 = {'b': 2, 'c': 4, 'd': 5}
 
@@ -541,18 +562,6 @@ for i in dict1.items():
             rslt.update({i[0]:j[1]})
 print(rslt)
 
-
-rslt = {k:v for k,v in dict1.items() if k in dict2 and dict1[k] == dict2[k]}
-print(rslt)
-dict1 = {'a': 1, 'b': 2, 'c': 3}
-dict2 = {'b': 2, 'c': 4, 'd': 5}
-
-rslt = {}
-for i in dict1.items():
-    for j in dict2.items():
-        if i == j:
-            rslt.update({i[0]:j[1]})
-print(rslt)
 
 Dictionary comprehension
 --------------------------
@@ -561,9 +570,10 @@ print(rslt)
 
 O/P -> {'b': 2}
 
+===================================================================================================================================================================================================================================
 
-Find the difference between two dictionaries
-==============================================
+29.Find the difference between two dictionaries
+================================================
 dict1 = {'a': 1, 'b': 2, 'c': 3}
 dict2 = {'b': 2, 'c': 4, 'd': 5}
 
@@ -587,9 +597,10 @@ student = {
     
 print(student["viji"]["age"])
 
+===================================================================================================================================================================================================================================
 
-Find the common keys in multiple dictionaries
-==============================================
+30.Find the common keys in multiple dictionaries
+=================================================
 dict1 = {'a': 1, 'b': 2, 'c': 3}
 dict2 = {'b': 2, 'c': 4, 'd': 5}
 dict3 = {'c': 7, 'd': 8, 'e': 9}
@@ -597,9 +608,10 @@ dict3 = {'c': 7, 'd': 8, 'e': 9}
 common_keys = set(dict1.keys()) & set(dict2.keys()) & set(dict3.keys())
 print(common_keys)
 
+===================================================================================================================================================================================================================================
 
-Find the key with the minimum value in a dictionary.
-=====================================================
+31. Find the key with the minimum value in a dictionary.
+=========================================================
 dict2 = {'b': 2, 'c': 9, 'd': 1}
 
 if dict2:
@@ -608,9 +620,10 @@ if dict2:
 
 O/P -> d
 
+===================================================================================================================================================================================================================================
 
-Filter a dictionary based on a condition
-=========================================
+32.Filter a dictionary based on a condition
+============================================
 my_dict = {'apple': 5, 'banana': 2, 'cherry': 8, 'date': 3}
 
 for k,v in my_dict.items():
@@ -628,10 +641,10 @@ O/P ->
 {'cherry': 8}
 {'apple': 5, 'cherry': 8}
 
+===================================================================================================================================================================================================================================
 
-
-Convert a list of dictionaries into a single dictionary
-========================================================
+33.Convert a list of dictionaries into a single dictionary
+===========================================================
 list_of_dicts = [
     {'a': 1, 'b': 2},
     {'c': 3, 'd': 4},
@@ -646,9 +659,10 @@ print(new_dict)
 
 O/P -> {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6}
 
+===================================================================================================================================================================================================================================
 
-Group a list of dictionaries by a specific key
-===============================================
+34.Group a list of dictionaries by a specific key
+==================================================
 
 defaultdict(list) creates a dictionary where each new key will automatically have an empty list as its default value.
 
@@ -674,9 +688,10 @@ O/P ->
  'IT': [{'name': 'Bob', 'department': 'IT'}, {'name': 'David', 'department': 'IT'}], 
  'Finance': [{'name': 'Eva', 'department': 'Finance'}]}
 
+===================================================================================================================================================================================================================================
 
-Sort a list of dictionaries by a specific key. Using BUBBLE Sort
-==================================================================
+35.Sort a list of dictionaries by a specific key. Using BUBBLE Sort
+====================================================================
 data = [
     {'name': 'Bob', 'age': 30},   25
     {'name': 'David', 'age': 28},  22
@@ -699,9 +714,10 @@ O/P ->
 
 [{'name': 'Charlie', 'age': 22}, {'name': 'Alice', 'age': 25}, {'name': 'David', 'age': 28}, {'name': 'Bob', 'age': 30}]
 
+===================================================================================================================================================================================================================================
 
-Find the maximum and minimum values in a list of dictionaries
-==============================================================
+36.Find the maximum and minimum values in a list of dictionaries
+=================================================================
 data = [
     {'name': 'Bob', 'age': 30},
     {'name': 'David', 'age': 28},
@@ -725,9 +741,10 @@ O/P ->
 Minimum value {'name': 'Charlie', 'age': 22}
 Maximum value {'name': 'Bob', 'age': 30}
 
+===================================================================================================================================================================================================================================
 
-Convert a dictionary of lists into a list of dictionaries
-==========================================================
+37.Convert a dictionary of lists into a list of dictionaries
+=============================================================
 data = {
     'name': ['Alice', 'Bob', 'Charlie'],
     'age': [25, 30, 22],
@@ -747,9 +764,10 @@ data = [
     {'name': 'Charlie', 'age': 22, 'city': 'Chicago'}
 ]
 
+===================================================================================================================================================================================================================================
 
-Create a dictionary of lists from a list of dictionaries
-==========================================================
+38.Create a dictionary of lists from a list of dictionaries
+============================================================
 result = {}
 for item in data:
     for key,val in item.items():
@@ -762,9 +780,10 @@ O/P ->
  'age': [25, 30, 22], 
  'city': ['New York', 'Los Angeles', 'Chicago']}
  
- 
-Find the unique keys in a list of dictionaries
-===============================================
+===================================================================================================================================================================================================================================
+
+39.Find the unique keys in a list of dictionaries
+==================================================
 data = [
     {'name': 'Alice', 'age': 25},
     {'name': 'Bob', 'city': 'New York'},
@@ -781,9 +800,10 @@ print(unique_key)
 O/P ->
 {'name', 'country', 'age', 'city'}
 
+===================================================================================================================================================================================================================================
 
-BINARY SEARCH
-==============
+40.BINARY SEARCH
+=================
 arr = [2, 4, 6, 7, 9, 11, 15, 20]
 
 def binary_search(arr,target):
@@ -804,9 +824,10 @@ print(f"Target value {target} found at index: {find_val}")
 
 O/P -> Target value 6 found at index: 2
 
+===================================================================================================================================================================================================================================
 
-Anagram
-========
+41.Anagram
+===========
 s1 = "Listen"
 s2 = "Silent"
 
@@ -832,9 +853,10 @@ if anagrams(s1,s2):
 else:
     print("No")
 	
+===================================================================================================================================================================================================================================
 
-Rotate the list
-=================
+42.Rotate the list
+====================
 def rotate_list(lst, k):
     k = k % len(lst)
     return lst[-k:] + lst[:-k]
@@ -853,9 +875,10 @@ print(txt[-n:]+txt[:-n])
 
 O/P -> llohe
 
+===================================================================================================================================================================================================================================
 
-Return All Number Pairs That Add to Target
-===========================================
+43.Return All Number Pairs That Add to Target
+==============================================
 num = [3, 1, 4, 6, 2, 5]
 target = 7
 
@@ -871,7 +894,7 @@ def two_nums(num,target):
 
 print(two_nums(num,target))
 
-OR
+OR:
 
 nums = [2, 7, 11, 15]
 target = 9
@@ -890,9 +913,10 @@ print(sum_of_nums(nums,target))
 
 OUTPUT -> [0, 1]
 
+===================================================================================================================================================================================================================================
 
-Sum of digits of a number
-==========================
+44.Sum of digits of a number
+=============================
 n = 1234
 
 def sum_digit(n):
@@ -903,199 +927,9 @@ def sum_digit(n):
 
 print(sum_digit(n))
 
-python decorator with both time and logging functionality:
-==========================================================
+===================================================================================================================================================================================================================================
 
-import time
-import logging
-
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-
-def time_logger(func):
-    def wrapper(*args, **kwargs):
-        start_time = time.time()
-        result = func(*args, **kwargs)
-        end_time = time.time()
-        execution_time = end_time - start_time
-        logging.info(f"Function '{func.__name__}' executed in {execution_time:.4f} seconds")
-        return result
-    return wrapper
-
-# Example usage
-@time_logger
-def example_function(n):
-    total = 0
-    for i in range(n):
-        total += i
-    return total
-
-# Call the function
-example_function(1000000)
-
-
-logging decorator: 
-==================
-
-import logging
-
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-
-def log_function(func):
-    def wrapper(*args, **kwargs):
-        logging.info(f"Executing function '{func.__name__}'")
-        result = func(*args, **kwargs)
-        logging.info(f"Function '{func.__name__}' executed successfully")
-        return result
-    return wrapper
-
-
-
-
-
-Timing Decorator:
-=================
-import time
-
-def time_function(func):
-    def wrapper(*args, **kwargs):
-        start_time = time.time()
-        result = func(*args, **kwargs)
-        end_time = time.time()
-        execution_time = end_time - start_time
-        print(f"Function '{func.__name__}' executed in {execution_time:.4f} seconds")
-        return result
-    return wrapper
-
-
-
-Example usage: 
-
-@log_function
-@time_function
-def example_function(n):
-    total = 0
-    for i in range(n):
-        total += i
-    return total
-
-# Call the function
-example_function(1000000)
-
-
-The log_function decorator logs when the function starts and finishes.
-The time_function decorator measures and prints the execution time of the function.
-
-You can apply these decorators separately or stack them as shown in the example
-
-
-
-
-
-
-Singleton: 
-==========
-
-A singleton class in Python is a design pattern that ensures a class has only one instance and provides a global point of access to that instance. This can be useful when exactly one object is needed to coordinate actions across the system.
-
-
-class Singleton:
-    _instance = None
-    def __new__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = super().__new__(cls)
-        return cls._instance
-
-    def __init__(self, value):
-        if not hasattr(self, 'initialized'):
-            self.value = value
-            self.initialized = True
-
-# Example usage
-singleton1 = Singleton(10)
-singleton2 = Singleton(20)
-
-print(singleton1.value)  # Output: 10
-print(singleton2.value)  # Output: 10
-print(singleton1 is singleton2)  # Output: True
-
-
-
-Explanation:
-------------
-__new__ Method: This method is responsible for creating a new instance of the class. It checks if an instance already exists (cls._instance). If not, it creates one and assigns it to cls._instance.
-__init__ Method: This method initializes the instance. The initialized attribute ensures that the initialization code runs only once.
-In the example:
-
-singleton1 and singleton2 are references to the same instance.
-Changing the value through one reference affects the other, demonstrating that only one instance exists.
-
-
-
-
-Implementing Singleton pattern using decorator:
-===============================================
-
-def singleton(cls):
-    instances = {}
-    def get_instance(*args, **kwargs):
-        if cls not in instances:
-            instances[cls] = cls(*args, **kwargs)
-        return instances[cls]
-    return get_instance
-	
-	
-@singleton
-class Singleton:
-    def __init__(self, value):
-        self.value = value
-
-# Example usage
-singleton1 = Singleton(10)
-singleton2 = Singleton(20)
-
-print(singleton1.value)  # Output: 10
-print(singleton2.value)  # Output: 10
-print(singleton1 is singleton2)  # Output: True
-
-
-
-Implementing Singleton pattern Using a Metaclass:
-=================================================
-Another approach is to use a metaclass to control the instance creation:
-
-
-class SingletonMeta(type):
-    _instances = {}
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super(SingletonMeta, cls).__call__(*args, **kwargs)
-        return cls._instances[cls]
-
-class Singleton(metaclass=SingletonMeta):
-    def __init__(self, value):
-        self.value = value
-
-# Example usage
-singleton1 = Singleton(10)
-singleton2 = Singleton(20)
-
-print(singleton1.value)  # Output: 10
-print(singleton2.value)  # Output: 10
-print(singleton1 is singleton2)  # Output: True
-
-
-Explanation
------------
-Decorator Approach: The singleton decorator function ensures that only one instance of the class is created. It uses a dictionary to store the instance.
-Metaclass Approach: The SingletonMeta metaclass overrides the __call__ method to control the instantiation process, ensuring only one instance is created.
-
-
-Both approaches achieve the same goal of ensuring a single instance of the class. You can choose the one that best fits your coding style and requirements.
-
-
-Explain how to implement a stack or queue in Python.
+45.Explain how to implement a stack or queue in Python.
 ======================================================
 
 STACK - LIFO (Last In First Out)
@@ -1184,8 +1018,9 @@ print(queue.dequeue())  # Output: 10
 print(queue.peek())     # Output: 20
 print(queue.size())     # Output: 2
 
+===================================================================================================================================================================================================================================
 
-20. Find the number of digits in an integer
+46. Find the number of digits in an integer
 ============================================
 Input: 12345
 Output: 5
@@ -1201,8 +1036,10 @@ while num !=0:
 
 print(count)
 
-Create an iterator that returns numbers, starting with 1, and each sequence will increase by one (returning 1,2,3,4,5 etc.):
-=============================================================================================================================
+===================================================================================================================================================================================================================================
+
+47.Create an iterator that returns numbers, starting with 1, and each sequence will increase by one (returning 1,2,3,4,5 etc.):
+===============================================================================================================================
 
 class MyNumbers:
   def __iter__(self):
@@ -1303,6 +1140,7 @@ OUTPUT
 3
 4
 Exhausted
+
 	
 
 GENERATOR
@@ -1342,8 +1180,10 @@ OUTPUT
 4
 Generator is exhausted.
 
+===================================================================================================================================================================================================================================
 
-1. Find all digits in a string
+48. Find all digits in a string
+================================
 Input: "abc123def456"
 Output: ['123', '456']
 
@@ -1359,8 +1199,10 @@ OUTPUT
 =======
 ['123', '456']
 
+===================================================================================================================================================================================================================================
 
-2. Extract all words starting with capital letters
+49. Extract all words starting with capital letters
+====================================================
 Input: "Alice and Bob are Friends"
 Output: ['Alice', 'Bob', 'Friends']
 
@@ -1377,7 +1219,10 @@ OUTPUT
 =======
 ['Alice', 'Bob', 'Friends']
 
-3. Replace all spaces with hyphens
+===================================================================================================================================================================================================================================
+
+50. Replace all spaces with hyphens
+===================================
 Input: "Python is awesome"
 Output: "Python-is-awesome"
 
@@ -1392,9 +1237,10 @@ print(rslt)
 OUTPUT    -> Python-is-awesome
 =======
 
+===================================================================================================================================================================================================================================
 
-
-4. Validate an email address
+51. Validate an email address
+==============================
 Input: "user@example.com"
 Output: True (if matched), or False (if not matched)
 
@@ -1418,7 +1264,10 @@ OUTPUT
 <re.Match object; span=(0, 16), match='user@example.com'>
 True
 
-5. Extract domain name from URL
+===================================================================================================================================================================================================================================
+
+52. Extract domain name from URL
+=================================
 Input: "https://www.example.com/path"
 Output: "example.com"
 
@@ -1441,8 +1290,10 @@ OUTPUT
 <re.Match object; span=(8, 23), match='www.example.com'>
 print((rslt).group(0))
 
+===================================================================================================================================================================================================================================
 
-6. Find all phone numbers in a text
+53. Find all phone numbers in a text
+=====================================
 Input: "Call me at 9876543210 or 1234567890"
 Output: ['9876543210', '1234567890']
 
@@ -1459,8 +1310,10 @@ print(rslt)
 OUTPUT    -> ['9876543210', '1234567890']
 =======
 
+===================================================================================================================================================================================================================================
 
-7. Split a sentence into words using regex
+54. Split a sentence into words using regex
+===========================================
 Input: "Hello, world! Python is great."
 Output: ['Hello', 'world', 'Python', 'is', 'great']
 
@@ -1477,7 +1330,11 @@ print(rslt)
 OUTPUT   -> ['Hello', 'world', 'Python', 'is', 'great']
 =======
 
-8. Remove all non-alphanumeric characters
+
+===================================================================================================================================================================================================================================
+
+55. Remove all non-alphanumeric characters
+===========================================
 Input: "Python@#3.9 is $cool!"
 Output: "Python39iscool"
 
@@ -1494,8 +1351,10 @@ print(rslt)
 OUTPUT  -> Python39iscool
 
 
-Check if a string is a rotation of another
-===========================================
+===================================================================================================================================================================================================================================
+
+56.Check if a string is a rotation of another
+==============================================
 
 Input: "abcd", "cdab"
 Output: True
@@ -1510,35 +1369,43 @@ if len(s1) == len(s2) and s2 in (s1+s1):
 else:
     print("False")
 	
+===================================================================================================================================================================================================================================
 
-Longest substring without repeating characters
-================================================
+57.Longest substring without repeating characters
+==================================================
 
-Input: "abcabcbb"
-Output: 3 (substring: "abc")
+s = "eceba"
 
-
-s = "abcabcbb"
-def longest_unique_substring(s):
-    seen = set()
-    left = 0
-    max_len = 0
-
-    for right in range(len(s)):
-        while s[right] in seen:
-            seen.remove(s[left])
-            left += 1
-        seen.add(s[right])
-        max_len = max(max_len, right - left + 1)
+def longest_substring(s):
     
-    return max_len
+    char_index = {}
+    max_length = 0
+    start = 0
+    max_substring = ""
+    
+    for i , char in enumerate(s):
+        if char in char_index  and char_index[char] >= start:
+            start = char_index[char] + 1
+        
+        char_index[char] = i
+        current_len = i-start+1
+        
+        if current_len > max_length:
+            max_length = current_len
+            max_substring = s[start:i+1]
+    
+    return max_substring, max_length
 
-print(longest_unique_substring("abcabcbb"))
+print(longest_substring(s))
 
+OUTPUT
+=======
+('ceba', 4)
 
+===================================================================================================================================================================================================================================
 
-String Compression
-===================
+58.String Compression
+=====================
 Input: "aaabbcc" → Output: "a3b2c2"
 
 SOLUTION
@@ -1559,9 +1426,10 @@ compressed = compressed + s[-1]+ str(count)
 
 print(compressed)
     
+===================================================================================================================================================================================================================================
 
-Check if a string is a valid palindrome ignoring non-alphanumerics
-===================================================================
+59.Check if a string is a valid palindrome ignoring non-alphanumerics
+======================================================================
 
 Input: "A man, a plan, a canal: Panama" → Output: True
 
@@ -1587,9 +1455,10 @@ amanaplanacanalpanama
 amanaplanacanalpanama
 True
 
+===================================================================================================================================================================================================================================
 
-Valid Parentheses
-===================
+60.Valid Parentheses
+=====================
 Input: "({[]})" → Output: True
 
 SOLUTION
@@ -1614,3 +1483,187 @@ def is_valid(s):
     
 print(is_valid("({[]})"))  -> True
 print(is_valid("({[})"))   -> False
+
+===================================================================================================================================================================================================================================
+
+61.Evaluate Reverse Polish Notation
+=====================================
+Input: ["2", "1", "+", "3", "*"] → Output: 9
+
+SOLUTION
+=========
+tokens = ["2", "1", "+", "3", "*", "6", "/","6"]
+
+def evaluation(tokens):
+    stack = []
+    for token in tokens:
+        if token not in "+*/-":
+            stack.append(int(token))
+        else:
+            b = stack.pop()
+            a = stack.pop()
+            
+            if token == "+":
+                stack.append(a+b)
+            elif token == "-":
+                stack.append(a+b)
+            elif token == "*":
+                stack.append(a*b)
+            elif token == "/":
+                stack.append(a/b)
+    return stack[0]
+
+print(evaluation(tokens))
+
+
+OUTPUT   -> 1.5
+
+===================================================================================================================================================================================================================================
+
+62.Climbing Stairs
+===================
+Input: n = 4
+
+SOLUTION
+=========
+n = 4
+
+def climb_stairs(n):
+    if n <= 1:
+        return 1
+    
+    a,b = 1,1
+    for _ in range(2,n+1):
+        a,b = b,a+b
+    
+    return b
+
+print(climb_stairs(4))
+
+OUTPUT -> 5
+
+===================================================================================================================================================================================================================================
+
+63.Longest Common Subsequence
+==============================
+
+SOLUTION
+=========
+text1 = "abcde"
+text2 = "ace"
+
+def longest_common_subsequence(text1, text2):
+    m, n = len(text1),len(text2)
+    dp = [[0]*(n+1) for _ in range(m+1)]
+    
+    for i in range(m):
+        for j in range(n):
+            if text1[i] == text2[j]:
+                dp[i+1][j+1] = dp[i][j] +1
+            else:
+                dp[i+1][j+1] = max(dp[i][j+1],dp[i+1][j])
+    
+    return dp[m][n]
+
+print(longest_common_subsequence(text1,text2))
+
+OUTPUT -> 3
+
+===================================================================================================================================================================================================================================
+
+64.Check if a Number is Power of Two
+=====================================
+
+SOLUTION
+=========
+def power(n):
+    return n>0 and (n & (n-1)) == 0
+
+print(power(8))   -> True
+print(power(10))  -> False
+
+===================================================================================================================================================================================================================================
+
+65.Generate All Permutations of a String
+=========================================
+
+SOLUTION
+=========
+s = "abc"
+
+def get_permutations(s):
+    if len(s) <= 1:
+        return [s]
+    
+    permutations=[]
+    for i,char in enumerate(s):
+        remaining = s[:i] + s[i+1:]
+        for sub_perm in get_permutations(remaining):
+            permutations.append(char+sub_perm)
+    
+    return permutations
+
+print(get_permutations(s))
+
+OUTPUT     -> ['abc', 'acb', 'bac', 'bca', 'cab', 'cba']
+=======
+
+===================================================================================================================================================================================================================================
+66.Move all zeros to the end while maintaining order.
+=======================================================
+
+[0, 1, 0, 3, 12] → [1, 3, 12, 0, 0]
+
+SOLUTION
+=========
+pos = 0
+
+for i in range(len(n)):
+    if n[i] != 0:
+        n[pos] =n[i]
+        pos +=1
+
+for i in range(pos,len(n)):
+    n[i] = 0
+    
+print(n)
+
+OUTPUT -> [1, 3, 12, 0, 0]
+
+===================================================================================================================================================================================================================================
+
+67.Longest Common Substring From All Strings
+=============================================
+
+def longest_common_substring(strings, min_occurrences=2):
+    if not strings:
+        return ""
+    
+    longest = ""
+    n = len(strings)
+    
+    for s in strings:
+        length = len(s)
+        for l in range(length,0,-1):
+            for start in range(length-l+1):
+                substr = s[start:start+l]
+            
+            if len(substr) < len(longest):
+                continue
+            
+            count = sum(1 for s in strings if substr in s)
+            
+            if count>= min_occurrences:
+                if len(substr) > len(longest):
+                    longest = substr
+                    
+            if len(longest) == l:
+                break
+    return longest
+
+words = ["enchashment", "cash", "milk", "catalog", "c+", "python", "cat", "dog", "cashless"]
+print(longest_common_substring(words)) 
+
+OUTPUT -> Cash
+
+===================================================================================================================================================================================================================================

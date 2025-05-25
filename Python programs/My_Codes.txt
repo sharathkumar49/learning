@@ -469,6 +469,191 @@ O/P ->
 0
 Insufficient funds
 
+
+Python decorator with both time and logging functionality:
+===========================================================
+
+import time
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+
+def time_logger(func):
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        execution_time = end_time - start_time
+        logging.info(f"Function '{func.__name__}' executed in {execution_time:.4f} seconds")
+        return result
+    return wrapper
+
+# Example usage
+@time_logger
+def example_function(n):
+    total = 0
+    for i in range(n):
+        total += i
+    return total
+
+# Call the function
+example_function(1000000)
+
+
+logging decorator: 
+==================
+
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+
+def log_function(func):
+    def wrapper(*args, **kwargs):
+        logging.info(f"Executing function '{func.__name__}'")
+        result = func(*args, **kwargs)
+        logging.info(f"Function '{func.__name__}' executed successfully")
+        return result
+    return wrapper
+
+
+Timing Decorator:
+=================
+import time
+
+def time_function(func):
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        execution_time = end_time - start_time
+        print(f"Function '{func.__name__}' executed in {execution_time:.4f} seconds")
+        return result
+    return wrapper
+
+
+
+Example usage: 
+
+@log_function
+@time_function
+def example_function(n):
+    total = 0
+    for i in range(n):
+        total += i
+    return total
+
+# Call the function
+example_function(1000000)
+
+
+The log_function decorator logs when the function starts and finishes.
+The time_function decorator measures and prints the execution time of the function.
+
+You can apply these decorators separately or stack them as shown in the example
+
+
+Singleton: 
+==========
+
+A singleton class in Python is a design pattern that ensures a class has only one instance and provides a global point of access to that instance. This can be useful when exactly one object is needed to coordinate actions across the system.
+
+
+class Singleton:
+    _instance = None
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
+    def __init__(self, value):
+        if not hasattr(self, 'initialized'):
+            self.value = value
+            self.initialized = True
+
+# Example usage
+singleton1 = Singleton(10)
+singleton2 = Singleton(20)
+
+print(singleton1.value)  # Output: 10
+print(singleton2.value)  # Output: 10
+print(singleton1 is singleton2)  # Output: True
+
+
+
+Explanation:
+------------
+__new__ Method: This method is responsible for creating a new instance of the class. It checks if an instance already exists (cls._instance). If not, it creates one and assigns it to cls._instance.
+__init__ Method: This method initializes the instance. The initialized attribute ensures that the initialization code runs only once.
+In the example:
+
+singleton1 and singleton2 are references to the same instance.
+Changing the value through one reference affects the other, demonstrating that only one instance exists.
+
+
+
+
+Implementing Singleton pattern using decorator:
+===============================================
+
+def singleton(cls):
+    instances = {}
+    def get_instance(*args, **kwargs):
+        if cls not in instances:
+            instances[cls] = cls(*args, **kwargs)
+        return instances[cls]
+    return get_instance
+	
+	
+@singleton
+class Singleton:
+    def __init__(self, value):
+        self.value = value
+
+# Example usage
+singleton1 = Singleton(10)
+singleton2 = Singleton(20)
+
+print(singleton1.value)  # Output: 10
+print(singleton2.value)  # Output: 10
+print(singleton1 is singleton2)  # Output: True
+
+
+
+Implementing Singleton pattern Using a Metaclass:
+=================================================
+Another approach is to use a metaclass to control the instance creation:
+
+
+class SingletonMeta(type):
+    _instances = {}
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(SingletonMeta, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+class Singleton(metaclass=SingletonMeta):
+    def __init__(self, value):
+        self.value = value
+
+# Example usage
+singleton1 = Singleton(10)
+singleton2 = Singleton(20)
+
+print(singleton1.value)  # Output: 10
+print(singleton2.value)  # Output: 10
+print(singleton1 is singleton2)  # Output: True
+
+
+Explanation
+-----------
+Decorator Approach: The singleton decorator function ensures that only one instance of the class is created. It uses a dictionary to store the instance.
+Metaclass Approach: The SingletonMeta metaclass overrides the __call__ method to control the instantiation process, ensuring only one instance is created.
+
+
+Both approaches achieve the same goal of ensuring a single instance of the class. You can choose the one that best fits your coding style and requirements.
+
 ===================================================================================================================================================================================================================================
                                                                    INTERVIEW QUESTIONS
 																   ====================
@@ -759,6 +944,17 @@ print(flatten(num))
 
 flattened = set([item for i in num for item in i ])
 print(list(flattened))
+
+
+LIST comprehension
+===================
+n = [1, [2, 3], [4, [5]]]
+
+def flatten(lst):
+    return [item for sublist in lst for item in (flatten(sublist) if isinstance(sublist, list) else [sublist])]
+
+flattened = flatten(n)
+print(flattened)
 
 ===============================================================================
 
