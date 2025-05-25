@@ -1,5 +1,6 @@
 def print_combinations(arrays, prefix=""):
-    # print("arrays: ", arrays, "prefix: ", prefix)
+    print("\n\ncalling the function")
+    print("arrays: ", arrays, "prefix: ", prefix)
     if not arrays:
         print("prefix: ",prefix)
         return

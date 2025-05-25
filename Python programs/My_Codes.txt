@@ -848,3 +848,28 @@ print_prime(num)
 =========================================================================================================================================================
 
 
+                                  ====================
+								        BlackStraw
+								  ---------------------
+								  
+
+class Employee:
+	def __init__(self,name,age):
+		self.name = name
+		self.age = age 
+		
+	@staticmethod	
+	def add([objs]):
+		concat_str = ''
+		for obj in objs:
+			concat_str += obj.name
+		return concat_str
+		
+
+emp1 = Employee('lokesh', 2)
+emp2 = Employee('likitha', 1)
+emp3 = Employee('nakkita', 3)
+
+
+print(Employee.add([emp1, emp2, emp3]))
+

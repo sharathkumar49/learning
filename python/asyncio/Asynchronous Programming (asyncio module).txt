@@ -1,0 +1,380 @@
+
+Python Asyncio: Complete Notes
+
+1. Introduction to Asyncio
+Asyncio is a Python library used for writing concurrent code using the async/await syntax. It is ideal for managing many waiting (I/O-bound) tasks efficiently, such as network requests, file I/O, or database operations.
+
+Why Use Asyncio?
+- Traditional synchronous code waits for each operation to finish before moving to the next.
+- Asyncio allows your program to handle other tasks while waiting for I/O operations, improving efficiency and responsiveness.
+
+
+
+2. Synchronous vs Asynchronous Programming:
+
+Synchronous Programming:
+- Tasks are executed one after another.
+- Each task blocks the next until it completes.
+
+
+Asynchronous Programming:
+- Tasks can be started and while waiting (e.g., for I/O), the program can switch to other tasks.
+- Great for I/O-bound operations, not for CPU-bound tasks.
+
+
+
+3. Asyncio vs Threads vs Processes:
+- Asyncio: For managing many waiting (I/O-bound) tasks.
+- Threads: For parallel tasks that share data with minimal CPU use.
+- Processes: For maximizing performance on CPU-intensive tasks.
+
+
+
+4. Core Concepts in Asyncio
+
+4.1 Coroutines
+A coroutine is a special function that can pause and resume its execution. Defined using 'async def'.
+
+# Example 1: Basic Coroutine
+import asyncio
+
+async def main():
+    print("Start of main coroutine")
+
+# main() # -> coroutine object
+
+# Run the main coroutine
+asyncio.run(main())
+
+
+- 'async def' defines a coroutine.
+- 'asyncio.run(main())' runs the coroutine.
+
+
+
+4.2 Awaiting Coroutines
+
+You can pause a coroutine using 'await', allowing other tasks to run.
+
+# Example 2: Awaiting Another Coroutine
+
+import asyncio
+
+
+#Define a coroutine that simulates a time_consuming task
+async def fetch_data(delay):
+	print("Fetching data..")
+	await asyncio.sleep(delay) # Simulates an I/O operation with a sleep 
+	print("Data fetched")
+	return {"data": "Some data"} # Return some data 
+		
+#Define another coroutine that calls the first coroutine
+async def main():
+	print("Start of the main coroutine")
+	task = fetch_data(2)
+	#Await the fetch_data coroutine, pausing execution of main until fetch_data completes 
+	result = await task 
+	print(f"Received result: {result}")
+	print("End of main coroutine")
+	
+	
+#Run the main coroutine
+asyncio.run(main())
+
+
+Output:
+Start of the main coroutine
+Fetching data..
+Data fetched
+Received result: {'data': 'Some data'}
+End of main coroutine
+
+
+
+# Changing the Order of Await
+
+If you move the 'await' after another print statement, the order of execution changes:
+
+async def main():
+    print("Start of the main coroutine")
+    task = fetch_data(2)
+    print("End of main coroutine")
+    result = await task
+    print(f"Received result: {result}")
+
+
+Output:
+
+Start of the main coroutine
+End of main coroutine
+Fetching data..
+Data fetched
+Received result: {'data': 'Some data'}
+
+
+
+4.3 Multiple Coroutines:
+
+# Example 3: Awaiting Multiple Coroutines Sequentially
+
+import asyncio
+
+async def fetch_data(delay, id):
+    print("Fetching data....id:", id)
+    await asyncio.sleep(delay)
+    print("Data fetched, id:", id)
+    return {"data": "Some data", "id": id}
+
+async def main():
+    task1 = fetch_data(2, 1)
+    task2 = fetch_data(2, 2)
+    result1 = await task1
+    print(f"Received result: {result1}")
+    result2 = await task2
+    print(f"Received result: {result2}")
+
+asyncio.run(main())
+
+
+Output:
+
+Fetching data....id: 1
+Data fetched, id: 1
+Received result: {'data': 'Some data', 'id': 1}
+Fetching data....id: 2
+Data fetched, id: 2
+Received result: {'data': 'Some data', 'id': 2}
+
+*Note: Tasks run one after another, not concurrently.*
+
+
+
+4.4 Running Coroutines Concurrently with Tasks
+
+# Example 4: Using 'asyncio.create_task'
+
+import asyncio
+
+async def fetch_data(id, sleep_time):
+    print(f"Coroutine {id} starting to fetch data.")
+    await asyncio.sleep(sleep_time)
+    return {"id": id, "data": f"Sample data from coroutine {id}"}
+
+async def main():
+    task1 = asyncio.create_task(fetch_data(1, 2))
+    task2 = asyncio.create_task(fetch_data(2, 3))
+    task3 = asyncio.create_task(fetch_data(3, 1))
+    result1 = await task1
+    result2 = await task2
+    result3 = await task3
+    print(result1, result2, result3)
+
+asyncio.run(main())
+
+
+Output:
+Coroutine 1 starting to fetch data.
+Coroutine 2 starting to fetch data.
+Coroutine 3 starting to fetch data.
+{'id': 1, ...} {'id': 2, ...} {'id': 3, ...}
+'''
+*All coroutines start together; results are printed as each finishes.*
+
+
+
+4.5 Gathering Results with 'asyncio.gather'
+# Example 5: Using 'asyncio.gather'
+
+import asyncio
+
+async def fetch_data(id, sleep_time):
+    print(f"Coroutine {id} starting to fetch data.")
+    await asyncio.sleep(sleep_time)
+    return {"id": id, "data": f"Sample data from coroutine {id}"}
+
+async def main():
+    results = await asyncio.gather(
+        fetch_data(1, 2),
+        fetch_data(2, 1),
+        fetch_data(3, 3)
+    )
+    for result in results:
+        print(f"Received result: {result}")
+
+asyncio.run(main())
+
+
+Output:
+Coroutine 1 starting to fetch data.
+Coroutine 2 starting to fetch data.
+Coroutine 3 starting to fetch data.
+Received result: {'id': 1, ...}
+Received result: {'id': 2, ...}
+Received result: {'id': 3, ...}
+
+*All coroutines run concurrently; results are gathered in order.*
+
+
+
+4.6 Task Groups (Python 3.11+)
+
+# Example 6: Using 'asyncio.TaskGroup'
+
+import asyncio
+
+async def fetch_data(id, sleep_time):
+    print(f"Coroutine {id} starting to fetch data.")
+    await asyncio.sleep(sleep_time)
+    return {"id": id, "data": f"Sample data from coroutine {id}"}
+
+async def main():
+    tasks = []
+    async with asyncio.TaskGroup() as tg:
+        for i, sleep_time in enumerate([2, 1, 3], start=1):
+            task = tg.create_task(fetch_data(i, sleep_time))
+            tasks.append(task)
+    results = [task.result() for task in tasks]
+    for result in results:
+        print(f"Received result: {result}")
+
+asyncio.run(main())
+
+
+
+
+4.7 Futures
+
+A Future is a low-level object representing a result that may not be available yet.
+
+# Example 7: Using Futures
+
+'''python
+import asyncio
+
+async def set_future_result(future, value):
+    await asyncio.sleep(2)
+    future.set_result(value)
+    print(f"Set the future's result to: {value}")
+
+async def main():
+    loop = asyncio.get_running_loop()
+    future = loop.create_future()
+    asyncio.create_task(set_future_result(future, "Future result is ready"))
+    result = await future
+    print(f"Received the future's result: {result}")
+
+asyncio.run(main())
+'''
+
+---
+
+ 5. Synchronization Primitives
+
+ 5.1 Locks
+
+Used to prevent multiple coroutines from modifying shared data at the same time.
+
+# Example 8: Using Locks
+
+'''python
+import asyncio
+
+shared_resource = 0
+lock = asyncio.Lock()
+
+async def modify_shared_resource():
+    global shared_resource
+    async with lock:
+        print(f"Resource before modification: {shared_resource}")
+        shared_resource += 1
+        print(f"Resource after modification: {shared_resource}")
+
+async def main():
+    await asyncio.gather(*(modify_shared_resource() for _ in range(5)))
+
+asyncio.run(main())
+'''
+
+---
+
+ 5.2 Semaphores
+
+Limit the number of coroutines accessing a resource.
+
+# Example 9: Using Semaphores
+
+'''python
+import asyncio
+
+async def access_resource(semaphore, resource_id):
+    async with semaphore:
+        print(f"Accessing resource {resource_id}")
+        await asyncio.sleep(1)
+        print(f"Releasing resource {resource_id}")
+
+async def main():
+    semaphore = asyncio.Semaphore(2)
+    await asyncio.gather(*(access_resource(semaphore, i) for i in range(5)))
+
+asyncio.run(main())
+'''
+
+---
+
+ 5.3 Events
+
+Used for signaling between coroutines.
+
+# Example 10: Using Events
+
+'''python
+import asyncio
+
+async def waiter(event):
+    print("Waiting for the event to be set")
+    await event.wait()
+    print("event has been set, continuing execution")
+
+async def setter(event):
+    await asyncio.sleep(2)
+    event.set()
+    print("event has been set!")
+
+async def main():
+    event = asyncio.Event()
+    await asyncio.gather(waiter(event), setter(event))
+
+asyncio.run(main())
+'''
+
+---
+
+ 6. When to Use Asyncio, Threads, or Processes?
+
+- Asyncio: Best for I/O-bound and high-level structured network code (many waiting tasks).
+- Threads: For parallel tasks that need to share data and are not CPU-intensive.
+- Processes: For CPU-bound tasks that need to maximize performance (each process has its own memory space).
+
+Refer to the Comparison Chart above for a quick summary.
+
+---
+
+ 7. Key Takeaways
+
+- Use 'async def' to define coroutines.
+- Use 'await' to pause a coroutine until another completes.
+- Use 'asyncio.run()' to start the event loop.
+- Use 'asyncio.create_task()' or 'asyncio.gather()' for concurrency.
+- Use synchronization primitives (Lock, Semaphore, Event) for safe access to shared resources.
+- Choose between asyncio, threads, and processes based on your task type (I/O-bound vs CPU-bound).
+
+---
+
+ 8. References
+
+- All code and diagrams are from your provided files.
+- For more, see the official [asyncio documentation](https://docs.python.org/3/library/asyncio.html).
+
+---
+
+This guide covers all minute details, code, and concepts discussed in your files, and includes visual aids for better understanding. You can use this as your complete asyncio reference!

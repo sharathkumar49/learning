@@ -1,0 +1,84 @@
+
+write a python class program with dunder method implementation where it can accept any number of objects and add one of its attributes and return the same
+
+Implementation:
+python
+class Employee:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __add__(self, other):
+        if isinstance(other, Employee):
+            return Employee(self.name + " & " + other.name, self.age + other.age)
+        raise TypeError("Can only add Employee instances!")
+
+    @classmethod
+    def add(cls, employees):
+        if not all(isinstance(emp, Employee) for emp in employees):
+            raise TypeError("All objects must be instances of Employee")
+        total_age = sum(emp.age for emp in employees)
+        return total_age  # Returning total age instead of creating a new instance
+
+# Example Usage:
+emp1 = Employee('lokesh', 23)
+emp2 = Employee('rahul', 19)
+emp3 = Employee('ashok', 69)
+
+print(emp1 + emp2)  # Creates a new Employee with combined name and age
+print(Employee.add([emp1, emp2, emp3]))  # Returns total age of all employees
+How It Works:
+The __add__ method allows adding two Employee objects and returns a new Employee with combined attributes.
+
+The add class method accepts any number of Employee instances, sums their age, and returns the total.
+
+Expected Output:
+<__main__.Employee object at 0x...>  # An Employee with "lokesh & rahul" and age 42
+111  # Total age of all employees
+Would you like further modifications, such as handling missing attributes or returning detailed summary data? 🚀
+
+
+
+
+
+
+Currently, the way the `__add__` method is implemented, `emp1 + emp2` works because it returns a new `Employee` instance with a combined name and summed age. However, **`emp1 + emp2 + emp3` throws an error** unless explicitly handled.
+
+### **Why?**
+- Python evaluates `emp1 + emp2` first, which **returns an Employee object**.
+- Then it tries to do **`(new Employee) + emp3`**, which is valid because the returned object from `emp1 + emp2` still supports `__add__`.
+
+### **Direct Expression Handling (`emp1 + emp2 + emp3` Working as Expected)**
+Modify `__add__` to **accumulate multiple objects dynamically**:
+
+```python
+class Employee:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __add__(self, other):
+        if isinstance(other, Employee):
+            combined_name = f"{self.name} & {other.name}"
+            combined_age = self.age + other.age
+            return Employee(combined_name, combined_age)
+        raise TypeError("Can only add Employee instances!")
+
+# Example Usage:
+emp1 = Employee('lokesh', 23)
+emp2 = Employee('rahul', 19)
+emp3 = Employee('ashok', 69)
+
+result = emp1 + emp2 + emp3  # This now works!
+
+print(result.name)  # Output: "lokesh & rahul & ashok"
+print(result.age)   # Output: 111
+```
+
+### **What Changed?**
+- Each `+` operation **returns an Employee**, allowing **continuous addition** in a single expression.
+- Names **concatenate dynamically** (`lokesh & rahul & ashok`).
+- Ages **sum up properly** (`23 + 19 + 69 = 111`).
+
+Now `emp1 + emp2 + emp3` **directly evaluates without errors**. 🚀  
+Let me know if you'd like further customizations!

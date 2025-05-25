@@ -4829,3 +4829,2974 @@ FROM customers
 
 
 mysql string functions -->  https://dev.mysql.com/doc/refman/8.4/en/string-functions.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Date Functions in MySQL:
+------------------------
+
+Queries and other notes in this discussion:
+
+NOW(), CURDATE(),  CURTIME()
+YEAR(NOW())
+MONTH(NOW())
+HOUR(NOW())
+MINUTE(NOW())
+SECOND(NOW())
+DAYNAME(NOW())
+MONTHNAME(NOW())
+
+SELECT EXTRACT(DAY FROM NOW())
+SELECT EXTRACT(YEAR FROM NOW())
+
+
+Exercise:
+SELECT * 
+FROM orders
+WHERE order_date >= '2019-01-01';
+
+Solution:
+SELECT * 
+FROM orders
+WHERE YEAR(order_date) =  YEAR(NOW());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Formatting Dates and Times: 
+---------------------------
+
+
+Queries and other notes used in this discussion:
+DATE_FORMAT(NOW(), '%y') -- 19
+DATE_FORMAT(NOW(), '%Y') -- 2019
+
+
+DATE_FORMAT(NOW(), '%m %y') -- 03 2019
+DATE_FORMAT(NOW(), '%M %Y') -- March 2019 
+
+DATE_FORMAT(NOW(), '%M %d %y') -- March 11 2019
+
+
+search for mysql date format string --> https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html
+
+TIME_FORMAT(NOW(), '%H:%i %p')
+
+
+
+
+
+
+
+
+
+
+Calculating Dates and Times:
+-----------------------------
+
+Queries and other notes used in this discussion: 
+
+SELECT DATE_ADD(NOW(), INTERVAL 1 DAY);
+SELECT DATE_ADD(NOW(), INTERVAL 1 YEAR);
+SELECT DATE_ADD(NOW(), INTERVAL -1 YEAR);
+SELECT DATE_SUB(NOW(), INTERVAL 1 YEAR);
+SELECT DATEDIFF('2019-01-05', '2019-01-01');
+SELECT DATEDIFF('2019-01-05 09:00', '2019-01-01 17:00'); --only returns difference in days, even if we include time values
+
+SELECT TIME_TO_SEC('09:00')
+SELECT TIME_TO_SEC('09:02') - TIME_TO_SEC('09:00') -- 120 
+
+
+
+
+
+
+
+
+
+
+The IFNULL and COALESCE Functions: 
+----------------------------------
+
+Queries and other notes used in this discussion:
+
+SELECT 
+	order_id, 
+	IF_NULL(shipper_id, 'Not assigned') AS shipper
+FROM orders;
+
+
+SELECT 
+	order_id
+	COALESCE(shipper_id, comments, 'Not assigned')
+FROM orders;
+
+
+Exercise:
+SELECT 
+	CONCAT(first_name, ' ', last_name) AS customer, 
+	COALESCE(phone, 'Unknown') AS phone
+FROM customers;
+
+
+
+
+
+
+
+
+
+
+
+The IF Function:
+----------------
+
+Queries and other notes in this discussion: 
+
+IF(expression, first, second)
+
+
+SELECT
+	order_id, 
+	order_date, 
+	IF(
+		YEAR(order_date) = YEAR(NOW()),
+	    'Active', 
+		'Archived') AS category
+FROM orders
+
+
+
+Exercise: 
+SELECT 
+	product_id, 
+	name, 
+	COUNT(*) AS orders,
+	IF (COUNT(*) > 1, 'Many times', 'Once') AS frequency
+FROM products
+JOIN order_items USING (product_id)
+GROUP BY product_id, name;
+
+
+
+
+
+
+
+
+
+
+
+
+The CASE Operator:
+------------------
+
+Queries and other notes in this discussion: 
+
+
+
+SELECT 
+	order_id
+	CASE 
+		WHEN YEAR(order_date) = YEAR(NOW()) THEN 'Active'
+		WHEN YEAR(order_date) = YEAR(NOW()) - 1  THEN 'Last Year'
+		WHEN YEAR(order_date) < YEAR(NOW()) - 1  THEN 'Archived'
+		ELSE 'Future'
+	END AS category
+FROM orders;
+
+
+
+Exercise: 
+
+SELECT 
+	CONCAT(first_name, ' ', last_name) AS customer, 
+	points, 
+	CASE
+		WHEN points > 3000 THEN 'Gold'
+		WHEN points >=  2000 THEN 'Silver'
+		ELSE 'Bronze' 
+	END AS category
+FROM customers; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Views:
+------
+
+Creating Views:
+---------------
+
+Queries used in this discussion: 
+
+USE sql_invoicing; 
+
+CREATE VIEW sales_by_client AS
+SELECT 
+	c.client_id, 
+	c.name, 
+	SUM(invoice_total) AS total_sales
+FROM clients c
+JOIN invoices i USING (client_id)
+GROUP BY client_id, name; 
+
+
+
+SELECT * 
+FROM sales_by_client 
+ORDER BY total_sales DESC;
+
+
+SELECT * 
+FROM sales_by_client 
+WHERE total_sales > 500;
+
+
+SELECT * 
+FROM sales_by_client 
+JOIN clients USING (client_id);
+
+
+
+Exercise: 
+
+-- Create a view to see the balance 
+-- for each client 
+--
+-- client_balance 
+
+-- client_id
+-- name
+-- balance 
+
+
+CREATE VIEW clients_balance AS 
+SELECT 
+	c.client_id,
+	c.name, 
+	SUM(invoice_total - payment_total) AS balance
+FROM clients c
+JOIN invoices i USING (client_id)
+GROUP BY client_id, name;
+
+
+
+
+
+
+
+
+
+
+
+
+Altering or Dropping Views:
+---------------------------
+
+
+Queries used in this discussion: 
+
+DROP VIEW sales_by_client; 
+
+
+CREATE VIEW sales_by_client AS
+SELECT 
+	c.client_id, 
+	c.name, 
+	SUM(invoice_total) AS total_sales
+FROM clients c
+JOIN invoices i USING (client_id)
+GROUP BY client_id, name;
+
+
+CREATE OR REPLACE VIEW sales_by_client AS
+SELECT 
+	c.client_id, 
+	c.name, 
+	SUM(invoice_total) AS total_sales
+FROM clients c
+JOIN invoices i USING (client_id)
+GROUP BY client_id, name;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Updatable Views:
+----------------
+
+Queries and other notes in this discussion: 
+
+-- DISTINCT
+-- Aggregate Functions (MIN, MAX, SUM,..) 
+-- GROUP BY/ HAVING
+-- UNION 
+
+
+CREATE OR REPLACE VIEW invoices_with_balance AS
+SELECT 
+	invoice_id, 
+	number, 
+	client_id, 
+	invoice_total, 
+	payment_total, 
+	invoice_total - payment_total AS balance, 
+	invoice_date, 
+	due_date, 
+	payment_date
+FROM invoices 
+WHERE (invoice_total - payment_total) > 0; 
+
+
+
+DELETE FROM invoices_with_balance
+WHERE invoice_id = 1;
+
+
+UPDATE invoices_with_balance
+SET due_date = DATE_ADD(due_date, INTERVAL 2 DAY)
+WHERE invoice_id = 2; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+The WITH OPTION CHECK Clause: 
+-----------------------------
+
+Queries used in this discussion: 
+
+UPDATE invoices_with_balance
+SET payment_total = invoice_total 
+WHERE invoice_id = 2; 
+
+
+
+CREATE OR REPLACE VIEW invoices_with_balance AS
+SELECT 
+	invoice_id, 
+	number, 
+	client_id, 
+	invoice_total, 
+	payment_total, 
+	invoice_total - payment_total AS balance, 
+	invoice_date, 
+	due_date, 
+	payment_date
+FROM invoices 
+WHERE (invoice_total - payment_total) > 0
+WITH CHECK OPTION; 
+
+
+
+
+
+
+
+
+
+
+
+
+Other Benefits Of Views:
+------------------------
+
+Simplify Queries
+Reduce the impact of changes
+Restrict access to the data 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Stored Procedures:
+------------------
+
+Queries and other notes used in this discussion:
+
+Store and organize SQL
+Faster execution
+Data security
+
+
+
+
+
+
+
+
+
+
+
+Creating a Stored Procedure:
+----------------------------
+
+Queries and other notes used in this discussion:
+
+
+CREATE PROCEDURE get_clients()
+BEGIN 
+	SELECT * FROM clients;
+END 
+
+
+
+DELIMITER $$
+CREATE PROCEDURE get_clients()
+BEGIN 
+	SELECT * FROM clients;
+END$$ 
+
+DELIMITER ;
+
+
+CALL get_clients()
+
+
+Exercise: 
+-- create a stored procedure called 
+--  get_invoices_with_balance
+--  to return all the invoices with a balance > 0
+
+
+SELECT *
+FROM invoices 
+WHERE invoice_total - payment_total > 0  
+
+
+DELIMITER $$
+CREATE PROCEDURE get_invoices_with_balance()
+BEGIN 
+	SELECT * 
+	FROM invoices_with_balance
+	WHERE balance > 0;  
+END$$
+
+DELIMITER ; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+Creating Procedures Using MySQLWorkbench:
+-----------------------------------------
+
+Queries and other notes used in this discussion:
+
+
+Stored Procedures --> Create Stored Procedure 
+
+
+CREATE PROCEDURE `get_payments` ()
+BEGIN 
+	SELECT * FROM payments; 
+END 
+
+
+
+
+MySQL generates these SQL statements: 
+
+USE `sql_invoicing`;
+DROP procedure IF EXISTS `get_payments`;
+
+DELIMITER $$
+USE `sql_invoicing`$$
+CREATE PROCEDURE `get_payments` ()
+BEGIN
+	SELECT * FROM payments; 
+END$$
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Dropping Stored Procedures:
+---------------------------
+
+Queries and other notes used in this discussion:
+
+DROP PROCEDURE get_clients
+
+DROP PROCEDURE IF EXISTS get_clients;
+
+DELIMITER $$
+CREATE PROCEDURE get_clients()
+BEGIN 
+	SELECT * FROM clients; 
+END$$
+
+DELIMITER ; 
+
+
+
+
+
+
+
+
+
+
+
+Parameters:
+----------
+
+Queries and other notes in this discussion:
+
+
+DROP PROCEDURE IF EXISTS get_clients_by_state();
+
+DELIMITER$$
+CREATE PROCEDURE get_clients_by_state
+(
+	state CHAR(2) 
+)
+BEGIN 
+	SELECT * FROM clients c
+	WHERE c.state = state; 
+END $$
+
+DELIMITER ;
+
+
+
+CALL get_clients_by_state('CA')
+
+
+Exercise: 
+
+-- Write a stored procedure to return invoices 
+-- for a given client 
+--
+-- get_invoices_by_client 
+
+
+DROP PROCEDURE IF EXISTS get_invoices_by_client();
+
+DELIMITER$$
+CREATE PROCEDURE get_invoices_by_client
+(
+	client_id INT 
+)
+BEGIN 
+	SELECT * FROM invoices i
+	WHERE i.client_id = client_id; 
+END $$
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Parameter With Default Value:
+-----------------------------
+
+Queries and other notes in this discussion:
+
+
+DROP PROCEDURE IF EXISTS get_clients_by_state();
+
+DELIMITER$$
+CREATE PROCEDURE get_clients_by_state
+(
+	state CHAR(2) 
+)
+BEGIN 
+	IF state IS NULL THEN 
+		SET state = 'CA';
+	END IF; 
+	
+	SELECT * FROM clients c
+	WHERE c.state = state; 
+END $$
+
+DELIMITER ;
+
+CALL get_clients_by_state(NULL)
+
+
+-- if you want to display all clients of all states 
+
+DROP PROCEDURE IF EXISTS get_clients_by_state();
+
+DELIMITER$$
+CREATE PROCEDURE get_clients_by_state
+(
+	state CHAR(2) 
+)
+BEGIN 
+	IF state IS NULL THEN 
+		SELECT * FROM clients; 
+	ELSE
+		SELECT * FROM clients c
+		WHERE c.state = state; 
+	END IF; 
+
+END $$
+
+DELIMITER ;
+
+CALL get_clients_by_state(NULL)
+
+
+
+DROP PROCEDURE IF EXISTS get_clients_by_state();
+
+DELIMITER$$
+CREATE PROCEDURE get_clients_by_state
+(
+	state CHAR(2) 
+)
+BEGIN 
+	SELECT * FROM clients c
+	WHERE C.state = IFNULL(state, c.state);   -- if it is null, c.state = c.state, this condition is always true, returns all the rows
+
+END $$
+
+DELIMITER ;
+
+CALL get_clients_by_state(NULL)
+
+
+
+EXERCISE: 
+
+-- Write a stored procedure called get_payments
+-- with two parameters
+--
+-- client_id => INT
+-- payment_method_id => TINYINT
+
+
+
+DROP PROCEDURE IF EXISTS get_payments();
+
+DELIMITER$$
+CREATE PROCEDURE get_payments
+(
+	client_id INT,
+	payment_method_id TINYINT
+)
+BEGIN 
+	SELECT *
+	FROM payments p
+	WHERE 
+		p.client_id = IFNULL(client_id, p.client_id) AND 
+		p.payment_method  = IFNULL(payment_method_id, p.payment_method_id);
+
+END $$
+
+DELIMITER ;
+
+CALL get_payments(NULL, NULL)
+
+CALL get_payments(5, NULL)
+
+CALL get_payments(NULL, 2)
+
+
+
+
+
+
+
+
+
+
+
+
+Parameter Validation:
+---------------------
+
+Queries and other notes in this discussion:
+
+
+USE sql_invoicing;
+DROP PROCEDURE IF EXISTS make_payment;
+
+DELIMITER$$
+CREATE PROCEDURE make_payment
+(
+	invoice_id INT,
+	payment_amount DECIMAL(9,2),
+	payment_date DATE
+)
+BEGIN 
+	UPDATE invoices i
+	SET 
+		i.payment_total = payment_amount,
+		i.payment_date = payment_date
+	WHERE i.invoice_id = invoice_id;
+END $$
+
+DELIMITER ;
+
+CALL make_payment(2, 100, '2019-01-01')
+
+
+
+
+USE sql_invoicing;
+DROP PROCEDURE IF EXISTS make_payment;
+
+DELIMITER$$
+CREATE PROCEDURE make_payment
+(
+	invoice_id INT,
+	payment_amount DECIMAL(9,2),
+	payment_date DATE
+)
+BEGIN 
+	IF payment_amount <=  0 THEN 
+		SIGNAL SQLSTATE '22003' SET MESSAGE_TEXT = 'Invalid payment amount';
+	END IF; 
+	
+	UPDATE invoices i
+	SET 
+		i.payment_total = payment_amount,
+		i.payment_date = payment_date
+	WHERE i.invoice_id = invoice_id;
+END $$
+
+DELIMITER ;
+
+CALL make_payment(2, -100, '2019-01-01')
+
+
+
+search for sqlstate errors 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Output Parameters: 
+------------------
+
+
+Queries and other notes in this discussion:
+
+
+DELIMITER$$
+CREATE PROCEDURE get_unpaid_invoices_for_client
+(
+	client_id INT
+	OUT invoices_count INT
+	OUT invoices_total DECIMAL(9,2)
+)
+BEGIN 
+	SELECT COUNT(*), SUM(invoice_total)
+	INTO invoices_count, invoices_total 
+	FROM invoices i
+	WHERE i.client_id = client_id AND payment_total = 0; 
+	
+END$$
+
+DELIMITER ;
+
+
+CALL get_unpaid_invoices_for_client(3); 
+
+
+set @invoices_count = 0;
+set @invoices_total = 0; 
+
+CALL get_unpaid_invoices_for_client(3, @invoices_count, @invoices_total); 
+
+select @invoices_count, @invoices_total;
+
+
+
+
+
+
+
+
+
+
+
+Variables:
+----------
+
+Queries and other notes in this discussion:
+
+-- user or session variables
+SET @invoices_count = 0
+
+-- Local variable
+
+CREATE PROCEDURE get_risk_factor()
+BEGIN 
+-- risk_factor = invoices_total / invoices_count * 5
+	DECLARE risk_factor DECIMAL(9, 2) DEFAULT 0;
+	DECLARE invoices_total DECIMAL(9, 2); 
+	DECLARE invoices_count INT; 
+	
+	SELECT COUNT(*), SUM(invoice_total)
+	INTO invoices_count, invoices_total
+	FROM invoices; 
+	
+	SET risk_factor = invoices_total / invoices_count * 5; 
+
+	SELECT risk_factor;
+END 
+
+
+
+
+
+
+
+
+
+
+
+Functions:
+----------
+
+Queries and other notes in this discussion:
+
+CREATE FUNCTION function_name(param1 datatype, param2 datatype) 
+RETURNS return_datatype
+DETERMINISTIC   -- Other attributes are READS SQL DATA, MODIFIES SQL DATA 
+BEGIN
+    -- Function logic here
+    RETURN value;
+END;
+
+
+CREATE FUNCTION get_rist_factor_for_client(client_id INT) 
+RETURNS INTEGER
+READS SQL DATA 
+BEGIN
+	DECLARE risk_factor DECIMAL(9, 2) DEFAULT 0;
+	DECLARE invoices_total DECIMAL(9, 2); 
+	DECLARE invoices_count INT; 
+	
+	SELECT COUNT(*), SUM(invoice_total)
+	INTO invoices_count, invoices_total
+	FROM invoices i 
+	WHERE i.client_id = client_id;
+	
+	SET risk_factor = invoices_total / invoices_count * 5; 
+    RETURN IFNULL(risk_factor, 0);
+END;
+
+
+
+
+SELECT 
+	client_id, 
+	name, 
+	get_rist_factor_for_client(client_id) AS risk_factor
+FROM clients; 
+
+
+DROP FUNCTION IF EXISTS get_rist_factor_for_client; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+Other Conventions:
+------------------
+
+Queries and other notes in this discussion:
+
+'fn_', 'proc_', 'procGetRiskFactor', 'getRiskFactor', 'get_risk_factor'
+
+DELIMITER $$
+DELIMITER //
+
+
+
+
+
+
+
+
+
+
+
+Triggers and Events:
+--------------------
+
+
+Triggers:
+---------
+
+Queries and other notes in this discussion:
+
+A block of SQL code that automatically gets executed before or after an insert, update or delete statement. 
+
+DELIMITER $$
+
+CREATE TRIGGER payments_after_insert 
+	AFTER INSERT ON payments 
+	FOR EACH ROW 
+BEGIN
+	UPDATE invoices  
+	SET payment_total = payment_total + NEW.amount 
+	WHERE invoice_id = NEW.invoice_id; 
+END $$
+
+DELIMITER ;
+	
+	
+	
+INSERT INTO payments 
+VALUES (DEFAULT, 5, 3, '2019-01-01', 10, 1);
+
+
+
+Exercise: 
+
+-- Create a trigger that gets fired when we 
+-- delete a payment. 	
+
+
+
+DELIMITER $$
+
+CREATE TRIGGER payments_after_delete 
+	AFTER DELETE ON payments 
+	FOR EACH ROW 
+BEGIN
+	UPDATE invoices  
+	SET payment_total = payment_total - OLD.amount 
+	WHERE invoice_id = OLD.invoice_id; 
+END $$
+
+DELIMITER ;
+
+
+DELETE 
+FROM payments 
+WHERE payment_id = 10; 
+
+
+
+
+
+
+
+
+
+
+Viewing Triggers:
+-----------------
+
+Queries and other notes in this discussion:
+
+SHOW TRIGGERS 
+
+SHOW TRIGGERS LIKE 'payments%'
+
+--table_after_insert    
+
+
+
+
+
+
+
+
+
+
+Dropping Triggers:
+------------------
+
+Queries and other notes in this discussion:
+
+DROP TRIGGER IF EXISTS payments_after_insert; 
+
+
+
+
+DELIMITER $$
+
+DROP TRIGGER IF EXISTS payments_after_insert; 
+
+CREATE TRIGGER payments_after_insert 
+	AFTER INSERT ON payments 
+	FOR EACH ROW 
+BEGIN
+	UPDATE invoices  
+	SET payment_total = payment_total + NEW.amount 
+	WHERE invoice_id = NEW.invoice_id; 
+END $$
+
+DELIMITER ;
+
+
+
+
+DELIMITER $$
+
+DROP TRIGGER IF EXISTS payments_after_delete;
+
+CREATE TRIGGER payments_after_delete 
+	AFTER DELETE ON payments 
+	FOR EACH ROW 
+BEGIN
+	UPDATE invoices  
+	SET payment_total = payment_total - OLD.amount 
+	WHERE invoice_id = OLD.invoice_id; 
+END $$
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+Using Triggers for Auditing:
+----------------------------
+
+
+USE sql_invoicing; 
+
+CREATE TABLE payments_audit
+(
+	client_id 		INT 			NOT NULL, 
+    date 			DATE 			NOT NULL,
+    amount 			DECIMAL(9, 2) 	NOT NULL,
+    action_type 	VARCHAR(50) 	NOT NULL,
+    action_date 	DATETIME 		NOT NULL
+)
+
+
+DELIMITER $$
+
+DROP TRIGGER IF EXISTS payments_after_insert; 
+
+CREATE TRIGGER payments_after_insert 
+	AFTER INSERT ON payments 
+	FOR EACH ROW 
+BEGIN
+	UPDATE invoices  
+	SET payment_total = payment_total + NEW.amount 
+	WHERE invoice_id = NEW.invoice_id; 
+
+	INSERT INTO payments_audit 
+	VALUES (NEW.client_id, NEW.date, NEW.amount, 'Insert', NOW());
+END $$
+
+DELIMITER ;
+
+
+
+
+DELIMITER $$
+
+DROP TRIGGER IF EXISTS payments_after_delete;
+
+CREATE TRIGGER payments_after_delete 
+	AFTER DELETE ON payments 
+	FOR EACH ROW 
+BEGIN
+	UPDATE invoices  
+	SET payment_total = payment_total - OLD.amount 
+	WHERE invoice_id = OLD.invoice_id; 
+	
+	INSERT INTO payments_audit 
+	VALUES (OLD.client_id, OLD.date, OLD.amount, 'Delete', NOW());
+END $$
+
+DELIMITER ;
+
+
+INSERT INTO payments 
+VALUES (DEFAULT, 5, 3, '2019-01-01', 10, 1); 
+
+
+
+DELETE 
+FROM payments 
+WHERE payment_id = 11; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Events:
+-------
+
+Queries and other notes in this discussion:
+
+
+A task (or block of SQL code) that gets executed according to a schedule
+
+SHOW VARIABLES LIKE 'event%'; 
+
+
+event_scheduler -- set it to 'ON'
+
+SET GLOBAL event_scheduler = ON; 
+
+
+
+
+DELIMITER $$
+
+CREATE EVENT yearly_delete_stale_audit_rows 
+ON SCHEDULE 
+	-- AT '2019-05-01'
+	EVERY 1 YEAR STARTS '2019-01-01' ENDS '2029-01-01'
+DO BEGIN
+	DELETE FROM payments_audit
+	WHERE  action_date < NOW() - INTERVAL 1 YEAR;   -- or DATEADD(NOW(), INTERVAL -1 YEAR) or DATESUB(NOW(), INTERVAL 1 YEAR)
+END $$
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Viewing, Dropping and Altering Events:
+--------------------------------------
+
+Queries and other notes in this discussion:
+
+SHOW EVENTS; 
+
+
+SHOW EVENTS LIKE 'yearly%';
+
+DROP EVENT IF EXISTS yearly_delete_stale_audit_rows;
+
+
+
+DELIMITER $$
+
+ALTER EVENT yearly_delete_stale_audit_rows 
+ON SCHEDULE 
+	-- AT '2019-05-01'
+	EVERY 1 YEAR STARTS '2019-01-01' ENDS '2029-01-01'
+DO BEGIN
+	DELETE FROM payments_audit
+	WHERE  action_date < NOW() - INTERVAL 1 YEAR;   -- or DATEADD(NOW(), INTERVAL -1 YEAR) or DATESUB(NOW(), INTERVAL 1 YEAR)
+END $$
+
+DELIMITER ;  
+
+
+
+ALTER EVENT yearly_delete_stale_audit_rows DISABLE; 
+
+ALTER EVENT yearly_delete_stale_audit_rows ENABLE; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Transactions and Concurrency:
+-----------------------------
+
+
+Transactions:
+-------------
+
+Queries and other notes in this discussion:
+
+
+A group of SQL statements that represent a single unit of work 
+
+
+properties of Transactions:(ACID)
+
+Atomicity 
+Consistency
+Isolation 
+Durability
+
+
+
+
+
+
+
+
+
+
+
+
+
+Creating Transactions:
+-----------------------
+
+Queries and other notes in this discussion:
+
+
+USE sql_store;
+
+START TRANSACTION; 
+
+INSERT INTO orders (customer_id, order_date, status)
+VALUES(1, '2019-01-01', 1);
+
+INSERT INTO order_items
+VALUES (Last_INSERT_ID(), 1, 1, 1);
+
+COMMIT; 
+
+
+
+
+USE sql_store;
+
+START TRANSACTION; 
+
+INSERT INTO orders (customer_id, order_date, status)
+VALUES(1, '2019-01-01', 1);
+
+INSERT INTO order_items
+VALUES (Last_INSERT_ID(), 1, 1, 1);
+
+ROLLBACK;
+
+
+difference between commit and rollback 
+
+
+SHOW VARIABLES LIKE 'autocommit';  -- autocommit variable which is set to 'ON' 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrency and Locking:
+------------------------
+
+
+Queries and other notes in this discussion:
+
+
+connection 1:
+
+USE sql_store;
+START TRANSACTION; 
+UPDATE customers
+SET points = points + 10 
+WHERE customer_id = 1;
+COMMIT; 
+
+
+connection 2: 
+
+USE sql_store;
+START TRANSACTION; 
+UPDATE customers
+SET points = points + 10 
+WHERE customer_id = 1;
+COMMIT; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concurrency Problems: 
+---------------------
+
+
+Queries and other notes in this discussion:
+
+Some common concurrency problems:
+Lost Updates 
+Dirty Reads 
+Non-repeating Reads 
+Phantom Reads 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Transaction Isolation Levels:
+-----------------------------
+
+Queries and other notes in this discussion:
+
+
+SHOW VARIABLES LIKE 'transaction_isolation'; 
+
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+SET SESSION TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+SET GLOBAL TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+
+
+
+
+
+
+
+READ UNCOMMITTED Isolation Level: 
+---------------------------------
+
+Queries and other notes in this discussion:
+
+connection 1:
+
+USE sql_store; 
+SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+SELECT points 
+FROM customers 
+WHERE customer_id = 1; -- reads the uncommitted data which is points = 20
+
+
+connection 2:
+USE sql_store; 
+START TRANSACTION;
+UPDATE customers 
+SET points = 20
+WHERE customer_id = 1; 
+COMMIT; 
+
+
+USE sql_store; 
+START TRANSACTION;
+UPDATE customers 
+SET points = 20
+WHERE customer_id = 1; 
+ROLLBACK;   -- say if we rolls back for some reason, and connection 1 has read it as points as 20 which is not true now 
+
+
+
+
+
+
+
+
+
+
+
+READ COMMITTED Isolation Level: 
+-------------------------------
+
+Queries and other notes in this discussion:
+
+connection 1:
+
+USE sql_store; 
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+SELECT points 
+FROM customers 
+WHERE customer_id = 1; -- reads only the committed data 
+
+
+connection 2:
+USE sql_store; 
+START TRANSACTION;
+UPDATE customers 
+SET points = 20
+WHERE customer_id = 1; 
+COMMIT; 
+
+
+
+connection 1:
+USE sql_store; 
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+START TRANSACTION;
+SELECT points FROM customers WHERE customer_id = 1; -- reads 20
+SELECT points FROM customers WHERE customer_id = 1; -- reads 30 after we updated the points and committed in connection 2
+COMMIT; 
+
+
+connection 2:
+USE sql_store; 
+START TRANSACTION;
+UPDATE customers 
+SET points = 30
+WHERE customer_id = 1; 
+COMMIT; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+REPEATABLE READ Isolation Level:
+--------------------------------
+
+Queries and other notes in this discussion:
+
+
+connection 1:
+USE sql_store; 
+SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+START TRANSACTION;
+SELECT points FROM customers WHERE customer_id = 1; -- reads 30
+SELECT points FROM customers WHERE customer_id = 1; -- reads 30, because our reads are repeatable and consistent 
+COMMIT; 
+
+
+
+connection 2:
+USE sql_store; 
+START TRANSACTION;
+UPDATE customers 
+SET points = 40
+WHERE customer_id = 1; 
+COMMIT; 
+
+
+
+problem with phantom reads:
+connection 1:
+USE sql_store; 
+SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+START TRANSACTION;
+SELECT * FROM customers WHERE state = 'VA';  -- we won't get to see the customer_id 1
+COMMIT; 
+
+
+connection 2:
+USE sql_store; 
+START TRANSACTION;
+UPDATE customers 
+SET state = 'VA'
+WHERE customer_id = 1; 
+COMMIT; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SERIALIZABLE Isolation Level:
+-----------------------------
+
+Queries and other notes in this discussion:
+
+
+connection 1:
+USE sql_store; 
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+START TRANSACTION;
+SELECT * FROM customers WHERE state = 'VA';  -- this transaction should be waiting for the transaction to finish and then reads customers along with customer_id 3 
+COMMIT; 
+
+
+connection 2:
+USE sql_store; 
+START TRANSACTION;
+UPDATE customers 
+SET state = 'VA'
+WHERE customer_id = 3; 
+COMMIT; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Deadlocks:
+----------
+
+Queries and other notes in this discussion:
+
+
+Session 1:
+USE sql_store; 
+START TRANSACTION; 
+UPDATE customers SET state = 'VA' WHERE customer_id = 1; 
+UPDATE orders SET status = 1 WHERE order_id = 1; 
+COMMIT; 
+
+
+
+Session 2:
+USE sql_store; 
+START TRANSACTION; 
+UPDATE orders SET status = 1 WHERE order_id = 1; 
+UPDATE customers SET state = 'VA' WHERE customer_id = 1; 
+COMMIT; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Data Types:
+-----------
+
+In MySQL we have several categories of data types. We have String types, Numeric types, Date and Time types, Blob Types for storing binary data, and Spatial Types storing geometric or geographical values. Over the next few lectures, we're going to explore various data types in each category. So, let's get started.
+
+
+
+
+String Types:
+-------------
+
+Queries and other notes in this discussion:
+
+CHAR(x) -- fixed length
+VARCHAR(x) -- max: 65, 535 characters (~64KB)
+
+VARCHAR(50) for short strings 
+VARCHAR(255) for medium-length strings 
+
+MEDIUMTEXT: max: 16MB
+LONGTEXT: max: 4GB
+
+TINYTEXT: max: 255 bytes 
+TEXT: max: 64KB
+
+
+Bytes: 
+English = 1 byte, 
+European, Middle-eastern = 2 bytes
+Asian = 3 bytes 
+
+
+
+
+
+
+
+
+
+
+
+Integer Types:
+--------------
+
+Queries and other notes in this discussion:
+
+TINYINT 1b   [-128, 127]
+UNSIGNED TINYINT [0, 255]
+SMALLINT 2b [-32K, 32K]
+MEDIUMINT 3b [-8M, 8M]
+INT 4b [-2B, 2B]
+BIGINT  8b [-9Z, 9Z]
+
+search for mysql integer types 
+
+
+Zerofill --> INT(4) => 0001
+
+
+Use the smallest data type that suits your needs. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fixed-point and Floating-point Types:
+-------------------------------------
+
+Queries and other notes in this discussion:
+
+DECIMAL(p, s)     DECIMAL(9, 2) => 1234567.89
+DEC
+NUMERIC
+FIXED 
+
+FLOAT  4b
+DOUBLE  8b
+
+
+
+
+
+
+
+
+
+
+
+
+
+Boolean Types:
+---------------
+
+Queries and other notes in this discussion:
+
+BOOL 
+
+BOOLEAN 
+
+UPDATE posts
+SET is_published = 1 
+
+
+
+
+
+
+
+
+
+
+Enum and Set Types:
+-------------------
+
+ENUM('small', 'medium', 'large')
+SET(...)
+
+
+
+
+
+
+
+
+
+Date and Time Types:
+--------------------
+
+DATE
+TIME
+DATETIME  8b
+TIMESTAMP 4b (up to 2038)
+YEAR
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Blob Types: 
+-----------
+
+
+TINYBLOB      255b
+BLOB          65KB
+MEDIUM BLOB   16MB
+LONGBLOB      4GB
+
+
+Problems with storing files in database: 
+
+Increased database size
+Slower backups
+Performance problems 
+More code to read/write images
+
+
+
+
+
+
+
+
+
+JSON Type:
+----------
+
+
+Queries and other notes in this discussion:
+
+Lightweight format for storing and transferring data over the internet
+
+json
+{
+ "key" : value
+}
+
+
+
+UPDATE products 
+SET properties = '
+{
+	"dimensions" : [1, 2, 3],
+	"weight": 10
+	"manufacturer": { "name" : "sony"}
+}
+'
+WHERE product_id = 1;
+
+
+in MySQL:
+UPDATE products 
+SET properties = JSON_OBJECT(
+	'weight', 10, 
+	'dimensions', JSON_ARRAY(1, 2, 3),
+	'manufacturer, JSON_OBJECT('name', 'sony')
+)
+WHERE product_id = 1;
+
+
+
+SELECT product_id, JSON_EXTRACT(properties, '$.weight') AS weight
+FROM products
+WHERE product_id = 1; 
+
+SELECT product_id, properties -> '$.weight' AS weight  -- '->' column pass operator
+FROM products
+WHERE product_id = 1; 
+
+
+SELECT product_id, properties -> '$.dimensions[0]'
+FROM products
+WHERE product_id = 1; 
+
+SELECT product_id, properties ->> '$.manufacturer.name'
+FROM products
+WHERE product_id = 1; 
+
+
+SELECT product_id, properties ->> '$.manufacturer.name'
+FROM products
+WHERE properties ->> '$.manufacturer.name' = 'sony';
+
+
+
+
+UPDATE products 
+SET properties = JSON_SET(
+	properties,
+	'$.weight', 20
+	'$.age', 10
+)
+WHERE product_id = 1;
+
+
+
+UPDATE products 
+SET properties = JSON_REMOVE(
+	properties,
+	'$.age'
+)
+WHERE product_id = 1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Designing Databases:
+
+So far we've been writing our queries against existing databases. But as a software engineer or database administrator, there are times when you will need to design a new database from scratch or add new tables to an existing database. And that's what you're going to learn in this section. I'm going to walk you through a simple step-by-step process to design well-structured databases. Remember, a well-designed database requires a bit of planning at the beginning and it may take a bit of time, but it plays a critical role in the success of your applications. If your database is designed properly, you can easily extend it to support new business requirements, you can easily query to extract useful information and your queries will execute quickly. A poorly designed database requires a lot of maintenance and the cost of maintaining it increases over time to the extent that it will eventually prevent you from supporting new business requirements. 
+In one of the companies that I worked at, we had a poorly designed database and believe it or not, some of our stored procedures were almost a thousand lines of code because the structure of the database was overly complex. So extracting data was really difficult. Also, some of our queries took several minutes to execute. So in this section, I'm going to walk you through a systematic approach to design well-structured databases. Are you ready? Let's get started.
+
+
+
+
+Data Modelling:
+---------------
+
+Queries and other notes in this discussion:
+
+Understand the requirements 
+Build a Conceptual Model 
+Build a Logical Model 
+Build a Physical Model 
+
+
+
+
+
+
+
+
+
+
+
+Conceptual Models:
+------------------
+
+Queries and other notes in this discussion:
+
+Conceptual Model: Represents the entities and their relationships 
+
+Entity Relationship, UML - visually expressing the concepts 
+
+conceptual model - identifying the entities or things or concepts in the business and their relationships with each other. A conceptual model is just a visual representation of these concepts that you use to communicate with the stakeholders so you know you're both on the same page.
+
+
+
+
+
+
+
+
+
+
+
+Logical Models:
+---------------
+
+logical model is independent of database technologies
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Physical Models:
+----------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Primary Keys:
+-------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Foreign Keys:
+-------------
+
+parent or the primary key table, child or the foreign key table 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Foreign Key Constraints:
+------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Normalization: 
+--------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1NF-First Normal Form:
+----------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Link Tables:
+------------
+
+
+
+
+
+
+
+
+
+2NF-Second Normal Form:
+-----------------------
+
+
+
+
+
+3NF-Third Normal Form:
+----------------------
+
+
+
+
+
+
+My Pragmatic Advice:
+--------------------
+
+
+
+
+
+Don't Model the Universe:
+-------------------------
+
+
+
+
+
+
+
+Forward Engineering a Model:
+----------------------------
+
+
+
+
+
+
+
+
+Synchronizing a Model with a Database:
+--------------------------------------
+
+
+
+
+
+
+
+Reverse Engineering a Database:
+-------------------------------
+
+
+
+
+
+
+
+
+Project: Flight Booking System
+------------------------------
+
+
+Flight Booking System.pdf:
+Los Angeles, CA -> San Francisco, CA
+San Francisco, CA -> Los Angeles, CA
+Fri Apr 05 2019 -> Sun Apr 07 2019
+2 Tickets
+
+
+Airline Confirmation Numbers
+Alaska Airline: TAEGKX
+
+
+Passengers and Ticket Numbers:
+John Smith
+Ticket Number: 0177200658
+
+Jennifer Smith
+Ticket Number: 0178410326
+
+
+
+
+
+Fri Apr 05
+Los Angeles -> San Francisco
+LAX -> SFO
+08:20 AM - 09:35 AM
+Alaska Airlines Flight 1490
+1h 15m, 236 miles
+
+Depart: Los Angeles Intl Airport (LAX)
+Arrive: San Francisco Intl Airport (SFO)
+
+Economy Class
+
+
+Sun Apr 07
+San Francisco -> Los Angeles
+SFO -> LAX
+02:00 PM - 03:15 PM
+Alaska Airlines Flight 1473
+1h 15m, 236 miles
+
+Depart: San Francisco Intl Airport (SFO)
+Arrive: Los Angeles Intl Airport (LAX)
+
+Economy Class
+
+
+
+
+Price Summary:
+Traveler 1: $357.60
+Traveler 2: $357.60
+Total:      $756.20
+
+
+
+
+
+
+
+
+
+
+
+
+
+Solution - Conceptual Model:
+----------------------------
+
+
+
+
+
+
+
+
+
+
+
+Solution - Logical Model:
+-------------------------
+
+
+
+
+
+
+
+
+
+
+Project - Video Rental Application:
+-----------------------------------
+
+
+Vidly - Requirements:
+We’re going to build a desktop application called Vidly. This application will be used at a video rental store. We need different levels of permissions for different users.
+The store manager should be able to add/update/delete the list of movies. They will be in charge of setting the stock for each movie as well as the daily rental rate. Cashiers should have a read-only view of the list of movies. They should be able to manage the list of customers and the movies they rent. 
+
+At check out, a customer brings one or more movies. The cashier looks up a customer by their phone number. If the customer is a first-time customer, the cashier asks their full name, email and phone number, and then registers them in the system. The cashier then scans the movies the customer has brought to check out and records them in the system. Each movie has a 10 digit barcode printed on the cover.
+
+
+When the customer returns to the store, they’ll bring the movies they rented. If a movie is lost, the customer should be charged 5 times the daily rental rate of the movie. The cashier should mark the movie as lost and this will reduce the stock. There is no need to keep track of the lost movies. All we need to know is the the number of movies in stock and how much the customer was charged.
+
+
+For other movies, the customer should be charged based on the number of days and the daily rental rate.
+
+We issue discount coupons from time to time. The customer can bring a coupon when returning the movies.
+
+It is possible that a customer returns the movies they’ve rented in multiple visits.
+
+We need to be able to track the
+- top movies
+- top customers
+- revenue per day, month and year
+
+
+
+
+
+
+
+Solution - Conceptual Model:
+----------------------------
+
+
+
+
+
+
+
+
+
+
+
+Solution - Logical Model:
+-------------------------
+
+
+
+
+
+
+
+
+
+
+
+Creating and Dropping Databases:
+--------------------------------
+
+
+Queries and other notes in this discussion:
+
+CREATE DATABASE sql_store2; 
+
+CREATE DATABASE IF NOT EXISTS sql_store2; 
+
+DROP DATABASE IF EXISTS sql_store2; 
+
+
+
+
+
+
+
+
+
+
+
+
+Creating Tables:
+----------------
+
+Queries and other notes in this discussion: 
+
+CREATE DATABASE IF NOT EXISTS sql_store2; 
+USE sql_store2;
+DROP TABLE IF EXISTS customers; 
+CREATE TABLE customers
+(
+	customer_id INT PRIMARY KEY AUTO_INCREMENT, 
+	first_name VARCHAR(50) NOT NULL,
+	points INT NOT NULL DEFAULT 0,
+	email VARCHAR(255) NOT NULL UNIQUE
+);
+
+
+or 
+
+
+CREATE TABLE IF NOT EXISTS customers
+(
+	customer_id INT PRIMARY KEY AUTO_INCREMENT, 
+	first_name VARCHAR(50) NOT NULL,
+	points INT NOT NULL DEFAULT 0,
+	email VARCHAR(255) NOT NULL UNIQUE
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Altering Tables:
+----------------
+
+Queries and other notes in this discussion: 
+
+ALTER TABLE customers 
+	ADD last_name VARCHAR(50) NOT NULL AFTER first_name, -- if you have space in between `first name`
+	ADD city  VARHCAR(50) NOT NULL, 
+	MODIFY COLUMN first_name VARCHAR(255) DEFAULT '', 
+	DROP points;
+
+
+
+
+
+
+
+
+
+
+
+
+Creating Relationships:
+-----------------------
+
+Queries and other notes in this discussion:
+
+CREATE DATABASE IF NOT EXISTS sql_store2; 
+USE sql_store2;
+DROP TABLE IF EXISTS customers;
+CREATE TABLE IF NOT EXISTS customers
+(
+	customer_id INT PRIMARY KEY AUTO_INCREMENT, 
+	first_name VARCHAR(50) NOT NULL,
+	points INT NOT NULL DEFAULT 0,
+	email VARCHAR(255) NOT NULL UNIQUE
+);
+DROP TABLE IF EXISTS orders;
+CREATE TABLE orders
+(
+	order_id INT PRIMARY KEY, 
+	customer_id INT NOT NULL,
+	FOREIGN KEY fk_orders_customers (customer_id)
+		REFERENCES customers (customer_id)
+		ON UPDATE CASCADE
+		ON DELETE NO ACTION
+);
+
+
+
+CREATE DATABASE IF NOT EXISTS sql_store2; 
+USE sql_store2;
+DROP TABLE IF EXISTS orders;   -- Since customers table is having relationship with orders table, we are moving the statement before dropping customers table
+DROP TABLE IF EXISTS customers;
+
+CREATE TABLE IF NOT EXISTS customers
+(
+	customer_id INT PRIMARY KEY AUTO_INCREMENT, 
+	first_name VARCHAR(50) NOT NULL,
+	points INT NOT NULL DEFAULT 0,
+	email VARCHAR(255) NOT NULL UNIQUE
+);
+
+CREATE TABLE orders
+(
+	order_id INT PRIMARY KEY, 
+	customer_id INT NOT NULL,
+	FOREIGN KEY fk_orders_customers (customer_id)
+		REFERENCES customers (customer_id)
+		ON UPDATE CASCADE
+		ON DELETE NO ACTION
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Altering Primary and Foreign Key Constraints:
+---------------------------------------------
+
+
+Queries and other notes in this discussion: 
+
+
+ALTER TABLE orders
+	ADD PRIMARY KEY (order_id), 
+	DROP PRIMARY KEY, 
+	DROP FOREIGN KEY fk_orders_customers,
+	ADD FOREIGN KEY fk_orders_customers (customer_id)
+		REFERENCES customers (customer_id)
+		ON UPDATE CASCADE
+		ON DELETE NO ACTION
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+Character Sets and Collations:
+------------------------------
+
+Queries and other notes in this discussion: 
+
+SHOW CHARSET 
+
+
+CHAR(10) -> 10 x 3 = 30 x 1000000 = 30M
+
+
+
+CREATE DATABASE db_name 
+	CHARACTER SET latin1;
+
+
+ALTER DATABASE db_name 
+	CHARACTER SET latin1;
+	
+	
+CREATE TABLE table1
+(
+)
+CHARACTER SET latin1;
+
+
+ALTER TABLE table1
+CHARACTER SET latin1; 
+
+
+CREATE TABLE IF NOT EXISTS customers
+(
+	customer_id INT PRIMARY KEY AUTO_INCREMENT, 
+	first_name VARCHAR(50) CHARACTER SET latin1 NOT NULL,
+	points INT NOT NULL DEFAULT 0,
+	email VARCHAR(255) NOT NULL UNIQUE
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Storage Engines:
+----------------
+
+Queries and other notes in this discussion: 
+
+SHOW ENGINES
+
+-- most commonly used storage engines are MyISAM and InnoDB
+
+
+ALTER TABLE customers
+ENGINE = InnoDB 
+
+
+
+
+
+
+
+
+Indexing for High Performance:
+------------------------------
+
+In this section we're going to look at indexing for high performance. Indexes are extremely important in large databases and high traffic websites because they can improve the performance of our queries dramatically. In this section you're going to learn all about indexes, how they work, and how we can create them to speed up our queries. This is a very important topic that every developer and database administrator must learn and understand. Now before we get started, I want you to download and execute the script I've attached to this lecture. With this script, we're going to populate our customers table with a thousand new records so we can see the impact of indexes on our queries. Alright, now let's get started.
+
+
+use sql_store; 
+insert into customers (first_name, last_name, birth_date, address, city, state, points) values ('Ashlin', 'Bickerdyke', '1970-12-09', '79 Holmberg Parkway', 'Saint Louis', 'MO', 1278);
+insert into customers (first_name, last_name, birth_date, address, city, state, points) values ('Mordecai', 'Barltrop', '1970-08-06', '59322 Northridge Street', 'Long Beach', 'CA', 838);
+insert into customers (first_name, last_name, birth_date, address, city, state, points) values ('Karoline', 'Gookey', '1975-09-15', '180 Walton Pass', 'New York City', 'NY', 24);
+insert into customers (first_name, last_name, birth_date, address, city, state, points) values ('Shelba', 'Pedden', '1956-10-28', '50 Troy Drive', 'Minneapolis', 'MN', 1937);
+insert into customers (first_name, last_name, birth_date, address, city, state, points) values ('Leighton', 'Beeble', '1982-02-16', '2562 Northview Circle', 'Cleveland', 'OH', 1824);
+insert into customers (first_name, last_name, birth_date, address, city, state, points) values ('Almeria', 'Biddlestone', '1985-04-17', '41 Sunfield Junction', 'Los Angeles', 'CA', 790);
+.
+.
+.
+
+and so on 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Indexes: 
+--------
+
+
+
+
+
+
+
+
+
+
+Creating Indexes:
+-----------------
+
+Queries and other notes in this discussion:
+
+
+SELECT customer_id FROM customers WHERE state = 'CA';
+EXPLAIN SELECT customer_id FROM customers WHERE state = 'CA';
+
+
+CREATE INDEX idx_state ON customers (state);
+
+
+Exercise: 
+
+-- Write a query to find customers with more than 1000 points 
+
+EXPLAIN SELECT customer_id FROM customers WHERE points > 1000;
+
+CREATE INDEX idx_points ON customers (points);
+
+
+
+
+
+
+
+
+
+
+
+Viewing Indexes:
+----------------
+
+Queries and other notes in this discussion:
+
+SHOW INDEXES IN customers; 
+
+Clustered Index -- having primary key as index 
+Secondary Indexes 
+
+
+ANALYZE TABLE customers; 
+
+
+
+
+
+
+
+
+Prefix Indexes:
+---------------
+
+Queries and other notes in this discussion: 
+
+CREATE INDEX idx_lastname ON customers (last_name(20));
+
+
+To find the optimal prefix length:
+
+SELECT COUNT(*) FROM customers; 
+
+SELECT COUNT(DISTINCT LEFT(last_name, 1)) FROM customers; 
+
+
+
+SELECT 
+	COUNT(DISTINCT LEFT(last_name, 1)) 
+	COUNT(DISTINCT LEFT(last_name, 5))
+	COUNT(DISTINCT LEFT(last_name, 10)) 
+FROM customers;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+Full-text Indexes:
+------------------	
+
+Queries and other notes in this discussion: 
+
+
+create-db-blog.sql:
+
+DROP DATABASE IF EXISTS sql_blog;
+CREATE DATABASE sql_blog;
+
+USE sql_blog;
+
+CREATE TABLE `posts`
+(
+  `post_id` int
+(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar
+(255) NOT NULL,
+  `body` text NOT NULL,
+  `date_published` datetime DEFAULT NULL,
+  PRIMARY KEY
+(`post_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+INSERT INTO posts
+  (title, body, date_published)
+VALUES
+  ('Handling a Form in React', 'Web applications often need to send data from browser to the backend server. Certainly, the most used way of doing so is through a HTML form, by using text inputs, radio buttons, checkboxes, selects and so on. This remains true in React. Are you looking how to handle forms in React? If so, this article is a great fit for you. Have a good read.', '2019-01-01'),
+  ('What JavaScript Framework You Should Learn to Get a Job in 2019?', 'Are you wondering what JavaScript framework or library you should use to land a job in 2019? In this post, I am going to go over a comparison of the most popular JavaScript frameworks that are available today. By the end of this post, you will be ready to pick the right framework to help you land a front-end developer job in 2019.', '2019-03-02'),
+  ('Building an Accessible React Modal Component', 'Modal is an overlay on the web-page, but has some standards to follow. WAI-ARIA Authoring Practices are the standards set by W3C. This lets bots and screen-readers know that it is a modal. It is not within the regular flow of the page. We’ll create an awesome react modal using React components.', '2019-01-15'),
+  ('Redux Vs. Mobx – What Should I Pick For My Web App?', 'State management is a hard problem to solve in large applications. Redux and Mobx are both external libraries that are popularly used to solve state management problems.', '2019-02-20'),
+  ('Stateful and Stateless Components in React', 'Today, we’re going to review what stateful and stateless components are in React, how you can tell the difference, and the complex process of deciding whether to make components stateful or not.', '2019-03-29');
+
+
+
+
+
+'react redux' -->
+USE sql_blog;
+SELECT *
+FROM posts
+WHERE title LIKE '%react redux%' OR
+		body LIKE '%react redux%';
+		
+		
+		
+CREATE FULLTEXT INDEX idx_title_body ON posts (title, body);
+
+
+SELECT *
+FROM posts
+WHERE MATCH(title, body) AGAINST('react redux');
+
+
+SELECT *, MATCH(title, body) AGAINST('react redux')  -- relevance score  
+FROM posts
+WHERE MATCH(title, body) AGAINST('react redux');
+
+
+SELECT *, MATCH(title, body) AGAINST('react redux')  
+FROM posts
+WHERE MATCH(title, body) AGAINST('react -redux' IN BOOLEAN MODE);
+
+
+SELECT *, MATCH(title, body) AGAINST('react redux')  
+FROM posts
+WHERE MATCH(title, body) AGAINST('react -redux +form' IN BOOLEAN MODE);
+
+
+SELECT *, MATCH(title, body) AGAINST('react redux')  
+FROM posts
+WHERE MATCH(title, body) AGAINST('"handling a form"' IN BOOLEAN MODE);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Composite Indexes: 
+------------------
+
+Queries and other notes in this discussion: 
+
+
+USE sql_store; 
+
+SHOW INDEXES IN customers; 
+
+EXPLAIN select customer_id FROM customers 
+WHERE state = 'CA' AND points > 1000;
+
+
+CREATE INDEX idx_state_points ON customers (state, points);
+
+EXPLAIN select customer_id FROM customers 
+WHERE state = 'CA' AND points > 1000;
+
+
+DROP INDEX idx_state ON customers; 
+DROP INDEX idx_points ON customers; 
+
+
+
+
+
+
+
+Order of Columns in Composite Indexes:
+--------------------------------------
+
+
+Queries and other notes in this discussion: 
+
+order of columns: 
+put the most frequently used columns first 
+put the columns with a higher cardinality first 
+
+cardinality represents the number of unique values in the index.
+
+
+SELECT 
+	COUNT(DISTINCT state),
+	COUNT(DISTINCT last_name)
+FROM customers; 
+
+
+CREATE INDEX idx_lastname_state ON customers (last_name, state);
+
+
+EXPLAIN SELECT customer_id 
+FROM customers
+WHERE state = 'CA' AND last_name LIKE 'A%';  -- 40 rows scanned
+
+CREATE INDEX idx_state_lastname ON customers (state, last_name);
+
+
+EXPLAIN SELECT customer_id 
+FROM customers
+WHERE state = 'CA' AND last_name LIKE 'A%'; -- 7 rows scanned 
+
+
+EXPLAIN SELECT customer_id 
+FROM customers
+WHERE state = 'NY' AND last_name LIKE 'A%';
+
+
+EXPLAIN SELECT customer_id 
+FROM customers
+USE INDEX (idx_lastname_state)
+WHERE state = 'NY' AND last_name LIKE 'A%';
+
+
+

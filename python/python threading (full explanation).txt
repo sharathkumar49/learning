@@ -486,3 +486,51 @@ Multiprocessing allows Python to bypass the GIL, since each process has its own 
 
 Summary:
 The GIL ensures thread safety for Python’s automatic memory management by preventing multiple threads from modifying reference counts simultaneously. While this limits true parallel execution for CPU-bound tasks, it prevents memory corruption and makes Python’s threading model more reliable.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Concurrent in Multithreading:
+-----------------------------
+
+When we say "concurrent" in multithreading, we mean that multiple threads appear to be running at the same time, but they don’t necessarily execute in true parallel fashion, especially in Python due to the Global Interpreter Lock (GIL).
+
+Here’s how concurrency works in Python multithreading:
+The operating system switches between threads rapidly, creating an illusion that they are running simultaneously.
+If one thread is waiting (e.g., for I/O operations, network calls, or user input), another thread can get CPU time and execute.
+Threads share the same memory space, so there is no costly context switching like in multiprocessing.
+The CPU time is divided among active threads, but only one thread actually runs Python bytecode at a time because of the GIL.
+
+So yes, your understanding is correct: when a thread is idle (e.g., waiting for a network response), another thread gets executed. This interleaving execution of threads is what we call concurrency.
+
+If you were using multiprocessing, that would allow true parallel execution because each process would get its own Python interpreter instance without the GIL limitation.
+
+
+
+
+
+How does concurrency differ in multiprocessing?
+
+
+
+Great question! Concurrency in multiprocessing differs from concurrency in multithreading mainly due to how processes and threads are handled at the system level.
+
+Key Differences Between Multithreading & Multiprocessing Concurrency:
+ 
+| Feature           | Multithreading (threading module)               | Multiprocessing (multiprocessing module)                         |
+|-------------------|-------------------------------------------------|------------------------------------------------------------------|
+| Execution Type    | Concurrent, but not truly parallel (due to GIL) | Parallel execution (each process has its own Python interpreter) |
+| CPU-bound tasks   | Not efficient (due to GIL restriction)          | Best for CPU-heavy tasks                                         |
+| I/O-bound tasks   | Efficient (threads can switch on I/O wait)      | Not ideal (process switching overhead)                           |
+| Memory Usage      | Threads share memory                            | Processes have separate memory space (higher memory cost)        |
+| Context Switching | Lightweight (lower overhead)                    | Heavyweight (higher overhead due to separate memory)             |
+------------------------------------------------------------------------------------------------------------------------------------------
+
+How Concurrency Works in Each Model:
+- Multithreading: The OS rapidly switches between threads when they become idle (waiting for I/O). This creates the illusion of parallel execution, but only one thread runs Python bytecode at a time due to the GIL.
+
+- Multiprocessing: Each process runs independently, with its own Python interpreter, allowing true parallel execution on multi-core CPUs. This eliminates the GIL issue but requires more memory since processes don’t share memory like threads do.
+
+
+Choosing Between Multithreading & Multiprocessing
+- If you're dealing with CPU-bound tasks (like heavy computations, data processing, or image rendering) → Use multiprocessing ✅
+- If you're handling I/O-bound tasks (like web scraping, API calls, or file I/O) → Use multithreading ✅
