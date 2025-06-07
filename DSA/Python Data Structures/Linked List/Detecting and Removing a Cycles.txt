@@ -1,0 +1,507 @@
+
+
+📌 Removing Cycles in Singly and Doubly Linked Lists
+Once a cycle is detected, the next step is removing it by breaking the loop. The process differs slightly for singly and doubly linked lists.
+
+🚀 Approach for Singly Linked List:
+1. Detect the Cycle using Floyd’s Cycle Detection Algorithm
+Use Tortoise and Hare (slow and fast pointers) to detect a cycle.
+
+2. Find the Cycle Start Point
+Reset one pointer to head and keep the other pointer at the meeting point.
+Move both one step at a time until they meet again.
+The meeting point is the start of the cycle.
+
+3. Remove the Cycle
+Traverse until the node before the cycle start and set next = None.
+
+🚀 Implementation (Removing Cycle in a Singly Linked List)
+python
+class Node:
+    def __init__(self, data=None, next=None):
+        self.data = data
+        self.next = next
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def insert_values(self, data_list):
+        """Creates a linked list from a list of values."""
+        self.head = None
+        prev = None
+        for data in data_list:
+            node = Node(data)
+            if prev:
+                prev.next = node
+            else:
+                self.head = node
+            prev = node
+        return prev  # Returns last node
+
+    def detect_cycle(self):
+        """Detects a cycle using Floyd’s Cycle Detection Algorithm."""
+        if self.head is None:
+            return None
+
+        slow, fast = self.head, self.head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                return slow  # Cycle detected; return the meeting point
+
+        return None  # No cycle
+
+    def find_cycle_start(self, meet_point):
+        """Finds the starting node of the cycle."""
+        ptr1, ptr2 = self.head, meet_point
+
+        while ptr1 != ptr2:
+            ptr1 = ptr1.next
+            ptr2 = ptr2.next
+
+        return ptr1  # Cycle start node
+
+    def remove_cycle(self):
+        """Removes the cycle from the linked list."""
+        meet_point = self.detect_cycle()
+        if not meet_point:
+            return False  # No cycle to remove
+
+        cycle_start = self.find_cycle_start(meet_point)
+
+        # Traverse until the last node in the cycle
+        temp = cycle_start
+        while temp.next != cycle_start:
+            temp = temp.next
+
+        temp.next = None  # Break the cycle
+        return True
+
+
+# ----------- Testing -----------
+ll = LinkedList()
+ll.insert_values([2, 4, 3, 9, 24, 34, 1, 0, 2, 3, 4, 5, 6, 7, 8, 9])
+
+# Creating a cycle at node with value 3
+def create_cycle(ll, pos):
+    last_node = ll.head
+    cycle_node = None
+    index = 0
+    current = ll.head
+
+    while current:
+        if index == pos:
+            cycle_node = current
+        last_node = current
+        current = current.next
+        index += 1
+
+    if cycle_node:
+        last_node.next = cycle_node  # Create the cycle
+
+create_cycle(ll, 2)  # Cycle at node with value 3
+
+print("Cycle detected?", ll.detect_cycle() is not None)  # Expected Output: True
+
+ll.remove_cycle()
+print("Cycle removed?", ll.detect_cycle() is None)  # Expected Output: True
+
+
+
+
+Explanation: 
+📌 Detecting and Removing a Cycle in a Singly Linked List (Detailed Explanation)
+This implementation follows Floyd’s Cycle Detection Algorithm (Tortoise & Hare) to find the cycle and then removes it.
+
+🚀 Step 1: Detecting the Cycle (detect_cycle)
+This function checks whether the linked list contains a cycle.
+
+🔍 Key Idea
+Use two pointers (slow and fast).
+ - slow moves one step at a time.
+ - fast moves two steps at a time.
+If slow and fast meet, a cycle exists.
+If fast reaches None, the list terminates naturally, meaning no cycle.
+
+
+Execution Steps:
+def detect_cycle(self):
+    """Detects a cycle using Floyd’s Cycle Detection Algorithm."""
+    if self.head is None:
+        return None  # No cycle (empty list)
+
+    slow, fast = self.head, self.head  # Initialize pointers
+
+    while fast and fast.next:  # Ensure safe traversal
+        slow = slow.next  # Move one step
+        fast = fast.next.next  # Move two steps
+
+        if slow == fast:  # Pointers meet → Cycle detected
+            return slow  # Return the meeting point inside the cycle
+
+    return None  # No cycle detected
+	
+	
+Example Walkthrough:
+Given linked list:
+
+2 → 4 → 3 → 9 → 24 → 34 → 1 → 0 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9
+        ↑                                                     ↓
+        └─────────────────────────────────────────────────────┘  (Cycle starts at node `3`)
+
+
+
+Iteration	slow moves one step →	fast moves two steps →	   Debug Output
+Start	       2	                     2	                 (initial position)
+1			   4	                     3	                     4, 3
+2	           3	                     24	                     3, 24
+3	           9	                     1	                     9, 1
+4	           24	                     2	                    24, 2
+5	           34	                     4	                    34, 4
+6	           1	                     6	                     1, 6
+7	           0	                     8	                     0, 8
+8	           2	                     3	                     2, 3
+9	           3	                     24	                     3, 24
+10	           4	                     1	                     4, 1
+11	           5	                     2	                     5, 2
+12	           6	                     4	                     6, 4
+13	           7	                     6	                     7, 6
+14	           8	                     8	                     8, 8 🚨 Cycle Detected!
+
+✅ The function returns slow (meeting point inside cycle).
+
+
+
+
+🚀 Step 2: Finding the Cycle Start (find_cycle_start)
+Once the cycle is detected, we find the entry point of the loop.
+
+🔍 Key Idea:
+Reset one pointer (ptr1) to head and keep the other (ptr2) at the meeting point.
+Move both one step at a time.
+The first node where they meet is the cycle start.
+
+Execution Steps:
+def find_cycle_start(self, meet_point):
+    """Finds the starting node of the cycle."""
+    ptr1, ptr2 = self.head, meet_point  # Initialize pointers
+
+    while ptr1 != ptr2:  # Move one step at a time
+        ptr1 = ptr1.next
+        ptr2 = ptr2.next
+
+    return ptr1  # Cycle start node
+	
+	
+🔖 Example Walkthrough:
+Given the meeting point (node 8):
+Set ptr1 = head (2) and ptr2 = meet_point (8).
+Move both one step at a time until they meet at the cycle start node (3).
+
+Step	ptr1 moves one step →	ptr2 moves one step →	Condition
+Start	2	                         8	                ptr1 != ptr2
+1	    4	                         9	                ptr1 != ptr2
+2	    3	                         3	               ✅ Cycle start found!
+
+✅ The function returns 3 (cycle start).
+
+
+
+
+🚀 Step 3: Removing the Cycle (remove_cycle):
+🔍 Key Idea
+Traverse from cycle start (3) until the last node in the cycle.
+Set its next pointer to None, breaking the loop.
+
+Execution Steps:
+def remove_cycle(self):
+    """Removes the cycle from the linked list."""
+    meet_point = self.detect_cycle()  # Step 1: Detect cycle
+
+    if not meet_point:
+        return False  # No cycle to remove
+
+    cycle_start = self.find_cycle_start(meet_point)  # Step 2: Find cycle start
+
+    # Step 3: Traverse until last node in cycle
+    temp = cycle_start
+    while temp.next != cycle_start:  # Find last node in cycle
+        temp = temp.next
+
+    temp.next = None  # Break the cycle
+    return True
+	
+	
+🔖 Example Walkthrough:
+Given:
+2 → 4 → 3 → 9 → 24 → 34 → 1 → 0 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9
+        ↑                                                     ↓
+        └─────────────────────────────────────────────────────┘
+		
+From cycle start (3), traverse and find last node in cycle (9).
+
+Step	temp moves one step →	  Condition
+Start	   3	                  temp.next != cycle_start
+1	       9	                  temp.next != cycle_start
+2	       24	                  temp.next != cycle_start
+3	       34	                  temp.next != cycle_start
+4	       1	                  temp.next != cycle_start
+5	       0	                  temp.next != cycle_start
+6	       2	                  temp.next != cycle_start
+7	       3	                  ✅ Last node found!
+
+✅ Break the cycle → Set temp.next = None.
+
+Now, the linked list becomes:
+2 → 4 → 3 → 9 → 24 → 34 → 1 → 0 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → None
+
+The cycle is removed successfully!
+
+
+
+✅ Summary Notes
+✔ Step 1 (detect_cycle) → Find cycle using slow and fast pointers. 
+✔ Step 2 (find_cycle_start) → Reset one pointer and move step-by-step to find cycle entry. 
+✔ Step 3 (remove_cycle) → Traverse to last node in cycle and break next link. 
+✔ Efficient solution using O(n) time and O(1) space. 
+✔ After removal, linked list becomes normal (no cycle).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+🚀 Approach for Doubly Linked List
+In doubly linked lists, both next and prev pointers need consideration.
+
+1. Detect Cycle (Same Floyd’s Algorithm)
+Use slow and fast pointers to check if they meet, indicating a cycle.
+
+2. Find Cycle Start
+Reset one pointer to head and move both one step at a time until they meet.
+This gives the entry point of the cycle.
+
+3. Remove Cycle
+Traverse until the last node in the cycle.
+Set next = None to break the loop.
+
+
+
+🚀 Implementation (Removing Cycle in a Doubly Linked List)
+
+class Node:
+    def __init__(self, data=None):
+        self.data = data
+        self.next = None
+        self.prev = None
+
+class DoublyLinkedList:
+    def __init__(self):
+        self.head = None
+
+    def insert_values(self, data_list):
+        """Creates a doubly linked list from a list of values."""
+        self.head = None
+        prev_node = None
+        for data in data_list:
+            node = Node(data)
+            if prev_node:
+                prev_node.next = node
+                node.prev = prev_node
+            else:
+                self.head = node
+            prev_node = node
+        return prev_node  # Returns last node
+
+    def detect_cycle(self):
+        """Detects a cycle using Floyd’s Cycle Detection Algorithm."""
+        if self.head is None:
+            return None
+
+        slow, fast = self.head, self.head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                return slow  # Cycle detected
+
+        return None  # No cycle
+
+    def find_cycle_start(self, meet_point):
+        """Finds cycle start node in a doubly linked list."""
+        ptr1, ptr2 = self.head, meet_point
+
+        while ptr1 != ptr2:
+            ptr1 = ptr1.next
+            ptr2 = ptr2.next
+
+        return ptr1  # Cycle start
+
+    def remove_cycle(self):
+        """Removes the cycle in a doubly linked list."""
+        meet_point = self.detect_cycle()
+        if not meet_point:
+            return False
+
+        cycle_start = self.find_cycle_start(meet_point)
+
+        # Find the last node in the cycle
+        temp = cycle_start
+        while temp.next != cycle_start:
+            temp = temp.next
+
+        temp.next = None  # Break the cycle
+        return True
+
+
+
+# ----------- Testing -----------
+dll = DoublyLinkedList()
+dll.insert_values([1, 2, 3, 4, 5, 6, 7, 8, 9])
+
+# Creating a cycle at node with value 3
+def create_cycle(dll, pos):
+    last_node = dll.head
+    cycle_node = None
+    index = 0
+    current = dll.head
+
+    while current:
+        if index == pos:
+            cycle_node = current
+        last_node = current
+        current = current.next
+        index += 1
+
+    if cycle_node:
+        last_node.next = cycle_node  # Create the cycle
+
+create_cycle(dll, 2)  # Cycle at node with value 3
+
+print("Cycle detected?", dll.detect_cycle() is not None)  # Expected Output: True
+dll.remove_cycle()
+print("Cycle removed?", dll.detect_cycle() is None)  # Expected Output: True
+
+
+
+✅ Summary Notes
+✔ Removing a cycle requires detecting its entry point first. 
+✔ Floyd’s Cycle Detection Algorithm (O(n) time, O(1) space) is the best way to find cycles. 
+✔ Once the cycle’s start node is found, breaking the last node’s next pointer removes the cycle. 
+✔ Same technique works for singly and doubly linked lists; prev pointers in doubly linked lists don’t affect cycle removal.
+
+
+
+
+
+
+
+
+📌 Detecting and Removing a Cycle in a Doubly Linked List (Detailed Explanation)
+A doubly linked list has two pointers per node:
+next → Points to the next node.
+prev → Points to the previous node.
+
+Even though doubly linked lists have prev pointers, cycles still occur when a node’s next pointer connects back to an earlier node, forming a loop.
+
+🚀 Step 1: Detecting the Cycle (detect_cycle)
+This function determines whether the list contains a cycle.
+
+
+🔍 Key Idea
+Use two pointers (slow and fast).
+ - slow moves one step at a time.
+ - fast moves two steps at a time.
+If slow and fast meet, a cycle exists.
+If fast reaches None, the list terminates naturally, meaning no cycle.
+
+
+🚀 Implementation for Cycle Detection:
+def detect_cycle(self):
+    """Detects a cycle using Floyd’s Cycle Detection Algorithm."""
+    if self.head is None:
+        return None  # No cycle (empty list)
+
+    slow, fast = self.head, self.head  # Initialize pointers
+
+    while fast and fast.next:  # Ensure safe traversal
+        slow = slow.next  # Move one step
+        fast = fast.next.next  # Move two steps
+
+        if slow == fast:  # Pointers meet → Cycle detected
+            return slow  # Return the meeting point inside the cycle
+
+    return None  # No cycle detected
+	
+
+
+	
+🚀 Step 2: Finding the Cycle Start (find_cycle_start)
+Once the cycle is detected, we find the entry point of the loop.
+
+🔍 Key Idea
+Reset one pointer (ptr1) to head and keep the other (ptr2) at the meeting point.
+Move both one step at a time.
+The first node where they meet is the cycle start.
+
+🚀 Implementation for Finding Cycle Start
+def find_cycle_start(self, meet_point):
+    """Finds the starting node of the cycle."""
+    ptr1, ptr2 = self.head, meet_point  # Initialize pointers
+
+    while ptr1 != ptr2:  # Move one step at a time
+        ptr1 = ptr1.next
+        ptr2 = ptr2.next
+
+    return ptr1  # Cycle start node
+	
+	
+	
+	
+	
+🚀 Step 3: Removing the Cycle (remove_cycle)
+
+🔍 Key Idea
+Traverse from cycle start until the last node in the cycle.
+Set its next pointer to None, breaking the loop.
+
+🚀 Implementation for Cycle Removal:
+def remove_cycle(self):
+    """Removes the cycle from the doubly linked list."""
+    meet_point = self.detect_cycle()  # Step 1: Detect cycle
+
+    if not meet_point:
+        return False  # No cycle to remove
+
+    cycle_start = self.find_cycle_start(meet_point)  # Step 2: Find cycle start
+
+    # Step 3: Traverse until last node in cycle
+    temp = cycle_start
+    while temp.next != cycle_start:  # Find last node in cycle
+        temp = temp.next
+
+    temp.next = None  # Break the cycle
+    return True
+
+
+
+🚀 Summary Notes
+✔ Step 1 (detect_cycle) → Find cycle using slow and fast pointers. 
+✔ Step 2 (find_cycle_start) → Reset one pointer and move step-by-step to find cycle entry. 
+✔ Step 3 (remove_cycle) → Traverse to last node in cycle and break next link. 
+✔ Works for doubly linked lists where cycles exist in next pointers. 
+✔ Efficient solution using O(n) time and O(1) space.

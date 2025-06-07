@@ -1,0 +1,126 @@
+Common API Questions:
+What is an API, and how does it work?
+What are REST APIs, and how are they different from SOAP APIs?
+What are HTTP methods in REST APIs? (GET, POST, PUT, DELETE)
+What are status codes in API responses? (e.g., 200 OK, 404 Not Found, 500 Internal Server Error)
+How do authentication and authorization work in APIs? (OAuth, JWT, API keys)
+What are rate limits in APIs, and why are they important?
+What is versioning in APIs, and how is it implemented?
+How do you design a scalable and secure REST API?
+What are best practices for error handling in APIs?
+How does caching improve API performance?
+
+
+Real-Life API Problems & How to Handle Them:
+Slow API Response Times
+Solution: Implement caching, optimize database queries, and use pagination for large datasets.
+
+Authentication Issues
+Solution: Use secure authentication mechanisms like OAuth, JWT, and regularly update API keys.
+
+Handling High Traffic Loads
+Solution: Employ rate limiting, load balancing, and scalable architecture (cloud-based solutions).
+
+Data Format Mismatch Between Clients & APIs
+Solution: Standardize data formats (JSON/XML) and document API specifications properly.
+
+Security Vulnerabilities (SQL Injection, Unauthorized Access, etc.)
+Solution: Use input validation, apply HTTPS, enforce authorization rules, and audit API security.
+
+Breaking API Changes
+Solution: Implement versioning (e.g., /v1/users vs. /v2/users) and ensure backward compatibility.
+
+Limited API Documentation
+Solution: Use tools like Swagger/OpenAPI to provide well-structured and accessible API documentation.
+
+
+
+
+
+Here are additional common API interview questions and real-life API problems to expand your list:
+
+**Common API Questions (Expanded):**
+- What is the difference between synchronous and asynchronous APIs?
+- What is an endpoint in an API?
+- What is idempotency in REST APIs, and why is it important?
+- What is HATEOAS in RESTful APIs?
+- What is the difference between PUT and PATCH methods?
+- What is CORS (Cross-Origin Resource Sharing), and how does it affect APIs?
+- How do you secure sensitive data in API requests and responses?
+- What is API throttling?
+- What is the difference between public, private, and partner APIs?
+- What is API gateway, and what are its benefits?
+- What is the role of middleware in API development?
+- How do you handle file uploads and downloads in APIs?
+- What is the difference between 401 Unauthorized and 403 Forbidden status codes?
+- What is OpenAPI/Swagger, and why is it useful?
+- How do you test APIs (manual and automated testing)?
+- What is API mocking, and when would you use it?
+- What is the difference between monolithic and microservices API architectures?
+- How do you handle API deprecation?
+- What is GraphQL, and how does it differ from REST?
+- What is webhooks, and how are they used in APIs?
+- How do you handle pagination in API responses?
+- What is the difference between query parameters and path parameters?
+- What is API documentation, and why is it important?
+- How do you ensure backward compatibility in APIs?
+- What is the difference between API and SDK?
+- What is API monitoring, and how do you implement it?
+- What is the difference between a resource and a representation in REST?
+- How do you handle nested resources in REST APIs?
+- What is the N+1 query problem in APIs, and how do you solve it?
+- What is API orchestration and API aggregation?
+- What is the difference between RESTful and RESTless APIs?
+- What is the role of HTTP headers in APIs?
+- How do you handle timeouts and retries in API calls?
+- What is the difference between 204 No Content and 200 OK?
+- What is API analytics, and why is it important?
+- How do you handle localization and internationalization in APIs?
+- What is the difference between SOAP and REST in terms of security?
+- What is the role of JSON Web Tokens (JWT) in stateless authentication?
+- How do you handle large file transfers in APIs?
+- What is the difference between synchronous and asynchronous API calls?
+- What is API rate limiting, and how do you implement it?
+- What is the difference between REST and RPC APIs?
+- How do you handle versioning in GraphQL APIs?
+- What is the role of API proxies?
+- What is API lifecycle management?
+- How do you handle API gateway failures?
+- What is the difference between 422 Unprocessable Entity and 400 Bad Request?
+- What is the role of API keys, and how should they be managed?
+- How do you handle cross-site scripting (XSS) in APIs?
+- What is the difference between a REST API and a RESTful API?
+
+**Real-Life API Problems & Solutions (Expanded):**
+- Inconsistent API responses  
+  Solution: Enforce strict response schemas and use automated contract testing.
+- API downtime or outages  
+  Solution: Implement redundancy, health checks, and graceful degradation.
+- Data privacy concerns  
+  Solution: Mask sensitive data, use encryption, and comply with data protection regulations.
+- API abuse or misuse  
+  Solution: Monitor usage, apply rate limiting, and block suspicious activity.
+- Lack of observability and monitoring  
+  Solution: Integrate logging, tracing, and monitoring tools.
+- Difficulty in onboarding new API consumers  
+  Solution: Provide clear documentation, SDKs, and sample code.
+- Handling backward-incompatible changes  
+  Solution: Use versioning, deprecation notices, and migration guides.
+- Managing API dependencies  
+  Solution: Use dependency management tools and document third-party integrations.
+- Handling partial failures in distributed systems  
+  Solution: Implement retries, circuit breakers, and fallback mechanisms.
+- Ensuring data consistency across services  
+  Solution: Use distributed transactions or eventual consistency patterns.
+- Handling long-running operations  
+  Solution: Use asynchronous processing and provide status endpoints.
+- Supporting multiple client platforms  
+  Solution: Design APIs to be platform-agnostic and provide SDKs for popular languages.
+- Managing API quotas for different user tiers  
+  Solution: Implement tiered rate limits and quota management.
+- Handling API schema evolution  
+  Solution: Use schema validation and communicate changes proactively.
+- Ensuring API discoverability  
+  Solution: Use API catalogs and service registries.
+
+Let me know if you want explanations or examples for any of these questions!

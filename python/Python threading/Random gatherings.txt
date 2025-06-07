@@ -1,0 +1,19 @@
+
+
+Runnable (Ready/Running) - The thread is eligible to run and waiting for CPU time, or is currently running. - In Python: After calling 'start()', the thread is scheduled by the OS and may run at any time. What does it mean by CPU time, is it waiting for CPU to permit thread to execute. like preemtive
+
+
+Great question! "CPU time" refers to the amount of time a thread spends executing on the processor. When a thread is in the runnable state, it is eligible to run but isn't necessarily executing at that moment. It's waiting for the OS scheduler to assign it CPU time.
+
+Now, regarding preemptive scheduling—yes, in most modern operating systems, the scheduler follows a preemptive multitasking model, meaning:
+The CPU switches between multiple threads/processes based on a scheduling policy.
+A thread may get interrupted by the OS and replaced by another, even if it hasn’t finished execution.
+The scheduler considers factors like priority, time slices, and resource availability when deciding which thread gets CPU time next.
+
+In Python's threading model:
+When you call .start(), the thread is ready to run.
+The OS scheduler determines when it actually gets CPU time.
+It may run immediately or wait until resources are available.
+Other threads can preempt it based on the scheduling strategy.
+
+So in summary: CPU time is the actual execution duration a thread gets. A runnable thread is just in the queue, waiting for the scheduler to permit it to run. And yes, preemption ensures no single thread monopolizes the CPU. Would you like to dive into different scheduling policies in detail?

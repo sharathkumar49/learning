@@ -1,0 +1,90 @@
+
+
+📌 Floyd’s Cycle Detection Algorithm (Tortoise and Hare Algorithm) Explained in Detail:
+Floyd’s Cycle Detection Algorithm, also known as the Tortoise and Hare algorithm, is a widely used technique for detecting cycles in a linked list. It is efficient because it runs in O(n) time complexity and requires O(1) space complexity, making it superior to alternative methods that rely on extra memory.
+
+Concept Behind the Algorithm:
+The algorithm is based on two pointers:
+Slow Pointer (Tortoise) → Moves one step at a time.
+Fast Pointer (Hare) → Moves two steps at a time.
+
+📌 If there is a cycle in the linked list, the fast pointer will eventually catch up to the slow pointer inside the cycle. 📌 If there is no cycle, the fast pointer will reach the end (None), confirming the absence of a cycle.
+
+🚀 Step-by-Step Explanation
+1. Initialization
+Start with two pointers:
+slow = head  # Tortoise (moves one step)
+fast = head  # Hare (moves two steps)
+
+
+2. Traversing the Linked List
+The algorithm loops using:
+while fast and fast.next:
+
+This ensures fast can move two steps safely without accessing an invalid memory address.
+1.Slow moves one step forward → slow = slow.next
+2.Fast moves two steps forward → fast = fast.next.next
+3.Check if slow and fast meet:
+
+If slow == fast, there is a cycle.
+
+If fast reaches None, there is no cycle.
+
+
+3. Detecting the Cycle
+If the two pointers meet at some node inside the cycle, the function returns True, confirming a loop exists in the linked list.
+
+📌 Since fast moves twice as fast, it will inevitably catch up to slow inside the loop.
+
+If fast reaches None first, the function returns False, meaning the linked list is properly terminated.
+
+🔍 Example Execution
+Let's take a linked list with a cycle at node 3:
+
+2 → 4 → 3 → 9 → 24 → 34 → 1 → 0 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9
+        ↑                                                     ↓
+        └─────────────────────────────────────────────────────┘  (Cycle starts at node '3')
+		
+		
+		
+Tracking Pointer Movement:
+
+Iteration	slow moves one step →	fast moves two steps →	   Debug Output
+Start	       2	                     2	                 (initial position)
+1			   4	                     3	                     4, 3
+2	           3	                     24	                     3, 24
+3	           9	                     1	                     9, 1
+4	           24	                     2	                    24, 2
+5	           34	                     4	                    34, 4
+6	           1	                     6	                     1, 6
+7	           0	                     8	                     0, 8
+8	           2	                     3	                     2, 3
+9	           3	                     24	                     3, 24
+10	           4	                     1	                     4, 1
+11	           5	                     2	                     5, 2
+12	           6	                     4	                     6, 4
+13	           7	                     6	                     7, 6
+14	           8	                     8	                     8, 8 🚨 Cycle Detected!
+✅ The function returns True because slow and fast meet at node 8 inside the cycle.
+
+
+🔖 Time Complexity Analysis
+Worst-case scenario: O(n) → The slow pointer traverses each node once.
+Efficient traversal: The fast pointer moves at double speed, reducing overall iterations.
+Since both pointers move within n nodes, total runtime is O(n).
+
+
+🔖 Space Complexity Analysis
+No extra memory structures are used (no arrays or hash tables).
+Only two pointers (slow and fast) are maintained.
+Uses constant space: O(1).
+
+
+✅ Summary Notes
+✔ Uses two pointers (slow and fast) to detect cycles efficiently. 
+✔ If a cycle exists, the fast pointer will inevitably meet the slow pointer inside the loop. 
+✔ If no cycle exists, the fast pointer will reach None, confirming the absence of a cycle. 
+✔ Runs in O(n) time complexity and O(1) space complexity, making it highly efficient.
+
+
+💡 Floyd’s Cycle Detection Algorithm is one of the best approaches for detecting cycles in linked lists because it requires no extra memory! 🚀🔥

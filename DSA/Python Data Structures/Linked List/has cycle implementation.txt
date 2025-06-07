@@ -1,0 +1,208 @@
+
+    def has_cycle(self):
+        if self.head is None:
+            return False
+
+        slow = self.head
+        fast = self.head
+
+        while fast and fast.next:
+            # print("fast and fast.next", fast, fast.next)
+            # print("slow =slow.next", slow.next, "fast = fast.next.next", fast.next.next)  # Debugging output to trace the values
+            slow = slow.next
+            fast = fast.next.next
+            print(slow.data, fast.data)  # Debugging output to trace the values
+            if slow == fast:
+                return True
+
+        return False    
+
+
+
+What is a cycle in a linked list?
+A cycle in a singly linked list occurs when a node’s next pointer points back to a previous node in the list instead of None. This creates an infinite loop when traversing the list. In a cyclic linked list, moving forward using next will never reach the end (None).
+
+How does the has_cycle function work?
+The given function uses Floyd’s Cycle Detection Algorithm, also called the Tortoise and Hare algorithm, to determine if there is a cycle in the linked list.
+
+1. Initialize two pointers:
+slow moves one step at a time.
+fast moves two steps at a time.
+
+2. Traverse the list:
+While both pointers are moving and fast.next exists, they keep advancing.
+If slow and fast meet, it means there’s a cycle. This is because the faster pointer keeps looping back due to the cycle and eventually catches up with the slower pointer.
+
+3.If slow == fast, return True: A cycle is detected.
+4. If fast or fast.next becomes None, return False: The list terminates, meaning no cycle.
+
+
+
+
+📌 Understanding the while fast and fast.next Condition in Floyd’s Cycle Detection Algorithm:
+
+🔹 Why do we check both fast and fast.next?
+The loop condition in Floyd’s Cycle Detection Algorithm ensures safe traversal of the linked list while preventing errors.
+
+✅ Checking fast: Prevents errors when the linked list is empty (head == None). 
+✅ Checking fast.next: Prevents accessing None.next (which would cause an error). 
+✅ Together, while fast and fast.next ensures:
+The fast pointer is valid before checking its next node.
+The fast pointer is able to move forward safely without triggering an error.
+The algorithm correctly terminates when it reaches the end of a non-cyclic list.
+
+🔍 What happens if we don’t check fast.next?
+If we use while fast: but don’t check fast.next, we risk errors when accessing fast.next.next.
+
+Example: Linked List Without a Cycle
+2 → 4 → 6 → 8 → 10 → None
+
+Fast pointer movement:
+fast = 2, fast.next = 4 → ✅ Safe
+fast = 6, fast.next = 8 → ✅ Safe
+fast = 10, fast.next = None → 🚨 Error! 🚫 Since fast.next == None, trying fast.next.next fails.
+
+
+
+🔍 What happens if we don't check fast.next?
+If we only check while fast:, then when fast.next is None, the next iteration will try to execute:
+
+fast = fast.next.next
+🚨 Error! Since fast.next is None, accessing fast.next.next will cause a crash
+
+
+🔢 Step-by-Step Breakdown
+Let’s analyze an example without a cycle where the linked list ends at None:
+
+Example Linked List:
+
+2 → 4 → 6 → 8 → 10 → None
+
+Let's simulate fast pointer:
+
+Iteration	fast (Current)	fast.next	fast.next.next	  Valid?
+1	          2	                4	          6	         ✅ Yes
+2	          6	                8	          10	     ✅ Yes
+3	         10	               None	        🚨 Error!    ❌ No!
+
+📌 In Iteration 3, fast.next is None. Trying fast.next.next causes an error because None.next does not exist.
+
+✅ Solution: Always check fast.next before accessing fast.next.next.
+
+
+
+
+
+
+
+
+🔍 What happens if we don’t check fast itself?
+If we only check fast.next, we assume fast always exists. But what if the list is empty?
+
+Example: Empty Linked List
+self.head = None
+fast = self.head  # fast = None
+🚫 Since fast is None, checking fast.next immediately causes an error.
+
+✅ Solution → Always check fast before checking fast.next.
+
+
+
+📌 Why Check fast?
+The condition while fast and fast.next: ensures safe traversal of the linked list. Checking fast prevents cases where:
+fast is already None at the start → This happens if the list is empty (head is None).
+fast becomes None while moving → If we didn’t check fast, we'd accidentally try to access fast.next, causing an error.
+
+If we only wrote:
+while fast.next:
+
+🔴 Problem: The code assumes fast always exists before checking fast.next. But if the list is empty (fast == None), then fast.next doesn’t exist, and we'd get an AttributeError.
+✅ Solution: By checking fast first, we ensure that fast.next is only checked if fast is valid.
+
+
+
+Example Breakdown:
+Case 1: Empty List (head = None)
+Linked list: None (no nodes at all)
+
+self.head = None, so:
+fast = self.head  # fast = None
+
+Without fast check, fast.next doesn’t exist, and accessing fast.next.next would crash the program.
+
+
+Case 2: Single Node List (No next)
+2 → None
+fast = 2
+
+fast.next = None (since there's only one node)
+
+Without fast check, fast.next.next would trigger an error.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+📌 Understanding Floyd’s Cycle Detection Algorithm:
+The Tortoise and Hare algorithm is used to detect cycles in a linked list. It employs two pointers:
+
+Slow Pointer (slow) moves one step at a time.
+Fast Pointer (fast) moves two steps at a time.
+
+📌 If there is a cycle, these two pointers will eventually meet inside the cycle.
+
+Given Linked List Input (Cycle at Node with Value 3):
+
+2 → 4 → 3 → 9 → 24 → 34 → 1 → 0 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9
+        ↑                                                     ↓
+        └─────────────────────────────────────────────────────┘  (Cycle starts at node `3`)
+Here, node '8' points back to node 3, forming a cycle.
+
+🚀 Step-by-Step Execution:
+
+Each step shows where slow and fast move.
+
+Iteration	slow moves one step →	fast moves two steps →	   Debug Output
+Start	       2	                     2	                 (initial position)
+1			   4	                     3	                     4, 3
+2	           3	                     24	                     3, 24
+3	           9	                     1	                     9, 1
+4	           24	                     2	                    24, 2
+5	           34	                     4	                    34, 4
+6	           1	                     6	                     1, 6
+7	           0	                     8	                     0, 8
+8	           2	                     3	                     2, 3
+9	           3	                     24	                     3, 24
+10	           4	                     1	                     4, 1
+11	           5	                     2	                     5, 2
+12	           6	                     4	                     6, 4
+13	           7	                     6	                     7, 6
+14	           8	                     8	                     8, 8 🚨 Cycle Detected!
+
+
+✅ Cycle Detected at Node 8
+At iteration 14, slow == fast, meaning both pointers meet at node 8 inside the cycle. The function returns:
+True
+
+
+📌 Summary Notes
+✅ The fast pointer moves twice as fast as the slow pointer. 
+✅ If a cycle exists, fast will eventually catch up to slow. 
+✅ The cycle was detected at node 8, proving that the linked list has a loop. ✅ If there was no cycle, fast would eventually become None, and the function would return False.
+
+📖 Final Thoughts
+This approach runs in O(n) time complexity (fast and slow traverse the list efficiently) and O(1) space complexity (only two pointers are used). It’s one of the most efficient algorithms for detecting cycles in linked lists.
+
+
+📌 Time Complexity: O(n)
+Since we have n elements in the linked list, the slow pointer must traverse through most (or all) of the list in the worst case before a cycle is detected.
+The fast pointer may move past the slow pointer multiple times within the cycle, but it still stays within a bounded range in a cyclic scenario.
+Overall, the worst-case scenario occurs when the cycle is at the end of the list or the list is completely non-cyclic, meaning we need to visit almost every node—hence, O(n) time complexity.
+
+
+📌 Space Complexity: O(1)
+We don’t use any extra memory structures, like arrays or hash sets, to track visited nodes.
+The algorithm only maintains two pointers (slow and fast), meaning we only use a constant amount of extra space.
+This makes the algorithm extremely efficient in terms of memory usage.
+
+
+✅ Summary
+Time Complexity: O(n) (we visit up to n nodes once)
+Space Complexity: O(1) (only slow and fast pointers are used)

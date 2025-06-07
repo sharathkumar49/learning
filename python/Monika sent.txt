@@ -1,0 +1,131 @@
+
+
+The same question was asked to your immediate predecessors.-  Go through this also
+
+
+merge 2 sorted arrays
+
+int x=10
+while(x-->0)
+	cout<<x<<endl;
+what is the output?
+
+float x=10.0;
+x=x+0.1;//case 1
+x=x+0.0;//case 2
+which case is faster in execution?
+
+
+SLL-> find if list has cycle or not under these circumstances
+1. you can't modify LL but you know the length of list
+2. you can modify LL and do not know length
+3. you can't modify LL and you do not know length
+
+Multi threading questions --> lock_guard, unique_lock, condition_variable, mutex, semaphore
+
+
+
+You're describing the classic Dining Philosophers Problem — a concurrency problem that illustrates synchronization issues and deadlock scenarios in multithreaded systems.
+
+Problem Statement Recap:
+5 philosophers sit around a circular table.
+
+Between each pair of philosophers is 1 chopstick (5 chopsticks total).
+
+Each philosopher needs both left and right chopsticks to eat.
+
+Chopsticks can only be used by one philosopher at a time.
+
+Philosophers alternate between thinking and eating.
+
+Main Issues:
+Deadlock: If each philosopher picks up the chopstick on their right (or left) simultaneously, they all wait forever for the other chopstick.
+Starvation: One philosopher may never get both chopsticks if others keep eating before them.
+
+Solutions (in C++ Pseudocode Style with Mutexes):
+✅ Naive Approach (Leads to Deadlock):
+cpp
+Copy
+Edit
+void philosopher(int id) {
+    while (true) {
+        think();
+        lock(chopstick[id]);              // take left
+        lock(chopstick[(id + 1) % 5]);    // take right
+        eat();
+        unlock(chopstick[id]);
+        unlock(chopstick[(id + 1) % 5]);
+    }
+}
+
+Solution:
+✅ C++ Code: Dining Philosophers using Mutex and Waiter Semaphore
+cpp
+Copy
+Edit
+#include <iostream>
+#include <thread>
+#include <mutex>
+#include <semaphore>
+#include <chrono>
+#include <array>
+
+constexpr int NUM_PHILOSOPHERS = 5;
+
+// Mutexes for chopsticks
+std::mutex chopsticks[NUM_PHILOSOPHERS];
+
+// Waiter to limit max philosophers picking up chopsticks
+std::counting_semaphore<NUM_PHILOSOPHERS> waiter(NUM_PHILOSOPHERS - 1);  // max 4 at a time
+
+void think(int id) {
+    std::cout << "Philosopher " << id << " is thinking.\n";
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+}
+
+void eat(int id) {
+    std::cout << "Philosopher " << id << " is eating.\n";
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    std::cout << "Philosopher " << id << " finished eating.\n";
+}
+
+void philosopher(int id) {
+    int left = id;
+    int right = (id + 1) % NUM_PHILOSOPHERS;
+
+    while (true) {
+        think(id);
+
+        waiter.acquire(); // Ask permission from the waiter
+
+        chopsticks[left].lock();
+        chopsticks[right].lock();
+
+        eat(id);
+
+        chopsticks[right].unlock();
+        chopsticks[left].unlock();
+
+        waiter.release(); // Done eating
+    }
+}
+
+int main() {
+    std::array<std::thread, NUM_PHILOSOPHERS> philosophers;
+
+    for (int i = 0; i < NUM_PHILOSOPHERS; ++i) {
+        philosophers[i] = std::thread(philosopher, i);
+    }
+
+    for (auto& p : philosophers) {
+        p.join();
+    }
+
+    return 0;
+}
+
+
+🧠 How it Works
+Each philosopher thinks, then tries to acquire the two chopsticks.
+The waiter semaphore allows only 4 philosophers at a time to attempt picking up chopsticks, breaking the circular wait condition and preventing deadlock.
+The std::counting_semaphore is a C++20 feature. If you’re using an older compiler, I can rewrite it using a custom semaphore with condition variables.

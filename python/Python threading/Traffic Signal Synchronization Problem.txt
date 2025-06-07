@@ -1,0 +1,735 @@
+
+
+what does it mean threading.Semaphore(1)?
+
+In Python's threading module, threading.Semaphore(1) creates a semaphore with an initial count of 1.
+
+A semaphore is a synchronization mechanism that controls access to a shared resource by allowing only a limited number of threads to acquire it at any given time. The number passed as an argument (in this case, 1) defines the maximum number of threads that can hold the semaphore simultaneously.
+
+What does threading.Semaphore(1) do?
+Since the initial value is 1, it behaves like a binary semaphore (or a mutex), meaning only one thread can acquire it at a time.
+When a thread calls .acquire(), it decreases the semaphore count.
+If the count reaches 0, other threads that call .acquire() will wait until the semaphore is released.
+When a thread calls .release(), it increases the semaphore count, allowing another waiting thread to proceed.
+
+Example:
+import threading
+
+sem = threading.Semaphore(1)  # Only one thread can proceed at a time
+
+def critical_section(thread_id):
+    print(f"Thread {thread_id} waiting...")
+    sem.acquire()  # Try to enter the critical section
+    print(f"Thread {thread_id} entered the critical section.")
+    # Simulating some work
+    import time
+    time.sleep(2)
+    print(f"Thread {thread_id} leaving...")
+    sem.release()  # Release the semaphore
+
+threads = []
+for i in range(3):
+    t = threading.Thread(target=critical_section, args=(i,))
+    threads.append(t)
+    t.start()
+
+for t in threads:
+    t.join()
+	
+	
+	
+Expected Output:
+Since only one thread can enter the critical section at a time, the output will show threads waiting, entering, and leaving sequentially.
+This approach is useful for ensuring mutual exclusion, especially when dealing with shared resources in multithreaded programs.
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+then what does it mean, 
+quadrants = [threading.Semaphore(1) for _ in range(4)]?
+
+
+This line of code:
+quadrants = [threading.Semaphore(1) for _ in range(4)]
+
+Creates a list of 4 semaphore objects, each initialized with a count of 1. This means each semaphore allows only one thread to acquire it at a time.
+
+Breakdown:
+The list comprehension [threading.Semaphore(1) for _ in range(4)] executes four times, creating four separate semaphore instances.
+quadrants is now a list containing four independent semaphore objects.
+Each semaphore behaves like a mutex, ensuring that only one thread can hold it at any given moment.
+
+
+Use Case:
+This could be useful in scenarios where four independent resources (like quadrants in a grid, lanes in a traffic system, or sections in shared memory) require synchronization. For example:
+
+
+Example: Synchronizing Access to Four Quadrants
+import threading
+import time
+
+quadrants = [threading.Semaphore(1) for _ in range(4)]  # Four quadrants, each with its own semaphore
+
+def access_quadrant(quadrant_id, thread_id):
+    print(f"Thread {thread_id} waiting for Quadrant {quadrant_id}...")
+    quadrants[quadrant_id].acquire()
+    print(f"Thread {thread_id} entered Quadrant {quadrant_id}.")
+    time.sleep(2)  # Simulating work inside quadrant
+    print(f"Thread {thread_id} leaving Quadrant {quadrant_id}.")
+    quadrants[quadrant_id].release()
+
+threads = []
+for i in range(4):  # Creating one thread for each quadrant
+    t = threading.Thread(target=access_quadrant, args=(i, i))
+    threads.append(t)
+    t.start()
+
+for t in threads:
+    t.join()
+	
+	
+Expected Behavior:
+Each thread acquires and enters a quadrant one at a time.
+No two threads can simultaneously hold the same quadrant's semaphore.
+Ensures proper exclusion, preventing multiple threads from conflicting over shared resources.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+I don't understand it, only one thread can acquire semaphore in a four quadrants right. Or one thread per semaphore, then it 4 thread at each semaphore?
+
+
+Each semaphore in the quadrants list is independent, meaning each quadrant has its own separate semaphore.
+
+How it works:
+threading.Semaphore(1) means only one thread can acquire that specific semaphore at a time.
+Since we have four semaphores, each semaphore controls one quadrant independently.
+If four different threads try to acquire different semaphores, they can proceed simultaneously (one thread per quadrant).
+If multiple threads try to acquire the same semaphore, only one can enter, and others must wait until it is released.
+
+What does this mean in practice?
+One thread per quadrant at a time → Yes ✅
+Multiple threads can access different quadrants at the same time → Yes ✅
+If a thread is already in Quadrant 1, another thread must wait before entering it → Yes ✅
+
+Example visualization:
+Imagine a parking lot with four parking spaces, and each space has a barrier that allows only one car at a time.
+If four different cars arrive, each taking a separate parking space, they can enter at the same time.
+But if two cars try to enter the same space, the second car must wait until the first car leaves.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+A Traffic Signal Synchronization Problem is a concurrency challenge similar to the Dining Philosophers Problem, where multiple vehicles (or threads) must navigate an intersection while avoiding deadlocks and ensuring smooth traffic flow.
+
+Traffic Intersection Problem:
+Imagine a four-way intersection where cars arrive from different directions and must decide whether to:
+1.Go straight
+2.Turn left
+3.Turn right
+
+Each quadrant of the intersection can be considered a shared resource, and cars must acquire locks or semaphores to pass through safely.
+
+
+
+Key Concepts:
+Deadlock Prevention: Ensuring cars do not block each other indefinitely.
+Fairness: No vehicle should be starved from crossing.
+Synchronization: Using semaphores or mutex locks to control access.
+
+
+
+Approach Using Semaphores:
+Each quadrant of the intersection has a semaphore. A car must acquire locks for all quadrants it will pass through before proceeding.
+
+Python Code Example:
+
+import threading
+import time
+
+# Define semaphores for each quadrant
+quadrants = [threading.Semaphore(1) for _ in range(4)]
+
+def vehicle(vehicle_id, path):
+    """Vehicle tries to pass through the intersection"""
+    print(f"Vehicle {vehicle_id} approaching intersection")
+
+    # Acquire locks for required quadrants
+    for quadrant in path:
+        quadrants[quadrant].acquire()
+
+    print(f"Vehicle {vehicle_id} is passing through {path}")
+    time.sleep(2)  # Simulating crossing time
+
+    # Release locks
+    for quadrant in path:
+        quadrants[quadrant].release()
+
+    print(f"Vehicle {vehicle_id} has crossed")
+
+# Example: Vehicles with different paths
+vehicles = [
+    threading.Thread(target=vehicle, args=(1, [0, 1])),
+    threading.Thread(target=vehicle, args=(2, [2, 3])),
+    threading.Thread(target=vehicle, args=(3, [1, 2])),
+]
+
+for v in vehicles:
+    v.start()
+
+for v in vehicles:
+    v.join()
+	
+	
+	
+Explanation:
+Each vehicle acquires locks for the quadrants it will pass through.
+Once it crosses, it releases the locks.
+This prevents collisions and ensures safe passage.
+
+This problem is commonly used in traffic simulations and multithreading applications.
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Traffic Signal Synchronization Problem Explained:
+
+This problem models a traffic intersection where multiple vehicles may approach from different directions and need to pass through safely without collisions. The semaphores ensure that vehicles passing through overlapping quadrants do not interfere with each other.
+
+Quadrants in the Intersection:
+Think of a four-way intersection divided into four quadrants:
+
+  [0]---[1]
+   |     |
+  [2]---[3]
+Each quadrant corresponds to a section of the intersection that a vehicle might pass through. Using semaphores, we ensure that only one vehicle can occupy a quadrant at a time.
+
+
+
+How the Code Works:
+1. Creating Quadrant Locks:
+quadrants = [threading.Semaphore(1) for _ in range(4)]
+This creates four separate semaphores, each initially set to 1, meaning only one thread (vehicle) can pass through a quadrant at a time.
+
+
+2. Vehicle Movement
+Each vehicle follows a path through specific quadrants. For example:
+
+threading.Thread(target=vehicle, args=(1, [0, 1]))  # Vehicle 1 crosses quadrants 0 and 1
+threading.Thread(target=vehicle, args=(2, [2, 3]))  # Vehicle 2 crosses quadrants 2 and 3
+threading.Thread(target=vehicle, args=(3, [1, 2]))  # Vehicle 3 crosses quadrants 1 and 2
+
+
+
+3. Synchronization Using Semaphores
+A vehicle acquires locks for all quadrants it must pass through.
+If another vehicle is already in a required quadrant, the new vehicle waits.
+Once done crossing, the vehicle releases the locks so others can proceed.
+
+
+
+
+Potential Issues & Optimization
+Deadlocks: If multiple vehicles wait for each other's quadrants, they may form a circular wait and get stuck.
+Solution: Enforce a consistent locking order (e.g., always acquire quadrants in increasing order).
+
+Fairness & Optimization:
+We can implement priority queues to ensure traffic moves efficiently.
+Traffic lights or timing mechanisms can regulate vehicle entry.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Ok. Explain the code from top to bottom with clear understanding
+Absolutely! Let's break down the code step by step, ensuring you fully grasp how the Traffic Signal Synchronization Problem is solved using semaphores.
+
+
+1. Importing Required Modules
+
+import threading
+import time
+
+threading: Enables multithreading, allowing multiple vehicles to move concurrently.
+time: Used to simulate crossing time for vehicles.
+
+
+
+2. Defining Quadrants with Semaphores
+
+quadrants = [threading.Semaphore(1) for _ in range(4)]
+Creates a list of four semaphores, each initialized with a count of 1.
+
+Why use semaphores?
+Each semaphore represents a quadrant of the intersection.
+It ensures that only one vehicle can occupy a quadrant at a time.
+
+The four quadrants resemble this grid:
+
+ [0]---[1]
+  |     |
+ [2]---[3]
+ 
+ 
+ 
+3. Defining the Vehicle Behavior
+
+def vehicle(vehicle_id, path):
+
+Defines a function that simulates a vehicle passing through the intersection.
+vehicle_id: A unique identifier for each vehicle.
+path: A list of quadrant indices the vehicle must pass through.
+
+
+
+4. Vehicle Approaching the Intersection:
+
+print(f"Vehicle {vehicle_id} approaching intersection")
+The vehicle announces its arrival at the intersection.
+
+
+
+
+5. Acquiring Quadrants (Locking Semaphores):
+
+for quadrant in path:
+    quadrants[quadrant].acquire()
+
+The vehicle locks each quadrant in its path before proceeding.
+If another vehicle already occupies a required quadrant, this thread will wait until that quadrant is released.
+
+
+
+6. Crossing the Intersection:
+
+print(f"Vehicle {vehicle_id} is passing through {path}")
+time.sleep(2)
+
+The vehicle enters the intersection and moves through its designated quadrants.
+time.sleep(2): Simulates real-world crossing delay.
+
+
+
+7. Releasing Quadrants (Unlocking Semaphores):
+
+for quadrant in path:
+    quadrants[quadrant].release()
+
+The vehicle releases the quadrants after crossing.
+This allows other waiting vehicles to proceed.
+
+
+
+8. Vehicle Has Crossed:
+
+print(f"Vehicle {vehicle_id} has crossed")
+The vehicle announces that it has successfully exited the intersection.
+
+
+
+
+9. Creating and Managing Threads (Vehicles):
+
+vehicles = [
+    threading.Thread(target=vehicle, args=(1, [0, 1])),
+    threading.Thread(target=vehicle, args=(2, [2, 3])),
+    threading.Thread(target=vehicle, args=(3, [1, 2])),
+]
+
+Creates three vehicle threads, each taking different paths:
+Vehicle 1 passes through Quadrants [0, 1].
+Vehicle 2 passes through Quadrants [2, 3].
+Vehicle 3 passes through Quadrants [1, 2].
+
+
+
+10. Starting the Threads:
+
+for v in vehicles:
+    v.start()
+	
+Starts all vehicle threads simultaneously.
+Each thread executes the vehicle() function independently.
+
+
+
+11. Waiting for All Vehicles to Finish:
+
+for v in vehicles:
+    v.join()
+	
+Ensures that the main program waits for all vehicles to finish crossing.
+
+
+
+Expected Behavior
+✅ Vehicles enter the intersection only if their quadrants are free. 
+✅ If a quadrant is occupied, other vehicles wait. 
+✅ Once a vehicle leaves a quadrant, waiting vehicles proceed.
+
+
+
+
+Possible Improvements:
+Deadlock Prevention: If multiple vehicles wait for each other indefinitely, a deadlock might occur. Solution: Always acquire quadrants in ascending order (min to max index).
+Traffic Light System: Instead of direct semaphore control, a traffic light mechanism could prioritize movement.
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Will there be any deadlocks and starvation expected in this problem. If yes, how we can handle this. Explain in detailed manner along with code
+Yes, deadlocks and starvation can occur in this traffic signal synchronization problem, especially when multiple vehicles wait on each other indefinitely. Let's analyze each issue and how we can resolve it with code modifications.
+
+Deadlock: Why Does It Happen?
+A deadlock occurs when two or more vehicles hold some quadrants while waiting for others, creating a cycle where no vehicle can proceed.
+
+Example Scenario: Deadlock Formation
+Vehicle 1 acquires Quadrants [0, 1] → Needs Quadrant 2, but it's occupied.
+Vehicle 2 acquires Quadrants [1, 2] → Needs Quadrant 0, but it's occupied.
+
+Neither vehicle can proceed because they are waiting on each other indefinitely.
+
+✅ Deadlock Solution: Ordered Locking
+To prevent deadlock, we can enforce a consistent order of acquiring quadrants (always acquire in ascending order). This ensures vehicles do not create circular waits.
+
+import threading
+import time
+
+# Define semaphores for each quadrant
+quadrants = [threading.Semaphore(1) for _ in range(4)]
+
+def vehicle(vehicle_id, path):
+    """Vehicle tries to pass through the intersection in a fixed order."""
+    print(f"Vehicle {vehicle_id} approaching intersection")
+
+    # Sort quadrants to enforce an ordering rule (prevents deadlock)
+    path.sort()  
+
+    # Acquire locks in sorted order
+    for quadrant in path:
+        quadrants[quadrant].acquire()
+
+    print(f"Vehicle {vehicle_id} is passing through {path}")
+    time.sleep(2)
+
+    # Release locks
+    for quadrant in path:
+        quadrants[quadrant].release()
+
+    print(f"Vehicle {vehicle_id} has crossed")
+
+# Vehicles following a fixed quadrant acquisition order
+vehicles = [
+    threading.Thread(target=vehicle, args=(1, [0, 1])),
+    threading.Thread(target=vehicle, args=(2, [1, 2])),
+    threading.Thread(target=vehicle, args=(3, [2, 3])),
+]
+
+for v in vehicles:
+    v.start()
+
+for v in vehicles:
+    v.join()
+
+
+✅ Why Does This Work?
+Sorting path before acquiring semaphores ensures consistent acquisition order.
+Prevents circular dependencies among waiting vehicles.
+Guarantees each vehicle progresses without indefinitely blocking others.
+
+
+
+
+🟡 Starvation: Why Does It Happen?
+Starvation occurs when low-priority vehicles keep waiting forever because high-priority vehicles continuously acquire quadrants.
+
+Example Scenario: Starvation Formation
+Fast-moving vehicles may keep acquiring semaphores.
+Slow-moving vehicles or lower-priority traffic might never get a chance to enter.
+
+✅ Starvation Solution: Fair Locking with Timeout
+To ensure fairness, we can introduce:
+
+A timeout → If a vehicle cannot acquire quadrants, it retries after waiting.
+Priority queue scheduling → Older waiting vehicles get higher priority.
+
+🔄 Code Solution: Using a Retry Mechanism
+This modification allows vehicles to wait for a limited time before retrying, preventing indefinite starvation.
+
+import threading
+import time
+
+quadrants = [threading.Semaphore(1) for _ in range(4)]
+
+def vehicle(vehicle_id, path):
+    """Vehicle retries if unable to acquire quadrants initially."""
+    print(f"Vehicle {vehicle_id} approaching intersection")
+    
+    path.sort()  # Ensuring a fixed order
+    
+    acquired = []
+    for quadrant in path:
+        success = quadrants[quadrant].acquire(timeout=3)  # Try for 3 seconds
+        if success:
+            acquired.append(quadrant)
+        else:
+            print(f"Vehicle {vehicle_id} could not acquire Quadrant {quadrant}, retrying...")
+            # Release already acquired quadrants to prevent partial blocking
+            for q in acquired:
+                quadrants[q].release()
+            time.sleep(2)  # Wait before retrying
+            vehicle(vehicle_id, path)  # Retry function call
+            return
+    
+    print(f"Vehicle {vehicle_id} is passing through {path}")
+    time.sleep(2)
+
+    # Release locks
+    for quadrant in path:
+        quadrants[quadrant].release()
+
+    print(f"Vehicle {vehicle_id} has crossed")
+
+vehicles = [
+    threading.Thread(target=vehicle, args=(1, [0, 1])),
+    threading.Thread(target=vehicle, args=(2, [1, 2])),
+    threading.Thread(target=vehicle, args=(3, [2, 3])),
+]
+
+for v in vehicles:
+    v.start()
+
+for v in vehicles:
+    v.join()
+
+✅ Why Does This Work?
+Timeout prevents indefinite waiting.
+If a vehicle fails to acquire all required quadrants, it releases the ones it has and retries later.
+Vehicles eventually get their turn, ensuring fair access to intersection quadrants.
+
+🚦 Conclusion
+✅ Deadlock Prevention → Enforce an ascending locking order. ✅ Starvation Prevention → Use a timeout-based retry mechanism.
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Using Priority queue scheduling to prevent starvation: 
+------------------------------------------------------
+
+
+To prevent starvation effectively, we can use priority queue scheduling. The idea is to assign priority levels to vehicles so that vehicles with lower wait times or higher priority get access to the intersection earlier.
+
+
+
+Approach: Using a Priority Queue
+Each vehicle is assigned a priority value (higher priority vehicles go first).
+We use a heap-based priority queue (queue.PriorityQueue) to ensure fair access.
+Vehicles are dequeued based on their priority, ensuring fairness.
+
+
+
+Code Implementation: Priority Scheduling for Vehicles:
+import threading
+import time
+import queue
+
+class Vehicle(threading.Thread):
+    def __init__(self, vehicle_id, path, priority, pq):
+        super().__init__()
+        self.vehicle_id = vehicle_id
+        self.path = sorted(path)  # Ensure consistent locking order
+        self.priority = priority
+        self.pq = pq  # Priority queue reference
+
+    def run(self):
+        """Vehicle tries to pass through intersection with priority handling."""
+        print(f"Vehicle {self.vehicle_id} (Priority {self.priority}) waiting...")
+        self.pq.put((self.priority, self))  # Insert into priority queue
+
+        while self.pq.queue[0][1] != self:  # Wait until this vehicle is the highest-priority
+            time.sleep(0.5)  # Avoid busy waiting
+
+        # Acquire quadrant locks
+        for quadrant in self.path:
+            quadrants[quadrant].acquire()
+
+        print(f"Vehicle {self.vehicle_id} is passing through {self.path}")
+        time.sleep(2)  # Simulating crossing time
+
+        # Release quadrant locks
+        for quadrant in self.path:
+            quadrants[quadrant].release()
+
+        print(f"Vehicle {self.vehicle_id} has crossed")
+        self.pq.get()  # Remove from priority queue
+
+# Define semaphores for intersection quadrants
+quadrants = [threading.Semaphore(1) for _ in range(4)]
+pq = queue.PriorityQueue()
+
+# Vehicles with different priorities (lower number = higher priority)
+vehicles = [
+    Vehicle(1, [0, 1], priority=2, pq=pq),
+    Vehicle(2, [1, 2], priority=1, pq=pq),  # Higher priority (goes first)
+    Vehicle(3, [2, 3], priority=3, pq=pq),
+]
+
+for v in vehicles:
+    v.start()
+
+for v in vehicles:
+    v.join()
+	
+	
+	
+	
+✅ How Does This Prevent Starvation?
+Vehicles are inserted into a priority queue (pq.put((priority, self))).
+The lowest priority number moves first (higher priority goes earlier).
+Vehicles wait until they are the highest priority in the queue before acquiring quadrants.
+Ensures fair access—no vehicle waits indefinitely.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Will there be any starvation and deadlocks can we expect and If yes, how can we solve it. Provide along with coding example
+Yes, in the Traffic Intersection Problem, both starvation and deadlocks can occur. Let’s analyze them and discuss solutions with code.
+
+1. Deadlock in Traffic Intersection
+Problem:
+Deadlocks happen when multiple vehicles wait indefinitely for resources (quadrants) that others are holding, causing a circular wait condition.
+
+Example Deadlock Scenario
+Vehicle A needs Quadrant 0 & 1.
+Vehicle B needs Quadrant 1 & 2.
+Vehicle C needs Quadrant 2 & 3.
+Vehicle D needs Quadrant 3 & 0.
+If all vehicles grab one quadrant first and wait for the next quadrant, a circular wait occurs.
+
+Solution: Avoid Circular Wait
+One strategy is ordered resource allocation, where each vehicle must acquire quadrants in a fixed order (e.g., 0 → 1 → 2 → 3). This prevents cyclic dependencies.
+
+Deadlock-Free Code Example
+
+import threading
+import time
+
+# Define semaphore locks for intersection quadrants
+quadrants = [threading.Semaphore(1) for _ in range(4)]
+
+def vehicle(vehicle_id, path):
+    """Vehicle acquires locks in fixed order to prevent deadlocks"""
+    print(f"Vehicle {vehicle_id} approaching intersection")
+    
+    # Acquiring quadrants in sorted order (prevents cyclic wait)
+    path.sort()
+    
+    for quadrant in path:
+        quadrants[quadrant].acquire()
+
+    print(f"Vehicle {vehicle_id} is passing through quadrants {path}")
+    time.sleep(2)
+
+    for quadrant in path:
+        quadrants[quadrant].release()
+
+    print(f"Vehicle {vehicle_id} has crossed")
+
+# Creating vehicles with different routes
+vehicles = [
+    threading.Thread(target=vehicle, args=(1, [0, 1])),
+    threading.Thread(target=vehicle, args=(2, [1, 2])),
+    threading.Thread(target=vehicle, args=(3, [2, 3])),
+    threading.Thread(target=vehicle, args=(4, [3, 0])),
+]
+
+# Start all vehicle threads
+for v in vehicles:
+    v.start()
+
+# Wait for vehicles to finish crossing
+for v in vehicles:
+    v.join()
+
+
+Explanation:
+Vehicles acquire locks in an ordered manner (smallest first), eliminating cyclic dependencies.
+This prevents deadlocks because no vehicle holds a lock while waiting for another in a cycle.
+
+
+
+
+
+2. Starvation in Traffic Intersection
+
+Problem:
+Starvation occurs when a high-priority vehicle (or thread) keeps acquiring resources, preventing lower-priority vehicles from crossing. For example:
+A continuous stream of straight-moving vehicles may prevent left-turning vehicles from proceeding.
+
+Solution: Fairness Using Priority Queue
+We use a queue system where vehicles are queued based on arrival time to ensure fairness.
+
+
+Starvation-Free Code Example:
+
+import threading
+import queue
+import time
+
+# Priority queue for vehicles arriving at intersection
+vehicle_queue = queue.Queue()
+
+quadrants = [threading.Semaphore(1) for _ in range(4)]
+
+def vehicle(vehicle_id, path):
+    """Vehicle follows queue-based crossing approach"""
+    vehicle_queue.put((vehicle_id, path))
+    print(f"Vehicle {vehicle_id} is waiting for turn")
+
+    while vehicle_queue.queue[0][0] != vehicle_id:
+        time.sleep(0.5)  # Wait for turn
+    
+    # Acquire quadrants
+    for quadrant in path:
+        quadrants[quadrant].acquire()
+
+    print(f"Vehicle {vehicle_id} is crossing intersection")
+    time.sleep(2)
+
+    # Release quadrants
+    for quadrant in path:
+        quadrants[quadrant].release()
+    
+    vehicle_queue.get()
+    print(f"Vehicle {vehicle_id} has passed")
+
+# Creating vehicles with different paths
+vehicles = [
+    threading.Thread(target=vehicle, args=(1, [0, 1])),
+    threading.Thread(target=vehicle, args=(2, [1, 2])),
+    threading.Thread(target=vehicle, args=(3, [2, 3])),
+    threading.Thread(target=vehicle, args=(4, [3, 0])),
+]
+
+# Start all vehicle threads
+for v in vehicles:
+    v.start()
+
+for v in vehicles:
+    v.join()
+
+
+
+
+Explanation:
+Vehicles are queued based on arrival order.
+Each vehicle waits until it is at the front of the queue before crossing.
+This prevents starvation as all vehicles eventually get their turn.
+
+
+
+Summary:
+Issue	         Solution	                                 Approach
+Deadlock	     Ordered resource allocation	             Vehicles acquire quadrants in a fixed order
+Starvation	     Fairness using queue	                     Vehicles cross in arrival order
+
+
+By combining ordered locking and fair scheduling, we ensure smooth traffic flow while avoiding deadlocks and starvation.
+

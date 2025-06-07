@@ -1,0 +1,296 @@
+
+
+are tuples faster than list?
+
+Yes, tuples are generally faster than lists in Python. This is because tuples are immutable, meaning their contents cannot be changed after creation. As a result, Python optimizes them for performance by storing them more efficiently compared to lists, which are mutable and require additional overhead to manage changes.
+
+The speed advantage of tuples is most noticeable in situations where frequent iteration or lookup operations are performed, such as dictionary keys or function return values. If you're working with data that doesn't need modification, using tuples instead of lists can improve efficiency.
+
+
+And When I say tuples are stored more efficiently, I mean they take up less memory and are faster to access compared to lists.
+
+In Python, tuples are stored in memory as immutable objects. Because they never change, Python can store them in a more compact way than lists, which need extra space to handle modifications like appending or removing elements. Lists use dynamic arrays, meaning Python has to allocate and resize memory as elements are added or changed, making them slightly slower.
+
+Tuples are stored in a fixed size memory allocation, while lists have extra overhead due to their flexibility. This is why tuples are preferred for read-only operations or when speed is a priority.
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Understanding Mutable vs Immutable Types Consider the following:
+
+
+a = (1, 2, [3, 4])
+a[2].append(5)
+print(a)
+
+Question: What will be printed, and why? Concept Tested: Understanding tuples and mutability.
+
+Explanation: Even though a is a tuple, it contains a mutable list. While tuples themselves are immutable, the list inside can be modified, leading to unexpected behavior.
+
+
+contrasting after testing this, where I can append '5' list inside the tuple:
+
+You're absolutely right—this example demonstrates an interesting aspect of Python's behavior regarding mutability and immutability.
+
+Why does this happen?
+a is a tuple, and tuples are immutable, meaning their elements cannot be directly modified.
+However, immutability only applies to the tuple itself, not to the objects stored inside it.
+The third element of a is a list, and lists are mutable.
+So, even though you cannot change the structure of the tuple itself (e.g., reassign elements like a[2] = [6, 7]), you can modify the contents of the list within the tuple.
+
+Step-by-step breakdown:
+
+1. a = (1, 2, [3, 4]) → Creates a tuple with:
+1 (immutable integer)
+2 (immutable integer)
+[3, 4] (mutable list)
+
+2. a[2].append(5) → Modifies the list inside the tuple.
+Python does not change the tuple itself.
+Instead, it modifies the list referenced by the tuple.
+
+3. print(a) → The output is (1, 2, [3, 4, 5]).
+
+Key takeaway:
+Tuples prevent elements from being reassigned (a[2] = [6, 7] would fail).
+But if a tuple contains a mutable object, that object can still be modified.
+This is why tuples containing mutable objects can lead to unexpected behavior!
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Identifying Unexpected Type Conversions
+
+print(sorted(["apple", "banana", 3, "cherry"]))
+Question: Will this run successfully? If not, why? Concept Tested: Sorting rules and implicit type conversions.
+
+Explanation: Sorting requires values to be comparable. Mixing integers and strings leads to a TypeError.
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+The Tricky Scope Issue:
+
+
+def func():
+    x = 10
+    def inner():
+        print(x)
+    inner()
+
+x = 20
+func()
+
+Question: What will be printed and why? Concept Tested: Variable scoping within nested functions.
+
+Explanation: Python follows the LEGB (Local, Enclosing, Global, Built-in) rule for variable resolution. Since inner() references x, Python finds it inside func() before checking the global scope.
+
+
+Python follows the LEGB rule to determine the scope of a variable, which stands for Local, Enclosing, Global, Built-in. This defines the order in which Python searches for variables.
+
+1. Local (L) Scope:
+The innermost scope, inside a function.
+Python first looks for variables inside the function where they are used.
+
+🔹 Example:
+def my_function():
+    x = 10  # Local variable
+    print(x)
+
+my_function()  # Output: 10
+
+Here, x is a local variable, defined inside my_function(). Python finds x within the function first.
+
+
+
+2. Enclosing (E) Scope
+If a function is nested inside another function, Python looks for variables in the outer function when it's not found inside the inner function.
+
+🔹 Example:
+def outer_function():
+    y = 20  # Enclosing variable
+
+    def inner_function():
+        print(y)  # Looks for 'y' in outer_function's scope
+
+    inner_function()
+
+outer_function()  # Output: 20
+
+inner_function() doesn't define y, so Python checks outer_function() where it finds y.
+
+
+
+
+3. Global (G) Scope:
+If Python can't find a variable in the local or enclosing scope, it looks in the global scope (outside all functions).
+
+🔹 Example:
+z = 30  # Global variable
+
+def my_function():
+    print(z)  # Python searches globally since 'z' isn't inside my_function
+
+my_function()  # Output: 30
+Since z isn't inside my_function(), Python finds it in the global scope.
+
+
+
+
+4. Built-in (B) Scope
+The outermost scope, referring to Python's predefined functions and keywords.
+If a variable isn't found anywhere, Python checks built-in names.
+
+🔹 Example:
+
+print(len([1, 2, 3]))  # 'len' is a built-in function
+len() is found in the built-in scope, meaning it’s always available without needing a definition.
+
+
+How Python Searches?
+1.Local → 2.Enclosing → 3.Global → 4.Built-in If Python doesn't find the variable at any level, it raises a NameError.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Using is vs ==
+
+
+a = [1, 2, 3]
+b = a
+c = a[:]
+
+print(a is b, a == b) # True True
+print(a is c, a == c) # False True
+Question: What will each comparison evaluate to? Concept Tested: Object identity (is) vs equality (==).
+
+Explanation:
+is checks if two variables point to the same object.
+== checks if two objects contain the same data.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Copying Dictionaries with Nested Elements:
+
+
+import copy
+
+d1 = {'x': [1, 2, 3], 'y': 'hello'}
+d2 = copy.copy(d1)
+d3 = copy.deepcopy(d1)
+
+d1['x'].append(4)
+
+print(d2['x'], d3['x'])
+Question: What will be printed? Concept Tested: Shallow vs Deep Copy in dictionaries.
+
+Explanation:
+copy.copy() creates a new dictionary but does not copy nested objects, so d2['x'] is affected.
+copy.deepcopy() recursively copies everything, preserving the original state.
+
+
+
+
+
+Shallow Copy ('copy.copy()'):
+- Creates a new object but does not copy nested objects. Instead, references to nested objects are maintained.
+- Changes made to nested objects affect both the original and copied versions.
+
+Example with Lists (Mutable Objects)
+import copy
+
+list1 = [[1, 2, 3], [4, 5, 6]]
+list2 = copy.copy(list1)  # Shallow copy
+
+list1[0].append(99)  # Modifies the nested list inside list1
+
+print(list1)  # Output: [[1, 2, 3, 99], [4, 5, 6]]
+print(list2)  # Output: [[1, 2, 3, 99], [4, 5, 6]]  (Nested list is modified!)
+
+- Here, 'list2' points to the same nested lists inside 'list1', so modifying them affects both.
+
+
+Example with Tuples (Immutable Objects)
+t1 = (1, 2, [3, 4])
+t2 = copy.copy(t1)
+
+t1[2].append(5)  # Modifies the list inside the tuple
+
+print(t1)  # Output: (1, 2, [3, 4, 5])
+print(t2)  # Output: (1, 2, [3, 4, 5])  (Nested list is modified!)
+
+- Even though 't1' is a tuple, it contains a mutable list. Shallow copies preserve references to mutable objects.
+
+
+Example with Dictionaries:
+dict1 = {'a': [1, 2, 3], 'b': {'x': 10, 'y': 20}}
+dict2 = copy.copy(dict1)
+
+dict1['b']['x'] = 100  # Modifies original nested dictionary
+
+print(dict1)  # Output: {'a': [1, 2, 3], 'b': {'x': 100, 'y': 20}}
+print(dict2)  # Output: {'a': [1, 2, 3], 'b': {'x': 100, 'y': 20}} changes in nested structure
+
+Here the nested structures are [1, 2, 3] and {'x': 10, 'y': 20}
+
+
+
+
+
+Deep Copy ('copy.deepcopy()'):
+- Creates a completely independent copy, including all nested objects.
+- Changes in the original object do not affect the copied version.
+
+Example with Lists:
+list1 = [[1, 2, 3], [4, 5, 6]]
+list3 = copy.deepcopy(list1)
+
+list1[0].append(99)  # Modifies the original list
+
+print(list1)  # Output: [[1, 2, 3, 99], [4, 5, 6]]
+print(list3)  # Output: [[1, 2, 3], [4, 5, 6]]  (Nested structure remains unchanged)
+
+- 'deepcopy()' ensures 'list3' is completely separate from 'list1'.
+
+
+
+Example with Dictionaries:
+dict1 = {'a': [1, 2, 3], 'b': {'x': 10, 'y': 20}}
+dict2 = copy.deepcopy(dict1)
+
+dict1['b']['x'] = 100  # Modifies original nested dictionary
+
+print(dict1)  # Output: {'a': [1, 2, 3], 'b': {'x': 100, 'y': 20}}
+print(dict2)  # Output: {'a': [1, 2, 3], 'b': {'x': 10, 'y': 20}} (Remains unchanged)
+
+- Since 'copy.deepcopy()' creates new objects, modifying the original dictionary does not affect the copy.
+
+
+
+How It Works for n-Dimensional Structures:
+Deep copy ensures that:
+✅ Every level of nesting is copied independently.  
+✅ No references are shared between the original and copied object.  
+
+Shallow copy only affects:
+❌ The top-level structure is duplicated, but nested elements are still referenced.  
+
+For an n-dimensional list or dictionary, deep copy guarantees that all levels of nesting are fully copied, preventing any unintended modifications.
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Understanding Python's defaultdict Behavior:
+
+
+from collections import defaultdict
+
+d = defaultdict(list)
+d['A'].append(1)
+d['B'].append(2)
+print(d)
+
+Question: What does defaultdict do here? Concept Tested: Default values in dictionaries.
+Explanation: defaultdict(list) ensures that if a key is missing, it automatically assigns an empty list instead of throwing a KeyError.
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------

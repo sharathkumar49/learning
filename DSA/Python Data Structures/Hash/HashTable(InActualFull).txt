@@ -1,0 +1,426 @@
+
+
+
+Hash Tables: Comprehensive Notes
+
+1. Introduction:
+A hash table (also called a hash map) is a data structure that allows you to store and retrieve values efficiently using a key. In Python, the built-in 'dict' type is an implementation of a hash table.
+
+Hash tables are widely used because they provide average-case constant time (O(1)) complexity for lookup, insertion, and deletion operations.
+
+
+
+2. Motivation: Why Use a Hash Table?
+
+Suppose you have a CSV file containing stock prices, with each row containing a date and the price on that date. You want to write a program to fetch the price for a given day.
+
+Using a List:
+
+stock_prices = []
+with open("stock_prices.csv", "r") as f:
+    for line in f:
+        tokens = line.split(',')
+        day = tokens[0]
+        price = float(tokens[1])
+        stock_prices.append([day, price])
+
+
+To find the price for a specific day (e.g., 'march 9'), you would loop through the list:
+
+for element in stock_prices:
+    if element[0] == 'march 9':
+        print(element[1])
+
+
+- Drawback: If the list is large (e.g., millions of records), and the desired date is near the end, you must iterate through most or all of the list.
+- Time Complexity: O(n) for lookup.
+
+
+
+
+
+
+Using a Dictionary (Hash Table):
+stock_prices = {}
+with open("stock_prices.csv", "r") as f:
+    for line in f:
+        tokens = line.split(',')
+        day = tokens[0]
+        price = float(tokens[1])
+        stock_prices[day] = price
+
+
+Now, you can fetch the price instantly:
+print(stock_prices['march 9'])
+
+
+- Advantage: Lookup is O(1) on average.
+
+
+
+
+
+3. How Does a Hash Table Work Internally?
+
+3.1. List vs. Dictionary Storage:
+- List: Data is stored in contiguous memory locations. Access by integer index.
+- Dictionary (Hash Table): Data is stored in an array, but the index is determined by a hash function applied to the key (which can be a string or other immutable type).
+
+
+
+3.2. Hash Function:
+A hash function converts a key (e.g., a string) into an integer index for the underlying array.
+
+Example:
+For the key ''march 6'', a simple hash function could sum the ASCII values of each character:
+
+| Character | ASCII Value |
+|-----------|-------------|
+| m         | 109         |
+| a         | 97          |
+| r         | 114         |
+| c         | 99          |
+| h         | 104         |
+| (space)   | 32          |
+| 6         | 54          |
+| Total     | 609         |
+
+If the array size is 10, the index is '609 % 10 = 9'.
+
+- The value for ''march 6'' would be stored at index 9 in the array.
+
+Note: Real-world hash functions are more sophisticated to minimize collisions and distribute keys uniformly.
+
+
+
+
+
+4. Big O Complexity:
+
+- Average Case:
+  - Lookup: O(1)
+  - Insertion: O(1)
+  - Deletion: O(1)
+- Worst Case: O(n) (if many keys hash to the same index, i.e., collisions)
+
+
+
+5. Hash Table Terminology
+
+- Hash Table / Hash Map: The general data structure.
+- Dictionary: Python’s implementation of a hash table.
+- Key: The identifier used to store/retrieve a value.
+- Value: The data associated with a key.
+- Hash Function: Function that maps a key to an array index.
+- Collision: When two keys hash to the same index.
+
+
+
+6. Implementing a Simple Hash Table in Python
+
+Here’s a basic implementation (without collision handling):
+
+
+class HashTable:
+    def __init__(self):
+        self.MAX = 100
+        self.arr = [None for _ in range(self.MAX)]
+
+    def get_hash(self, key):
+        hash = 0
+        for char in key:
+            hash += ord(char)
+        return hash % self.MAX
+
+    def __getitem__(self, key):
+        h = self.get_hash(key)
+        return self.arr[h]
+
+    def __setitem__(self, key, value):
+        h = self.get_hash(key)
+        self.arr[h] = value
+
+    def __delitem__(self, key):
+        h = self.get_hash(key)
+        self.arr[h] = None
+
+
+Usage:
+t = HashTable()
+t["march 6"] = 310
+t["march 7"] = 420
+print(t["march 6"])  # Output: 310
+del t["march 6"]
+'''
+
+- '__getitem__', '__setitem__', and '__delitem__' are special methods that allow you to use the bracket notation ('[]') for getting, setting, and deleting items, just like a dictionary.
+
+
+
+7. Collision Handling:
+
+This simple implementation does not handle collisions.  
+Collisions occur when two different keys hash to the same index. Proper hash tables must handle collisions to avoid data loss.
+
+Common collision handling techniques:
+- Chaining: Each array index holds a list of key-value pairs.
+- Open Addressing (e.g., Linear Probing): If a slot is occupied, try the next slot (and so on) until an empty one is found.
+
+*These techniques are covered in more detail in advanced discussions.*
+
+
+
+8. Hash Table Implementations in Other Languages
+
+- Python: 'dict'
+- Java: 'HashMap', 'LinkedHashMap'
+- C++: 'std::map', 'std::unordered_map'
+
+Examples:
+- Python:
+  '''python
+  prices = {'march 6': 310, 'march 7': 430}
+  '''
+
+- Java:
+ 
+  HashMap<String, Integer> prices = new HashMap<>();
+  prices.put("march 6", 310);
+  prices.put("march 7", 430);
+  
+
+- C++:
+ 
+  std::map<std::string, int> prices;
+  prices["march 6"] = 310;
+  prices["march 7"] = 430;
+ 
+
+
+
+9. Key Takeaways:
+- Hash tables provide fast access to data using keys.
+- The efficiency comes from the hash function, which maps keys to array indices.
+- Python’s 'dict' is a hash table.
+- Understanding the underlying mechanism helps you appreciate the efficiency and limitations (e.g., collisions) of hash tables.
+- For most programming tasks, use the built-in dictionary, but knowing how it works internally is valuable for interviews and deeper understanding.
+
+
+
+10. Further Study:
+- Collision Handling: Learn about chaining and open addressing (linear probing, quadratic probing, double hashing).
+- Hash Function Design: Explore how to design good hash functions to minimize collisions.
+- Load Factor and Resizing: Understand how hash tables resize themselves to maintain efficiency.
+- Practical Applications: Symbol tables, caches, sets, and more.
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Collision Handling in Hash Tables
+
+1. What is a Collision?
+
+A collision in a hash table occurs when two different keys hash to the same index in the underlying array. Since the number of possible keys is usually much larger than the size of the array, collisions are inevitable in any practical hash table implementation.
+
+Example:  
+If the hash table size is 10, both 'march 6' and 'march 17' might hash to index 9.
+
+
+
+2. Why Do Collisions Matter?
+
+If collisions are not handled, inserting a new key-value pair at an already-occupied index will overwrite the existing value, leading to data loss. Proper collision handling ensures that all key-value pairs are stored and can be retrieved correctly.
+
+
+
+3. Collision Handling Techniques:
+3.1. Chaining (Separate Chaining)
+
+- Concept:  
+  Each index in the array points to a linked list (or a Python list) of entries that share the same hash value.
+- How it works:  
+  - When a collision occurs, the new entry is appended to the list at that index.
+  - When searching for a key, the hash index is found, and then the list at that index is searched linearly for the key.
+
+Example:
+Index 9: [ ('march 6', 310), ('march 17', 459) ]
+
+- Complexity:
+  - Average case: O(1) for search, insert, and delete (if the hash function distributes keys well).
+  - Worst case: O(n) if all keys hash to the same index (bad hash function), making the list at that index as long as the number of keys.
+
+- Python Implementation:
+
+  class HashTable:
+      def __init__(self):
+          self.MAX = 10
+          self.arr = [[] for _ in range(self.MAX)]
+
+      def get_hash(self, key):
+          hash = 0
+          for char in key:
+              hash += ord(char)
+          return hash % self.MAX
+
+      def __getitem__(self, key):
+          arr_index = self.get_hash(key)
+          for kv in self.arr[arr_index]:
+              if kv[0] == key:
+                  return kv[1]
+
+      def __setitem__(self, key, val):
+          h = self.get_hash(key)
+          found = False
+          for idx, element in enumerate(self.arr[h]):
+              if len(element) == 2 and element[0] == key:
+                  self.arr[h][idx] = (key, val)
+                  found = True
+          if not found:
+              self.arr[h].append((key, val))
+
+      def __delitem__(self, key):
+          arr_index = self.get_hash(key)
+          for index, kv in enumerate(self.arr[arr_index]):
+              if kv[0] == key:
+                  del self.arr[arr_index][index]
+ 
+
+
+
+3.2. Open Addressing:
+- Concept:  
+  When a collision occurs, the algorithm probes the array to find the next available slot.
+
+- Probing Methods:
+  - Linear Probing:  
+    Check the next slot in the array (move linearly).
+  - Quadratic Probing:  
+    Check slots at intervals of 1, 4, 9, 16, etc.
+  - Double Hashing:  
+    Use a second hash function to determine the probe step.
+
+
+Linear Probing Example:
+- If index 'h' is occupied, check 'h+1', 'h+2', ..., wrapping around to the start if needed, until an empty slot is found.
+
+
+Python Implementation:
+class HashTable:
+    def __init__(self):
+        self.MAX = 10
+        self.arr = [None for _ in range(self.MAX)]
+
+    def get_hash(self, key):
+        hash = 0
+        for char in key:
+            hash += ord(char)
+        return hash % self.MAX
+
+    def get_prob_range(self, index):
+        return [*range(index, len(self.arr))] + [*range(0, index)]
+
+    def find_slot(self, key, index):
+        prob_range = self.get_prob_range(index)
+        for prob_index in prob_range:
+            if self.arr[prob_index] is None or self.arr[prob_index][0] == key:
+                return prob_index
+        raise Exception("Hashmap full")
+
+    def __getitem__(self, key):
+        h = self.get_hash(key)
+        prob_range = self.get_prob_range(h)
+        for prob_index in prob_range:
+            element = self.arr[prob_index]
+            if element is None:
+                return
+            if element[0] == key:
+                return element[1]
+
+    def __setitem__(self, key, val):
+        h = self.get_hash(key)
+        slot = self.find_slot(key, h)
+        self.arr[slot] = (key, val)
+
+    def __delitem__(self, key):
+        h = self.get_hash(key)
+        prob_range = self.get_prob_range(h)
+        for prob_index in prob_range:
+            if self.arr[prob_index] is None:
+                return
+            if self.arr[prob_index][0] == key:
+                self.arr[prob_index] = None
+
+
+- Note:  
+  - If the table is full, insertion will fail.
+  - Deletion can create "holes" that may affect future searches.
+
+
+
+3.3. Other Collision Handling Methods:
+- Cuckoo Hashing:  
+  Uses two hash tables and two hash functions. On collision, the entry is moved to the other table, possibly displacing another entry, which is then moved as well.
+
+- Robin Hood Hashing:  
+  Tracks the number of probes each element undergoes and tries to keep probe counts balanced by displacing elements with higher probe counts less frequently.
+
+- Hopscotch Hashing:  
+  Each element has a neighborhood of slots it can be moved to upon collision, allowing elements to stay close to their original hash slot.
+
+
+
+4. Trade-offs and Considerations:
+- Chaining:
+  - Simple to implement.
+  - Handles high load factors better.
+  - Uses extra memory for linked lists.
+
+- Open Addressing:
+  - All data stored in the array (no extra memory for lists).
+  - Performance degrades as the table fills up (load factor increases).
+  - Deletion is more complex.
+
+- Other Methods:  
+  Offer different trade-offs in terms of speed, memory usage, and complexity.
+
+- Choice of Method:  
+  Depends on application requirements, expected load factor, and performance needs.
+
+
+
+
+
+5. Practical Examples and Usage:
+
+- Chaining Example:
+  t = HashTable()
+  t["march 6"] = 310
+  t["march 17"] = 63457
+  print(t["march 6"])   # 310
+  print(t["march 17"])  # 63457
+  t.arr
+  
+  # Output: ... [ [('march 6', 310), ('march 17', 63457)] ] ...
+
+
+- Linear Probing Example: 
+  t = HashTable()
+  t["march 6"] = 20
+  t["march 17"] = 88
+  t["march 33"] = 234
+  print(t["march 33"])  # 234
+  t["march 33"] = 999
+  print(t["march 33"])  # 999
+
+
+
+
+6. Summary:
+- Collisions are inevitable in hash tables due to limited array size.
+- Handling collisions is essential for correctness and efficiency.
+- Chaining and open addressing (linear probing, etc.) are the most common methods.
+- Other advanced methods (cuckoo, robin hood, hopscotch) exist for specialized needs.
+- Good hash functions and appropriate collision handling are key to maintaining O(1) average-case performance.
+
+
