@@ -1,0 +1,103 @@
+
+Write a Flask API for managing a simple to-do list. The API should allow users to perform the following operations:
+GET /todos: Retrieve all to-do items.
+POST /todos: Add a new to-do item.
+PUT /todos/<todo_id>: Update an existing to-do item (mark it as completed).
+DELETE /todos/<todo_id>: Delete a specific to-do item.
+Requirements:
+Each to-do item should have an id, task, and status ("pending" or "completed").
+Use in-memory storage (like a dictionary) to store the to-do items.
+Assume the to-do items have unique IDs.
+Validate input when adding and updating tasks.
+Test Case 1: Add a To-Do Item
+Request:
+POST /todos{  "task": "Buy groceries"}
+Response:
+{"id": 1,"task": "Buy groceries","status": "pending" }
+Test Case 2: Update a To-Do Item
+Request:
+PUT /todos/1{  "status": "completed"}
+Response:
+{"id": 1,"task": "Buy groceries","status": "completed" }
+Test Case 3: Get All To-Do Items
+Request:
+GET /todos
+Response:
+[{"id": 1,"task": "Buy groceries","status": "completed"},{"id": 2,"task": "Walk the dog","status": "pending"} ]
+Test Case 4: Delete a To-Do Item
+Request:
+DELETE /todos/1
+Response:
+{"message": "Todo item deleted successfully" }
+
+SOLUTION
+=========
+
+#Model.py
+==========
+from django.db import models
+
+class Todos(models.Model):
+    task = models.CharField(max_length=255)
+    status = models.CharField(max_length=255, choices=[("Pending","Pending"),("Completed","Completed")], default = "Pending")
+    
+    def __str__(self):
+        return self.task
+		
+
+#Serializers.py
+================
+from rest_framework import serializers
+from .models import Todos
+
+class TodoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Todos
+        fields = ["id","task","status"]
+		
+		
+#views.py
+==========
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Todos
+from .serializers import TodoSerializer
+from django.shortcuts import get_object_or_404
+
+@api_view(["GET","POST"])
+def Todo_list(request):
+    if request.method == "GET":
+        todos = Todos.objects.all()
+        serializer = TodoSerializer(todos, many=True)
+        return Response(serializer.data)
+    elif request.method == "POST":
+        serializer = TodoSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(["GET","PUT","DELETE"])
+def Todo_detail(request):
+    todo = get_object_or_404(Todos, pk=pk)
+    if request.method == "GET":
+        todos = Todos.objects.all()
+        serializer = TodoSerializer(todo, many=True)
+        return Response(serializer.data)
+    elif request.method == "PUT":
+        serializer = TodoSerializer(todo,data=request.data, Partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == "DELETE":
+        todo.delete()
+        return Response({"message":"Todo item deleted successfully"},status=status.HTTP_204_NO_CONTENT)
+		
+
+#urls.py
+urlpatterns = [
+     path(todos/, views.Todos_list),
+     path(todos/<int:pk>, views.Todos_detail),
+    ]
