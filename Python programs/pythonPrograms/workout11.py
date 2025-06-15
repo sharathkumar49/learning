@@ -20,4 +20,4 @@ def generate_partitions(n, max_num=None, current_partition=None):
 # Example usage:
 # num = int(input("Enter a number to partition: "))
 num = 4
-generate_partitions(num)
+print("the partitions are:", generate_partitions(num))

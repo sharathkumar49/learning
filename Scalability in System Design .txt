@@ -1,0 +1,106 @@
+Scalability
+Scalability refers to a system’s ability to handle increasing workloads by adding resources. It is categorized into:
+- Horizontal Scaling (Scaling Out): Adding more machines or instances to distribute the load.
+- Vertical Scaling (Scaling Up): Increasing resources (CPU, RAM) on the existing machine.
+
+Example:  
+Imagine an e-commerce website experiencing a surge in users.  
+- Horizontal Scaling: Deploying additional application servers and distributing traffic using a Load Balancer like AWS ELB or Nginx.  
+- Vertical Scaling: Upgrading a single database server to increase memory capacity instead of adding more replicas.
+
+Load Balancing:  
+A load balancer evenly distributes incoming requests across multiple servers to prevent overload.  
+Example: An API gateway that routes requests to different microservices using a round-robin or least connections algorithm.
+
+
+
+Let’s dive deeper into scalability and system design concepts that are often discussed in interviews.
+
+
+
+1. Scalability & Its Challenges
+Scalability ensures that a system can handle increased workloads without performance degradation. Common challenges include:
+- Database Bottlenecks: As traffic grows, a single database may struggle to handle concurrent queries.
+- Network Latency: More servers mean increased communication overhead.
+- Caching Strategies: Efficient caching prevents excessive database queries.
+
+
+
+2. Scaling Strategies
+- Horizontal Scaling (Scale Out): Increases capacity by adding more machines. Requires distributed computing strategies like sharding and load balancing.
+- Vertical Scaling (Scale Up): Boosts hardware power (CPU, RAM) on existing machines. Simple but has hardware limits.
+
+💡 *Horizontal scaling is more flexible and commonly used for modern distributed systems.*
+
+
+
+3. Load Balancing
+Load balancers distribute traffic efficiently across multiple servers to prevent overload and maximize availability.
+
+Types of Load Balancers:
+- DNS Load Balancer: Uses DNS routing to distribute requests across multiple IP addresses.
+- Application Load Balancer (ALB): Distributes requests based on HTTP headers, cookies, or request paths.
+- Network Load Balancer (NLB): Works at TCP level, useful for handling high-throughput workloads.
+
+Load Balancing Algorithms:
+- Round-Robin: Requests are assigned sequentially to different servers.
+- Least Connections: Sends requests to servers with the fewest active connections.
+- Hash-Based Routing: Uses request parameters (like user ID) to consistently route requests to the same server.
+
+
+
+4. Caching Mechanisms
+Caching improves system performance by storing frequently accessed data in memory.
+
+Common Caching Strategies:
+- Write-through Cache: Writes data to cache and permanent storage simultaneously.
+- Read-through Cache: Fetches missing data from the database when needed.
+- Least Recently Used (LRU) Cache Eviction: Removes least accessed data when cache is full.
+
+Tools:
+- Redis & Memcached → In-memory caching solutions.
+- CDN (Content Delivery Network) → Distributes content closer to users to reduce latency.
+
+
+
+5. Database Scalability
+Scaling databases is critical for large systems.
+
+Strategies:
+- Replication: Creates multiple copies of a database for read-heavy applications.
+- Sharding: Splits a database into multiple smaller databases (shards) to distribute load.
+- Partitioning: Organizes data into different tables for better indexing and retrieval.
+
+Popular Solutions:
+- SQL Scaling: MySQL replication, PostgreSQL partitioning.
+- NoSQL Scaling: MongoDB sharding, Cassandra horizontal scaling.
+
+
+
+
+6. Microservices & API Gateways
+- Microservices Architecture: Breaks monolithic applications into independent services.
+- API Gateway: Acts as a single entry point to route requests and handle authentication, logging, and rate limiting.
+
+Example: Netflix uses a microservices model with an API Gateway like NGINX or AWS API Gateway.
+
+
+
+ 7. Event-Driven Architecture
+- Message Queues (Kafka, RabbitMQ): Enables asynchronous processing.
+- Pub-Sub Model: Decouples components with event streaming.
+
+
+
+Common System Design Interview Questions
+1. How would you design a scalable URL shortening service like Bit.ly?
+2. How do you ensure consistency in a distributed database?
+3. What caching strategy would you use for a high-traffic website?
+4. How does a Content Delivery Network (CDN) work?
+5. Explain the differences between Load Balancer vs. Reverse Proxy.
+6. How would you design a rate limiter for an API?
+7. What are the trade-offs between SQL and NoSQL for scalability?
+
+
+
+Would you like me to focus on any specific topic in more depth? 🚀

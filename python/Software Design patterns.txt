@@ -3,6 +3,208 @@
 
 software Design patterns:
 
+1. Creational Patterns (For object creation)
+These patterns deal with object instantiation mechanisms to create objects in a controlled manner.
+Singleton: Ensures only one instance of a class exists.
+Factory Method: Provides an interface for creating objects but lets subclasses decide the type.
+Abstract Factory: Creates families of related objects without specifying their concrete classes.
+Builder: Separates object construction from its representation for flexible creation.
+Prototype: Creates objects by copying an existing object instead of instantiating a new one.
+
+
+
+
+Creational design patterns manage object instantiation efficiently, ensuring flexibility and reducing complexity. Here’s a detailed explanation along with Python implementations for each pattern:
+
+1. Singleton Pattern  
+Ensures that only one instance of a class exists and provides a global access point to it.
+
+# Example:
+'''python
+class Singleton:
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
+# Test Singleton
+s1 = Singleton()
+s2 = Singleton()
+
+print(s1 is s2)  # True, both reference the same instance
+'''
+
+
+
+2. Factory Method Pattern  
+Defines an interface for creating objects but lets subclasses decide which class to instantiate.
+
+# Example:
+'''python
+from abc import ABC, abstractmethod
+
+class Animal(ABC):
+    @abstractmethod
+    def speak(self): pass
+
+class Dog(Animal):
+    def speak(self): return "Woof!"
+
+class Cat(Animal):
+    def speak(self): return "Meow!"
+
+class AnimalFactory:
+    @staticmethod
+    def get_animal(animal_type):
+        if animal_type == "dog":
+            return Dog()
+        elif animal_type == "cat":
+            return Cat()
+        else:
+            return None
+
+# Test Factory
+animal = AnimalFactory.get_animal("dog")
+print(animal.speak())  # Outputs: Woof!
+'''
+
+
+
+
+
+3. Abstract Factory Pattern  
+Used to create families of related objects without specifying their concrete classes.
+
+# Example:
+'''python
+from abc import ABC, abstractmethod
+
+# Abstract Product Interfaces
+class Chair(ABC):
+    @abstractmethod
+    def sit(self): pass
+
+class Table(ABC):
+    @abstractmethod
+    def use(self): pass
+
+# Concrete Products
+class ModernChair(Chair):
+    def sit(self): return "Sitting on a modern chair."
+
+class VictorianChair(Chair):
+    def sit(self): return "Sitting on a Victorian chair."
+
+class ModernTable(Table):
+    def use(self): return "Using a modern table."
+
+class VictorianTable(Table):
+    def use(self): return "Using a Victorian table."
+
+# Abstract Factory
+class FurnitureFactory(ABC):
+    @abstractmethod
+    def create_chair(self): pass
+    @abstractmethod
+    def create_table(self): pass
+
+# Concrete Factories
+class ModernFurnitureFactory(FurnitureFactory):
+    def create_chair(self): return ModernChair()
+    def create_table(self): return ModernTable()
+
+class VictorianFurnitureFactory(FurnitureFactory):
+    def create_chair(self): return VictorianChair()
+    def create_table(self): return VictorianTable()
+
+# Test Abstract Factory
+factory = ModernFurnitureFactory()
+chair = factory.create_chair()
+table = factory.create_table()
+
+print(chair.sit())  # Sitting on a modern chair.
+print(table.use())  # Using a modern table.
+'''
+
+
+
+4. Builder Pattern  
+Separates object construction from representation, allowing flexible object creation.
+
+# Example:
+'''python
+class Burger:
+    def __init__(self, size, cheese=False, pepperoni=False, lettuce=False):
+        self.size = size
+        self.cheese = cheese
+        self.pepperoni = pepperoni
+        self.lettuce = lettuce
+
+    def __str__(self):
+        return f"Burger(size={self.size}, cheese={self.cheese}, pepperoni={self.pepperoni}, lettuce={self.lettuce})"
+
+class BurgerBuilder:
+    def __init__(self, size):
+        self.burger = Burger(size)
+
+    def add_cheese(self):
+        self.burger.cheese = True
+        return self
+
+    def add_pepperoni(self):
+        self.burger.pepperoni = True
+        return self
+
+    def add_lettuce(self):
+        self.burger.lettuce = True
+        return self
+
+    def build(self):
+        return self.burger
+
+# Test Builder
+burger = BurgerBuilder(5).add_cheese().add_lettuce().build()
+print(burger)  # Burger(size=5, cheese=True, pepperoni=False, lettuce=True)
+'''
+
+
+
+5. Prototype Pattern  
+Creates objects by cloning an existing object instead of creating a new one from scratch.
+
+# Example:
+'''python
+import copy
+
+class Prototype:
+    def __init__(self, value):
+        self.value = value
+
+    def clone(self):
+        return copy.deepcopy(self)
+
+# Test Prototype
+p1 = Prototype(42)
+p2 = p1.clone()
+
+print(p1.value)  # 42
+print(p2.value)  # 42 (but it's a different instance)
+print(p1 is p2)  # False, they are separate objects
+'''
+
+
+These creational patterns enhance object management, reducing code duplication and increasing flexibility. Would you like more variations or real-world applications?
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
 2. Structural Patterns (For organizing classes and objects) These patterns simplify relationships between objects and improve code organization. 
 Adapter: Bridges two incompatible interfaces so they can work together. 
 Decorator: Adds functionality to objects dynamically without altering their structure. 
@@ -149,4 +351,270 @@ folder.add(file2)
 print(folder.show_details())  # Outputs ['File1.txt', 'File2.txt']
 
 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3. Behavioral Patterns (For communication between objects)
+These patterns manage interactions and responsibilities among objects.
+Observer: Notifies multiple dependent objects when the state of another object changes.
+Strategy: Encapsulates different algorithms that can be swapped interchangeably.
+Command: Encapsulates a request as an object for better command execution control.
+Mediator: Centralizes communication between objects to reduce dependencies.
+State: Allows an object to change behavior dynamically based on its internal state.
+Chain of Responsibility: Passes requests through a chain of handlers until one processes it.
+Memento: Saves an object's state to restore it later.
 
+
+
+
+
+Behavioral design patterns focus on how objects communicate and share responsibilities efficiently. Let's explore each pattern with a detailed explanation and Python implementation.
+
+
+
+1. Observer Pattern  
+The Observer pattern establishes a one-to-many relationship where multiple objects (observers) listen for changes in another object (subject).
+
+ Example:
+'''python
+class Subject:
+    def __init__(self):
+        self._observers = []
+
+    def attach(self, observer):
+        self._observers.append(observer)
+
+    def notify(self, message):
+        for observer in self._observers:
+            observer.update(message)
+
+class Observer:
+    def update(self, message):
+        print(f"Received update: {message}")
+
+# Test Observer
+subject = Subject()
+obs1 = Observer()
+obs2 = Observer()
+
+subject.attach(obs1)
+subject.attach(obs2)
+
+subject.notify("State changed!")  # Both observers receive the update
+'''
+
+
+
+
+
+2. Strategy Pattern  
+Encapsulates different algorithms in separate classes and allows them to be swapped dynamically.
+
+ Example:
+'''python
+from abc import ABC, abstractmethod
+
+class PaymentStrategy(ABC):
+    @abstractmethod
+    def pay(self, amount): pass
+
+class CreditCardPayment(PaymentStrategy):
+    def pay(self, amount): return f"Paid {amount} using Credit Card."
+
+class PayPalPayment(PaymentStrategy):
+    def pay(self, amount): return f"Paid {amount} using PayPal."
+
+class PaymentContext:
+    def __init__(self, strategy: PaymentStrategy):
+        self.strategy = strategy
+
+    def execute_payment(self, amount):
+        return self.strategy.pay(amount)
+
+# Test Strategy
+context = PaymentContext(CreditCardPayment())
+print(context.execute_payment(100))  # Paid 100 using Credit Card.
+'''
+
+
+
+
+
+
+3. Command Pattern  
+Encapsulates a request as an object, allowing better execution control and undo functionality.
+
+ Example:
+'''python
+class Command:
+    def execute(self): pass
+
+class LightOnCommand(Command):
+    def execute(self): return "Light is ON."
+
+class LightOffCommand(Command):
+    def execute(self): return "Light is OFF."
+
+class RemoteControl:
+    def __init__(self):
+        self.history = []
+
+    def press(self, command):
+        self.history.append(command)
+        return command.execute()
+
+# Test Command
+remote = RemoteControl()
+print(remote.press(LightOnCommand()))  # Light is ON.
+print(remote.press(LightOffCommand()))  # Light is OFF.
+'''
+
+
+
+
+
+4. Mediator Pattern  
+Centralizes communication between objects to reduce dependencies.
+
+ Example:
+'''python
+class Mediator:
+    def __init__(self):
+        self._users = []
+
+    def register(self, user):
+        self._users.append(user)
+
+    def send_message(self, message, sender):
+        for user in self._users:
+            if user != sender:
+                user.receive(message)
+
+class User:
+    def __init__(self, name, mediator):
+        self.name = name
+        self.mediator = mediator
+        mediator.register(self)
+
+    def send(self, message):
+        self.mediator.send_message(message, self)
+
+    def receive(self, message):
+        print(f"{self.name} received: {message}")
+
+# Test Mediator
+med = Mediator()
+user1 = User("Alice", med)
+user2 = User("Bob", med)
+
+user1.send("Hello, Bob!")  # Bob receives the message
+'''
+
+
+
+
+
+5. State Pattern  
+Allows an object to change behavior dynamically based on its internal state.
+
+ Example:
+'''python
+class State:
+    def handle(self): pass
+
+class HappyState(State):
+    def handle(self): return "I'm feeling happy!"
+
+class SadState(State):
+    def handle(self): return "I'm feeling sad."
+
+class Person:
+    def __init__(self, state: State):
+        self.state = state
+
+    def mood(self):
+        return self.state.handle()
+
+# Test State
+person = Person(HappyState())
+print(person.mood())  # I'm feeling happy!
+person.state = SadState()
+print(person.mood())  # I'm feeling sad.
+'''
+
+
+
+
+
+
+6. Chain of Responsibility Pattern  
+Passes requests through a chain of handlers until one can process them.
+
+ Example:
+'''python
+class Handler:
+    def __init__(self, successor=None):
+        self.successor = successor
+
+    def handle(self, request):
+        if self.successor:
+            return self.successor.handle(request)
+        return "Request unhandled"
+
+class ConcreteHandlerA(Handler):
+    def handle(self, request):
+        if request == "A":
+            return "Handled by A"
+        return super().handle(request)
+
+class ConcreteHandlerB(Handler):
+    def handle(self, request):
+        if request == "B":
+            return "Handled by B"
+        return super().handle(request)
+
+# Test Chain
+handler_chain = ConcreteHandlerA(ConcreteHandlerB())
+print(handler_chain.handle("B"))  # Handled by B
+print(handler_chain.handle("X"))  # Request unhandled
+'''
+
+
+
+
+
+7. Memento Pattern  
+Saves an object's state to restore it later.
+
+ Example:
+'''python
+class Memento:
+    def __init__(self, state):
+        self.state = state
+
+class Originator:
+    def __init__(self):
+        self.state = ""
+
+    def set_state(self, state):
+        self.state = state
+
+    def save_state(self):
+        return Memento(self.state)
+
+    def restore_state(self, memento):
+        self.state = memento.state
+
+# Test Memento
+originator = Originator()
+originator.set_state("State1")
+memento = originator.save_state()
+
+originator.set_state("State2")
+print(originator.state)  # State2
+
+originator.restore_state(memento)
+print(originator.state)  # Restored to State1
+'''
+
+
+
+These Behavioral design patterns effectively manage object interactions while promoting flexibility and maintainability. Do you need further clarifications or more practical examples?

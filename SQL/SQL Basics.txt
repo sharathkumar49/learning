@@ -1,0 +1,608 @@
+
+
+The SELECT TOP clause is used to specify the number of records to return.
+
+The SELECT TOP clause is useful on large tables with thousands of records. Returning a large number of records can impact performance.
+
+ExampleGet your own SQL Server
+Select only the first 3 records of the Customers table:
+
+SELECT TOP 3 * FROM Customers;
+
+SELECT * FROM Customers
+LIMIT 3;
+
+SELECT * FROM Customers
+FETCH FIRST 3 ROWS ONLY;
+
+SELECT TOP 50 PERCENT * FROM Customers;
+
+
+SQL INNER JOIN
+===============
+The INNER JOIN keyword selects records that have matching values in both tables.
+
+JOIN and INNER JOIN will return the same result.
+
+
+Sol:
+Let's look at a selection of the Products table:
+
+ProductID	ProductName	CategoryID	Price
+1	Chais	1	18
+2	Chang	1	19
+3	Aniseed Syrup	2	10
+
+And a selection of the Categories table:
+
+CategoryID	CategoryName	Description
+1	Beverages	Soft drinks, coffees, teas, beers, and ales
+2	Condiments	Sweet and savory sauces, relishes, spreads, and seasonings
+3	Confections	Desserts, candies, and sweet breads
+
+We will join the Products table with the Categories table, by using the CategoryID field from both tables:
+
+ExampleGet your own SQL Server
+Join Products and Categories with the INNER JOIN keyword:
+
+SELECT ProductID, ProductName, CategoryName
+FROM Products
+INNER JOIN Categories ON Products.CategoryID = Categories.CategoryID;
+
+
+SQL LEFT JOIN Keyword
+======================
+The LEFT JOIN keyword returns all records from the left table (table1), and the matching records from the right table (table2). The result is 0 records from the right side, if there is no match.
+
+SOL:
+SELECT column_name(s)
+FROM table1
+LEFT JOIN table2
+ON table1.column_name = table2.column_name;
+
+
+SQL RIGHT JOIN Keyword
+=======================
+The RIGHT JOIN keyword returns all records from the right table (table2), and the matching records from the left table (table1). The result is 0 records from the left side, if there is no match.
+
+SOl:
+SELECT column_name(s)
+FROM table1
+RIGHT JOIN table2
+ON table1.column_name = table2.column_name;
+
+
+SQL FULL OUTER JOIN Keyword
+============================
+The FULL OUTER JOIN keyword returns all records when there is a match in left (table1) or right (table2) table records.
+
+Tip: FULL OUTER JOIN and FULL JOIN are the same.
+
+Sol:
+SELECT column_name(s)
+FROM table1
+FULL OUTER JOIN table2
+ON table1.column_name = table2.column_name
+WHERE condition;
+
+
+SQL Self Join
+==============
+A self join is a regular join, but the table is joined with itself.
+
+Sol:
+SELECT column_name(s)
+FROM table1 T1, table1 T2
+WHERE condition;
+
+SELECT A.CustomerName AS CustomerName1, B.CustomerName AS CustomerName2, A.City
+FROM Customers A, Customers B
+WHERE A.CustomerID <> B.CustomerID
+AND A.City = B.City
+ORDER BY A.City;
+
+<> -> Not equal to
+
+
+
+The SQL UNION Operator
+========================
+The UNION operator is used to combine the result-set of two or more SELECT statements.
+
+Every SELECT statement within UNION must have the same number of columns
+The columns must also have similar data types
+The columns in every SELECT statement must also be in the same order
+UNION Syntax
+=============
+SELECT column_name(s) FROM table1
+UNION
+SELECT column_name(s) FROM table2;
+
+UNION ALL Syntax
+==================
+The UNION operator selects only distinct values by default. To allow duplicate values, use UNION ALL:
+
+SELECT column_name(s) FROM table1
+UNION ALL
+SELECT column_name(s) FROM table2;
+
+
+The SQL HAVING Clause
+=======================
+The HAVING clause was added to SQL because the WHERE keyword cannot be used with aggregate functions.
+
+HAVING Syntax
+==============
+SELECT column_name(s)
+FROM table_name
+WHERE condition
+GROUP BY column_name(s)
+HAVING condition
+ORDER BY column_name(s);
+
+
+The following SQL statement lists the number of customers in each country, sorted high to low (Only include countries with more than 5 customers):
+
+Example
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+HAVING COUNT(CustomerID) > 5
+ORDER BY COUNT(CustomerID) DESC;
+
+
+EXISTS
+=======
+The EXISTS operator is used to test for the existence of any record in a subquery.
+
+The EXISTS operator returns TRUE if the subquery returns one or more records.
+
+EXISTS Syntax
+---------------
+SELECT column_name(s)
+FROM table_name
+WHERE EXISTS
+(SELECT column_name FROM table_name WHERE condition);
+
+
+SELECT INTO 
+============
+The SELECT INTO statement copies data from one table into a new table.
+
+Copy all columns into a new table:
+
+SELECT *
+INTO newtable [IN externaldb]
+FROM oldtable
+WHERE condition;
+
+
+Creates a new table and copies data into it from an existing table.
+
+You do not need to create the destination table first.
+
+
+
+The SQL INSERT INTO SELECT Statement
+=====================================
+The INSERT INTO SELECT statement copies data from one table and inserts it into another table.
+
+The INSERT INTO SELECT statement requires that the data types in source and target tables match.
+
+Note: The existing records in the target table are unaffected.
+
+INSERT INTO SELECT Syntax
+Copy all columns from one table to another table:
+
+INSERT INTO table2
+SELECT * FROM table1
+WHERE condition;
+
+Inserts data into an existing table from another table.
+
+The destination table must already exist.
+
+
+The SQL CASE Expression
+========================
+The CASE expression goes through conditions and returns a value when the first condition is met (like an if-then-else statement). So, once a condition is true, it will stop reading and return the result. If no conditions are true, it returns the value in the ELSE clause.
+
+If there is no ELSE part and no conditions are true, it returns NULL.
+
+CASE Syntax
+CASE
+    WHEN condition1 THEN result1
+    WHEN condition2 THEN result2
+    WHEN conditionN THEN resultN
+    ELSE result
+END;
+
+
+1. What is SQL and what are its types?
+Answer:
+SQL (Structured Query Language) is used to communicate with databases.
+Types:
+
+DDL (Data Definition Language): CREATE, ALTER, DROP
+
+DML (Data Manipulation Language): INSERT, UPDATE, DELETE
+
+DQL (Data Query Language): SELECT
+
+TCL (Transaction Control Language): COMMIT, ROLLBACK, SAVEPOINT
+
+DCL (Data Control Language): GRANT, REVOKE
+
+2. What is the difference between WHERE and HAVING?
+Answer:
+
+WHERE filters rows before aggregation.
+
+HAVING filters after aggregation.
+Example:
+
+SELECT department, COUNT(*)  
+FROM employees  
+WHERE status = 'active'  
+GROUP BY department  
+HAVING COUNT(*) > 5;
+
+3. What is the difference between INNER JOIN and LEFT JOIN?
+Answer:
+
+INNER JOIN: returns matching rows from both tables.
+
+LEFT JOIN: returns all rows from the left table and matching rows from the right table; NULLs for non-matches.
+
+4. How do you find duplicate records in a table?
+Answer:
+
+SELECT name, COUNT(*)  
+FROM employees  
+GROUP BY name  
+HAVING COUNT(*) > 1;
+
+
+TO DELETE the duplicates
+=========================
+DELETE FROM Orders
+WHERE order_id NOT IN (
+    SELECT MIN(order_id)
+    FROM Orders
+    GROUP BY item, amount
+);
+
+
+5. Write a query to fetch the second highest salary from a table.
+Answer:
+
+SELECT MAX(salary)  
+FROM employees  
+WHERE salary < (SELECT MAX(salary) FROM employees);
+
+(OR)
+
+SELECT DISTINCT salary 
+FROM employees 
+ORDER BY salary DESC 
+LIMIT 1 OFFSET 1;
+
+
+6. What are constraints in SQL?
+Answer:
+Constraints enforce rules on data. Examples:
+
+NOT NULL – No NULLs allowed
+
+UNIQUE – Unique values only
+
+PRIMARY KEY – Uniquely identifies each row
+
+FOREIGN KEY – Enforces referential integrity
+
+CHECK – Ensures a condition is met
+
+7. What is the difference between DELETE, TRUNCATE, and DROP?
+Answer:
+
+DELETE: removes rows, can be rolled back.
+
+TRUNCATE: removes all rows, faster, cannot be rolled back in most cases.
+
+DROP: removes entire table structure and data.
+
+8. Explain GROUP BY with an example.
+Answer:
+
+SELECT department, COUNT(*)  
+FROM employees  
+GROUP BY department;
+
+This groups employees by department and returns the number in each.
+
+9. What is a primary key and a foreign key?
+Answer:
+
+Primary Key: uniquely identifies each row in a table.
+
+Foreign Key: a field that references a primary key in another table.
+
+10. What is indexing?
+Answer:
+Indexes speed up query performance by allowing quick data retrieval.
+Types:
+
+Clustered Index: sorts and stores data rows in order.
+
+Non-clustered Index: stores pointers to the data.
+
+
+11. Write a query to get department-wise average salary and filter those having avg salary > 50,000.
+Answer:
+
+SELECT department_id, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY department_id
+HAVING AVG(salary) > 50000;
+
+12. How does normalization work? What are the different normal forms?
+Answer:
+Normalization is the process of organizing data to reduce redundancy and improve integrity.
+Normal Forms:
+
+1NF: Eliminate repeating groups; ensure atomicity.
+
+2NF: Remove partial dependencies.
+
+3NF: Remove transitive dependencies.
+
+BCNF: Every determinant must be a candidate key.
+
+Higher forms: 4NF, 5NF for more complex cases.
+
+13. What is a correlated subquery?
+Answer:
+A correlated subquery is a subquery that uses values from the outer query. It runs once for each row selected by the outer query.
+Example:
+
+
+SELECT e1.name
+FROM employees e1
+WHERE salary > (
+  SELECT AVG(salary)
+  FROM employees e2
+  WHERE e1.department_id = e2.department_id
+);
+14. What is the use of COALESCE() and NULLIF()?
+Answer:
+
+COALESCE(a, b, c) returns the first non-null value among a, b, c.
+
+NULLIF(a, b) returns NULL if a = b; otherwise, returns a.
+
+15. Explain window functions with an example.
+Answer:
+Window functions perform calculations across a set of rows related to the current row.
+Example:
+
+SELECT name, department_id, salary,
+       RANK() OVER (PARTITION BY department_id ORDER BY salary DESC) AS rank
+FROM employees;
+
+16. What is a CTE (Common Table Expression)?
+Answer:
+A CTE is a temporary result set that can be referred to within a SELECT, INSERT, UPDATE, or DELETE statement.
+Example:
+
+WITH dept_avg AS (
+  SELECT department_id, AVG(salary) AS avg_sal
+  FROM employees
+  GROUP BY department_id
+)
+SELECT *
+FROM dept_avg
+WHERE avg_sal > 50000;
+
+17. Difference between UNION and UNION ALL.
+Answer:
+
+UNION: Removes duplicates between result sets.
+
+UNION ALL: Includes all duplicates.
+
+18. Write a query to transpose rows into columns.
+Answer (using CASE):
+
+SELECT
+  employee_id,
+  MAX(CASE WHEN month = 'Jan' THEN salary END) AS Jan,
+  MAX(CASE WHEN month = 'Feb' THEN salary END) AS Feb
+FROM salary_data
+GROUP BY employee_id;
+
+19. How do you optimize a slow-running SQL query?
+Answer:
+
+Use indexes on columns used in WHERE, JOIN, and ORDER BY.
+
+Avoid SELECT *.
+
+Use proper joins instead of subqueries where possible.
+
+Analyze query execution plan.
+
+Remove unnecessary sorting or grouping.
+
+20. Explain ACID properties in the context of SQL transactions.
+Answer:
+
+Atomicity: All operations in a transaction are completed or none.
+
+Consistency: Transaction must leave the DB in a valid state.
+
+Isolation: Transactions don’t interfere with each other.
+
+Durability: Committed changes are permanent even after a crash.
+
+21. Given a table of employee attendance, how would you calculate the number of working days per employee in a month?
+Answer:
+Assuming table attendance(emp_id, att_date, status) where status = 'Present':
+
+SELECT emp_id, COUNT(*) AS working_days
+FROM attendance
+WHERE status = 'Present'
+  AND att_date BETWEEN '2024-04-01' AND '2024-04-30'
+GROUP BY emp_id;
+
+
+Query to delete the duplicates from the table
+===============================================
+
+Earlier
+--------
+| id | name  | email                                         |
+| -- | ----- | --------------------------------------------- |
+| 1  | Alice | [alice@example.com](mailto:alice@example.com) |
+| 2  | Bob   | [bob@example.com](mailto:bob@example.com)     |
+| 3  | Alice | [alice@example.com](mailto:alice@example.com) |
+| 4  | Carol | [carol@example.com](mailto:carol@example.com) |
+| 5  | Bob   | [bob@example.com](mailto:bob@example.com)     |
+| 6  | Alice | [alice@example.com](mailto:alice@example.com) |
+
+
+SOLUTION
+=========
+
+DELETE FROM my_table
+WHERE id NOT IN (
+    SELECT MIN(id)
+    FROM my_table
+    GROUP BY name, email
+);
+
+
+After
+------
+| id | name  | email                                         |
+| -- | ----- | --------------------------------------------- |
+| 1  | Alice | [alice@example.com](mailto:alice@example.com) |
+| 2  | Bob   | [bob@example.com](mailto:bob@example.com)     |
+| 4  | Carol | [carol@example.com](mailto:carol@example.com) |
+
+
+
+->COUNT(*) — Counts All Rows
+Counts every row, regardless of NULLs.
+
+Includes rows where all columns might be NULL.
+
+
+SELECT COUNT(*) FROM Orders;
+→ Returns the total number of rows in the table.
+
+->COUNT(column_name) — Counts Non-NULL Values Only
+Counts only the rows where the specified column is NOT NULL.
+
+Ignores rows where column_name is NULL.
+
+
+SELECT COUNT(customer_id) FROM Orders;
+→ Returns the number of rows where customer_id is not NULL.
+
+
+✅ CHAR(n) — Fixed-Length Character String
+Always uses exactly n characters.
+
+If the string is shorter than n, it's padded with spaces on the right.
+
+Slightly faster for fixed-length data (like country codes: US, IN, UK).
+
+sql
+Copy
+Edit
+CHAR(5)
+-- 'abc' is stored as 'abc  '
+✅ VARCHAR(n) — Variable-Length Character String
+Stores strings up to n characters, but only uses as much space as needed.
+
+No padding is added.
+
+More space-efficient for strings of varying length.
+
+sql
+Copy
+Edit
+VARCHAR(5)
+-- 'abc' is stored as 'abc'
+
+
+=======================================================================
+
+Write a query to find employees who earn more than the average salary.
+
+SOL:
+SELECT name
+FROM employees
+WHERE salary > (
+    SELECT AVG(salary)
+    FROM Employees
+);
+
+
+=======================================================================
+How do you get a list of duplicate records from a table?
+
+SOL:
+SELECT name, COUNT(*)
+FROM Employees
+GROUP BY name
+HAVING COUNT(*) > 1;
+
+=======================================================================
+What is the purpose of CASE statements in SQL? Provide an example.
+
+The CASE statement in SQL is used to implement conditional logic directly in SQL queries. It allows you to create conditional expressions that can be used to return different values depending on certain conditions, similar to if-else logic in programming languages.
+
+SOL:
+SELECT name, salary,
+       CASE
+           WHEN salary < 50000 THEN 'Low Salary'
+           WHEN salary BETWEEN 50000 AND 100000 THEN 'Medium Salary'
+           WHEN salary > 100000 THEN 'High Salary'
+           ELSE 'Unknown'
+       END AS salary_category
+FROM Employees;
+
+OUTPUT:
+| name        | salary | salary\_category |
+| ----------- | ------ | ---------------- |
+| Alice Brown | 50000  | Medium Salary    |
+| Bob Smith   | 75000  | Medium Salary    |
+| Carol Jones | 65000  | Medium Salary    |
+| David Green | 120000 | High Salary      |
+| Eva Wilson  | 40000  | Low Salary       |
+
+=======================================================================
+
+
+
+
+
+a={1:1,2:{3:4,5:6,7:[1,2,3,{5:6},{7:8,8:["test"]}]}}
+
+def square(num):
+    for i in num:
+        print(i)
+
+square(a)
+
+
+
+a=[1,2,3,4,5,[1,2,3,[6,7,8,9,[2,3,4,[5,6,["test"] ] ] ] ] ]
+
+print(a[5][3][4][3][2])
+
+
+a={1:1,2:{3:4,5:6,7:[1,2,3,{5:6},{7:8,8:["test"]}]} }
+
+print(a[2][7][4][8])

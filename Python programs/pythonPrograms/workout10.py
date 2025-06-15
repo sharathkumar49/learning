@@ -1,23 +1,28 @@
-class Singleton:
-    _instance = None
+def find_partitions(n):
+    result = []
 
-    def __new__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = super(Singleton, cls).__new__(cls)
-        return cls._instance
+    def helper(remaining, current, max_num):
+        print("calling helper function")
+        print("Remaining:", remaining, "Current:", current, "Max Num:", max_num)
+        if remaining == 0:
+            result.append(current[:])  # Store valid partition
+            print("result: ", result)
+            return
 
-    def __init__(self, value):
-        print("its coming here")
-        self.value = value
+        for i in range(min(remaining, max_num), 0, -1):  # Choose decreasing numbers
+            print("\n\nfor loop i: ", i)
+            current.append(i)
+            print("current after append: ", current)
+            print("calling helper function with:", remaining - i, current, i)
+            helper(remaining - i, current, i)  # Reduce remaining sum
+            current.pop()  # Undo last step (backtrack)
 
-# Usage
-obj1 = Singleton(10)
-obj2 = Singleton(20)
+    helper(n, [], n)  # Start recursion
+    return result
 
-print(obj1.value)  # Output: 20
-print(obj2.value)  # Output: 20
+# Example Usage
+num = 5
+print(find_partitions(num))
 
-print(id(obj1))
-print(id(obj2))
 
     

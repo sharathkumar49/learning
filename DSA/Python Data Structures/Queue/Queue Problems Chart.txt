@@ -1,0 +1,94 @@
+
+📊 Visual Tier List by Difficulty:
+
+🟢 Beginner  
+- First Non-Repeating Character in Stream  
+- Generate Binary Numbers  
+- Level Order Traversal (Binary Tree)  
+- Interleave Two Halves of a Queue  
+- Stack using Queues / Queue using Stacks  
+- Reverse First K Elements of a Queue  
+- Print First N Numbers (only 5 and 6)
+
+🟡 Intermediate  
+- Sliding Window Maximum  
+- Rotten Oranges (Multi-source BFS)  
+- Circular Tour (Petrol Pump Problem)  
+- Maximum of All Subarrays of Size K  
+- Sum of Min & Max of Subarrays Size K  
+- LRU Cache (Deque + HashMap)  
+- Course Schedule (BFS / Kahn’s Algo)  
+- Design Hit Counter / Rate Limiter  
+- Celebrity Problem (Queue Trick)
+
+🔴 Advanced  
+- Jump Game II (Min Jumps BFS)  
+- Knight's Shortest Path (BFS on Grid)  
+- Shortest Path in Binary Matrix (0-1 BFS)  
+- Implement Front-Middle-Back Queue  
+- Snake & Ladder Min Dice Throws (Multi-level BFS)  
+- Flood Fill (BFS Variation)  
+- Spiral / Reverse Level Order Traversals
+
+
+
+
+
+🧠 Grouped by Queue Techniques
+
+1. Sliding Window + Deque Optimization  
+- Sliding Window Maximum  
+- Maximum of All Subarrays of Size K  
+- Sum of Min & Max of Subarrays
+
+2. Multi-Source BFS / Grid Navigation  
+- Rotten Oranges  
+- Shortest Path in Binary Matrix  
+- Flood Fill  
+- Knight's Shortest Path  
+- Snake & Ladder Min Dice Throws
+
+3. Topological Sort & Scheduling  
+- Course Schedule (Kahn’s Algo)  
+- Task Scheduling Queue  
+- Job Queues / Printer Spooler
+
+4. Queue Simulation Problems  
+- Circular Tour  
+- Bank Queue Simulation  
+- Car Wash Queue  
+- Supermarket Checkout Queue  
+- Restaurant Waiting List  
+- Theme Park Ride Queue  
+- Ticket Counter Queue  
+- Emergency Room Queue  
+- Call Center Queue  
+- Hot Potato (Josephus Variant)
+
+5. Frequency & Stream Processing  
+- First Non-Repeating Character  
+- Hit Counter / Rate Limiter  
+- Print First N Numbers (5 and 6 only)
+
+6. Design Problems / Queue Variants  
+- LRU Cache (Queue + Map)  
+- Front-Middle-Back Queue  
+- Fixed Deque  
+- K Queues in Array  
+- Max Queue / Stack with Min using Queues
+
+7. Classic Implementations  
+- Stack using Queues  
+- Queue using Stacks  
+- Queue using LinkedList  
+- Reverse First K Elements  
+- Interleave Queue
+
+8. Traversals using Queues  
+- Binary Tree Level Order  
+- Reverse Level Order  
+- Spiral Level Order  
+- Binary Tree Zigzag (if you extend)
+
+
+

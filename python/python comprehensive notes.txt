@@ -1,0 +1,2510 @@
+
+Let's start with Shallow Copy vs. Deep Copy—a concept that's crucial for understanding Python's memory management and how objects behave when copied.
+
+
+
+Shallow Copy vs. Deep Copy in Python:
+When working with lists, dictionaries, or other complex data structures, copying them correctly is crucial to avoid unintended modifications. Python offers shallow copies and deep copies, and knowing the difference between them can save you from frustrating bugs.
+
+1. Shallow Copy:
+A shallow copy creates a new object, but does not create copies of nested objects inside it. Instead, it copies references to the original nested objects, meaning changes to a mutable nested object will reflect in both the original and the copy.
+
+
+How to create a shallow copy?
+1. Using '.copy()' method:
+   '''python
+   original_list = [[1, 2], [3, 4]]
+   shallow_copy = original_list.copy()
+
+   shallow_copy[0][0] = 99
+   print(original_list)  # Output: [[99, 2], [3, 4]]  (Original modified!)
+   '''
+
+2. Using 'copy' module:
+   '''python
+   import copy
+   shallow_copy = copy.copy(original_list)
+   '''
+
+
+Characteristics of a shallow copy:
+- The outer container (list, dict, set, etc.) is copied, but nested mutable objects are still linked to the original.
+- Changes to mutable elements inside the copied object affect the original.
+- Ideal for copying one-level structures, like a simple list of integers.
+
+
+
+
+2. Deep Copy
+A deep copy creates a completely independent copy, including all nested objects. This means that changes made to any part of the copy do not affect the original object.
+
+How to create a deep copy?
+Using Python’s 'copy.deepcopy()' function:
+'''python
+import copy
+original_list = [[1, 2], [3, 4]]
+deep_copy = copy.deepcopy(original_list)
+
+deep_copy[0][0] = 99
+print(original_list)  # Output: [[1, 2], [3, 4]]  (Original remains unchanged!)
+'''
+
+
+
+Characteristics of a deep copy:
+- Creates a full independent replica of the entire object.
+- Changes in the copy do not affect the original.
+- Useful when dealing with complex data structures that include mutable objects.
+
+
+
+Key Differences:
+
+| Feature                    | Shallow Copy              | Deep Copy                       |
+|----------------------------|---------------------------|---------------------------------|
+| Copies Outer Object?       | ✅ Yes                    | ✅ Yes                           |
+| Copies Nested Objects?     | ❌ No (references remain) | ✅ Yes (new independent objects) |
+| Mutations affect original? | ✅ Yes                    | ❌ No                            |
+| Performance                | 🚀 Faster                 | 🐢 Slower                        |
+
+
+
+When to Use What?
+✅ Use Shallow Copy when:  
+- You're dealing with simple lists or structures without nested mutable objects.
+- You want to retain a connection between the original and copied object (useful in cases where changes in one should reflect in the other).
+
+✅ Use Deep Copy when:  
+- You need a truly independent copy.
+- You are working with complex nested structures like lists of dictionaries, nested lists, or deeply interconnected objects.
+
+
+
+
+Shallow and deep copying can make or break your code, especially when handling large datasets or mutable objects. Understanding when to use which can prevent unexpected bugs and performance slowdowns.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Python Context Managers ('with' Statement)
+Context managers are used to properly manage resources like file handling, database connections, and network sockets by ensuring proper acquisition and cleanup. The most common way to use a context manager is with the 'with' statement.
+
+1. Why Use Context Managers?
+- Automatic resource management: Ensures that resources like files, database connections, and network sockets are properly opened and closed.
+- Prevents memory leaks: Helps avoid issues caused by forgetting to close files or connections.
+- Simplifies error handling: Exception-safe cleanup ensures proper resource deallocation even if an error occurs.
+
+
+
+2. Using Built-in Context Managers
+Python provides built-in context managers for several tasks. The most common one is file handling.
+
+'''python
+with open("example.txt", "w") as file:
+    file.write("Hello, Python!")
+
+No need to explicitly call file.close(), it's done automatically.
+'''
+
+How It Works?
+- 'open("example.txt", "w")' creates a file object.
+- 'with' ensures 'file.close()' is automatically called after exiting the block.
+
+
+Another example is handling database connections:
+'''python
+import sqlite3
+
+with sqlite3.connect("example.db") as conn:
+    cursor = conn.cursor()
+    cursor.execute("CREATE TABLE users (id INTEGER, name TEXT)")
+'''
+Here, 'conn.close()' is automatically called when the 'with' block exits.
+
+
+
+3. Creating Custom Context Managers
+Python allows you to create custom context managers using:
+1. Class-based approach ('__enter__' and '__exit__')
+2. Generator-based approach ('contextlib.contextmanager')
+
+Method 1: Using '__enter__' and '__exit__'
+You can define your own context manager by implementing the special methods:
+- '__enter__()': Defines what happens when entering the context.
+- '__exit__()': Defines cleanup tasks when exiting the context.
+
+'''python
+class MyContext:
+    def __enter__(self):
+        print("Entering the context...")
+        return self  # Optional object return
+    
+    def __exit__(self, exc_type, exc_value, traceback):
+        print("Exiting the context... Cleanup!")
+
+# Using the context manager
+with MyContext():
+    print("Inside the context block.")
+
+# Output:
+# Entering the context...
+# Inside the context block.
+# Exiting the context... Cleanup!
+'''
+
+✅ The '__exit__' method ensures cleanup happens no matter what!
+
+
+
+Method 2: Using 'contextlib.contextmanager'
+Python’s 'contextlib' module simplifies context manager creation using generators.
+
+'''python
+from contextlib import contextmanager
+
+@contextmanager
+def my_context():
+    print("Setup before entering the block.")
+    yield  # Execution pauses here and resumes after exiting the block.
+    print("Cleanup after exiting the block.")
+
+with my_context():
+    print("Inside the block")
+
+# Output:
+# Setup before entering the block.
+# Inside the block
+# Cleanup after exiting the block.
+
+
+🔹 'yield' helps pause execution and resumes once the block exits.
+
+
+
+
+4. Common Use Cases
+✔ File Handling: 'open()'
+✔ Database Management: 'sqlite3.connect()'
+✔ Thread Locks: 'threading.Lock()'
+✔ Temporary Files: 'tempfile.NamedTemporaryFile()'
+✔ Network Connections: 'socket.create_connection()'
+
+Context managers ensure efficient resource handling and prevent issues caused by forgetting to close objects!
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Python Metaclasses: Understanding Class Creation
+Metaclasses control how classes themselves are created in Python. Just like classes define objects, metaclasses define class behavior. Essentially, a metaclass is the “class of a class.”
+
+🔹 Think of it this way:  
+- Instance → Created by a Class
+- Class → Created by a Metaclass
+
+By defining a custom metaclass, we can modify how classes behave at the time of their creation.
+
+
+
+1. Why Use Metaclasses?
+✅ Enforce coding standards or structure across multiple classes  
+✅ Modify class attributes dynamically  
+✅ Add custom behavior to class instantiation  
+✅ Automatically register new classes for frameworks  
+
+Metaclasses are commonly used in ORMs, frameworks, and dependency injection systems.
+
+
+
+2. Basic Metaclass Example
+By default, Python uses 'type' as the built-in metaclass to create new classes.
+
+ Basic Class Creation Using 'type'
+'''python
+# Normally, we define a class like this:
+class MyClass:
+    pass
+
+# But behind the scenes, Python does something like this:
+MyClass = type("MyClass", (), {})  # Equivalent to defining a class normally
+'''
+
+Here, 'type(name, bases, dict)' does the following:
+1. Creates a class named '"MyClass"'
+2. Inherits from 'bases' (empty in this case)
+3. Defines attributes in 'dict' (also empty)
+
+
+
+
+3. Creating a Custom Metaclass
+A metaclass is just a class that inherits from 'type'.
+
+'''python
+class MyMeta(type):
+    def __new__(cls, name, bases, attrs):
+        print(f"Creating class: {name}")
+        attrs["custom_attribute"] = "Added by metaclass"
+        return super().__new__(cls, name, bases, attrs)
+
+# Using the metaclass
+class MyClass(metaclass=MyMeta):
+    pass
+
+print(MyClass.custom_attribute)  # Output: Added by metaclass
+'''
+
+🔹 How It Works?  
+- '__new__' in the metaclass modifies class attributes before class creation.
+- The custom attribute '"custom_attribute"' is automatically added to 'MyClass'.
+
+
+
+
+
+4. '__new__' vs '__init__' in Metaclasses
+Metaclasses modify class creation, but why use '__new__' and not '__init__'?
+
+| Method | Purpose | Used In |
+|--------|---------|---------|
+| '__new__' | Creates a new object | Metaclasses |
+| '__init__' | Initializes an object | Regular classes |
+
+Since metaclasses control class creation, we override '__new__', not '__init__'.
+
+
+
+
+
+5. Practical Use Cases
+ ✅ Automatically Register Subclasses
+Frameworks often use metaclasses to register new classes dynamically.
+
+'''python
+class RegistryMeta(type):
+    registry = {}
+
+    def __new__(cls, name, bases, attrs):
+        cls.registry[name] = attrs
+        return super().__new__(cls, name, bases, attrs)
+
+class User(metaclass=RegistryMeta):
+    pass
+
+print(RegistryMeta.registry)  # Output: {'User': {...}}
+'''
+📌 Now, every class using 'RegistryMeta' automatically registers itself!
+
+
+
+
+
+6. When Should You Use Metaclasses?
+✅ When you need dynamic class modifications.  
+✅ When you’re building frameworks or libraries that create many classes dynamically.  
+✅ When enforcing common behaviors across multiple classes (like auto-registering).  
+
+🚫 Avoid them for simple programs—metaclasses add complexity and should only be used when absolutely necessary.
+
+
+
+Python metaclasses are powerful tools for modifying class behavior at creation time, making them essential for framework development, automatic class registration, and enforcing standards.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Monkey Patching in Python
+Monkey patching refers to dynamically modifying or extending modules or classes at runtime. It allows developers to alter or replace methods without modifying the original source code. While this can be useful, it should be used cautiously, as it can make debugging more difficult.
+
+
+
+1. Why Use Monkey Patching?
+✅ Fix issues in third-party libraries without modifying the original code.  
+✅ Alter behavior of classes/modules dynamically.  
+✅ Enable hotfixes in production without waiting for a new release.  
+
+🚫 Potential risks:  
+- Can lead to unintended side effects, breaking code elsewhere.  
+- Makes debugging difficult as the original function is silently overridden.  
+- Can be fragile and incompatible with future updates of the patched module.  
+
+
+
+
+2. Basic Example of Monkey Patching
+Suppose we have a class 'Animal' with a method 'speak()', but we want to override it dynamically.
+
+'''python
+class Animal:
+    def speak(self):
+        return "I make a sound"
+
+# Monkey Patching: Changing behavior at runtime
+def new_speak():
+    return "I now say something else!"
+
+Animal.speak = new_speak  # Overriding the method
+
+print(Animal().speak())  # Output: I now say something else!
+'''
+
+Here, instead of modifying the 'Animal' class directly, we replaced its 'speak()' method at runtime.
+
+
+
+
+
+3. Monkey Patching Standard Library Functions
+Python allows modifying even built-in modules! Let's patch the 'datetime' module:
+
+'''python
+import datetime
+
+# Original method
+print(datetime.datetime.now())  # Returns current time
+
+# Monkey patch to make it return a fixed time
+def fake_now():
+    return datetime.datetime(2000, 1, 1)
+
+datetime.datetime.now = fake_now  # Overriding now()
+
+print(datetime.datetime.now())  # Output: 2000-01-01 00:00:00
+'''
+
+📌 This technique is useful for testing, but be careful when modifying standard modules!
+
+
+
+4. Monkey Patching in Unit Testing
+A common use case is overriding functions temporarily during testing.
+
+'''python
+import time
+
+# Original function
+def slow_function():
+    time.sleep(5)
+    return "Done"
+
+# Monkey patch for testing
+def fast_function():
+    return "Instant"
+
+time.sleep = fast_function  # Avoids real delay in tests
+
+print(slow_function())  # Output: Instant
+'''
+
+🚀 This helps avoid long execution times in test cases!
+
+
+
+
+5. Best Practices for Monkey Patching
+✅ Use monkey patching only when necessary—prefer modifying the actual code if possible.  
+✅ Limit scope—patch only where needed, avoiding global patches.  
+✅ Document patches clearly so others understand why they exist.  
+✅ Consider alternatives, such as subclassing or dependency injection.  
+✅ Use 'unittest.mock.patch' for testing rather than manual monkey patches.
+
+
+
+Monkey patching is a powerful tool, but it should be used carefully to avoid unintended consequences. It’s best reserved for testing, debugging, or modifying behavior when no other alternatives exist.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Great! Let’s explore Python Garbage Collection, an essential concept for memory management in Python.
+
+
+
+Python Garbage Collection: Managing Memory Efficiently
+Garbage collection in Python helps automatically reclaim unused memory, preventing memory leaks and optimizing performance. Python has built-in garbage collection, primarily managed by reference counting and the garbage collector module ('gc').
+
+
+
+1. How Python Manages Memory?
+Python uses automatic memory management, relying on:
+✅ Reference Counting  
+✅ Garbage Collector ('gc' module)  
+
+# Reference Counting
+Every Python object maintains a reference count—the number of variables pointing to it. When this count drops to zero, Python automatically deletes the object.
+
+'''python
+import sys
+
+a = [1, 2, 3]
+print(sys.getrefcount(a))  # Output: Reference count (typically 2 due to internal checks)
+
+b = a  # Another reference to the same object
+print(sys.getrefcount(a))  # Increased reference count
+
+del b  # Removing one reference
+print(sys.getrefcount(a))  # Count decreases
+
+a = None  # Now reference count becomes zero, and memory is freed
+'''
+
+📌 When an object’s reference count reaches zero, Python automatically deletes it.
+
+
+
+
+2. Issues with Reference Counting
+Reference counting fails in cases of circular references.
+
+'''python
+class Node:
+    def __init__(self, name):
+        self.name = name
+        self.ref = None  # Circular reference possible
+
+a = Node("A")
+b = Node("B")
+
+a.ref = b  # 'a' references 'b'
+b.ref = a  # 'b' references 'a' (circular reference)
+'''
+🚨 Here, 'a' and 'b' reference each other, preventing their reference count from dropping to zero. This means Python won’t automatically free memory.
+
+
+
+
+
+3. Python’s Garbage Collector ('gc' module)
+Python’s garbage collector handles such cases using generational garbage collection.
+
+# How Generational Garbage Collection Works?
+Python groups objects into three generations:
+- Gen 0 (youngest, frequent cleanup)
+- Gen 1 (mid-aged, less frequent cleanup)
+- Gen 2 (oldest, rarely cleaned)
+
+🚀 Objects that survive multiple garbage collection cycles move to older generations.  
+
+
+
+
+
+4. Controlling Garbage Collection in Python
+The 'gc' module lets you manually manage garbage collection.
+
+# Checking and Disabling Garbage Collection
+'''python
+import gc
+
+print(gc.isenabled())  # Check if garbage collection is active
+gc.disable()           # Disable garbage collection
+print(gc.isenabled())  # False
+gc.enable()            # Re-enable garbage collection
+'''
+
+# Manually Triggering Garbage Collection
+'''python
+gc.collect()  # Force garbage collection
+'''
+
+🚀 Useful when dealing with large objects or debugging memory leaks.
+
+
+
+
+
+5. Best Practices for Managing Memory
+✅ Use 'del' to explicitly delete objects no longer needed.  
+✅ Reduce unnecessary references to objects.  
+✅ Avoid circular references—use weak references ('weakref' module) where needed.  
+✅ Use 'gc.collect()' sparingly, as frequent calls may slow down execution.  
+
+
+
+Python’s garbage collection system ensures efficient memory management, but understanding when and how it works helps optimize performance. 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+1. First-Class Functions
+In Python, functions are treated as first-class citizens, meaning they can:
+✅ Be assigned to variables  
+✅ Be passed as arguments to other functions  
+✅ Be returned from functions  
+
+
+Example: Assigning Functions to Variables
+'''python
+def greet(name):
+    return f"Hello, {name}!"
+
+Assigning function to a variable
+hello_func = greet
+print(hello_func("Sharath"))  # Output: Hello, Sharath!
+
+
+Passing Functions as Arguments
+'''python
+def uppercase(text):
+    return text.upper()
+
+def process_text(func, text):
+    return func(text)
+
+print(process_text(uppercase, "hello"))  # Output: HELLO
+
+
+Returning Functions from Other Functions
+'''python
+def multiplier(n):
+    def multiply(x):
+        return x * n
+    return multiply
+
+double = multiplier(2)  # double(x) = x * 2
+print(double(5))  # Output: 10
+'''
+
+🟢 Key Benefits: Enables higher-order functions, callbacks, and functional programming patterns.
+
+
+
+
+
+2. Closures
+Closures occur when an inner function remembers variables from its enclosing function even after the outer function has finished execution.
+
+# Example of a Closure
+'''python
+def make_multiplier(n):
+    def multiplier(x):
+        return x * n  # Retains access to 'n'
+    return multiplier
+
+tripler = make_multiplier(3)
+print(tripler(4))  # Output: 12
+'''
+🚀 Here, 'multiplier(x)' retains access to 'n', even after 'make_multiplier(n)' has executed.
+
+# Real-World Use Case
+Closures are useful for:
+- Encapsulating logic without global variables.
+- Function decorators (next section).
+- Creating configurable functions dynamically.
+
+
+
+
+
+3. Decorators
+A decorator is a function that modifies another function without changing its code.
+
+# Basic Decorator Example
+'''python
+def decorator_func(func):
+    def wrapper():
+        print("Before function call")
+        func()
+        print("After function call")
+    return wrapper
+
+@decorator_func  # Applying decorator
+def say_hello():
+    print("Hello, World!")
+
+say_hello()
+'''
+📌 Output:
+'''
+Before function call
+Hello, World!
+After function call
+'''
+
+The 'wrapper()' adds behavior before and after the original function.
+
+# Decorators with Arguments
+'''python
+def repeat(n):
+    def decorator(func):
+        def wrapper(*args, kwargs):
+            for _ in range(n):
+                func(*args, kwargs)
+        return wrapper
+    return decorator
+
+@repeat(3)  # Calls function 3 times
+def greet():
+    print("Hello!")
+
+greet()
+'''
+🛠 Key Benefits of Decorators:  
+✔ Logging, authentication, and validation  
+✔ Timing function execution  
+✔ Automatically modifying functions dynamically  
+
+
+
+Python's first-class functions, closures, and decorators are fundamental for efficient, modular, and reusable code. 
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+1. What is the 'collections' Module?
+Python’s 'collections' module provides alternatives to standard data types like lists, tuples, and dictionaries, improving performance and usability. Some key types in 'collections' include:
+✅ Counter – Counting hashable objects  
+✅ DefaultDict – Dictionary with automatic default values  
+✅ OrderedDict – Dictionary that maintains order  
+✅ deque – Optimized list-like object  
+✅ NamedTuple – Tuple with named fields  
+
+These structures extend Python’s built-in functionality, making certain tasks more efficient.
+
+
+
+
+2. 'Counter': Counting Elements Efficiently
+'Counter' is used for counting occurrences in an iterable.
+
+# Example: Counting Characters in a String
+'''python
+from collections import Counter
+
+text = "banana"
+count = Counter(text)
+print(count)  # Output: Counter({'a': 3, 'n': 2, 'b': 1})
+'''
+📌 'Counter' automatically counts repeated elements.
+
+# Counting Words in a List
+'''python
+words = ["apple", "banana", "apple", "orange", "banana", "banana"]
+word_count = Counter(words)
+print(word_count)  # Output: Counter({'banana': 3, 'apple': 2, 'orange': 1})
+'''
+
+✔ Useful for: Word frequency analysis, inventory tracking, histograms.
+
+
+
+
+
+3. 'defaultdict': Avoiding Key Errors
+'defaultdict' is like a dictionary, but provides default values for missing keys.
+
+# Example: Handling Missing Keys
+'''python
+from collections import defaultdict
+
+# Default value is an empty list
+data = defaultdict(list)
+data["fruits"].append("apple")
+data["fruits"].append("banana")
+
+print(data["fruits"])  # Output: ['apple', 'banana']
+print(data["vegetables"])  # Output: [] (no KeyError!)
+'''
+
+✔ Useful for: Grouping data, setting default values automatically.
+
+
+
+
+4. 'OrderedDict': Maintaining Insertion Order
+In Python 3.7+, standard dictionaries maintain order, but 'OrderedDict' ensures consistent ordering across all versions.
+
+# Example: Ordered Dictionary
+'''python
+from collections import OrderedDict
+
+ordered_dict = OrderedDict()
+ordered_dict["first"] = 1
+ordered_dict["second"] = 2
+ordered_dict["third"] = 3
+
+print(ordered_dict)  # Output: OrderedDict([('first', 1), ('second', 2), ('third', 3)])
+'''
+
+✔ Useful for: Maintaining ordered data structures, serialization.
+
+
+
+
+
+5. 'deque': Fast Append and Pop
+'deque' (double-ended queue) is a list-like structure optimized for fast appends/removals from both ends.
+
+# Example: Efficient Queue Operations
+'''python
+from collections import deque
+
+queue = deque(["Alice", "Bob", "Charlie"])
+queue.append("Dave")  # Fast append
+queue.popleft()  # Removes from the left (first element)
+
+print(queue)  # Output: deque(['Bob', 'Charlie', 'Dave'])
+'''
+
+✔ Useful for: FIFO queues, fast stack operations.
+
+
+
+
+6. 'namedtuple': Creating Readable Tuples
+'namedtuple' creates tuples with named fields, making them more readable.
+
+# Example: Using 'namedtuple'
+'''python
+from collections import namedtuple
+
+Point = namedtuple("Point", ["x", "y"])
+p = Point(10, 20)
+
+print(p.x, p.y)  # Output: 10 20
+print(p)  # Output: Point(x=10, y=20)
+'''
+
+✔ Useful for: Structuring data like database records or configurations.
+
+
+
+
+
+7. When to Use 'collections' Types?
+✅ Use 'Counter' for fast frequency counting  
+✅ Use 'defaultdict' to handle missing dictionary keys automatically  
+✅ Use 'OrderedDict' for maintaining consistent order  
+✅ Use 'deque' for efficient queue operations  
+✅ Use 'namedtuple' for readable, structured tuples  
+
+Python’s 'collections' module makes data structures more efficient and readable. 
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Let's delve into Python’s Global, Private, and Protected Attributes, an important aspect of encapsulation in object-oriented programming.
+
+
+1. Understanding Attribute Visibility in Python
+Python allows different levels of access control for class attributes:
+✅ Public – Accessible anywhere.  
+✅ Protected ('_single_underscore') – Suggests restricted access.  
+✅ Private ('__double_underscore') – Restricted inside the class.  
+
+Python does not enforce strict access control like C++ or Java. Instead, naming conventions guide developers.
+
+
+
+2. Public Attributes (Default Visibility)
+Public attributes can be freely accessed from anywhere.
+
+# Example: Public Attributes
+'''python
+class Person:
+    def __init__(self, name):
+        self.name = name  # Public attribute
+
+p = Person("Sharath")
+print(p.name)  # Output: Sharath (Accessible anywhere)
+'''
+
+📌 Public attributes have no access restrictions.
+
+
+
+3. Protected Attributes ('_underscore')
+A protected attribute is not strictly private, but signals that it should not be modified outside the class or subclasses.
+
+# Example: Protected Attribute
+'''python
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self._age = age  # Protected attribute
+
+p = Person("Sharath", 25)
+print(p._age)  # Output: 25 (Accessible, but not recommended)
+'''
+
+🔹 Convention: '_age' tells other developers not to modify it directly.
+
+🔹 Subclasses can still access protected attributes:
+'''python
+class Employee(Person):
+    def show_age(self):
+        return self._age  # Allowed in subclass
+
+e = Employee("Sharath", 30)
+print(e.show_age())  # Output: 30
+'''
+
+Protected attributes help prevent unintended modification while allowing subclass access.
+
+
+
+
+4. Private Attributes ('__double_underscore')
+A private attribute cannot be accessed directly outside its class.
+
+# Example: Private Attribute
+'''python
+class BankAccount:
+    def __init__(self, balance):
+        self.__balance = balance  # Private attribute
+
+    def get_balance(self):
+        return self.__balance
+
+acc = BankAccount(1000)
+print(acc.get_balance())  # Output: 1000
+
+print(acc.__balance)  # ❌ Error: Attribute not accessible
+'''
+
+🚨 Private attributes are inaccessible outside the class.
+
+
+
+
+
+5. How Private Attributes Work? (Name Mangling)
+Python mangles private attributes by adding '_ClassName' as a prefix.
+
+# Example: Name Mangling
+'''python
+print(acc._BankAccount__balance)  # ✅ Output: 1000 (But not recommended)
+'''
+
+📌 Never use name mangling unless absolutely necessary.  
+
+Python doesn’t enforce private attributes strictly, but this naming helps developers follow best practices.
+
+
+
+
+
+6. When to Use Each Attribute Type?
+✔ Use public attributes when they don’t need protection.  
+✔ Use protected attributes when subclass access is needed but modification should be avoided.  
+✔ Use private attributes to strictly hide sensitive data from external access.  
+
+Python trusts developers to follow these conventions rather than imposing strict access control.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Let’s explore Python’s Method Resolution Order (MRO)—a crucial concept for understanding inheritance in Python.
+
+
+
+1. What is Method Resolution Order (MRO)?
+When a class inherits from multiple parents, Python follows a specific order to determine which method to call first. This order is called MRO, and it prevents ambiguous behavior in complex hierarchies.
+
+🔹 Python uses C3 Linearization (Algorithm) to determine MRO.
+
+ Example: Basic MRO Behavior
+'''python
+class A:
+    def show(self):
+        print("A's method")
+
+class B(A):
+    pass
+
+class C(A):
+    def show(self):
+        print("C's method")
+
+class D(B, C):
+    pass
+
+d = D()
+d.show()  # Output: C's method (Determined by MRO)
+'''
+📌 Since 'D' inherits from both 'B' and 'C', Python resolves the method using MRO.
+
+
+
+
+
+2. Checking MRO
+Use 'mro()' or '__mro__' to inspect the order:
+
+'''python
+print(D.mro())  # Output: [D, B, C, A, object]
+print(D.__mro__)  # Same result
+'''
+✅ Python follows Depth-First, Left-to-Right order.
+
+
+
+
+
+3. Understanding C3 Linearization
+Python’s C3 Linearization Algorithm ensures:
+✔ Consistent method resolution  
+✔ Prevents conflicting behaviors in inheritance  
+✔ Respects superclass hierarchy  
+
+🔹 Key MRO Rules:
+1.Look for the method in the current class.  
+2.If not found, search left-to-right in parent classes.  
+3.Continue up the hierarchy, ensuring each class is only visited once.  
+
+
+
+
+
+4. Complex Multiple Inheritance Example
+'''python
+class X:
+    def process(self):
+        print("X's method")
+
+class Y(X):
+    pass
+
+class Z(X):
+    def process(self):
+        print("Z's method")
+
+class M(Y, Z):
+    pass
+
+m = M()
+m.process()  # Output: Z's method
+
+print(M.mro())  # Output: [M, Y, Z, X, object]
+'''
+📌 Python prioritizes 'Z' over 'X', as seen in MRO.
+
+
+
+
+
+5. When to Use MRO?
+✅ Avoid conflicts in multiple inheritance  
+✅ Ensure correct method execution  
+✅ Debug inheritance issues easily  
+
+
+
+Python’s MRO ensures predictable method resolution, preventing conflicts in complex class structures.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Let's dive into Python’s Async and Await—Asynchronous Programming, a crucial concept for handling concurrency efficiently.
+
+
+
+1. Why Async/Await?
+Python’s asyncio library enables asynchronous programming, helping:
+✅ Improve responsiveness in network requests  
+✅ Handle multiple tasks concurrently (without blocking execution)  
+✅ Avoid performance bottlenecks  
+
+🔹 Async programming is useful for:
+✔ Web scraping  
+✔ Network requests  
+✔ Handling databases  
+
+
+
+
+2. Basic Async/Await Example
+The 'async' and 'await' keywords make Python functions asynchronous.
+
+'''python
+import asyncio
+
+async def greet():
+    print("Hello")
+    await asyncio.sleep(2)  # Simulating async wait
+    print("World")
+
+asyncio.run(greet())  
+'''
+
+✅ The function does not block execution, allowing other tasks to run.
+
+
+
+
+3. Using Multiple Async Functions
+We can run multiple tasks concurrently using 'asyncio.gather()'.
+
+'''python
+import asyncio
+
+async def task1():
+    await asyncio.sleep(1)
+    print("Task 1 completed")
+
+async def task2():
+    await asyncio.sleep(2)
+    print("Task 2 completed")
+
+async def main():
+    await asyncio.gather(task1(), task2())
+
+asyncio.run(main())  
+'''
+
+📌 Both tasks execute simultaneously, rather than sequentially.
+
+
+
+
+4. The Global Interpreter Lock (GIL)
+The GIL restricts Python’s ability to run multiple threads at once, affecting multi-threaded performance.
+
+✅ Async tasks avoid GIL bottlenecks by switching contexts efficiently.  
+🚀 For true parallelism, use multiprocessing instead of threading.
+
+
+
+
+
+5. When to Use Async/Await?
+✔ Web requests – Handling multiple API calls asynchronously.  
+✔ Database operations – Avoiding blocking queries.  
+✔ Long-running I/O operations – Streaming, file handling.  
+✔ Concurrency-friendly applications – Chat apps, live data updates.
+
+
+
+Python’s async and await make concurrency simple, helping improve performance in high-load applications.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+Let's dive into Python’s SOLID Principles, an essential set of guidelines for writing clean, maintainable, and scalable object-oriented code.
+
+
+
+1. What are the SOLID Principles?
+SOLID is an acronym for five fundamental object-oriented design principles that help developers create robust software architectures.
+
+✅ S – Single Responsibility Principle (SRP)  
+✅ O – Open/Closed Principle (OCP)  
+✅ L – Liskov Substitution Principle (LSP)  
+✅ I – Interface Segregation Principle (ISP)  
+✅ D – Dependency Inversion Principle (DIP)  
+
+These principles ensure modular, reusable, and maintainable code.
+
+
+
+
+
+2. Single Responsibility Principle (SRP)
+> “A class should have only one reason to change.”  
+Each class should handle one and only one responsibility.
+
+# Example: Violating SRP
+'''python
+class Report:
+    def generate_report(self):
+        print("Generating report...")
+
+    def save_to_file(self):  # ❌ Mixing concerns (report generation & file handling)
+        print("Saving report to file...")
+'''
+
+# Fixing SRP
+'''python
+class ReportGenerator:
+    def generate_report(self):
+        print("Generating report...")
+
+class FileSaver:
+    def save(self):
+        print("Saving to file...")
+'''
+✅ Separating concerns makes future modifications easier.
+
+
+
+
+
+3. Open/Closed Principle (OCP)
+> “A class should be open for extension, but closed for modification.”  
+You should extend functionality without modifying existing code.
+
+# Example: Violating OCP
+'''python
+class Shape:
+    def draw(self, shape_type):
+        if shape_type == "circle":
+            print("Drawing a circle")
+        elif shape_type == "square":
+            print("Drawing a square")
+'''
+🚨 Adding new shapes requires modifying 'draw()'—breaking OCP.
+
+# Fixing OCP Using Polymorphism
+'''python
+class Shape:
+    def draw(self):
+        pass
+
+class Circle(Shape):
+    def draw(self):
+        print("Drawing a circle")
+
+class Square(Shape):
+    def draw(self):
+        print("Drawing a square")
+
+shapes = [Circle(), Square()]
+for shape in shapes:
+    shape.draw()
+'''
+✅ New shapes can be added without changing existing code!
+
+
+
+
+
+4. Liskov Substitution Principle (LSP)
+> “Subtypes must be substitutable for their base types.”  
+A subclass shouldn’t break expectations of its parent class.
+
+# Example: Violating LSP
+'''python
+class Bird:
+    def fly(self):
+        print("Flying high")
+
+class Penguin(Bird):  # ❌ Penguins can't fly!
+    pass
+
+penguin = Penguin()
+penguin.fly()  # ❌ Incorrect behavior
+'''
+
+# Fixing LSP
+'''python
+class Bird:
+    def move(self):
+        print("Moving")
+
+class FlyingBird(Bird):
+    def fly(self):
+        print("Flying high")
+
+class Penguin(Bird):
+    def swim(self):
+        print("Swimming")
+
+penguin = Penguin()
+penguin.swim()  # ✅ Correct behavior
+'''
+✅ Subclasses work correctly without breaking expectations!
+
+
+
+
+
+5. Interface Segregation Principle (ISP)
+> “Clients should not be forced to implement interfaces they don’t use.”  
+Large interfaces should be split into specific, smaller interfaces.
+
+# Example: Violating ISP
+'''python
+class Worker:
+    def work(self):
+        pass
+    
+    def eat(self):
+        pass  # ❌ Not all workers need an 'eat()' method!
+'''
+
+# Fixing ISP
+'''python
+class Workable:
+    def work(self):
+        pass
+
+class Eatable:
+    def eat(self):
+        pass
+
+class Robot(Workable):
+    pass  # ✅ Robots don’t need an 'eat()' method!
+'''
+✅ Clients implement only relevant interfaces.
+
+
+
+
+
+6. Dependency Inversion Principle (DIP)
+> “High-level modules should not depend on low-level modules. Both should depend on abstractions.”  
+Instead of hardcoding dependencies, use abstraction.
+
+# Example: Violating DIP
+'''python
+class MySQLDatabase:
+    def connect(self):
+        print("Connecting to MySQL")
+
+class DataManager:
+    def __init__(self):
+        self.db = MySQLDatabase()  # ❌ Direct dependency
+
+    def fetch_data(self):
+        self.db.connect()
+'''
+🚨 Changing databases requires modifying 'DataManager'.
+
+# Fixing DIP Using Abstraction
+'''python
+class Database:
+    def connect(self):
+        pass
+
+class MySQLDatabase(Database):
+    def connect(self):
+        print("Connecting to MySQL")
+
+class PostgreSQLDatabase(Database):
+    def connect(self):
+        print("Connecting to PostgreSQL")
+
+class DataManager:
+    def __init__(self, db: Database):
+        self.db = db  # ✅ Inject dependency
+
+    def fetch_data(self):
+        self.db.connect()
+
+data_manager = DataManager(PostgreSQLDatabase())
+data_manager.fetch_data()  # Output: Connecting to PostgreSQL
+'''
+✅ Easily swap databases without modifying 'DataManager'!
+
+
+
+
+
+7. Why Use SOLID Principles?
+✔ Improves code readability  
+✔ Prevents unintended bugs  
+✔ Enhances scalability  
+✔ Encourages best practices  
+
+
+
+Python’s SOLID principles help write clean, structured code that scales effortlessly.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Let's dive into Python’s Name Mangling, a mechanism used for handling private attributes in classes.
+
+
+1. What is Name Mangling?
+In Python, private attributes are conventionally defined using '__double_underscore', but they aren't truly private. Python applies name mangling to prevent accidental access to such attributes, making them harder to override outside the class.
+
+🔹 Example of Name Mangling:
+'''python
+class Example:
+    def __init__(self):
+        self.__private_var = "Hidden value"
+
+e = Example()
+
+print(e.__private_var)  # ❌ AttributeError: Cannot access directly
+'''
+🚨 Private attributes are internally renamed to prevent direct access!  
+Python transforms '__private_var' to '_Example__private_var' behind the scenes.
+
+
+
+
+
+2. Accessing Name-Mangled Attributes
+Even though Python prevents direct access, you can still retrieve them using name mangling.
+
+# Example: Accessing a Private Attribute
+'''python
+print(e._Example__private_var)  # ✅ Output: Hidden value
+'''
+📌 Name mangling modifies the attribute name based on the class it belongs to.
+
+
+
+3. Why Name Mangling?
+✅ Avoid accidental overrides in subclasses  
+✅ Prevent unintended modification  
+✅ Encapsulation for critical data  
+
+🚨 Note: Name mangling is not a security feature—it only prevents accidental access.
+
+
+
+
+4. Name Mangling in Inheritance
+Python ensures that private attributes remain specific to each class, avoiding conflicts in subclasses.
+
+'''python
+class Parent:
+    def __init__(self):
+        self.__hidden = "Parent's secret"
+
+class Child(Parent):
+    def show_hidden(self):
+        return self.__hidden  # ❌ AttributeError: Not accessible!
+
+c = Child()
+print(c._Parent__hidden)  # ✅ Output: Parent's secret
+'''
+✔ Name mangling keeps parent attributes separate, preventing unintended modification in subclasses.
+
+
+
+
+5. Best Practices for Private Attributes
+✔ Use single underscore '_protected_var' for attributes intended for subclasses.  
+✔ Use double underscore '__private_var' only when strict name separation is required.  
+✔ Avoid accessing name-mangled attributes directly—instead, use getter/setter methods.
+
+
+
+Python’s name mangling helps maintain clean class structures while preventing accidental overrides. 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Let's explore Python Pickling and Unpickling, a mechanism for serializing and deserializing objects.
+
+
+
+1. What is Pickling and Unpickling?
+✅ Pickling: Converting a Python object into a byte stream (serialization).  
+✅ Unpickling: Reconstructing the object back from the byte stream (deserialization).  
+
+🔹 Why use pickling?
+- Save objects to a file or database.
+- Transfer objects over a network.
+- Cache Python objects efficiently.
+
+
+
+2. How to Pickle an Object?
+Use the 'pickle' module for serialization.
+
+# Example: Pickling a Dictionary
+'''python
+import pickle
+
+data = {"name": "Sharath", "age": 25, "language": "Python"}
+
+# Writing the object to a file
+with open("data.pkl", "wb") as file:
+    pickle.dump(data, file)
+'''
+✔ The object is saved in binary format ('data.pkl').
+
+
+
+
+3. How to Unpickle an Object?
+Read and reconstruct the object using 'pickle.load()'.
+
+'''python
+import pickle
+
+# Reading the pickled object
+with open("data.pkl", "rb") as file:
+    loaded_data = pickle.load(file)
+
+print(loaded_data)  # Output: {'name': 'Sharath', 'age': 25, 'language': 'Python'}
+'''
+✅ The original dictionary is restored!
+
+
+
+
+4. Pickling and Unpickling Objects in Memory
+Instead of saving to a file, use 'pickle.dumps()' and 'pickle.loads()' for in-memory serialization.
+
+'''python
+import pickle
+
+data = [1, 2, 3, 4, 5]
+serialized = pickle.dumps(data)  # Convert object to bytes
+
+deserialized = pickle.loads(serialized)  # Convert bytes back to object
+print(deserialized)  # Output: [1, 2, 3, 4, 5]
+'''
+
+✔ Efficient for network communication!
+
+
+
+
+5. Handling Custom Classes in Pickling
+Python can serialize objects of custom classes automatically.
+
+'''python
+import pickle
+
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+p = Person("Sharath", 25)
+
+# Pickling the object
+with open("person.pkl", "wb") as file:
+    pickle.dump(p, file)
+
+# Unpickling the object
+with open("person.pkl", "rb") as file:
+    restored_p = pickle.load(file)
+
+print(restored_p.name)  # Output: Sharath
+print(restored_p.age)   # Output: 25
+'''
+📌 Python reconstructs the object, keeping all attributes intact!
+
+
+
+
+6. Pickling Security Risks 🚨
+🚨 Never unpickle data from unknown sources!  
+Pickled files may contain malicious code—loading an untrusted pickle file can execute harmful scripts.
+
+# Example of a Malicious Pickle Attack
+'''python
+import pickle
+import os
+
+# A dangerous payload
+malicious_code = pickle.dumps(os.system("rm -rf /"))  # Deletes everything!
+
+# If an attacker sends this pickle file, running 'pickle.load()' will execute the command.
+'''
+🚫 Always validate sources before unpickling files.
+
+
+
+
+7. Alternative Serialization Formats
+🔹 JSON ('json' module): Human-readable, widely used for APIs.  
+🔹 MessagePack: Efficient binary serialization for speed.  
+🔹 Protobuf: Optimized for structured data (Google Protocol Buffers).  
+
+✔ Use pickle for internal applications but prefer JSON or Protobuf for external data exchange.
+
+
+
+Python’s Pickling and Unpickling are powerful tools for saving and transferring complex data structures. 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Let's explore Python’s Frozenset, an immutable version of a regular set.
+
+
+
+1. What is a Frozenset?
+A frozenset is similar to a regular set but immutable—once created, its contents cannot be modified (no adding or removing elements).
+
+🔹 Why use frozensets?
+✅ Ensures data integrity, preventing accidental modifications.  
+✅ Useful for dictionary keys, since regular sets cannot be used as keys.  
+✅ Supports set operations like union, intersection, and difference.
+
+
+
+
+2. Creating a Frozenset
+Use the 'frozenset()' function:
+
+'''python
+fs = frozenset([1, 2, 3, 4])
+print(fs)  # Output: frozenset({1, 2, 3, 4})
+'''
+
+🚫 Unlike regular sets, you cannot modify a frozenset:
+
+'''python
+fs.add(5)  # ❌ AttributeError (frozensets are immutable)
+fs.remove(1)  # ❌ AttributeError (removal is not allowed)
+'''
+
+
+
+
+3. Frozenset vs Regular Set
+| Feature                  | 'set'  | 'frozenset' |
+|--------------------------|--------|----------- -|
+| Mutable?                 | ✅ Yes | ❌ No       |
+| Can be dictionary key?   | ❌ No  | ✅ Yes      |
+| Supports set operations? | ✅ Yes | ✅ Yes      |
+| Efficient for constants? | 🚫 No  | ✅ Yes      |
+
+
+
+4. Using Frozenset as Dictionary Keys
+Since frozensets are hashable, they can be used as dictionary keys:
+
+'''python
+fs1 = frozenset(["apple", "banana"])
+fs2 = frozenset(["orange", "grape"])
+
+fruit_dict = {fs1: "Yellow Fruits", fs2: "Citrus Fruits"}
+print(fruit_dict[fs1])  # Output: Yellow Fruits
+'''
+
+✔ Regular sets are unhashable, making frozensets useful for immutable collections.
+
+
+
+5. Frozenset Operations
+Although immutable, frozensets support set operations:
+
+'''python
+fs1 = frozenset([1, 2, 3])
+fs2 = frozenset([3, 4, 5])
+
+print(fs1 | fs2)  # ✅ Union → frozenset({1, 2, 3, 4, 5})
+print(fs1 & fs2)  # ✅ Intersection → frozenset({3})
+print(fs1 - fs2)  # ✅ Difference → frozenset({1, 2})
+'''
+
+✔ Works like a regular set, but cannot be modified.
+
+
+
+6. When to Use Frozensets?
+✔ Prevent accidental modifications in critical data.  
+✔ Use as dictionary keys where sets aren’t allowed.  
+✔ Ensure data integrity in caching and function arguments.  
+✔ Perform efficient set operations without worrying about changes.  
+
+
+
+
+Python’s frozenset provides immutability with set operations, making it useful for data integrity. 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Let's explore Python's Singleton Class, a design pattern that ensures only one instance of a class exists.
+
+
+1. What is a Singleton Class?
+A singleton is a class that restricts the number of its instances to just one, ensuring global access to that single instance.
+
+🔹 Why use singletons?
+✅ Efficient resource management (e.g., database connections, logging)  
+✅ Ensures consistency (avoids multiple instances causing conflicts)  
+✅ Saves memory by preventing redundant objects  
+
+
+
+
+2. Implementing Singleton in Python
+# Using '__new__' Method
+The '__new__' method ensures only one instance is created, even if called multiple times.
+
+'''python
+class Singleton:
+    _instance = None  # Stores single instance
+    
+    def __new__(cls):
+        if cls._instance is None:  # Ensure only one instance is created
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
+# Creating multiple objects
+s1 = Singleton()
+s2 = Singleton()
+
+print(s1 is s2)  # ✅ Output: True (Same instance)
+'''
+🚀 Every call to 'Singleton()' returns the same object!
+
+
+
+
+3. Singleton Using a Decorator
+A decorator simplifies singleton creation.
+
+'''python
+def singleton(cls):
+    instances = {}
+
+    def get_instance(*args, kwargs):
+        if cls not in instances:
+            instances[cls] = cls(*args, kwargs)
+        return instances[cls]
+    
+    return get_instance
+
+@singleton
+class DatabaseConnection:
+    pass
+
+db1 = DatabaseConnection()
+db2 = DatabaseConnection()
+
+print(db1 is db2)  # ✅ Output: True (Same instance)
+'''
+✔ Ensures only one instance exists using a Python decorator.
+
+
+
+
+
+4. Singleton Using Metaclasses
+Metaclasses can control class creation, enforcing the singleton pattern.
+
+'''python
+class SingletonMeta(type):
+    _instances = {}
+
+    def __call__(cls, *args, kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super().__call__(*args, kwargs)
+        return cls._instances[cls]
+
+class Logger(metaclass=SingletonMeta):
+    pass
+
+l1 = Logger()
+l2 = Logger()
+
+print(l1 is l2)  # ✅ Output: True (Same instance)
+'''
+✔ Metaclasses elegantly enforce the singleton pattern.
+
+
+
+5. When to Use a Singleton?
+✔ Database connections – Prevents multiple connections  
+✔ Logging system – Ensures consistency  
+✔ Configuration managers – Centralized access  
+✔ Caching systems – Avoids redundant copies  
+
+🚨 Avoid singleton misuse—global instances may introduce hidden dependencies!
+
+
+
+Singletons help maintain a single instance, ensuring efficiency and consistency. 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Let's explore Python’s Map, Filter, and Reduce, essential functional programming tools for processing data efficiently.
+
+
+
+1. What are Map, Filter, and Reduce?
+🔹 'map()' – Applies a function to each item in an iterable.  
+🔹 'filter()' – Selects items that meet a condition.  
+🔹 'reduce()' – Aggregates all items into a single value (requires 'functools' module).  
+
+These functions eliminate the need for explicit loops, making code more readable.
+
+
+
+
+2. Using 'map()'
+'map()' applies a function to every element in an iterable.
+
+# Example: Doubling Numbers
+'''python
+numbers = [1, 2, 3, 4]
+doubled = list(map(lambda x: x * 2, numbers))
+print(doubled)  # Output: [2, 4, 6, 8]
+'''
+✔ Equivalent to:  
+'''python
+doubled = [x * 2 for x in numbers]  # List comprehension alternative
+'''
+
+✔ Useful for: Data transformation without explicit loops.
+
+
+
+
+3. Using 'filter()'
+'filter()' keeps only elements that satisfy a condition.
+
+# Example: Filtering Even Numbers
+'''python
+numbers = [1, 2, 3, 4, 5, 6]
+evens = list(filter(lambda x: x % 2 == 0, numbers))
+print(evens)  # Output: [2, 4, 6]
+'''
+📌 Alternative: Using list comprehension:
+'''python
+evens = [x for x in numbers if x % 2 == 0]
+'''
+
+✔ Useful for: Selecting elements based on conditions.
+
+
+
+
+4. Using 'reduce()'
+'reduce()' combines all items into a single result.
+
+# Example: Finding Product of All Numbers
+'''python
+from functools import reduce
+
+numbers = [1, 2, 3, 4]
+product = reduce(lambda x, y: x * y, numbers)
+print(product)  # Output: 24
+'''
+📌 Equivalent to manual loop:
+'''python
+product = 1
+for num in numbers:
+    product *= num
+'''
+
+✔ Useful for: Aggregating values efficiently.
+
+
+
+5. When to Use Map, Filter, and Reduce?
+✅ 'map()' – Transform data ('x * 2', uppercase strings).  
+✅ 'filter()' – Select specific elements ('x > 10', 'x % 2 == 0').  
+✅ 'reduce()' – Aggregate values ('sum, product').  
+
+✔ Prefer list comprehensions for readability, but these functions are powerful for functional programming!
+
+
+
+
+Python’s Map, Filter, and Reduce streamline data processing, making operations efficient. 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Let's explore Python’s Dynamic Typing, a fundamental characteristic of the language.
+
+
+
+1. What is Dynamic Typing?
+Python is a dynamically typed language, meaning:
+✅ Variables don’t have fixed types—they can change at runtime.  
+✅ No explicit type declarations—types are inferred.  
+✅ Easy variable assignment—values define the type, not the variable name.
+
+🚀 Unlike statically typed languages (C, Java), Python doesn’t require type declarations.
+
+
+
+
+
+2. Example of Dynamic Typing
+Variables in Python can change type at runtime:
+
+'''python
+x = 10  # Integer
+print(type(x))  # Output: <class 'int'>
+
+x = "Hello"  # Now it's a string!
+print(type(x))  # Output: <class 'str'>
+'''
+
+📌 Python automatically assigns types, unlike Java or C++, where variable types must be specified.
+
+
+
+
+
+3. Pros and Cons of Dynamic Typing
+| Feature | Advantages | Disadvantages |
+|-------------|--------------|----------------|
+| Flexibility | No need to declare types | Harder to debug type errors |
+| Rapid Development | Code is shorter and easier to write | Unexpected type changes can cause runtime errors |
+| Memory Efficiency | Uses only what is needed | Performance can be slightly slower than statically typed languages |
+
+🚀 Dynamic typing speeds up development but requires careful handling of types!  
+
+
+
+
+4. Is Python Fully Dynamically Typed?
+Yes, Python is dynamically typed, but type hints ('PEP 484') allow optional type declarations.
+
+# Example: Using Type Hints
+'''python
+def greet(name: str) -> str:
+    return f"Hello, {name}"
+
+print(greet("Sharath"))  # ✅ Works fine
+print(greet(123))  # 🚨 No error, but incorrect input!
+'''
+🔹 Python ignores type hints at runtime, but tools like 'mypy' enforce type checking.
+
+
+
+
+5. When to Use Type Hints?
+✔ Large projects where maintaining type consistency is essential.  
+✔ Library development to ensure predictable function behavior.  
+✔ Reducing bugs by clarifying expected inputs and outputs.  
+
+Python remains dynamically typed, but type hints provide structure where needed.
+
+
+
+Python’s dynamic typing makes coding flexible and fast, but careful type management prevents errors. 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Let's explore Python's 'enumerate()' function, a handy tool for looping with index tracking.
+
+
+
+1. What is 'enumerate()'?
+'enumerate()' simplifies iterating over lists or sequences while keeping track of index positions.
+
+✅ Eliminates manual index tracking ('range(len(seq))').  
+✅ Improves readability and efficiency.  
+
+
+
+2. Basic Usage
+# Example: Iterating with Index
+'''python
+fruits = ["apple", "banana", "cherry"]
+
+for index, fruit in enumerate(fruits):
+    print(f"{index}: {fruit}")
+'''
+✅ Output:
+'''
+0: apple
+1: banana
+2: cherry
+'''
+📌 No need for 'range(len(fruits))'—'enumerate()' automatically provides indexes!
+
+
+
+
+3. Customizing Index Start
+You can set a starting index (default is '0').
+
+# Example: Starting from 1
+'''python
+for index, fruit in enumerate(fruits, start=1):
+    print(f"{index}: {fruit}")
+'''
+✅ Output:
+'''
+1: apple
+2: banana
+3: cherry
+'''
+
+✔ Useful for numbering lists dynamically!
+
+
+
+
+4. Combining 'enumerate()' with List Comprehensions
+You can use 'enumerate()' inside list comprehensions.
+
+'''python
+indexed_fruits = [(i, f) for i, f in enumerate(fruits)]
+print(indexed_fruits)
+'''
+✅ Output:
+'''
+[(0, 'apple'), (1, 'banana'), (2, 'cherry')]
+'''
+
+✔ Efficient way to store indexed pairs without manual loops.
+
+
+
+
+5. Comparing 'enumerate()' vs Manual Indexing
+| Feature     | 'enumerate()' | Manual Index ('range(len(seq))') |
+|-------------|--------------|---------------------------------|
+| Readability | ✅ Clear | 🚫 Verbose |
+| Performance | ✅ Optimized | 🚫 Less efficient |
+| Flexibility | ✅ Supports custom start | 🚫 Hardcoded |
+
+🚀 Prefer 'enumerate()' for cleaner loops!
+
+
+
+
+
+6. When to Use 'enumerate()'?
+✔ Iterating while tracking indexes (list processing, logging).  
+✔ Dynamically numbering items ('enumerate(seq, start=n)').  
+✔ Storing index-item pairs ('[(i, item) for i, item in enumerate(seq)]').  
+
+Python’s 'enumerate()' streamlines indexing, making loops clearer and more efficient. 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Let's explore Python's '__str__' and '__repr__' methods, which control how objects are displayed and represented.
+
+
+
+1. What are '__str__' and '__repr__'?
+✅ '__str__' – Defines a user-friendly string representation of an object (used in 'print()').  
+✅ '__repr__' – Defines a developer-friendly, unambiguous representation (used in debugging).  
+
+🔹 If '__repr__' is defined but '__str__' is not, Python falls back to '__repr__'.
+
+
+
+2. Basic Example
+# Without '__str__' and '__repr__'
+'''python
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+p = Person("Sharath", 25)
+
+print(p)  # Output: <__main__.Person object at 0x...>
+'''
+🚨 Without '__str__', Python prints an unhelpful default object representation!
+
+
+
+
+
+3. Implementing '__str__' and '__repr__'
+Define '__str__' and '__repr__' to improve object readability.
+
+'''python
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __str__(self):
+        return f"{self.name}, Age: {self.age}"  # User-friendly output
+
+    def __repr__(self):
+        return f"Person('{self.name}', {self.age})"  # Developer representation
+
+p = Person("Sharath", 25)
+
+print(p)  # ✅ Output (from __str__): Sharath, Age: 25
+print(repr(p))  # ✅ Output (from __repr__): Person('Sharath', 25)
+'''
+✔ '__str__' for human-readable output  
+✔ '__repr__' for debugging & reconstruction
+
+
+
+4. Key Differences
+| Feature  | '__str__' | '__repr__' |
+|----------|----------|------------|
+| Purpose | User-friendly output | Debugging & object recreation |
+| Used by | 'print(obj)', 'str(obj)' | 'repr(obj)', debugging tools |
+| Format | Readable | Precise and detailed |
+| Fallback | ✅ Uses '__repr__' if '__str__' is missing | 🚫 No fallback |
+
+
+
+
+5. When to Use Each?
+✅ Use '__str__' when objects need human-readable output ('print()', logs).  
+✅ Use '__repr__' for debugging and precise object recreation.  
+
+📌 Best Practice: Always define '__repr__', and use '__str__' for better print formatting.
+
+
+
+Python’s '__str__' and '__repr__' enhance object readability, improving debugging and usability.
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+Let's explore Python’s '__new__' and '__init__' methods, which control how objects are created and initialized.
+
+
+
+1. What are '__new__' and '__init__'?
+✅ '__new__' – Creates a new object before '__init__' is called.  
+✅ '__init__' – Initializes the newly created object.  
+
+📌 '__new__' is rarely overridden, but essential for customizing instance creation.
+
+
+
+
+2. How '__new__' Works?
+'__new__' executes before '__init__', controlling object creation.
+
+# Example: Understanding Order of Execution
+'''python
+class Example:
+    def __new__(cls):
+        print("Step 1: Creating object")
+        return super().__new__(cls)  # Calls parent class '__new__'
+
+    def __init__(self):
+        print("Step 2: Initializing object")
+
+e = Example()
+'''
+✅ Output:
+'''
+Step 1: Creating object
+Step 2: Initializing object
+'''
+🚀 '__new__' runs first, then '__init__' sets up attributes.
+
+
+
+
+3. When to Override '__new__'?
+🔹 Immutable types (e.g., 'tuple', 'str') – Need custom allocation.  
+🔹 Singleton classes – Ensure only one instance exists.  
+🔹 Meta-class behaviors – Control object creation dynamically.  
+
+
+
+
+4. Example: Using '__new__' to Modify Object Creation
+'''python
+class CustomClass:
+    def __new__(cls, value):
+        obj = super().__new__(cls)
+        obj.value = value * 2  # Modify before '__init__'
+        return obj
+
+    def __init__(self, value):
+        print(f"Original value: {value}")
+        print(f"Stored value: {self.value}")
+
+c = CustomClass(10)
+'''
+✅ Output:
+'''
+Original value: 10
+Stored value: 20
+'''
+📌 '__new__' modified 'value' before '__init__' executed.
+
+
+
+
+
+5. Singleton Pattern with '__new__'
+Ensure only one instance exists across the program.
+
+'''python
+class Singleton:
+    _instance = None
+    
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
+s1 = Singleton()
+s2 = Singleton()
+
+print(s1 is s2)  # ✅ Output: True (Only one instance)
+'''
+✔ All instances reference the same object!
+
+
+
+
+6. Key Differences
+| Feature   | '__new__' | '__init__' |
+|-----------|----------|------------|
+| Purpose   | Creates new instance | Initializes the instance |
+| Runs first? | ✅ Yes | ❌ No |
+| Overrides allowed? | ✅ Yes (Rarely) | ✅ Yes (Common) |
+| When used? | Immutable objects, singletons | Setting instance attributes |
+
+
+
+
+7. When to Use '__new__'?
+✅ Modify instance before initialization.  
+✅ Ensure one instance only (Singleton).  
+✅ Handle immutable objects like 'tuple', 'str'.  
+
+🚀 In most cases, use '__init__'—only override '__new__' when necessary!
+
+
+
+Python’s '__new__' controls object creation, while '__init__' handles setup. 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Let's explore Python’s Packing and Unpacking, a powerful way to handle multiple arguments in functions and tuples.
+
+
+
+1. What is Packing and Unpacking?
+✅ Packing: Combining multiple values into a single variable (usually a tuple or dictionary).  
+✅ Unpacking: Extracting values from a packed structure into separate variables.  
+
+
+
+
+
+2. Packing with '*args' and 'kwargs'
+🔹 '*args' (Positional Arguments): Packs multiple positional arguments into a tuple.  
+🔹 'kwargs' (Keyword Arguments): Packs multiple named arguments into a dictionary.
+
+Example: Packing with '*args'
+'''python
+def pack_items(*args):
+    print(args)  # Output: Tuple containing all arguments
+
+pack_items(1, 2, 3, "Python")  # Output: (1, 2, 3, 'Python')
+'''
+🚀 All arguments are packed into a tuple.
+
+# Example: Packing with 'kwargs'
+'''python
+def pack_details(kwargs):
+    print(kwargs)  # Output: Dictionary containing named arguments
+
+pack_details(name="Sharath", age=25, language="Python")
+# Output: {'name': 'Sharath', 'age': 25, 'language': 'Python'}
+'''
+✔ Useful for passing dynamic function arguments!
+
+
+
+
+
+3. Unpacking Tuples and Lists
+Extract values from a tuple or list into individual variables.
+
+# Example: Unpacking a Tuple
+'''python
+data = ("Sharath", 25, "Python")
+name, age, language = data  # Unpacks into separate variables
+
+print(name)  # Output: Sharath
+print(age)   # Output: 25
+print(language)  # Output: Python
+'''
+📌 Ensure variables match the number of elements!
+
+
+
+
+
+
+4. Unpacking with '*' for Flexible Assignments
+Use '*' to unpack multiple elements into a list.
+
+'''python
+numbers = [1, 2, 3, 4, 5]
+first, *middle, last = numbers
+
+print(first)  # Output: 1
+print(middle)  # Output: [2, 3, 4] (Packed inside a list)
+print(last)  # Output: 5
+'''
+✔ Captures multiple values dynamically!
+
+
+
+
+
+5. Unpacking Dictionaries
+Use '' to unpack dictionary values into function arguments.
+
+'''python
+def show_person(name, age, language):
+    print(f"Name: {name}, Age: {age}, Language: {language}")
+
+person_details = {"name": "Sharath", "age": 25, "language": "Python"}
+
+show_person(person_details)  # Unpacks dictionary into function arguments
+'''
+📌 Each dictionary key matches the function parameter!
+
+
+
+
+
+6. When to Use Packing and Unpacking?
+✅ Passing flexible arguments ('*args', 'kwargs').  
+✅ Extracting values from tuples, lists, or dictionaries dynamically.  
+✅ Handling unknown numbers of elements with '*' and ''.  
+✅ Simplifying function calls by unpacking arguments.  
+
+🚀 Packing and Unpacking streamline data handling, making functions more versatile. 
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Let's explore Python’s Dunder (Magic) Methods, which enable custom behavior for objects.
+
+
+
+1. What are Dunder Methods?
+Dunder (double underscore) or magic methods allow objects to support:
+✅ Operator overloading  
+✅ Custom initialization ('__init__')  
+✅ Comparison ('__eq__', '__lt__')  
+✅ Object representation ('__str__', '__repr__')  
+
+📌 These methods start and end with '__', e.g., '__add__', '__len__'.
+
+
+
+2. Commonly Used Dunder Methods
+# Object Initialization: '__init__'
+'''python
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+p = Person("Sharath", 25)
+print(p.name)  # Output: Sharath
+'''
+✅ Called automatically when an object is created.
+
+
+
+Object Representation: '__str__' vs '__repr__'
+'''python
+class Person:
+    def __str__(self):
+        return "Human-readable format"
+
+    def __repr__(self):
+        return "Developer-friendly format"
+
+p = Person()
+print(p)  # Uses '__str__'
+print(repr(p))  # Uses '__repr__'
+'''
+📌 '__str__' is for users, '__repr__' is for debugging.
+
+
+
+Operator Overloading: '__add__'
+'''python
+class Number:
+    def __init__(self, value):
+        self.value = value
+
+    def __add__(self, other):
+        return Number(self.value + other.value)
+
+n1 = Number(10)
+n2 = Number(20)
+
+result = n1 + n2  # Calls '__add__'
+print(result.value)  # Output: 30
+'''
+✅ Defines custom behavior for '+' operator!
+
+
+
+Comparison Methods: '__eq__', '__lt__'
+'''python
+class Box:
+    def __init__(self, size):
+        self.size = size
+
+    def __eq__(self, other):
+        return self.size == other.size
+
+    def __lt__(self, other):
+        return self.size < other.size
+
+b1 = Box(5)
+b2 = Box(10)
+
+print(b1 == b2)  # False
+print(b1 < b2)   # True
+'''
+📌 Overloads comparison operators ('==', '<', etc.).
+
+
+
+Length and Indexing: '__len__', '__getitem__'
+'''python
+class Container:
+    def __init__(self, items):
+        self.items = items
+
+    def __len__(self):
+        return len(self.items)
+
+    def __getitem__(self, index):
+        return self.items[index]
+
+c = Container(["apple", "banana", "cherry"])
+print(len(c))  # Output: 3
+print(c[1])   # Output: banana
+'''
+✔ Supports built-in functions like 'len()' and indexing ('obj[index]').
+
+
+
+3. When to Use Dunder Methods?
+✅ Improve object representation ('__str__', '__repr__').  
+✅ Enable operator overloading ('__add__', '__mul__').  
+✅ Implement built-in behaviors ('__len__', '__getitem__').  
+✅ Customize class functionality ('__call__', '__iter__').  
+
+🚀 Dunder methods allow objects to behave like built-in types!
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Let's explore Python's Metaprogramming, a technique for writing code that modifies or generates other code.
+
+
+
+1. What is Metaprogramming?
+Metaprogramming allows dynamic modifications to Python programs at runtime.  
+✅ Writing code that manipulates code (e.g., dynamic class creation).  
+✅ Automating repetitive tasks using reflection ('inspect' module).  
+✅ Building powerful frameworks using metaclasses and decorators.  
+
+🚀 Metaprogramming helps create flexible and scalable software architectures!
+
+
+
+
+2. Key Metaprogramming Tools in Python
+🔹 Metaclasses ('type', custom metaclasses)  
+🔹 Reflection ('getattr', 'setattr', 'hasattr', 'dir')  
+🔹 Monkey Patching (modifying modules at runtime)  
+🔹 Dynamic Attribute Handling ('__getattr__', '__setattr__')  
+
+
+
+
+
+3. Using Metaclasses for Dynamic Class Creation
+Metaclasses control how classes themselves are created.
+
+'''python
+class Meta(type):
+    def __new__(cls, name, bases, attrs):
+        attrs["auto_added"] = "Generated by metaclass"
+        return super().__new__(cls, name, bases, attrs)
+
+class Example(metaclass=Meta):
+    pass
+
+print(Example.auto_added)  # ✅ Output: Generated by metaclass
+'''
+📌 Metaclass modifies class attributes at creation time!
+
+
+
+
+
+
+4. Reflection in Python ('getattr', 'setattr')
+Reflection allows introspecting and modifying objects dynamically.
+
+'''python
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+p = Person("Sharath")
+
+# Access attribute dynamically
+print(getattr(p, "name"))  # ✅ Output: Sharath
+
+# Modify attribute dynamically
+setattr(p, "name", "Pythonista")
+print(p.name)  # ✅ Output: Pythonista
+'''
+✔ Useful for building frameworks where object attributes are unknown upfront.
+
+
+
+
+
+5. Monkey Patching (Modifying Code at Runtime)
+Modify existing classes without changing their original source.
+
+'''python
+class Example:
+    def greet(self):
+        return "Hello!"
+
+def new_greet():
+    return "Modified greeting!"
+
+Example.greet = new_greet  # Monkey patching
+
+e = Example()
+print(e.greet())  # ✅ Output: Modified greeting!
+'''
+📌 Useful for testing and patching third-party libraries dynamically!
+
+
+
+
+
+
+6. Dynamic Attribute Handling ('__getattr__', '__setattr__')
+Define behavior when accessing or modifying attributes dynamically.
+
+'''python
+class Dynamic:
+    def __getattr__(self, name):
+        return f"Attribute '{name}' not found!"
+
+d = Dynamic()
+print(d.some_attr)  # ✅ Output: Attribute 'some_attr' not found!
+'''
+✔ Prevents attribute errors and allows dynamic property access.
+
+
+
+
+
+7. When to Use Metaprogramming?
+✅ Framework development – Django ORM, SQLAlchemy use metaprogramming.  
+✅ Automating repetitive tasks – Reducing manual coding effort.  
+✅ Building plugins or extensible applications – Dynamic attribute handling.  
+✅ Creating dynamic APIs – Web frameworks use metaprogramming for request handling.  
+
+🚀 Metaprogramming gives Python enormous flexibility, enabling smarter and more efficient code. 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------

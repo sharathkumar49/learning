@@ -1,0 +1,6 @@
+
+
+divide and conquer(plumber, flowchart)
+writing on paper and whiteboarding(you may discuss with your friends)
+making wise use of data structures and algorithms
+using platforms like stackoverflow/Discord/Google

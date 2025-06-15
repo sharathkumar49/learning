@@ -1,0 +1,2743 @@
+
+
+175. Combine Two Tables
+
+Table: Person
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| personId    | int     |
+| lastName    | varchar |
+| firstName   | varchar |
++-------------+---------+
+personId is the primary key (column with unique values) for this table.
+This table contains information about the ID of some persons and their first and last names.
+ 
+
+Table: Address
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| addressId   | int     |
+| personId    | int     |
+| city        | varchar |
+| state       | varchar |
++-------------+---------+
+addressId is the primary key (column with unique values) for this table.
+Each row of this table contains information about the city and state of one person with ID = PersonId.
+ 
+
+Write a solution to report the first name, last name, city, and state of each person in the Person table. If the address of a personId is not present in the Address table, report null instead.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Person table:
++----------+----------+-----------+
+| personId | lastName | firstName |
++----------+----------+-----------+
+| 1        | Wang     | Allen     |
+| 2        | Alice    | Bob       |
++----------+----------+-----------+
+Address table:
++-----------+----------+---------------+------------+
+| addressId | personId | city          | state      |
++-----------+----------+---------------+------------+
+| 1         | 2        | New York City | New York   |
+| 2         | 3        | Leetcode      | California |
++-----------+----------+---------------+------------+
+Output: 
++-----------+----------+---------------+----------+
+| firstName | lastName | city          | state    |
++-----------+----------+---------------+----------+
+| Allen     | Wang     | Null          | Null     |
+| Bob       | Alice    | New York City | New York |
++-----------+----------+---------------+----------+
+
+Explanation: 
+There is no address in the address table for the personId = 1 so we return null in their city and state.
+addressId = 1 contains information about the address of personId = 2.
+
+
+
+
+
+
+Solution: 
+
+# Write your MySQL query statement below
+SELECT p.firstName, p.lastName, a.city, a.state
+FROM Person p 
+LEFT JOIN Address a
+ON p.personId = a.personId;
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+181. Employees Earning More Than Their Managers
+
+Table: Employee
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| name        | varchar |
+| salary      | int     |
+| managerId   | int     |
++-------------+---------+
+id is the primary key (column with unique values) for this table.
+Each row of this table indicates the ID of an employee, their name, salary, and the ID of their manager.
+ 
+
+Write a solution to find the employees who earn more than their managers.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Employee table:
++----+-------+--------+-----------+
+| id | name  | salary | managerId |
++----+-------+--------+-----------+
+| 1  | Joe   | 70000  | 3         |
+| 2  | Henry | 80000  | 4         |
+| 3  | Sam   | 60000  | Null      |
+| 4  | Max   | 90000  | Null      |
++----+-------+--------+-----------+
+Output: 
++----------+
+| Employee |
++----------+
+| Joe      |
++----------+
+Explanation: Joe is the only employee who earns more than his manager.
+
+
+
+Solution: 
+
+SELECT e1.name AS Employee
+FROM Employee e1
+INNER JOIN Employee e2
+ON e1.managerId = e2.id
+WHERE e1.salary > e2.salary
+
+(can also be done with LEFT JOIN)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+182. Duplicate Emails
+
+Table: Person
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| email       | varchar |
++-------------+---------+
+id is the primary key (column with unique values) for this table.
+Each row of this table contains an email. The emails will not contain uppercase letters.
+ 
+
+Write a solution to report all the duplicate emails. Note that it's guaranteed that the email field is not NULL.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Person table:
++----+---------+
+| id | email   |
++----+---------+
+| 1  | a@b.com |
+| 2  | c@d.com |
+| 3  | a@b.com |
++----+---------+
+
+Output: 
++---------+
+| Email   |
++---------+
+| a@b.com |
++---------+
+
+Explanation: a@b.com is repeated two times.
+
+
+
+Solution: 
+
+SELECT email
+FROM Person 
+GROUP BY email
+HAVING COUNT(DISTINCT id) > 1
+
+Since id is a primary key and unique, you don't need to mention distinct keyword
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+183. Customers Who Never Order
+
+Table: Customers
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| name        | varchar |
++-------------+---------+
+id is the primary key (column with unique values) for this table.
+Each row of this table indicates the ID and name of a customer.
+ 
+
+Table: Orders
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| id          | int  |
+| customerId  | int  |
++-------------+------+
+
+id is the primary key (column with unique values) for this table.
+customerId is a foreign key (reference columns) of the ID from the Customers table.
+Each row of this table indicates the ID of an order and the ID of the customer who ordered it.
+ 
+
+Write a solution to find all customers who never order anything.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+
+Customers table:
++----+-------+
+| id | name  |
++----+-------+
+| 1  | Joe   |
+| 2  | Henry |
+| 3  | Sam   |
+| 4  | Max   |
++----+-------+
+
+Orders table:
++----+------------+
+| id | customerId |
++----+------------+
+| 1  | 3          |
+| 2  | 1          |
++----+------------+
+
+Output: 
++-----------+
+| Customers |
++-----------+
+| Henry     |
+| Max       |
++-----------+
+
+
+
+Solution: 
+
+SELECT  c.name AS Customers
+FROM Customers c
+WHERE c.id NOT IN 
+(SELECT c.id 
+FROM Customers c
+INNER JOIN Orders o
+ON c.id = o.customerId)
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Consecutive Available Seats:
+
+
+
+SELECT W.seat_id
+FROM (SELECT *, LEAD(free) OVER(ORDER BY seat_id) AS NextSeat, LAG(free) OVER(ORDER BY seat_id) AS PrevSeat
+FROM Cinema) as W
+WHERE W.free = 1 AND  w.NextSeat = 1
+OR W.free = 1 AND w.PrevSeat = 1 
+ORDER BY W.seat_id
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+577. Employee Bonus
+
+Table: Employee
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| empId       | int     |
+| name        | varchar |
+| supervisor  | int     |
+| salary      | int     |
++-------------+---------+
+empId is the column with unique values for this table.
+Each row of this table indicates the name and the ID of an employee in addition to their salary and the id of their manager.
+ 
+
+Table: Bonus
+
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| empId       | int  |
+| bonus       | int  |
++-------------+------+
+empId is the column of unique values for this table.
+empId is a foreign key (reference column) to empId from the Employee table.
+Each row of this table contains the id of an employee and their respective bonus.
+ 
+
+Write a solution to report the name and bonus amount of each employee with a bonus less than 1000.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Employee table:
++-------+--------+------------+--------+
+| empId | name   | supervisor | salary |
++-------+--------+------------+--------+
+| 3     | Brad   | null       | 4000   |
+| 1     | John   | 3          | 1000   |
+| 2     | Dan    | 3          | 2000   |
+| 4     | Thomas | 3          | 4000   |
++-------+--------+------------+--------+
+Bonus table:
++-------+-------+
+| empId | bonus |
++-------+-------+
+| 2     | 500   |
+| 4     | 2000  |
++-------+-------+
+
+Output: 
++------+-------+
+| name | bonus |
++------+-------+
+| Brad | null  |
+| John | null  |
+| Dan  | 500   |
++------+-------+
+
+
+
+
+
+Solution:
+
+SELECT e.name, b.bonus
+FROM Employee e
+LEFT JOIN Bonus b
+ON e.empId = b.empId
+where b.bonus < 1000
+OR b.bonus IS NULL
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+584. Find Customer Referee
+
+
+Table: Customer
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| name        | varchar |
+| referee_id  | int     |
++-------------+---------+
+
+In SQL, id is the primary key column for this table.
+Each row of this table indicates the id of a customer, their name, and the id of the customer who referred them.
+ 
+
+Find the names of the customer that are not referred by the customer with id = 2.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Customer table:
++----+------+------------+
+| id | name | referee_id |
++----+------+------------+
+| 1  | Will | null       |
+| 2  | Jane | null       |
+| 3  | Alex | 2          |
+| 4  | Bill | null       |
+| 5  | Zack | 1          |
+| 6  | Mark | 2          |
++----+------+------------+
+
+Output: 
++------+
+| name |
++------+
+| Will |
+| Jane |
+| Bill |
+| Zack |
++------+
+
+
+
+Solution: 
+
+
+SELECT name
+FROM Customer
+WHERE referee_id <> 2
+OR referee_id IS NULL
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+586. Customer Placing the Largest Number of Orders
+
+
+
+Table: Orders
+
++-----------------+----------+
+| Column Name     | Type     |
++-----------------+----------+
+| order_number    | int      |
+| customer_number | int      |
++-----------------+----------+
+order_number is the primary key (column with unique values) for this table.
+This table contains information about the order ID and the customer ID.
+ 
+
+Write a solution to find the customer_number for the customer who has placed the largest number of orders.
+
+The test cases are generated so that exactly one customer will have placed more orders than any other customer.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Orders table:
++--------------+-----------------+
+| order_number | customer_number |
++--------------+-----------------+
+| 1            | 1               |
+| 2            | 2               |
+| 3            | 3               |
+| 4            | 3               |
++--------------+-----------------+
+
+
+Output: 
++-----------------+
+| customer_number |
++-----------------+
+| 3               |
++-----------------+
+
+Explanation: 
+The customer with number 3 has two orders, which is greater than either customer 1 or 2 because each of them only has one order. 
+So the result is customer_number 3.
+
+
+
+Solution:
+
+SELECT customer_number 
+FROM orders
+GROUP BY customer_number
+ORDER BY COUNT(customer_number) DESC 
+LIMIT 1;
+
+
+Say if two customers is having the same number of max number of orders, we need to return both the customers right. We need to go for common table expression approach
+
+
+WITH cte AS
+(SELECT customer_number, COUNT(order_number) AS NumOrd
+FROM Orders
+GROUP BY customer_number)
+
+
+SELECT customer_number
+FROM cte
+WHERE NumOrd = (SELECT Max(NumOrd) FROM cte)
+
+
+So, if both the customer 3 and 4 having the max number of orders. We'll be returning the both the customers
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+595. Big Countries
+
+Table: World
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| name        | varchar |
+| continent   | varchar |
+| area        | int     |
+| population  | int     |
+| gdp         | bigint  |
++-------------+---------+
+name is the primary key (column with unique values) for this table.
+Each row of this table gives information about the name of a country, the continent to which it belongs, its area, the population, and its GDP value.
+ 
+
+A country is big if:
+
+it has an area of at least three million (i.e., 3000000 km2), or
+it has a population of at least twenty-five million (i.e., 25000000).
+Write a solution to find the name, population, and area of the big countries.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+World table:
++-------------+-----------+---------+------------+--------------+
+| name        | continent | area    | population | gdp          |
++-------------+-----------+---------+------------+--------------+
+| Afghanistan | Asia      | 652230  | 25500100   | 20343000000  |
+| Albania     | Europe    | 28748   | 2831741    | 12960000000  |
+| Algeria     | Africa    | 2381741 | 37100000   | 188681000000 |
+| Andorra     | Europe    | 468     | 78115      | 3712000000   |
+| Angola      | Africa    | 1246700 | 20609294   | 100990000000 |
++-------------+-----------+---------+------------+--------------+
+
+Output: 
++-------------+------------+---------+
+| name        | population | area    |
++-------------+------------+---------+
+| Afghanistan | 25500100   | 652230  |
+| Algeria     | 37100000   | 2381741 |
++-------------+------------+---------+
+
+
+
+Solution: 
+
+SELECT name, population, area
+FROM World
+WHERE area >= 3000000
+OR population >= 25000000
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+596. Classes With at Least 5 Students
+
+Table: Courses
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| student     | varchar |
+| class       | varchar |
++-------------+---------+
+(student, class) is the primary key (combination of columns with unique values) for this table.
+Each row of this table indicates the name of a student and the class in which they are enrolled.
+ 
+
+Write a solution to find all the classes that have at least five students.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Courses table:
++---------+----------+
+| student | class    |
++---------+----------+
+| A       | Math     |
+| B       | English  |
+| C       | Math     |
+| D       | Biology  |
+| E       | Math     |
+| F       | Computer |
+| G       | Math     |
+| H       | Math     |
+| I       | Math     |
++---------+----------+
+
+Output: 
++---------+
+| class   |
++---------+
+| Math    |
++---------+
+
+Explanation: 
+- Math has 6 students, so we include it.
+- English has 1 student, so we do not include it.
+- Biology has 1 student, so we do not include it.
+- Computer has 1 student, so we do not include it.
+
+
+
+
+Solution: 
+
+SELECT class
+FROM Courses
+GROUP BY class
+HAVING COUNT(student) >= 5 
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+610. Triangle Judgement
+
+Table: Triangle
+
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| x           | int  |
+| y           | int  |
+| z           | int  |
++-------------+------+
+In SQL, (x, y, z) is the primary key column for this table.
+Each row of this table contains the lengths of three line segments.
+ 
+
+Report for every three line segments whether they can form a triangle.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Triangle table:
++----+----+----+
+| x  | y  | z  |
++----+----+----+
+| 13 | 15 | 30 |
+| 10 | 20 | 15 |
++----+----+----+
+
+Output: 
++----+----+----+----------+
+| x  | y  | z  | triangle |
++----+----+----+----------+
+| 13 | 15 | 30 | No       |
+| 10 | 20 | 15 | Yes      |
++----+----+----+----------+
+
+
+
+
+Solution: 
+
+
+SELECT *, CASE WHEN x+y>z AND y+z>x AND x+z>y THEN 'Yes'
+ELSE 'No' END AS triangle
+FROM Triangle
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+613. Shortest Distance in a Line: 
+
+
+SELECT MIN(ABS(p1.x - p2.x)) AS Shortest
+FROM point p1
+CROSS JOIN point p2
+WHERE p1.x <> p2.x
+
+
+SELECT MIN(ABS(p1.x - p2.x)) AS Shortest
+FROM point p1
+INNER JOIN point p2
+WHERE p1.x < p2.x
+
+
+see again, didn't understand
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+619. Biggest Single Number
+
+
+Table: MyNumbers
+
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| num         | int  |
++-------------+------+
+This table may contain duplicates (In other words, there is no primary key for this table in SQL).
+Each row of this table contains an integer.
+ 
+
+A single number is a number that appeared only once in the MyNumbers table.
+
+Find the largest single number. If there is no single number, report null.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+MyNumbers table:
++-----+
+| num |
++-----+
+| 8   |
+| 8   |
+| 3   |
+| 3   |
+| 1   |
+| 4   |
+| 5   |
+| 6   |
++-----+
+
+Output: 
++-----+
+| num |
++-----+
+| 6   |
++-----+
+Explanation: The single numbers are 1, 4, 5, and 6.
+Since 6 is the largest single number, we return it.
+Example 2:
+
+Input: 
+MyNumbers table:
++-----+
+| num |
++-----+
+| 8   |
+| 8   |
+| 7   |
+| 7   |
+| 3   |
+| 3   |
+| 3   |
++-----+
+
+
+Output: 
++------+
+| num  |
++------+
+| null |
++------+
+Explanation: There are no single numbers in the input table so we return null.
+
+
+
+
+Solution: 
+
+WITH cte AS
+(SELECT num
+FROM MyNumbers
+GROUP BY num
+HAVING COUNT(num) = 1)
+
+SELECT CASE WHEN COUNT(*) > 0 THEN MAX(num)
+ELSE NULL END AS num
+FROM cte
+
+-- cte common table expression 
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+620. Not Boring Movies
+Easy
+Topics
+premium lock icon
+Companies
+SQL Schema
+Pandas Schema
+Table: Cinema
+
++----------------+----------+
+| Column Name    | Type     |
++----------------+----------+
+| id             | int      |
+| movie          | varchar  |
+| description    | varchar  |
+| rating         | float    |
++----------------+----------+
+id is the primary key (column with unique values) for this table.
+Each row contains information about the name of a movie, its genre, and its rating.
+rating is a 2 decimal places float in the range [0, 10]
+ 
+
+Write a solution to report the movies with an odd-numbered ID and a description that is not "boring".
+
+Return the result table ordered by rating in descending order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Cinema table:
++----+------------+-------------+--------+
+| id | movie      | description | rating |
++----+------------+-------------+--------+
+| 1  | War        | great 3D    | 8.9    |
+| 2  | Science    | fiction     | 8.5    |
+| 3  | irish      | boring      | 6.2    |
+| 4  | Ice song   | Fantacy     | 8.6    |
+| 5  | House card | Interesting | 9.1    |
++----+------------+-------------+--------+
+
+
+Output: 
++----+------------+-------------+--------+
+| id | movie      | description | rating |
++----+------------+-------------+--------+
+| 5  | House card | Interesting | 9.1    |
+| 1  | War        | great 3D    | 8.9    |
++----+------------+-------------+--------+
+
+
+Explanation: 
+We have three movies with odd-numbered IDs: 1, 3, and 5. The movie with ID = 3 is boring so we do not include it in the answer.
+
+
+
+Solution: 
+
+SELECT *
+FROM Cinema
+WHERE id%2<>0
+AND description <> "boring"
+ORDER BY rating DESC
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+627. Swap Salary
+
+
+Table: Salary
+
++-------------+----------+
+| Column Name | Type     |
++-------------+----------+
+| id          | int      |
+| name        | varchar  |
+| sex         | ENUM     |
+| salary      | int      |
++-------------+----------+
+id is the primary key (column with unique values) for this table.
+The sex column is ENUM (category) value of type ('m', 'f').
+The table contains information about an employee.
+ 
+
+Write a solution to swap all 'f' and 'm' values (i.e., change all 'f' values to 'm' and vice versa) with a single update statement and no intermediate temporary tables.
+
+Note that you must write a single update statement, do not write any select statement for this problem.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Salary table:
++----+------+-----+--------+
+| id | name | sex | salary |
++----+------+-----+--------+
+| 1  | A    | m   | 2500   |
+| 2  | B    | f   | 1500   |
+| 3  | C    | m   | 5500   |
+| 4  | D    | f   | 500    |
++----+------+-----+--------+
+
+Output: 
++----+------+-----+--------+
+| id | name | sex | salary |
++----+------+-----+--------+
+| 1  | A    | f   | 2500   |
+| 2  | B    | m   | 1500   |
+| 3  | C    | f   | 5500   |
+| 4  | D    | m   | 500    |
++----+------+-----+--------+
+
+Explanation: 
+(1, A) and (3, C) were changed from 'm' to 'f'.
+(2, B) and (4, D) were changed from 'f' to 'm'.
+
+
+
+
+Solution: 
+
+UPDATE Salary
+SET sex = CASE WHEN sex = 'f' THEN 'm'
+			   WHEN sex = 'm' THEN 'f'
+		  END			   
+		  
+		  
+Another way to solve this: 
+
+We can break this table into two temporary table, first it contains all the values of 'm' and other one for 'f'. And then in the first table, change everything to 'f' and in second table change everything to 'm' 
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1050. Actors and Directors Who Cooperated At Least Three Times
+
+Table: ActorDirector
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| actor_id    | int     |
+| director_id | int     |
+| timestamp   | int     |
++-------------+---------+
+timestamp is the primary key (column with unique values) for this table.
+ 
+
+Write a solution to find all the pairs (actor_id, director_id) where the actor has cooperated with the director at least three times.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+ActorDirector table:
++-------------+-------------+-------------+
+| actor_id    | director_id | timestamp   |
++-------------+-------------+-------------+
+| 1           | 1           | 0           |
+| 1           | 1           | 1           |
+| 1           | 1           | 2           |
+| 1           | 2           | 3           |
+| 1           | 2           | 4           |
+| 2           | 1           | 5           |
+| 2           | 1           | 6           |
++-------------+-------------+-------------+
+
+Output: 
++-------------+-------------+
+| actor_id    | director_id |
++-------------+-------------+
+| 1           | 1           |
++-------------+-------------+
+
+Explanation: The only pair is (1, 1) where they cooperated exactly 3 times.
+
+
+
+Solution: 
+
+SELECT actor_id, director_id
+FROM ActorDirector
+GROUP BY actor_id, director_id
+HAVING COUNT(timestamp) >= 3
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1113. Reported Posts:
+
+
+
+
+SELECT extra AS report_reason, COUNT(DISTINCT post_id) AS report_count 
+FROM Actions
+WHERE action_date = '2019-07-04'
+AND action = 'report'
+AND extra IS NOT Null
+GROUP BY extra
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1211. Queries Quality and Percentage
+Easy
+Topics
+premium lock icon
+Companies
+SQL Schema
+Pandas Schema
+Table: Queries
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| query_name  | varchar |
+| result      | varchar |
+| position    | int     |
+| rating      | int     |
++-------------+---------+
+This table may have duplicate rows.
+This table contains information collected from some queries on a database.
+The position column has a value from 1 to 500.
+The rating column has a value from 1 to 5. Query with rating less than 3 is a poor query.
+ 
+
+We define query quality as:
+The average of the ratio between query rating and its position.
+
+We also define poor query percentage as:
+The percentage of all queries with rating less than 3.
+
+Write a solution to find each query_name, the quality and poor_query_percentage.
+
+Both quality and poor_query_percentage should be rounded to 2 decimal places.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Queries table:
++------------+-------------------+----------+--------+
+| query_name | result            | position | rating |
++------------+-------------------+----------+--------+
+| Dog        | Golden Retriever  | 1        | 5      |
+| Dog        | German Shepherd   | 2        | 5      |
+| Dog        | Mule              | 200      | 1      |
+| Cat        | Shirazi           | 5        | 2      |
+| Cat        | Siamese           | 3        | 3      |
+| Cat        | Sphynx            | 7        | 4      |
++------------+-------------------+----------+--------+
+
+
+Output: 
++------------+---------+-----------------------+
+| query_name | quality | poor_query_percentage |
++------------+---------+-----------------------+
+| Dog        | 2.50    | 33.33                 |
+| Cat        | 0.66    | 33.33                 |
++------------+---------+-----------------------+
+
+
+Explanation: 
+Dog queries quality is ((5 / 1) + (5 / 2) + (1 / 200)) / 3 = 2.50
+Dog queries poor_ query_percentage is (1 / 3) * 100 = 33.33
+
+Cat queries quality equals ((2 / 5) + (3 / 3) + (4 / 7)) / 3 = 0.66
+Cat queries poor_ query_percentage is (1 / 3) * 100 = 33.33
+
+
+
+Solution: 
+
+WITH cte AS
+(SELECT query_name, rating/position AS ratio, 
+CASE WHEN rating < 3 THEN 1
+ELSE 0 END AS quality_binary
+FROM Queries)
+
+
+SELECT query_name, ROUND(AVG(ratio), 2) as quality, ROUND((SUM(quality_binary) / COUNT(*)) * 100, 2) AS poor_query_percentage
+FROM cte
+GROUP BY query_name 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+1241. Number of Comments per Post
+
+
+WITH posts AS
+(SELECT DISTINCT sub_id
+FROM Submissions
+WHERE parent_id IS NULL)
+
+
+WITH com AS
+(SELECT parent_id, COUNT(DISTINCT sub_id) AS Num
+FROM Submissions
+WHERE parent_id IS NOT Null
+GROUP BY parent_id)
+
+
+SELECT sub_id AS post_id, CASE WHEN Num IS NOT NULL THEN Num ELSE 0 END AS number_of_comments
+FROM posts
+LEFT JOIN com
+ON posts.sub_id = com.parent_id
+ORDER BY post_id 
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1251. Average Selling Price
+
+Table: Prices
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| product_id    | int     |
+| start_date    | date    |
+| end_date      | date    |
+| price         | int     |
++---------------+---------+
+(product_id, start_date, end_date) is the primary key (combination of columns with unique values) for this table.
+Each row of this table indicates the price of the product_id in the period from start_date to end_date.
+For each product_id there will be no two overlapping periods. That means there will be no two intersecting periods for the same product_id.
+ 
+
+Table: UnitsSold
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| product_id    | int     |
+| purchase_date | date    |
+| units         | int     |
++---------------+---------+
+This table may contain duplicate rows.
+Each row of this table indicates the date, units, and product_id of each product sold. 
+ 
+
+Write a solution to find the average selling price for each product. average_price should be rounded to 2 decimal places. If a product does not have any sold units, its average selling price is assumed to be 0.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Prices table:
++------------+------------+------------+--------+
+| product_id | start_date | end_date   | price  |
++------------+------------+------------+--------+
+| 1          | 2019-02-17 | 2019-02-28 | 5      |
+| 1          | 2019-03-01 | 2019-03-22 | 20     |
+| 2          | 2019-02-01 | 2019-02-20 | 15     |
+| 2          | 2019-02-21 | 2019-03-31 | 30     |
++------------+------------+------------+--------+
+
+
+UnitsSold table:
++------------+---------------+-------+
+| product_id | purchase_date | units |
++------------+---------------+-------+
+| 1          | 2019-02-25    | 100   |
+| 1          | 2019-03-01    | 15    |
+| 2          | 2019-02-10    | 200   |
+| 2          | 2019-03-22    | 30    |
++------------+---------------+-------+
+
+
+Output: 
++------------+---------------+
+| product_id | average_price |
++------------+---------------+
+| 1          | 6.96          |
+| 2          | 16.96         |
++------------+---------------+
+
+
+Explanation: 
+Average selling price = Total Price of Product / Number of products sold.
+Average selling price for product 1 = ((100 * 5) + (15 * 20)) / 115 = 6.96
+Average selling price for product 2 = ((200 * 15) + (30 * 30)) / 230 = 16.96
+
+
+
+Solution: 
+
+SELECT p.product_id, ROUND(SUM(p.price * u.units) / SUM(u.units), 2) AS average_price
+FROM Prices p
+INNER JOIN UnitsSold u
+ON p.product_id = u.product_id
+WHERE u.purchase_date BETWEEN p.start_date AND p.end_date
+GROUP BY p.product_id
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1294. Weather Type in Each Country
+
+
+SELECT c.coutry_name, CASE WHEN AVG(w.weather_state) <= 15 THEN 'Cold'
+						   WHEN AVG(w.weather_state) >= 25 THEN 'Hot'
+						   ELSE 'Warm' END AS weather_type
+FROM weather w
+LEFT JOIN Countries c
+ON w.country_id = c.country_id
+WHERE MONTH(day) = 11
+AND YEAR(day) = 2019
+GROUP BY c.country_name 
+
+
+Whatever you're grouping, you would return the same thing to SELECT statement, which means, since you're grouping by 'country_name' field, you should have the same thing in the SELECT statement also 'country_name'
+
+
+Since in the above sql AVG is used twice, to optimize the above query, we can use the cte:
+
+WITH WeatherSummary AS (
+    SELECT c.country_name, AVG(w.weather_state) AS avg_weather
+    FROM weather w
+    LEFT JOIN Countries c ON w.country_id = c.country_id
+    WHERE MONTH(day) = 11
+    AND YEAR(day) = 2019
+    GROUP BY c.country_name
+)
+SELECT country_name, 
+       CASE WHEN avg_weather <= 15 THEN 'Cold'
+            WHEN avg_weather >= 25 THEN 'Hot'
+            ELSE 'Warm' 
+       END AS weather_type
+FROM WeatherSummary;
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1303. Find the Team Size
+
+SELECT employee_id, COUNT(employee_id) OVER(PARTITION BY team_id ORDER BY team_id) AS team_size
+FROM Employee
+
+
+
+Same using GROUPBY Clause:
+
+SELECT e.employee_id, team_summary.team_size
+FROM Employee e
+JOIN (
+    SELECT team_id, COUNT(*) AS team_size
+    FROM Employee
+    GROUP BY team_id
+) team_summary
+ON e.team_id = team_summary.team_id;
+
+Explanation:
+1. Subquery (team_summary):
+Groups employees by team_id and counts the number of employees in each team.
+Produces a mapping of team_id → team_size.
+
+2. Join Back to Employee Table:
+Matches each employee with their respective team_size.
+
+
+
+Anyway using partition is the efficient way of doing, instead of grouping by and making another table. Because if you make another table, you perform join and basically include lot more steps.  
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1280. Students and Examinations
+
+
+Table: Students:
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| student_id    | int     |
+| student_name  | varchar |
++---------------+---------+
+student_id is the primary key (column with unique values) for this table.
+Each row of this table contains the ID and the name of one student in the school.
+ 
+
+Table: Subjects
++--------------+---------+
+| Column Name  | Type    |
++--------------+---------+
+| subject_name | varchar |
++--------------+---------+
+subject_name is the primary key (column with unique values) for this table.
+Each row of this table contains the name of one subject in the school.
+ 
+
+Table: Examinations
+
++--------------+---------+
+| Column Name  | Type    |
++--------------+---------+
+| student_id   | int     |
+| subject_name | varchar |
++--------------+---------+
+There is no primary key (column with unique values) for this table. It may contain duplicates.
+Each student from the Students table takes every course from the Subjects table.
+Each row of this table indicates that a student with ID student_id attended the exam of subject_name.
+ 
+
+Write a solution to find the number of times each student attended each exam.
+
+Return the result table ordered by student_id and subject_name.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Students table:
++------------+--------------+
+| student_id | student_name |
++------------+--------------+
+| 1          | Alice        |
+| 2          | Bob          |
+| 13         | John         |
+| 6          | Alex         |
++------------+--------------+
+
+
+Subjects table:
++--------------+
+| subject_name |
++--------------+
+| Math         |
+| Physics      |
+| Programming  |
++--------------+
+
+
+Examinations table:
++------------+--------------+
+| student_id | subject_name |
++------------+--------------+
+| 1          | Math         |
+| 1          | Physics      |
+| 1          | Programming  |
+| 2          | Programming  |
+| 1          | Physics      |
+| 1          | Math         |
+| 13         | Math         |
+| 13         | Programming  |
+| 13         | Physics      |
+| 2          | Math         |
+| 1          | Math         |
++------------+--------------+
+
+
+Output: 
++------------+--------------+--------------+----------------+
+| student_id | student_name | subject_name | attended_exams |
++------------+--------------+--------------+----------------+
+| 1          | Alice        | Math         | 3              |
+| 1          | Alice        | Physics      | 2              |
+| 1          | Alice        | Programming  | 1              |
+| 2          | Bob          | Math         | 1              |
+| 2          | Bob          | Physics      | 0              |
+| 2          | Bob          | Programming  | 1              |
+| 6          | Alex         | Math         | 0              |
+| 6          | Alex         | Physics      | 0              |
+| 6          | Alex         | Programming  | 0              |
+| 13         | John         | Math         | 1              |
+| 13         | John         | Physics      | 1              |
+| 13         | John         | Programming  | 1              |
++------------+--------------+--------------+----------------+
+
+
+Explanation: 
+The result table should contain all students and all subjects.
+Alice attended the Math exam 3 times, the Physics exam 2 times, and the Programming exam 1 time.
+Bob attended the Math exam 1 time, the Programming exam 1 time, and did not attend the Physics exam.
+Alex did not attend any exams.
+John attended the Math exam 1 time, the Physics exam 1 time, and the Programming exam 1 time.
+
+
+
+WITH cte AS
+(SELECT *
+FROM Students
+CROSS JOIN Subjects),
+
+-- 1 Alice Math
+-- 1 Alice Physics
+
+cte2 AS
+(SELECT student_id, subject_name,
+COUNT(subject_name) AS attempt_count
+FROM Examination
+GROUP BY student_id, subject_name)
+
+-- 1 Math    3
+-- 1 Physics 2
+
+SELECT cte.student_id, cte.student_name, cte.subject_name, CASE WHEN attempt_count IS NOT NULL THEN attempt_count ELSE 0 END AS attended_exams
+FROM cte 
+LEFT JOIN cte2
+ON cte.student_id = cte2.student_id 
+AND cte.subject_name = cte2.subject_name
+ORDER BY cte.student_id, cte.subject_name 
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1350. Students With Invalid Departments
+
+
+SELECT s.id, s.name, 
+FROM Students s
+LEFT JOIN Departments d
+ON s.department_id = d.id
+WHERE d.name IS NULL
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1378. Replace Employee ID With The Unique Identifier
+
+Table: Employees
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| id            | int     |
+| name          | varchar |
++---------------+---------+
+id is the primary key (column with unique values) for this table.
+Each row of this table contains the id and the name of an employee in a company.
+ 
+
+Table: EmployeeUNI
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| id            | int     |
+| unique_id     | int     |
++---------------+---------+
+(id, unique_id) is the primary key (combination of columns with unique values) for this table.
+Each row of this table contains the id and the corresponding unique id of an employee in the company.
+ 
+
+Write a solution to show the unique ID of each user, If a user does not have a unique ID replace just show null.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Employees table:
++----+----------+
+| id | name     |
++----+----------+
+| 1  | Alice    |
+| 7  | Bob      |
+| 11 | Meir     |
+| 90 | Winston  |
+| 3  | Jonathan |
++----+----------+
+EmployeeUNI table:
++----+-----------+
+| id | unique_id |
++----+-----------+
+| 3  | 1         |
+| 11 | 2         |
+| 90 | 3         |
++----+-----------+
+Output: 
++-----------+----------+
+| unique_id | name     |
++-----------+----------+
+| null      | Alice    |
+| null      | Bob      |
+| 2         | Meir     |
+| 3         | Winston  |
+| 1         | Jonathan |
++-----------+----------+
+
+
+Explanation: 
+Alice and Bob do not have a unique ID, We will show null instead.
+The unique ID of Meir is 2.
+The unique ID of Winston is 3.
+The unique ID of Jonathan is 1.
+
+
+
+Solution: 
+SELECT eu.unique_id, e.name
+FROM Employees e
+LEFT JOIN EmployeeUNI eu
+ON e.id = eu.id
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1407. Top Travellers
+Easy
+Topics
+premium lock icon
+Companies
+SQL Schema
+Pandas Schema
+Table: Users
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| id            | int     |
+| name          | varchar |
++---------------+---------+
+id is the column with unique values for this table.
+name is the name of the user.
+ 
+
+Table: Rides
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| id            | int     |
+| user_id       | int     |
+| distance      | int     |
++---------------+---------+
+id is the column with unique values for this table.
+user_id is the id of the user who traveled the distance "distance".
+ 
+
+Write a solution to report the distance traveled by each user.
+
+Return the result table ordered by travelled_distance in descending order, if two or more users traveled the same distance, order them by their name in ascending order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Users table:
++------+-----------+
+| id   | name      |
++------+-----------+
+| 1    | Alice     |
+| 2    | Bob       |
+| 3    | Alex      |
+| 4    | Donald    |
+| 7    | Lee       |
+| 13   | Jonathan  |
+| 19   | Elvis     |
++------+-----------+
+
+
+Rides table:
++------+----------+----------+
+| id   | user_id  | distance |
++------+----------+----------+
+| 1    | 1        | 120      |
+| 2    | 2        | 317      |
+| 3    | 3        | 222      |
+| 4    | 7        | 100      |
+| 5    | 13       | 312      |
+| 6    | 19       | 50       |
+| 7    | 7        | 120      |
+| 8    | 19       | 400      |
+| 9    | 7        | 230      |
++------+----------+----------+
+
+
+Output: 
++----------+--------------------+
+| name     | travelled_distance |
++----------+--------------------+
+| Elvis    | 450                |
+| Lee      | 450                |
+| Bob      | 317                |
+| Jonathan | 312                |
+| Alex     | 222                |
+| Alice    | 120                |
+| Donald   | 0                  |
++----------+--------------------+
+
+
+Explanation: 
+Elvis and Lee traveled 450 miles, Elvis is the top traveler as his name is alphabetically smaller than Lee.
+Bob, Jonathan, Alex, and Alice have only one ride and we just order them by the total distances of the ride.
+Donald did not have any rides, the distance traveled by him is 0.
+
+
+
+Solution: 
+
+SELECT DISTINCT u.name, CASE WHEN r.distance IS NOT NULL THEN SUM(distance) OVER(PARTITION BY r.user_id ORDER BY r.user_id)
+			   ELSE 0 END AS travelled_distance
+FROM Users u
+LEFT JOIN Rides r
+ON u.id = r.user_id 
+ORDER BY travelled_distance DESC, u.name 			   
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1421. NPV Queries 
+
+
+SELECT q.id, q.year, CASE WHEN n.npv IS NOT NULL THEN n.npv ELSE 0 END AS npv
+FROM queries q
+LEFT JOIN NPV n
+ON q.id = n.id
+AND q.year = n.year
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1435. Create a Session Bar Chart
+
+WITH cte AS
+(SELECT *, CASE WHEN duration BETWEEN 0 AND 299 THEN '[0-5>'
+                WHEN duration BETWEEN 300 AND 599 THEN '[5-10>'
+				WHEN duration BETWEEN 600 AND 899 THEN '[10-15>'
+				ELSE '15 or more' END AS bin
+FROM Sessions), 
+
+-- 1 30    '[0-5>'
+-- 2 199   '[0-5>'
+-- 3 299   '[0-5>'
+-- 4 580   '[5-10>'
+-- 5 1000  '15 or more'
+
+
+-- '[0-5>'       3
+-- '[5-10>'      1
+-- '15 or more'  1
+
+
+cte2 as 
+(SELECT '[0-5>' AS bin
+UNION
+SELECT '[5-10>'
+UNION
+SELECT '[10-15>'
+UNION 
+SELECT '15 or more')
+
+
+SELECT cte2.bin, CASE WHEN W.c IS NOT NULL THEN W.c ELSE 0 END AS total 
+FROM cte2
+LEFT JOIN 
+(SELECT bin, COUNT(session_id) AS c
+FROM cte
+GROUP BY bin) W
+ON cte2.bin = W.bin
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1484. Group Sold Products By The Date
+
+Table Activities:
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| sell_date   | date    |
+| product     | varchar |
++-------------+---------+
+There is no primary key (column with unique values) for this table. It may contain duplicates.
+Each row of this table contains the product name and the date it was sold in a market.
+ 
+
+Write a solution to find for each date the number of different products sold and their names.
+
+The sold products names for each date should be sorted lexicographically.
+
+Return the result table ordered by sell_date.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Activities table:
++------------+------------+
+| sell_date  | product     |
++------------+------------+
+| 2020-05-30 | Headphone  |
+| 2020-06-01 | Pencil     |
+| 2020-06-02 | Mask       |
+| 2020-05-30 | Basketball |
+| 2020-06-01 | Bible      |
+| 2020-06-02 | Mask       |
+| 2020-05-30 | T-Shirt    |
++------------+------------+
+
+
+Output: 
++------------+----------+------------------------------+
+| sell_date  | num_sold | products                     |
++------------+----------+------------------------------+
+| 2020-05-30 | 3        | Basketball,Headphone,T-shirt |
+| 2020-06-01 | 2        | Bible,Pencil                 |
+| 2020-06-02 | 1        | Mask                         |
++------------+----------+------------------------------+
+
+
+Explanation: 
+For 2020-05-30, Sold items were (Headphone, Basketball, T-shirt), we sort them lexicographically and separate them by a comma.
+For 2020-06-01, Sold items were (Pencil, Bible), we sort them lexicographically and separate them by a comma.
+For 2020-06-02, the Sold item is (Mask), we just return it.
+
+
+
+Solution: 
+
+SELECT sell_date, COUNT(DISTINCT product) AS num_sold, 
+GROUP_CONCAT(DISTINCT product ORDER BY product) AS products
+FROM Activities
+GROUP BY sell_date
+ORDER BY sell_date
+
+
+
+Here’s the nuance:
+ORDER BY product → means sort by product in ascending order.
+ORDER BY product ASC → means exactly the same thing but with the sort direction made explicit.
+ORDER BY product DESC → flips the order and gives you a descending, reverse-lexicographic list.
+
+Since lexicographical ordering typically implies ascending unless stated otherwise, the clean version—ORDER BY product—is often preferred for readability.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1565. Unique Orders and Customers Per Month
+
+
+SELECT SUBSTRING(order_date, 1, 7) AS month, 
+COUNT(order_id) AS order_count, COUNT(DISTINCT customer_id) AS customer_count
+FROM Orders
+WHERE invoice > 20
+GROUP BY SUBSTRING(order_date, 1, 7)
+
+
+
+Initially, we have tried concat function, CONCAT((YEAR(order_date), '-', MONTH(order_date))), to fetch the year and month part alone. But it doesn't work, since the 'MONTH' fetches only the number say (9 instead of '09')
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+1571. Warehouse Manager 
+
+
+SELECT w.name AS warehouse_name, 
+SUM(w.units * p.Width * p.Length * p.Height) AS volume
+FROM Warehouse w
+INNER JOIN Products p
+ON w.product_id = p.product_id
+GROUP BY w.name
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1581. Customer Who Visited but Did Not Make Any Transactions
+
+Table: Visits
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| visit_id    | int     |
+| customer_id | int     |
++-------------+---------+
+visit_id is the column with unique values for this table.
+This table contains information about the customers who visited the mall.
+ 
+
+Table: Transactions
++----------------+---------+
+| Column Name    | Type    |
++----------------+---------+
+| transaction_id | int     |
+| visit_id       | int     |
+| amount         | int     |
++----------------+---------+
+transaction_id is column with unique values for this table.
+This table contains information about the transactions made during the visit_id.
+ 
+
+Write a solution to find the IDs of the users who visited without making any transactions and the number of times they made these types of visits.
+
+Return the result table sorted in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Visits
++----------+-------------+
+| visit_id | customer_id |
++----------+-------------+
+| 1        | 23          |
+| 2        | 9           |
+| 4        | 30          |
+| 5        | 54          |
+| 6        | 96          |
+| 7        | 54          |
+| 8        | 54          |
++----------+-------------+
+
+
+Transactions
++----------------+----------+--------+
+| transaction_id | visit_id | amount |
++----------------+----------+--------+
+| 2              | 5        | 310    |
+| 3              | 5        | 300    |
+| 9              | 5        | 200    |
+| 12             | 1        | 910    |
+| 13             | 2        | 970    |
++----------------+----------+--------+
+Output: 
++-------------+----------------+
+| customer_id | count_no_trans |
++-------------+----------------+
+| 54          | 2              |
+| 30          | 1              |
+| 96          | 1              |
++-------------+----------------+
+
+
+Explanation: 
+Customer with id = 23 visited the mall once and made one transaction during the visit with id = 12.
+Customer with id = 9 visited the mall once and made one transaction during the visit with id = 13.
+Customer with id = 30 visited the mall once and did not make any transactions.
+Customer with id = 54 visited the mall three times. During 2 visits they did not make any transactions, and during one visit they made 3 transactions.
+Customer with id = 96 visited the mall once and did not make any transactions.
+
+As we can see, users with IDs 30 and 96 visited the mall one time without making any transactions. Also, user 54 visited the mall twice and did not make any transactions.
+
+
+
+
+Solution: 
+
+SELECT v.customer_id, COUNT(v.visit_id) AS count_no_trans
+FROM Visits v
+LEFT JOIN Transactions t
+ON v.visit_id = t.visit_id
+WHERE t.transaction_id IS NULL
+GROUP BY v.customer_id
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1587. Bank Account Summary II
+
+
+Table: Users
+
++--------------+---------+
+| Column Name  | Type    |
++--------------+---------+
+| account      | int     |
+| name         | varchar |
++--------------+---------+
+account is the primary key (column with unique values) for this table.
+Each row of this table contains the account number of each user in the bank.
+There will be no two users having the same name in the table.
+ 
+
+Table: Transactions
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| trans_id      | int     |
+| account       | int     |
+| amount        | int     |
+| transacted_on | date    |
++---------------+---------+
+trans_id is the primary key (column with unique values) for this table.
+Each row of this table contains all changes made to all accounts.
+amount is positive if the user received money and negative if they transferred money.
+All accounts start with a balance of 0.
+ 
+
+Write a solution to report the name and balance of users with a balance higher than 10000. The balance of an account is equal to the sum of the amounts of all transactions involving that account.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Users table:
++------------+--------------+
+| account    | name         |
++------------+--------------+
+| 900001     | Alice        |
+| 900002     | Bob          |
+| 900003     | Charlie      |
++------------+--------------+
+
+
+Transactions table:
++------------+------------+------------+---------------+
+| trans_id   | account    | amount     | transacted_on |
++------------+------------+------------+---------------+
+| 1          | 900001     | 7000       |  2020-08-01   |
+| 2          | 900001     | 7000       |  2020-09-01   |
+| 3          | 900001     | -3000      |  2020-09-02   |
+| 4          | 900002     | 1000       |  2020-09-12   |
+| 5          | 900003     | 6000       |  2020-08-07   |
+| 6          | 900003     | 6000       |  2020-09-07   |
+| 7          | 900003     | -4000      |  2020-09-11   |
++------------+------------+------------+---------------+
+
+
+Output: 
++------------+------------+
+| name       | balance    |
++------------+------------+
+| Alice      | 11000      |
++------------+------------+
+
+
+Explanation: 
+Alice's balance is (7000 + 7000 - 3000) = 11000.
+Bob's balance is 1000.
+Charlie's balance is (6000 + 6000 - 4000) = 8000.
+
+
+Solution: 
+
+SELECT u.name, SUM(amount) AS balance
+FROM Transactions t
+INNER JOIN users u
+ON t.account = u.account
+GROUP BY u.name
+HAVING SUM(amount) > 10000
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1683. Invalid Tweets
+
+
+
+Table: Tweets
+
++----------------+---------+
+| Column Name    | Type    |
++----------------+---------+
+| tweet_id       | int     |
+| content        | varchar |
++----------------+---------+
+tweet_id is the primary key (column with unique values) for this table.
+content consists of alphanumeric characters, '!', or ' ' and no other special characters.
+This table contains all the tweets in a social media app.
+ 
+
+Write a solution to find the IDs of the invalid tweets. The tweet is invalid if the number of characters used in the content of the tweet is strictly greater than 15.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Tweets table:
++----------+-----------------------------------+
+| tweet_id | content                           |
++----------+-----------------------------------+
+| 1        | Let us Code                       |
+| 2        | More than fifteen chars are here! |
++----------+-----------------------------------+
+
+
+Output: 
++----------+
+| tweet_id |
++----------+
+| 2        |
++----------+
+
+
+Explanation: 
+Tweet 1 has length = 11. It is a valid tweet.
+Tweet 2 has length = 33. It is an invalid tweet.
+
+
+Solution: 
+
+SELECT tweet_id
+FROM Tweets
+WHERE LENGTH(content) > 15
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1693. Daily Leads and Partners
+
+
+
+Table: DailySales
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| date_id     | date    |
+| make_name   | varchar |
+| lead_id     | int     |
+| partner_id  | int     |
++-------------+---------+
+There is no primary key (column with unique values) for this table. It may contain duplicates.
+This table contains the date and the name of the product sold and the IDs of the lead and partner it was sold to.
+The name consists of only lowercase English letters.
+ 
+
+For each date_id and make_name, find the number of distinct lead_id's and distinct partner_id's.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+DailySales table:
++-----------+-----------+---------+------------+
+| date_id   | make_name | lead_id | partner_id |
++-----------+-----------+---------+------------+
+| 2020-12-8 | toyota    | 0       | 1          |
+| 2020-12-8 | toyota    | 1       | 0          |
+| 2020-12-8 | toyota    | 1       | 2          |
+| 2020-12-7 | toyota    | 0       | 2          |
+| 2020-12-7 | toyota    | 0       | 1          |
+| 2020-12-8 | honda     | 1       | 2          |
+| 2020-12-8 | honda     | 2       | 1          |
+| 2020-12-7 | honda     | 0       | 1          |
+| 2020-12-7 | honda     | 1       | 2          |
+| 2020-12-7 | honda     | 2       | 1          |
++-----------+-----------+---------+------------+
+
+
+Output: 
++-----------+-----------+--------------+-----------------+
+| date_id   | make_name | unique_leads | unique_partners |
++-----------+-----------+--------------+-----------------+
+| 2020-12-8 | toyota    | 2            | 3               |
+| 2020-12-7 | toyota    | 1            | 2               |
+| 2020-12-8 | honda     | 2            | 2               |
+| 2020-12-7 | honda     | 3            | 2               |
++-----------+-----------+--------------+-----------------+
+
+
+Explanation: 
+For 2020-12-8, toyota gets leads = [0, 1] and partners = [0, 1, 2] while honda gets leads = [1, 2] and partners = [1, 2].
+For 2020-12-7, toyota gets leads = [0] and partners = [1, 2] while honda gets leads = [0, 1, 2] and partners = [1, 2].
+
+
+
+
+Solution: 
+SELECT date_id, make_name, COUNT(DISTINCT lead_id) AS unique_leads, COUNT(DISTINCT partner_id) AS unique_partners
+FROM DailySales
+GROUP BY date_id, make_name 
+
+
+
+
+
+
+Extras: 
+
+I've asked a question whether we can apply COUNT Function to the the field we use in the GROUP BY:
+
+Yes, you can absolutely use COUNT(date_id) in this query. But the result might not always be what you're expecting, depending on what you want to measure.
+
+Let’s break it down with the query:
+
+SELECT 
+  date_id, 
+  make_name, 
+  COUNT(date_id) AS total_rows
+FROM DailySales
+GROUP BY date_id, make_name;
+
+
+Here’s what this does:
+After the GROUP BY, the data is split by unique (date_id, make_name) pairs.
+COUNT(date_id) counts how many non-NULL values of date_id exist in each group (and since date_id likely isn't NULL, it effectively counts the number of rows in each group).
+
+💡 So in your problem, COUNT(date_id) would give you the total number of rows (sales records) for each date and make—not the number of distinct dates (because date_id is constant within each group).
+
+
+| date_id    | make_name | total_rows |
+| ---------- | --------- | ---------- |
+| 2020-12-08 | toyota    | 3          |
+| 2020-12-07 | toyota    | 2          |
+| 2020-12-08 | honda     | 2          |
+| 2020-12-07 | honda     | 3          |
+
+
+
+
+
+
+
+Lets see how COUNT(*), COUNT(date_id), and COUNT(DISTINCT date_id) would behave in the same query to visualize the difference:
+
+COUNT(*): Counts all rows in the group, regardless of NULLs. Always gives you the total number of records.
+COUNT(date_id): Counts non-NULL values of date_id. In this case, it’s 3 since date_id is never NULL.
+COUNT(DISTINCT date_id): Counts the unique values of date_id. Since all rows have the same date, this is just 1.
+
+
+🪄 What’s the point?
+All three functions count something, but they each answer a slightly different question:
+How many rows are there? → COUNT(*)
+How many date_ids aren’t NULL? → COUNT(date_id)
+How many unique date_ids? → COUNT(DISTINCT date_id)
+
+If you're grouping by date_id, COUNT(DISTINCT date_id) is usually redundant (will always be 1), but the others might help you catch edge cases—like nulls or duplicates.
+
+
+SELECT 
+  date_id, 
+  make_name,
+  COUNT(*) AS total_rows,
+  COUNT(date_id) AS non_null_dates,
+  COUNT(DISTINCT date_id) AS distinct_dates
+FROM DailySales
+GROUP BY date_id, make_name;
+
+
+
+| date_id    | make_name | total_rows | non_null_dates | distinct_dates |
+| ---------- | --------- | ---------- | -------------- | -------------- |
+| 2020-12-07 | honda     | 3          | 3              | 1              |
+| 2020-12-07 | toyota    | 2          | 2              | 1              |
+| 2020-12-08 | honda     | 2          | 2              | 1              |
+| 2020-12-08 | toyota    | 3          | 3              | 1              |
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1741. Find Total Time Spent by Each Employee
+
+Table: Employees
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| emp_id      | int  |
+| event_day   | date |
+| in_time     | int  |
+| out_time    | int  |
++-------------+------+
+(emp_id, event_day, in_time) is the primary key (combinations of columns with unique values) of this table.
+The table shows the employees' entries and exits in an office.
+event_day is the day at which this event happened, in_time is the minute at which the employee entered the office, and out_time is the minute at which they left the office.
+in_time and out_time are between 1 and 1440.
+It is guaranteed that no two events on the same day intersect in time, and in_time < out_time.
+ 
+
+Write a solution to calculate the total time in minutes spent by each employee on each day at the office. Note that within one day, an employee can enter and leave more than once. The time spent in the office for a single entry is out_time - in_time.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Employees table:
++--------+------------+---------+----------+
+| emp_id | event_day  | in_time | out_time |
++--------+------------+---------+----------+
+| 1      | 2020-11-28 | 4       | 32       |
+| 1      | 2020-11-28 | 55      | 200      |
+| 1      | 2020-12-03 | 1       | 42       |
+| 2      | 2020-11-28 | 3       | 33       |
+| 2      | 2020-12-09 | 47      | 74       |
++--------+------------+---------+----------+
+
+Output: 
++------------+--------+------------+
+| day        | emp_id | total_time |
++------------+--------+------------+
+| 2020-11-28 | 1      | 173        |
+| 2020-11-28 | 2      | 30         |
+| 2020-12-03 | 1      | 41         |
+| 2020-12-09 | 2      | 27         |
++------------+--------+------------+
+
+
+Explanation: 
+Employee 1 has three events: two on day 2020-11-28 with a total of (32 - 4) + (200 - 55) = 173, and one on day 2020-12-03 with a total of (42 - 1) = 41.
+Employee 2 has two events: one on day 2020-11-28 with a total of (33 - 3) = 30, and one on day 2020-12-09 with a total of (74 - 47) = 27.
+
+
+
+
+Solution: 
+
+SELECT event_day AS day, emp_id, SUM(out_time - in_time) AS total_time
+FROM Employees
+GROUP BY event_day, emp_id
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+1757. Recyclable and Low Fat Products
+
+
+
+Table: Products
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| product_id  | int     |
+| low_fats    | enum    |
+| recyclable  | enum    |
++-------------+---------+
+product_id is the primary key (column with unique values) for this table.
+low_fats is an ENUM (category) of type ('Y', 'N') where 'Y' means this product is low fat and 'N' means it is not.
+recyclable is an ENUM (category) of types ('Y', 'N') where 'Y' means this product is recyclable and 'N' means it is not.
+ 
+
+Write a solution to find the ids of products that are both low fat and recyclable.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Products table:
++-------------+----------+------------+
+| product_id  | low_fats | recyclable |
++-------------+----------+------------+
+| 0           | Y        | N          |
+| 1           | Y        | Y          |
+| 2           | N        | Y          |
+| 3           | Y        | Y          |
+| 4           | N        | N          |
++-------------+----------+------------+
+
+
+Output: 
++-------------+
+| product_id  |
++-------------+
+| 1           |
+| 3           |
++-------------+
+Explanation: Only products 1 and 3 are both low fat and recyclable.
+
+
+Solution: 
+
+SELECT product_id
+FROM Products
+WHERE low_fats = 'Y'
+AND recyclable = 'Y'
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1821. Find Customers With Positive Revenue this Year
+
+SELECT customer_id
+FROM Customers
+WHERE year = '2021'
+AND revenue > 0
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1873. Calculate Special Bonus
+
+Table: Employees
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| employee_id | int     |
+| name        | varchar |
+| salary      | int     |
++-------------+---------+
+employee_id is the primary key (column with unique values) for this table.
+Each row of this table indicates the employee ID, employee name, and salary.
+ 
+
+Write a solution to calculate the bonus of each employee. The bonus of an employee is 100% of their salary if the ID of the employee is an odd number and the employee's name does not start with the character 'M'. The bonus of an employee is 0 otherwise.
+
+Return the result table ordered by employee_id.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Employees table:
++-------------+---------+--------+
+| employee_id | name    | salary |
++-------------+---------+--------+
+| 2           | Meir    | 3000   |
+| 3           | Michael | 3800   |
+| 7           | Addilyn | 7400   |
+| 8           | Juan    | 6100   |
+| 9           | Kannon  | 7700   |
++-------------+---------+--------+
+
+
+Output: 
++-------------+-------+
+| employee_id | bonus |
++-------------+-------+
+| 2           | 0     |
+| 3           | 0     |
+| 7           | 7400  |
+| 8           | 0     |
+| 9           | 7700  |
++-------------+-------+
+
+
+Explanation: 
+The employees with IDs 2 and 8 get 0 bonus because they have an even employee_id.
+The employee with ID 3 gets 0 bonus because their name starts with 'M'.
+The rest of the employees get a 100% bonus.
+
+
+
+Solution: 
+
+SELECT employee_id, CASE WHEN employee_id % 2 <> 0 AND name NOT LIKE 'M%' THEN salary ELSE 0 END AS bonus
+FROM Employees
+ORDER BY employee_id 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1890. The Latest Login in 2020
+
+Table: Logins
++----------------+----------+
+| Column Name    | Type     |
++----------------+----------+
+| user_id        | int      |
+| time_stamp     | datetime |
++----------------+----------+
+(user_id, time_stamp) is the primary key (combination of columns with unique values) for this table.
+Each row contains information about the login time for the user with ID user_id.
+ 
+
+Write a solution to report the latest login for all users in the year 2020. Do not include the users who did not login in 2020.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Logins table:
++---------+---------------------+
+| user_id | time_stamp          |
++---------+---------------------+
+| 6       | 2020-06-30 15:06:07 |
+| 6       | 2021-04-21 14:06:06 |
+| 6       | 2019-03-07 00:18:15 |
+| 8       | 2020-02-01 05:10:53 |
+| 8       | 2020-12-30 00:46:50 |
+| 2       | 2020-01-16 02:49:50 |
+| 2       | 2019-08-25 07:59:08 |
+| 14      | 2019-07-14 09:00:00 |
+| 14      | 2021-01-06 11:59:59 |
++---------+---------------------+
+
+
+Output: 
++---------+---------------------+
+| user_id | last_stamp          |
++---------+---------------------+
+| 6       | 2020-06-30 15:06:07 |
+| 8       | 2020-12-30 00:46:50 |
+| 2       | 2020-01-16 02:49:50 |
++---------+---------------------+
+
+
+Explanation: 
+User 6 logged into their account 3 times but only once in 2020, so we include this login in the result table.
+User 8 logged into their account 2 times in 2020, once in February and once in December. We include only the latest one (December) in the result table.
+User 2 logged into their account 2 times but only once in 2020, so we include this login in the result table.
+User 14 did not login in 2020, so we do not include them in the result table.
+
+
+
+Solution: 
+
+SELECT DISTINCT user_id, FIRST_VALUE(time_stamp) OVER(PARTITION BY user_id ORDER BY time_stamp DESC) AS last_stamp
+FROM Logins 
+WHERE YEAR(time_stamp) = '2020'
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1965. Employees With Missing Information
+
+Table: Employees
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| employee_id | int     |
+| name        | varchar |
++-------------+---------+
+employee_id is the column with unique values for this table.
+Each row of this table indicates the name of the employee whose ID is employee_id.
+ 
+
+Table: Salaries
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| employee_id | int     |
+| salary      | int     |
++-------------+---------+
+employee_id is the column with unique values for this table.
+Each row of this table indicates the salary of the employee whose ID is employee_id.
+ 
+
+Write a solution to report the IDs of all the employees with missing information. The information of an employee is missing if:
+
+The employee's name is missing, or
+The employee's salary is missing.
+Return the result table ordered by employee_id in ascending order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Employees table:
++-------------+----------+
+| employee_id | name     |
++-------------+----------+
+| 2           | Crew     |
+| 4           | Haven    |
+| 5           | Kristian |
++-------------+----------+
+
+
+Salaries table:
++-------------+--------+
+| employee_id | salary |
++-------------+--------+
+| 5           | 76071  |
+| 1           | 22517  |
+| 4           | 63539  |
++-------------+--------+
+Output: 
++-------------+
+| employee_id |
++-------------+
+| 1           |
+| 2           |
++-------------+
+
+
+Explanation: 
+Employees 1, 2, 4, and 5 are working at this company.
+The name of employee 1 is missing.
+The salary of employee 2 is missing.
+
+
+
+
+Solution: 
+
+SELECT e.employee_id
+FROM Employees e
+LEFT JOIN Salaries s
+ON e.employee_id = s.employee_id
+WHERE s.salary IS NULL
+UNION 
+SELECT s.employee_id
+FROM Salaries s
+LEFT JOIN Employees e
+ON s.employee_id = e.employee_id
+WHERE e.name IS NULL 
+ORDER BY employee_id
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2026. Low-Quality Problems 
+
+
+
+Solution: 
+
+SELECT problem_id
+FROM Problems
+WHERE (likes)/(likes+dislikes) < 0.6
+ORDER BY problem_id
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2082. The Number of Rich Customers 
+
+
+Solution: 
+
+SELECT COUNT(DISTINCT customer_id) AS rich_count
+FROM Store 
+WHERE amount > 500
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1445. Apples & Oranges 
+
+
+
+Solution: 
+
+WITH cte AS
+(SELECT *
+FROM sales
+ORDER BY sale_date, fruit),
+
+cte2 AS
+(SELECT *, LEAD(sold_num, 1) OVER(PARTITION BY sale_date) AS orange_num
+FROM cte)
+
+
+SELECT sale_date, (sold_num - orange_num) AS diff 
+FROM cte2
+WHERE orange_num IS NOT NULL 
+ORDER BY sale_date
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2084. Drop Type 1 Orders for Customers With Type 0 Orders
+
+
+WITH cte AS
+(SELECT *, MIN(order_type) OVER(PARTITION BY customer_id) AS min_order_type
+FROM Orders)
+
+SELECT order_id, customer_id, order_type
+FROM cte
+WHERE (order_type + min_order_type <> 1) 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1393. Capital Gain/Loss
+
+Table: Stocks
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| stock_name    | varchar |
+| operation     | enum    |
+| operation_day | int     |
+| price         | int     |
++---------------+---------+
+(stock_name, operation_day) is the primary key (combination of columns with unique values) for this table.
+The operation column is an ENUM (category) of type ('Sell', 'Buy')
+Each row of this table indicates that the stock which has stock_name had an operation on the day operation_day with the price.
+It is guaranteed that each 'Sell' operation for a stock has a corresponding 'Buy' operation in a previous day. It is also guaranteed that each 'Buy' operation for a stock has a corresponding 'Sell' operation in an upcoming day.
+ 
+
+Write a solution to report the Capital gain/loss for each stock.
+
+The Capital gain/loss of a stock is the total gain or loss after buying and selling the stock one or many times.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Stocks table:
++---------------+-----------+---------------+--------+
+| stock_name    | operation | operation_day | price  |
++---------------+-----------+---------------+--------+
+| Leetcode      | Buy       | 1             | 1000   |
+| Corona Masks  | Buy       | 2             | 10     |
+| Leetcode      | Sell      | 5             | 9000   |
+| Handbags      | Buy       | 17            | 30000  |
+| Corona Masks  | Sell      | 3             | 1010   |
+| Corona Masks  | Buy       | 4             | 1000   |
+| Corona Masks  | Sell      | 5             | 500    |
+| Corona Masks  | Buy       | 6             | 1000   |
+| Handbags      | Sell      | 29            | 7000   |
+| Corona Masks  | Sell      | 10            | 10000  |
++---------------+-----------+---------------+--------+
+Output: 
++---------------+-------------------+
+| stock_name    | capital_gain_loss |
++---------------+-------------------+
+| Corona Masks  | 9500              |
+| Leetcode      | 8000              |
+| Handbags      | -23000            |
++---------------+-------------------+
+
+
+Explanation: 
+Leetcode stock was bought at day 1 for 1000$ and was sold at day 5 for 9000$. Capital gain = 9000 - 1000 = 8000$.
+Handbags stock was bought at day 17 for 30000$ and was sold at day 29 for 7000$. Capital loss = 7000 - 30000 = -23000$.
+Corona Masks stock was bought at day 1 for 10$ and was sold at day 3 for 1010$. It was bought again at day 4 for 1000$ and was sold at day 5 for 500$. At last, it was bought at day 6 for 1000$ and was sold at day 10 for 10000$. Capital gain/loss is the sum of capital gains/losses for each ('Buy' --> 'Sell') operation = (1010 - 10) + (500 - 1000) + (10000 - 1000) = 1000 - 500 + 9000 = 9500$.
+
+
+
+Solution 1: 
+
+SELECT stock_name, SUM(CASE WHEN operation = 'Buy' THEN price*-1 ELSE price END) AS capital_gain_loss
+FROM Stocks
+GROUP BY stock_name 
+
+
+Solution 2:
+WITH CTE AS
+(SELECT *
+FROM Stocks
+ORDER BY stock_name, operation, operation_day),
+
+cte2 AS
+(SELECT *, LEAD(price) OVER(PARTITION BY stock_name ORDER BY operation_day) AS selling_price
+FROM cte)
+
+SELECT stock_name, SUM(selling_price - price) AS capital_gain_loss
+FROM cte2
+WHERE operation = 'Buy'
+GROUP BY stock_name 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1795. Rearrange Products Table
+
+Table: Products
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| product_id  | int     |
+| store1      | int     |
+| store2      | int     |
+| store3      | int     |
++-------------+---------+
+product_id is the primary key (column with unique values) for this table.
+Each row in this table indicates the product's price in 3 different stores: store1, store2, and store3.
+If the product is not available in a store, the price will be null in that store's column.
+ 
+
+Write a solution to rearrange the Products table so that each row has (product_id, store, price). If a product is not available in a store, do not include a row with that product_id and store combination in the result table.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Products table:
++------------+--------+--------+--------+
+| product_id | store1 | store2 | store3 |
++------------+--------+--------+--------+
+| 0          | 95     | 100    | 105    |
+| 1          | 70     | null   | 80     |
++------------+--------+--------+--------+
+Output: 
++------------+--------+-------+
+| product_id | store  | price |
++------------+--------+-------+
+| 0          | store1 | 95    |
+| 0          | store2 | 100   |
+| 0          | store3 | 105   |
+| 1          | store1 | 70    |
+| 1          | store3 | 80    |
++------------+--------+-------+
+
+
+Explanation: 
+Product 0 is available in all three stores with prices 95, 100, and 105 respectively.
+Product 1 is available in store1 with price 70 and store3 with price 80. The product is not available in store2.    

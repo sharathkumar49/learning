@@ -1,0 +1,69 @@
+📊 Visual Tier List by Difficulty:
+
+🟢 Beginner = Valid Parentheses, Infix to Postfix, Postfix Evaluation, Celebrity Problem, Next Greater Element, Stack using Queues                                           |
+🟡 Intermediate = Trapping Rain Water, Histogram Max Area, Remove K Digits, Decode String, Daily Temperatures, Min Stack, Sort Stack, Balanced Tags (HTML/XML), Valid Sequences 
+🔴 Advanced = Longest Valid Parentheses, Flatten Nested Iterator, Max Stack, Undo/Redo System, Expression Tree Construction, Evaluate RPN, Design Stack Language Interpreter 
+
+
+
+🧠 Grouped by Stack Techniques
+
+1. Monotonic Stacks
+- Next Greater Element
+- Daily Temperatures
+- Trapping Rain Water
+- Stock Span Problem
+
+2. Recursion Simulation
+- Tree Traversals (Inorder Iterative)
+- Sort Stack using Recursion
+- Evaluate Postfix without Recursion
+- Flatten Nested List Iterator
+
+3. State Machines + Stack
+- Decode String (`"3[a2[c]]"`)
+- Longest Valid Parentheses
+- XML Tag Validator
+- Undo/Redo Simulation
+
+4. Parsing & Expression Evaluation
+- Infix to Postfix
+- Postfix Evaluation
+- Reverse Polish Notation
+- Expression Tree Builder
+
+5. Greedy + Stack
+- Remove K Digits
+- Remove Adjacent Duplicates
+- Valid Stack Sequences
+
+6. System Simulation
+- Min/Max Stack
+- Stack with GetMin/GetMax in O(1)
+- Stack using Queues or Two Stacks
+- Stack Language Interpreter
+
+
+
+💻 System-Level Stack Use-Cases
+
+🔎 Depth-First Search (DFS)
+- Used to simulate recursive DFS on trees or graphs
+- Stack tracks visited nodes or traversal state
+- Often paired with "Visited" hash or flag array
+
+🧮 Expression Interpreter
+- Tokenize an expression → build AST or evaluate
+- Stack manages operands and operators (nested scopes, precedence)
+- Used in calculators, compilers, custom scripting
+
+🖋 Undo/Redo System
+- Use two stacks: one for undo, one for redo
+- Push actions onto `undo_stack`; pop and reverse onto `redo_stack` when undoing
+- Often used in editors, IDEs, even multiplayer games
+
+🧩 Memory and Call Stack
+- Emulate recursive backtracking, e.g. solving Sudoku or parsing grammars
+- You push frames for "function calls" and pop when returning — great to teach memory behavior
+
+

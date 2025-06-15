@@ -1,0 +1,32 @@
+
+
+You've got this, Sharath! Since it's a system design round, you'll want to cover the core concepts that interviewers typically focus on. Given your strong SQL and database optimization background, you already have a solid foundation to build upon. Here’s a structured plan for your review:
+
+1. Fundamentals of System Design
+- Scalability – Horizontal vs. vertical scaling, load balancing
+- Reliability & Fault Tolerance – Replication, failover strategies, disaster recovery
+- Availability – CAP theorem (Consistency, Availability, Partition Tolerance)
+- Performance Optimization – Caching strategies (Redis, Memcached), CDN usage
+
+2. Database Design & Optimization (Your Strength!)
+- Schema Design – Normalization vs. denormalization, composite primary keys, indexing strategies
+- Query Optimization – Efficient joins, partitioning, query caching
+- Consistency Models – ACID vs. BASE properties
+- Sharding & Replication – Database partitioning, leader-follower replication
+
+3. API Design & Scaling
+- REST vs. GraphQL – When to use each
+- Rate Limiting & Throttling – Protecting endpoints from excessive requests
+- API Versioning – URI-based, header-based, query parameter-based (which you’ve explored!)
+
+4. Distributed Systems Basics
+- Microservices vs. Monoliths – Pros and cons, patterns
+- Message Queues & Event-Driven Architecture – Kafka, RabbitMQ, Pub/Sub models
+- Consensus Algorithms – Paxos, Raft (optional but useful to know)
+
+5. System Design Case Studies
+- Design Twitter Feed – High-volume data processing, caching strategies
+- Design URL Shortener – Hashing, database schema, redirection optimization
+- Design E-Commerce Checkout – Transactions, inventory management, payment flow
+
+Since you're already comfortable with SQL and API versioning, lean into those strengths and highlight them in your responses. Would you like me to suggest how you can structure your answers effectively during the interview?
