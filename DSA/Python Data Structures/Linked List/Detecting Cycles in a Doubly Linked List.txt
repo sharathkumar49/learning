@@ -1,0 +1,166 @@
+📌 Detecting Cycles in a Doubly Linked List
+A doubly linked list differs from a singly linked list because each node has two pointers:
+next → Points to the next node.
+prev → Points to the previous node.
+
+Even though a doubly linked list has prev pointers, cycles can still occur. The techniques for detecting cycles in doubly linked lists are slightly different compared to singly linked lists.
+
+🚀 Methods to Detect Cycles in a Doubly Linked List
+Here are some approaches:
+
+1.Floyd’s Cycle Detection Algorithm (Tortoise and Hare)
+Just like in singly linked lists, we can use the Tortoise and Hare approach:
+Slow Pointer (slow) moves one step at a time.
+Fast Pointer (fast) moves two steps at a time.
+If slow and fast meet, there is a cycle.
+If fast or fast.next becomes None, the list terminates without a cycle.
+
+✅ Efficient → Runs in O(n) time and O(1) space.
+
+🔻 Limitations
+The prev pointer does not help detect a cycle; only next pointers matter.
+This method assumes the structure of a valid doubly linked list with proper connections.
+
+
+
+
+2. Using Extra Memory (Hashing):
+Maintain a set of visited nodes.
+Traverse the list, and store each node’s reference in a set.
+If a node already exists in the set, a cycle is detected.
+If traversal reaches None, no cycle exists.
+
+✅ Guaranteed detection → Works for any linked list structure.
+
+Drawback:
+Extra space (O(n)) is needed for storing visited nodes.
+
+
+
+
+3.Using Modifications (Marking Nodes)
+Modify each node’s data temporarily by marking it.
+If a node is re-visited, it means a cycle exists.
+If traversal reaches None, no cycle is present.
+
+✅ Simple to implement.
+
+Drawbacks:
+Modifies the linked list, which may corrupt data.
+Not recommended for real-world applications.
+
+🚀 Implementation
+🔹 Floyd’s Cycle Detection Algorithm for Doubly Linked List
+python
+class Node:
+    def __init__(self, data=None):
+        self.data = data
+        self.next = None
+        self.prev = None
+
+class DoublyLinkedList:
+    def __init__(self):
+        self.head = None
+
+    def insert_values(self, data_list):
+        """Creates a doubly linked list from a list of values."""
+        self.head = None
+        prev_node = None
+        for data in data_list:
+            node = Node(data)
+            if prev_node:
+                prev_node.next = node
+                node.prev = prev_node
+            else:
+                self.head = node
+            prev_node = node
+        return prev_node  # Returns last node
+
+    def has_cycle(self):
+        """Detects cycles using Floyd’s Cycle Detection Algorithm."""
+        if self.head is None:
+            return False
+
+        slow, fast = self.head, self.head
+
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+            if slow == fast:
+                return True  # Cycle detected
+
+        return False  # No cycle
+
+# ----------- Testing -----------
+
+dll = DoublyLinkedList()
+dll.insert_values([1, 2, 3, 4, 5, 6, 7, 8, 9])
+
+print("Cycle detected?", dll.has_cycle())  # Expected Output: False
+
+# Creating a cycle at node with value 3 (manual modification for testing)
+
+def create_cycle(dll, pos):
+    """Manually creates a cycle at a given position in the doubly linked list."""
+    last_node = dll.head
+    cycle_node = None
+    index = 0
+    current = dll.head
+
+    while current:
+        if index == pos:
+            cycle_node = current
+        last_node = current
+        current = current.next
+        index += 1
+
+    if cycle_node:
+        last_node.next = cycle_node  # Create the cycle
+
+create_cycle(dll, 2)  # Create a cycle at node with value 3
+print("Cycle detected?", dll.has_cycle())  # Expected Output: True
+
+
+📌 Different Cycle Detection Questions
+Here are some common cycle-related questions:
+
+1.How do you detect a cycle in a doubly linked list?
+✅ Solutions:
+Use Floyd’s Cycle Detection Algorithm (O(n) time, O(1) space)
+Use Hashing (O(n) time, O(n) space)
+
+
+
+2. How do you remove a cycle in a doubly linked list?
+✅ Solutions:
+
+Detect cycle → Identify the loop entry point → Break the link
+
+Implementation:
+Use Tortoise and Hare to detect cycle.
+Reset one pointer to the head and move both pointers one step at a time.
+The meeting point is the start of the cycle.
+Break the next pointer that creates the loop.
+
+
+
+3. How do you detect if a doubly linked list is valid (no corruption in next and prev pointers)?
+✅ Solutions:
+Traverse using next and verify all prev pointers are correctly pointing back.
+If a prev pointer does not match the previous node, there is corruption.
+
+
+
+4. What if we don’t know the length and can’t modify the list?
+✅ Solution:
+Use Tortoise and Hare (fast and slow pointer approach).
+Hashing-based method (O(n) space).
+
+
+
+🔖 Summary Notes
+✔ Doubly linked lists can still have cycles if next pointers form a loop. 
+✔ The best approach to detecting a cycle is Floyd’s Cycle Detection Algorithm (O(n) time, O(1) space). 
+✔ Alternative methods include hashing (O(n) space) or modifying nodes (not recommended). 
+✔ Multiple questions exist on cycle detection, removal, and validity checks for doubly linked lists.

@@ -1,0 +1,145 @@
+
+
+
+what kind of problem does binary tree solve?
+
+
+Internally to implement set operation, one of the ways you can use is binary search tree
+
+
+Binary tree has at most 2 child nodes. Binary search tree is a special case of binary tree where the elements have some kind of order
+
+
+    50
+   /  \
+  30  70
+ / \  / \
+20 40 60 80
+
+
+
+
+
+search complexity:
+
+Every iteration we reduce search space by 1/2
+
+
+n = 8  8 -> 4 -> 2 -> 1
+
+3 iterations
+
+log2 8 =3
+
+search complexity  = O(log n)
+
+Insertion is also O(log n)
+
+
+
+
+If you want to search through the binary search tree, there are two approaches:
+
+Breadth first search: 
+
+
+
+Depth first search:
+
+In order traversal
+Pre order traversal
+Post order traversal
+
+
+
+
+
+    15
+   /  \
+  12  27
+ / \  / \
+7  14 20 88
+       \
+	    23
+		
+		
+		
+		
+code:
+
+class BinarySearchTreeNode:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+    def add_child(self, data):
+        if data == self.data:
+            return # node already exist
+
+        if data < self.data:
+            if self.left:
+                self.left.add_child(data)
+            else:
+                self.left = BinarySearchTreeNode(data)
+        else:
+            if self.right:
+                self.right.add_child(data)
+            else:
+                self.right = BinarySearchTreeNode(data)
+
+
+    def search(self, val):
+        if self.data == val:
+            return True
+
+        if val < self.data:
+            if self.left:
+                return self.left.search(val)
+            else:
+                return False
+
+        if val > self.data:
+            if self.right:
+                return self.right.search(val)
+            else:
+                return False
+
+    def in_order_traversal(self):
+        elements = []
+		
+		# visit left sub tree
+        if self.left:
+            elements += self.left.in_order_traversal()
+			
+		# visit base node
+        elements.append(self.data)
+
+		#Visit right sub tree
+        if self.right:
+            elements += self.right.in_order_traversal()
+
+        return elements
+
+
+def build_tree(elements):
+    print("Building tree with these elements:",elements)
+    root = BinarySearchTreeNode(elements[0])
+
+    for i in range(1,len(elements)):
+        root.add_child(elements[i])
+
+    return root
+
+if __name__ == '__main__':
+    countries = ["India","Pakistan","Germany", "USA","China","India","UK","USA"]
+    country_tree = build_tree(countries)
+
+    print("UK is in the list? ", country_tree.search("UK"))
+    print("Sweden is in the list? ", country_tree.search("Sweden"))
+
+    numbers_tree = build_tree([17, 4, 1, 20, 9, 23, 18, 34])
+    print("In order traversal gives this sorted list:",numbers_tree.in_order_traversal())   #[1, 4, 9, 17, 18, 20, 23, 34] 
+	
+	
+One of the utility of binary search tree is that it will return the elements in the sorted order. Other utility is that it can be set type of class where it doesn't allow duplicate elements

@@ -1,5 +1,8 @@
 
 
+https://devinterview.io/questions/web-and-mobile-development/django-interview-questions/
+
+
 sharathkumar49: Django Fundamentals
 
   What is Django and what are its key features?
@@ -49,7 +52,7 @@ Django URL Routing and Middleware
     How do you capture URL parameters in Django views?
     What is Django middleware and how is it used?
     Describe the purpose of the CSRF middleware in Django.
-What is the difference between process_request) and process_response) in Django middleware?
+	What is the difference between process_request) and process_response) in Django middleware?
     How do you create a custom middleware in Django?
     Explain the concept of URL namespaces in Django.
     What is the purpose of the include() function in Django URL configuration?
@@ -139,15 +142,15 @@ GitHub Copilot: ### **Django Fundamentals**
 
 1. What is a database migration in Django, and why is it important? **done**
 2. How do you create and apply migrations in Django? **done**
-3. Explain the difference between `ForeignKey`, `OneToOneField`, and `ManyToManyField` in Django models.
-4. How do you define a custom model field in Django?
+3. Explain the difference between `ForeignKey`, `OneToOneField`, and `ManyToManyField` in Django models. **done**
+4. How do you define a custom model field in Django? **done**
 5. What is a QuerySet in Django, and how is it used?
 6. How do you filter, order, and limit QuerySets in Django?
-7. What is the purpose of the `Meta` class in Django models?
+7. What is the purpose of the `Meta` class in Django models? **done**
 8. How do you perform raw SQL queries in Django?
 9. What is the difference between `select_related()` and `prefetch_related()` in Django queries?
 10. How do you handle database transactions in Django?
-11. What is the purpose of the `save()` method in Django models?
+11. What is the purpose of the `save()` method in Django models? **done**
 12. How do you define default values for model fields in Django?
 13. What is the purpose of the `unique_together` and `constraints` options in the `Meta` class?
 14. How do you use the `get_or_create()` and `update_or_create()` methods in Django?
@@ -232,11 +235,11 @@ GitHub Copilot: ### **Django Fundamentals**
 
 ### **Django REST Framework (DRF)**
 
-1. What is Django REST Framework (DRF), and why is it used?
-2. What is the difference between function-based views and class-based views in DRF?
-3. What is a serializer in DRF, and how is it used?
-4. How do you create a custom serializer in DRF?
-5. What is the purpose of the `APIView` class in DRF?
+1. What is Django REST Framework (DRF), and why is it used?  **Done**
+2. What is the difference between function-based views and class-based views in DRF?  **Done**
+3. What is a serializer in DRF, and how is it used?  **Done**
+4. How do you create a custom serializer in DRF?  **Done**
+5. What is the purpose of the `APIView` class in DRF?  **Done**
 6. How do you use generic views in DRF?
 7. What is the purpose of viewsets in DRF?
 8. How do you use routers in DRF?
@@ -372,7 +375,7 @@ GitHub Copilot: ### **Django ORM (Object-Relational Mapping)**
 
 #### **Building RESTful APIs with Django REST Framework**
 
-1. What is Django REST Framework (DRF), and why is it used?
+1. What is Django REST Framework (DRF), and why is it used?  **Done**
 2. How do you create a simple API endpoint using DRF?
 3. What is the purpose of serializers in DRF?
 4. How do you create a custom serializer in DRF?

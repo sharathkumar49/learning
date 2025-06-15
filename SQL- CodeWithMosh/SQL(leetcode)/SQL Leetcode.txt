@@ -1,0 +1,1235 @@
+
+
+175. Combine Two Tables
+
+Table: Person
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| personId    | int     |
+| lastName    | varchar |
+| firstName   | varchar |
++-------------+---------+
+personId is the primary key (column with unique values) for this table.
+This table contains information about the ID of some persons and their first and last names.
+ 
+
+Table: Address
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| addressId   | int     |
+| personId    | int     |
+| city        | varchar |
+| state       | varchar |
++-------------+---------+
+addressId is the primary key (column with unique values) for this table.
+Each row of this table contains information about the city and state of one person with ID = PersonId.
+ 
+
+Write a solution to report the first name, last name, city, and state of each person in the Person table. If the address of a personId is not present in the Address table, report null instead.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Person table:
++----------+----------+-----------+
+| personId | lastName | firstName |
++----------+----------+-----------+
+| 1        | Wang     | Allen     |
+| 2        | Alice    | Bob       |
++----------+----------+-----------+
+Address table:
++-----------+----------+---------------+------------+
+| addressId | personId | city          | state      |
++-----------+----------+---------------+------------+
+| 1         | 2        | New York City | New York   |
+| 2         | 3        | Leetcode      | California |
++-----------+----------+---------------+------------+
+Output: 
++-----------+----------+---------------+----------+
+| firstName | lastName | city          | state    |
++-----------+----------+---------------+----------+
+| Allen     | Wang     | Null          | Null     |
+| Bob       | Alice    | New York City | New York |
++-----------+----------+---------------+----------+
+
+Explanation: 
+There is no address in the address table for the personId = 1 so we return null in their city and state.
+addressId = 1 contains information about the address of personId = 2.
+
+
+
+
+
+
+Solution: 
+
+# Write your MySQL query statement below
+SELECT p.firstName, p.lastName, a.city, a.state
+FROM Person p 
+LEFT JOIN Address a
+ON p.personId = a.personId;
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+181. Employees Earning More Than Their Managers
+
+Table: Employee
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| name        | varchar |
+| salary      | int     |
+| managerId   | int     |
++-------------+---------+
+id is the primary key (column with unique values) for this table.
+Each row of this table indicates the ID of an employee, their name, salary, and the ID of their manager.
+ 
+
+Write a solution to find the employees who earn more than their managers.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Employee table:
++----+-------+--------+-----------+
+| id | name  | salary | managerId |
++----+-------+--------+-----------+
+| 1  | Joe   | 70000  | 3         |
+| 2  | Henry | 80000  | 4         |
+| 3  | Sam   | 60000  | Null      |
+| 4  | Max   | 90000  | Null      |
++----+-------+--------+-----------+
+Output: 
++----------+
+| Employee |
++----------+
+| Joe      |
++----------+
+Explanation: Joe is the only employee who earns more than his manager.
+
+
+
+Solution: 
+
+SELECT e1.name AS Employee
+FROM Employee e1
+INNER JOIN Employee e2
+ON e1.managerId = e2.id
+WHERE e1.salary > e2.salary
+
+(can also be done with LEFT JOIN)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+182. Duplicate Emails
+
+Table: Person
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| email       | varchar |
++-------------+---------+
+id is the primary key (column with unique values) for this table.
+Each row of this table contains an email. The emails will not contain uppercase letters.
+ 
+
+Write a solution to report all the duplicate emails. Note that it's guaranteed that the email field is not NULL.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Person table:
++----+---------+
+| id | email   |
++----+---------+
+| 1  | a@b.com |
+| 2  | c@d.com |
+| 3  | a@b.com |
++----+---------+
+
+Output: 
++---------+
+| Email   |
++---------+
+| a@b.com |
++---------+
+
+Explanation: a@b.com is repeated two times.
+
+
+
+Solution: 
+
+SELECT email
+FROM Person 
+GROUP BY email
+HAVING COUNT(DISTINCT id) > 1
+
+Since id is a primary key and unique, you don't need to mention distinct keyword
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+183. Customers Who Never Order
+
+Table: Customers
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| name        | varchar |
++-------------+---------+
+id is the primary key (column with unique values) for this table.
+Each row of this table indicates the ID and name of a customer.
+ 
+
+Table: Orders
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| id          | int  |
+| customerId  | int  |
++-------------+------+
+
+id is the primary key (column with unique values) for this table.
+customerId is a foreign key (reference columns) of the ID from the Customers table.
+Each row of this table indicates the ID of an order and the ID of the customer who ordered it.
+ 
+
+Write a solution to find all customers who never order anything.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+
+Customers table:
++----+-------+
+| id | name  |
++----+-------+
+| 1  | Joe   |
+| 2  | Henry |
+| 3  | Sam   |
+| 4  | Max   |
++----+-------+
+
+Orders table:
++----+------------+
+| id | customerId |
++----+------------+
+| 1  | 3          |
+| 2  | 1          |
++----+------------+
+
+Output: 
++-----------+
+| Customers |
++-----------+
+| Henry     |
+| Max       |
++-----------+
+
+
+
+Solution: 
+
+SELECT  c.name AS Customers
+FROM Customers c
+WHERE c.id NOT IN 
+(SELECT c.id 
+FROM Customers c
+INNER JOIN Orders o
+ON c.id = o.customerId)
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Consecutive Available Seats:
+
+
+
+SELECT W.seat_id
+FROM (SELECT *, LEAD(free) OVER(ORDER BY seat_id) AS NextSeat, LAG(free) OVER(ORDER BY seat_id) AS PrevSeat
+FROM Cinema) as W
+WHERE W.free = 1 AND  w.NextSeat = 1
+OR W.free = 1 AND w.PrevSeat = 1 
+ORDER BY W.seat_id
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+577. Employee Bonus
+
+Table: Employee
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| empId       | int     |
+| name        | varchar |
+| supervisor  | int     |
+| salary      | int     |
++-------------+---------+
+empId is the column with unique values for this table.
+Each row of this table indicates the name and the ID of an employee in addition to their salary and the id of their manager.
+ 
+
+Table: Bonus
+
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| empId       | int  |
+| bonus       | int  |
++-------------+------+
+empId is the column of unique values for this table.
+empId is a foreign key (reference column) to empId from the Employee table.
+Each row of this table contains the id of an employee and their respective bonus.
+ 
+
+Write a solution to report the name and bonus amount of each employee with a bonus less than 1000.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Employee table:
++-------+--------+------------+--------+
+| empId | name   | supervisor | salary |
++-------+--------+------------+--------+
+| 3     | Brad   | null       | 4000   |
+| 1     | John   | 3          | 1000   |
+| 2     | Dan    | 3          | 2000   |
+| 4     | Thomas | 3          | 4000   |
++-------+--------+------------+--------+
+Bonus table:
++-------+-------+
+| empId | bonus |
++-------+-------+
+| 2     | 500   |
+| 4     | 2000  |
++-------+-------+
+
+Output: 
++------+-------+
+| name | bonus |
++------+-------+
+| Brad | null  |
+| John | null  |
+| Dan  | 500   |
++------+-------+
+
+
+
+
+
+Solution:
+
+SELECT e.name, b.bonus
+FROM Employee e
+LEFT JOIN Bonus b
+ON e.empId = b.empId
+where b.bonus < 1000
+OR b.bonus IS NULL
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+584. Find Customer Referee
+
+
+Table: Customer
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| name        | varchar |
+| referee_id  | int     |
++-------------+---------+
+
+In SQL, id is the primary key column for this table.
+Each row of this table indicates the id of a customer, their name, and the id of the customer who referred them.
+ 
+
+Find the names of the customer that are not referred by the customer with id = 2.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Customer table:
++----+------+------------+
+| id | name | referee_id |
++----+------+------------+
+| 1  | Will | null       |
+| 2  | Jane | null       |
+| 3  | Alex | 2          |
+| 4  | Bill | null       |
+| 5  | Zack | 1          |
+| 6  | Mark | 2          |
++----+------+------------+
+
+Output: 
++------+
+| name |
++------+
+| Will |
+| Jane |
+| Bill |
+| Zack |
++------+
+
+
+
+Solution: 
+
+
+SELECT name
+FROM Customer
+WHERE referee_id <> 2
+OR referee_id IS NULL
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+586. Customer Placing the Largest Number of Orders
+
+
+
+Table: Orders
+
++-----------------+----------+
+| Column Name     | Type     |
++-----------------+----------+
+| order_number    | int      |
+| customer_number | int      |
++-----------------+----------+
+order_number is the primary key (column with unique values) for this table.
+This table contains information about the order ID and the customer ID.
+ 
+
+Write a solution to find the customer_number for the customer who has placed the largest number of orders.
+
+The test cases are generated so that exactly one customer will have placed more orders than any other customer.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Orders table:
++--------------+-----------------+
+| order_number | customer_number |
++--------------+-----------------+
+| 1            | 1               |
+| 2            | 2               |
+| 3            | 3               |
+| 4            | 3               |
++--------------+-----------------+
+
+
+Output: 
++-----------------+
+| customer_number |
++-----------------+
+| 3               |
++-----------------+
+
+Explanation: 
+The customer with number 3 has two orders, which is greater than either customer 1 or 2 because each of them only has one order. 
+So the result is customer_number 3.
+
+
+
+Solution:
+
+SELECT customer_number 
+FROM orders
+GROUP BY customer_number
+ORDER BY COUNT(customer_number) DESC 
+LIMIT 1;
+
+
+Say if two customers is having the same number of max number of orders, we need to return both the customers right. We need to go for common table expression approach
+
+
+WITH cte AS
+(SELECT customer_number, COUNT(order_number) AS NumOrd
+FROM Orders
+GROUP BY customer_number)
+
+
+SELECT customer_number
+FROM cte
+WHERE NumOrd = (SELECT Max(NumOrd) FROM cte)
+
+
+So, if both the customer 3 and 4 having the max number of orders. We'll be returning the both the customers
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+595. Big Countries
+
+Table: World
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| name        | varchar |
+| continent   | varchar |
+| area        | int     |
+| population  | int     |
+| gdp         | bigint  |
++-------------+---------+
+name is the primary key (column with unique values) for this table.
+Each row of this table gives information about the name of a country, the continent to which it belongs, its area, the population, and its GDP value.
+ 
+
+A country is big if:
+
+it has an area of at least three million (i.e., 3000000 km2), or
+it has a population of at least twenty-five million (i.e., 25000000).
+Write a solution to find the name, population, and area of the big countries.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+World table:
++-------------+-----------+---------+------------+--------------+
+| name        | continent | area    | population | gdp          |
++-------------+-----------+---------+------------+--------------+
+| Afghanistan | Asia      | 652230  | 25500100   | 20343000000  |
+| Albania     | Europe    | 28748   | 2831741    | 12960000000  |
+| Algeria     | Africa    | 2381741 | 37100000   | 188681000000 |
+| Andorra     | Europe    | 468     | 78115      | 3712000000   |
+| Angola      | Africa    | 1246700 | 20609294   | 100990000000 |
++-------------+-----------+---------+------------+--------------+
+
+Output: 
++-------------+------------+---------+
+| name        | population | area    |
++-------------+------------+---------+
+| Afghanistan | 25500100   | 652230  |
+| Algeria     | 37100000   | 2381741 |
++-------------+------------+---------+
+
+
+
+Solution: 
+
+SELECT name, population, area
+FROM World
+WHERE area >= 3000000
+OR population >= 25000000
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+596. Classes With at Least 5 Students
+
+Table: Courses
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| student     | varchar |
+| class       | varchar |
++-------------+---------+
+(student, class) is the primary key (combination of columns with unique values) for this table.
+Each row of this table indicates the name of a student and the class in which they are enrolled.
+ 
+
+Write a solution to find all the classes that have at least five students.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Courses table:
++---------+----------+
+| student | class    |
++---------+----------+
+| A       | Math     |
+| B       | English  |
+| C       | Math     |
+| D       | Biology  |
+| E       | Math     |
+| F       | Computer |
+| G       | Math     |
+| H       | Math     |
+| I       | Math     |
++---------+----------+
+
+Output: 
++---------+
+| class   |
++---------+
+| Math    |
++---------+
+
+Explanation: 
+- Math has 6 students, so we include it.
+- English has 1 student, so we do not include it.
+- Biology has 1 student, so we do not include it.
+- Computer has 1 student, so we do not include it.
+
+
+
+
+Solution: 
+
+SELECT class
+FROM Courses
+GROUP BY class
+HAVING COUNT(student) >= 5 
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+610. Triangle Judgement
+
+Table: Triangle
+
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| x           | int  |
+| y           | int  |
+| z           | int  |
++-------------+------+
+In SQL, (x, y, z) is the primary key column for this table.
+Each row of this table contains the lengths of three line segments.
+ 
+
+Report for every three line segments whether they can form a triangle.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Triangle table:
++----+----+----+
+| x  | y  | z  |
++----+----+----+
+| 13 | 15 | 30 |
+| 10 | 20 | 15 |
++----+----+----+
+
+Output: 
++----+----+----+----------+
+| x  | y  | z  | triangle |
++----+----+----+----------+
+| 13 | 15 | 30 | No       |
+| 10 | 20 | 15 | Yes      |
++----+----+----+----------+
+
+
+
+
+Solution: 
+
+
+SELECT *, CASE WHEN x+y>z AND y+z>x AND x+z>y THEN 'Yes'
+ELSE 'No' END AS triangle
+FROM Triangle
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+613. Shortest Distance in a Line: 
+
+
+SELECT MIN(ABS(p1.x - p2.x)) AS Shortest
+FROM point p1
+CROSS JOIN point p2
+WHERE p1.x <> p2.x
+
+
+SELECT MIN(ABS(p1.x - p2.x)) AS Shortest
+FROM point p1
+INNER JOIN point p2
+WHERE p1.x < p2.x
+
+
+see again, didn't understand
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+619. Biggest Single Number
+
+
+Table: MyNumbers
+
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| num         | int  |
++-------------+------+
+This table may contain duplicates (In other words, there is no primary key for this table in SQL).
+Each row of this table contains an integer.
+ 
+
+A single number is a number that appeared only once in the MyNumbers table.
+
+Find the largest single number. If there is no single number, report null.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+MyNumbers table:
++-----+
+| num |
++-----+
+| 8   |
+| 8   |
+| 3   |
+| 3   |
+| 1   |
+| 4   |
+| 5   |
+| 6   |
++-----+
+
+Output: 
++-----+
+| num |
++-----+
+| 6   |
++-----+
+Explanation: The single numbers are 1, 4, 5, and 6.
+Since 6 is the largest single number, we return it.
+Example 2:
+
+Input: 
+MyNumbers table:
++-----+
+| num |
++-----+
+| 8   |
+| 8   |
+| 7   |
+| 7   |
+| 3   |
+| 3   |
+| 3   |
++-----+
+
+
+Output: 
++------+
+| num  |
++------+
+| null |
++------+
+Explanation: There are no single numbers in the input table so we return null.
+
+
+
+
+Solution: 
+
+WITH cte AS
+(SELECT num
+FROM MyNumbers
+GROUP BY num
+HAVING COUNT(num) = 1)
+
+SELECT CASE WHEN COUNT(*) > 0 THEN MAX(num)
+ELSE NULL END AS num
+FROM cte
+
+-- cte common table expression 
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+620. Not Boring Movies
+Easy
+Topics
+premium lock icon
+Companies
+SQL Schema
+Pandas Schema
+Table: Cinema
+
++----------------+----------+
+| Column Name    | Type     |
++----------------+----------+
+| id             | int      |
+| movie          | varchar  |
+| description    | varchar  |
+| rating         | float    |
++----------------+----------+
+id is the primary key (column with unique values) for this table.
+Each row contains information about the name of a movie, its genre, and its rating.
+rating is a 2 decimal places float in the range [0, 10]
+ 
+
+Write a solution to report the movies with an odd-numbered ID and a description that is not "boring".
+
+Return the result table ordered by rating in descending order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Cinema table:
++----+------------+-------------+--------+
+| id | movie      | description | rating |
++----+------------+-------------+--------+
+| 1  | War        | great 3D    | 8.9    |
+| 2  | Science    | fiction     | 8.5    |
+| 3  | irish      | boring      | 6.2    |
+| 4  | Ice song   | Fantacy     | 8.6    |
+| 5  | House card | Interesting | 9.1    |
++----+------------+-------------+--------+
+
+
+Output: 
++----+------------+-------------+--------+
+| id | movie      | description | rating |
++----+------------+-------------+--------+
+| 5  | House card | Interesting | 9.1    |
+| 1  | War        | great 3D    | 8.9    |
++----+------------+-------------+--------+
+
+
+Explanation: 
+We have three movies with odd-numbered IDs: 1, 3, and 5. The movie with ID = 3 is boring so we do not include it in the answer.
+
+
+
+Solution: 
+
+SELECT *
+FROM Cinema
+WHERE id%2<>0
+AND description <> "boring"
+ORDER BY rating DESC
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+627. Swap Salary
+
+
+Table: Salary
+
++-------------+----------+
+| Column Name | Type     |
++-------------+----------+
+| id          | int      |
+| name        | varchar  |
+| sex         | ENUM     |
+| salary      | int      |
++-------------+----------+
+id is the primary key (column with unique values) for this table.
+The sex column is ENUM (category) value of type ('m', 'f').
+The table contains information about an employee.
+ 
+
+Write a solution to swap all 'f' and 'm' values (i.e., change all 'f' values to 'm' and vice versa) with a single update statement and no intermediate temporary tables.
+
+Note that you must write a single update statement, do not write any select statement for this problem.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Salary table:
++----+------+-----+--------+
+| id | name | sex | salary |
++----+------+-----+--------+
+| 1  | A    | m   | 2500   |
+| 2  | B    | f   | 1500   |
+| 3  | C    | m   | 5500   |
+| 4  | D    | f   | 500    |
++----+------+-----+--------+
+
+Output: 
++----+------+-----+--------+
+| id | name | sex | salary |
++----+------+-----+--------+
+| 1  | A    | f   | 2500   |
+| 2  | B    | m   | 1500   |
+| 3  | C    | f   | 5500   |
+| 4  | D    | m   | 500    |
++----+------+-----+--------+
+
+Explanation: 
+(1, A) and (3, C) were changed from 'm' to 'f'.
+(2, B) and (4, D) were changed from 'f' to 'm'.
+
+
+
+
+Solution: 
+
+UPDATE Salary
+SET sex = CASE WHEN sex = 'f' THEN 'm'
+			   WHEN sex = 'm' THEN 'f'
+		  END			   
+		  
+		  
+Another way to solve this: 
+
+We can break this table into two temporary table, first it contains all the values of 'm' and other one for 'f'. And then in the first table, change everything to 'f' and in second table change everything to 'm' 
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1050. Actors and Directors Who Cooperated At Least Three Times
+
+Table: ActorDirector
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| actor_id    | int     |
+| director_id | int     |
+| timestamp   | int     |
++-------------+---------+
+timestamp is the primary key (column with unique values) for this table.
+ 
+
+Write a solution to find all the pairs (actor_id, director_id) where the actor has cooperated with the director at least three times.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+ActorDirector table:
++-------------+-------------+-------------+
+| actor_id    | director_id | timestamp   |
++-------------+-------------+-------------+
+| 1           | 1           | 0           |
+| 1           | 1           | 1           |
+| 1           | 1           | 2           |
+| 1           | 2           | 3           |
+| 1           | 2           | 4           |
+| 2           | 1           | 5           |
+| 2           | 1           | 6           |
++-------------+-------------+-------------+
+
+Output: 
++-------------+-------------+
+| actor_id    | director_id |
++-------------+-------------+
+| 1           | 1           |
++-------------+-------------+
+
+Explanation: The only pair is (1, 1) where they cooperated exactly 3 times.
+
+
+
+Solution: 
+
+SELECT actor_id, director_id
+FROM ActorDirector
+GROUP BY actor_id, director_id
+HAVING COUNT(timestamp) >= 3
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1113. Reported Posts:
+
+
+
+
+SELECT extra AS report_reason, COUNT(DISTINCT post_id) AS report_count 
+FROM Actions
+WHERE action_date = '2019-07-04'
+AND action = 'report'
+AND extra IS NOT Null
+GROUP BY extra
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1211. Queries Quality and Percentage
+Easy
+Topics
+premium lock icon
+Companies
+SQL Schema
+Pandas Schema
+Table: Queries
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| query_name  | varchar |
+| result      | varchar |
+| position    | int     |
+| rating      | int     |
++-------------+---------+
+This table may have duplicate rows.
+This table contains information collected from some queries on a database.
+The position column has a value from 1 to 500.
+The rating column has a value from 1 to 5. Query with rating less than 3 is a poor query.
+ 
+
+We define query quality as:
+The average of the ratio between query rating and its position.
+
+We also define poor query percentage as:
+The percentage of all queries with rating less than 3.
+
+Write a solution to find each query_name, the quality and poor_query_percentage.
+
+Both quality and poor_query_percentage should be rounded to 2 decimal places.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Queries table:
++------------+-------------------+----------+--------+
+| query_name | result            | position | rating |
++------------+-------------------+----------+--------+
+| Dog        | Golden Retriever  | 1        | 5      |
+| Dog        | German Shepherd   | 2        | 5      |
+| Dog        | Mule              | 200      | 1      |
+| Cat        | Shirazi           | 5        | 2      |
+| Cat        | Siamese           | 3        | 3      |
+| Cat        | Sphynx            | 7        | 4      |
++------------+-------------------+----------+--------+
+
+
+Output: 
++------------+---------+-----------------------+
+| query_name | quality | poor_query_percentage |
++------------+---------+-----------------------+
+| Dog        | 2.50    | 33.33                 |
+| Cat        | 0.66    | 33.33                 |
++------------+---------+-----------------------+
+
+
+Explanation: 
+Dog queries quality is ((5 / 1) + (5 / 2) + (1 / 200)) / 3 = 2.50
+Dog queries poor_ query_percentage is (1 / 3) * 100 = 33.33
+
+Cat queries quality equals ((2 / 5) + (3 / 3) + (4 / 7)) / 3 = 0.66
+Cat queries poor_ query_percentage is (1 / 3) * 100 = 33.33
+
+
+
+Solution: 
+
+WITH cte AS
+(SELECT query_name, rating/position AS ratio, 
+CASE WHEN rating < 3 THEN 1
+ELSE 0 END AS quality_binary
+FROM Queries)
+
+
+SELECT query_name, ROUND(AVG(ratio), 2) as quality, ROUND((SUM(quality_binary) / COUNT(*)) * 100, 2) AS poor_query_percentage
+FROM cte
+GROUP BY query_name 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+1241. Number of Comments per Post
+
+
+WITH posts AS
+(SELECT DISTINCT sub_id
+FROM Submissions
+WHERE parent_id IS NULL)
+
+
+WITH com AS
+(SELECT parent_id, COUNT(DISTINCT sub_id) AS Num
+FROM Submissions
+WHERE parent_id IS NOT Null
+GROUP BY parent_id)
+
+
+SELECT sub_id AS post_id, CASE WHEN Num IS NOT NULL THEN Num ELSE 0 END AS number_of_comments
+FROM posts
+LEFT JOIN com
+ON posts.sub_id = com.parent_id
+ORDER BY post_id 
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1251. Average Selling Price
+
+Table: Prices
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| product_id    | int     |
+| start_date    | date    |
+| end_date      | date    |
+| price         | int     |
++---------------+---------+
+(product_id, start_date, end_date) is the primary key (combination of columns with unique values) for this table.
+Each row of this table indicates the price of the product_id in the period from start_date to end_date.
+For each product_id there will be no two overlapping periods. That means there will be no two intersecting periods for the same product_id.
+ 
+
+Table: UnitsSold
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| product_id    | int     |
+| purchase_date | date    |
+| units         | int     |
++---------------+---------+
+This table may contain duplicate rows.
+Each row of this table indicates the date, units, and product_id of each product sold. 
+ 
+
+Write a solution to find the average selling price for each product. average_price should be rounded to 2 decimal places. If a product does not have any sold units, its average selling price is assumed to be 0.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Prices table:
++------------+------------+------------+--------+
+| product_id | start_date | end_date   | price  |
++------------+------------+------------+--------+
+| 1          | 2019-02-17 | 2019-02-28 | 5      |
+| 1          | 2019-03-01 | 2019-03-22 | 20     |
+| 2          | 2019-02-01 | 2019-02-20 | 15     |
+| 2          | 2019-02-21 | 2019-03-31 | 30     |
++------------+------------+------------+--------+
+
+
+UnitsSold table:
++------------+---------------+-------+
+| product_id | purchase_date | units |
++------------+---------------+-------+
+| 1          | 2019-02-25    | 100   |
+| 1          | 2019-03-01    | 15    |
+| 2          | 2019-02-10    | 200   |
+| 2          | 2019-03-22    | 30    |
++------------+---------------+-------+
+
+
+Output: 
++------------+---------------+
+| product_id | average_price |
++------------+---------------+
+| 1          | 6.96          |
+| 2          | 16.96         |
++------------+---------------+
+
+
+Explanation: 
+Average selling price = Total Price of Product / Number of products sold.
+Average selling price for product 1 = ((100 * 5) + (15 * 20)) / 115 = 6.96
+Average selling price for product 2 = ((200 * 15) + (30 * 30)) / 230 = 16.96
+
+
+
+Solution: 
+
+SELECT p.product_id, ROUND(SUM(p.price * u.units) / SUM(u.units), 2) AS average_price
+FROM Prices p
+INNER JOIN UnitsSold u
+ON p.product_id = u.product_id
+WHERE u.purchase_date BETWEEN p.start_date AND p.end_date
+GROUP BY p.product_id
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+

@@ -1,0 +1,152 @@
+
+
+
+software Design patterns:
+
+2. Structural Patterns (For organizing classes and objects) These patterns simplify relationships between objects and improve code organization. 
+Adapter: Bridges two incompatible interfaces so they can work together. 
+Decorator: Adds functionality to objects dynamically without altering their structure. 
+Facade: Provides a simplified interface to a complex system. 
+Proxy: Controls access to another object, usually for security or performance. 
+
+
+Structural design patterns help simplify relationships between objects, making code more flexible and easier to maintain. Let's go through each of them in detail:
+
+1. Adapter Pattern
+The Adapter pattern acts as a bridge between two incompatible interfaces, allowing them to work together without modifying existing code.
+
+Example: Suppose you have a legacy system that outputs XML data, but your new system only understands JSON. An adapter can be created to convert XML to JSON, enabling seamless integration.
+
+Implementation: Typically, the adapter class implements the expected interface while internally using an instance of the legacy class.
+
+class XMLData:
+    def get_data(self):
+        return "<data>XML Format</data>"
+
+class JSONAdapter:
+    def __init__(self, xml_data):
+        self.xml_data = xml_data
+
+    def get_data(self):
+        return f'{{"data": "{self.xml_data.get_data()[6:-7]}"}}'
+
+xml = XMLData()
+adapter = JSONAdapter(xml)
+print(adapter.get_data())  # Outputs JSON formatted data
+
+
+
+
+2. Decorator Pattern
+The Decorator pattern allows for dynamically adding functionality to objects without modifying their structure.
+
+Example: Consider a coffee shop where you have a base Coffee class. Instead of creating multiple subclasses for different coffee types, you use decorators like MilkDecorator, SugarDecorator, etc., to add features.
+
+Implementation: The decorator class extends the base component class and contains an instance of it, wrapping additional behavior around the original object.
+
+class Coffee:
+    def cost(self):
+        return 5
+
+class MilkDecorator:
+    def __init__(self, coffee):
+        self.coffee = coffee
+
+    def cost(self):
+        return self.coffee.cost() + 2
+
+coffee = Coffee()
+milk_coffee = MilkDecorator(coffee)
+print(milk_coffee.cost())  # Outputs 7 (base + milk cost)
+
+
+
+
+
+3. Facade Pattern
+The Facade pattern provides a simplified interface to a complex system, reducing dependency on multiple components.
+
+Example: If you have a system with multiple subsystems for handling user authentication, payment processing, and order management, a ShoppingFacade class can provide a simple interface for clients to interact with the entire system.
+
+Implementation: The facade class encapsulates the complexities of the system and exposes only the necessary functionalities.
+
+class AuthService:
+    def authenticate(self): return "User authenticated."
+
+class PaymentService:
+    def process_payment(self): return "Payment processed."
+
+class OrderService:
+    def place_order(self): return "Order placed."
+
+class ShoppingFacade:
+    def __init__(self):
+        self.auth = AuthService()
+        self.payment = PaymentService()
+        self.order = OrderService()
+
+    def shop(self):
+        return f"{self.auth.authenticate()} {self.payment.process_payment()} {self.order.place_order()}"
+
+shop = ShoppingFacade()
+print(shop.shop())  # Simplified interaction
+
+
+
+
+
+4. Proxy Pattern
+The Proxy pattern controls access to another object, often used for security, performance optimization, or lazy initialization.
+
+Example: A common use case is a virtual proxy that loads a large image only when required rather than loading it immediately upon object creation.
+
+Implementation: The proxy class implements the same interface as the real object, controlling access and adding logic such as caching or authentication.
+
+class RealImage:
+    def display(self): return "Displaying image."
+
+class ProxyImage:
+    def __init__(self):
+        self.image = None
+
+    def display(self):
+        if self.image is None:
+            self.image = RealImage()  # Lazy initialization
+        return self.image.display()
+
+proxy = ProxyImage()
+print(proxy.display())  # Loads only when needed
+
+
+
+
+
+5. Composite Pattern
+The Composite pattern allows treating individual objects and their compositions uniformly, making hierarchical structures easier to work with.
+
+Example: Consider a file system where directories contain files and subdirectories. Instead of handling individual files and directories differently, the Directory class and File class implement the same interface, allowing recursive operations like searching or deletion.
+
+Implementation: The composite class contains a collection of child components, treating them as a single entity.
+
+class FileComponent:
+    def show_details(self): pass
+
+class File(FileComponent):
+    def __init__(self, name): self.name = name
+    def show_details(self): return self.name
+
+class Directory(FileComponent):
+    def __init__(self): self.files = []
+    def add(self, file): self.files.append(file)
+    def show_details(self): return [file.show_details() for file in self.files]
+
+file1 = File("File1.txt")
+file2 = File("File2.txt")
+folder = Directory()
+folder.add(file1)
+folder.add(file2)
+
+print(folder.show_details())  # Outputs ['File1.txt', 'File2.txt']
+
+
+
