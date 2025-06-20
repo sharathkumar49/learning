@@ -1,0 +1,35 @@
+
+
+Great question, Sharath — sounds like you're building a solid mental map of concurrency challenges. Beyond the Dining Philosophers and Traffic Signal Synchronization, here’s a curated list of classic and widely discussed threading problems that often come up in systems design, OS theory, and interviews:
+
+🧠 Classic Threading Problems
+1. Producer-Consumer Problem  **Done**
+   A synchronization issue where producers generate data and consumers use it. The challenge is managing the shared buffer without race conditions or deadlocks.
+
+2. Readers-Writers Problem  
+   Multiple threads either read or write to a shared resource. The goal is to allow concurrent reads but exclusive writes, balancing fairness and efficiency.
+
+3. Sleeping Barber Problem  
+   Models a barber shop with limited waiting chairs. It explores synchronization between customer and barber threads — a metaphor for managing limited resources.
+
+4. Cigarette Smokers Problem  
+   A coordination puzzle involving three smokers and an agent. It’s used to illustrate complex synchronization and resource allocation.
+
+5. Bounded Buffer Problem (a variant of Producer-Consumer)  
+   Focuses on a fixed-size buffer, emphasizing blocking behavior when the buffer is full or empty.
+
+6. Barbershop Problem  
+   Similar to the sleeping barber but often extended to multiple barbers and customers — useful for modeling semaphores and condition variables.
+
+7. Readers-Writers Lock Variants  
+   Includes First Readers-Writers Problem (no writer starvation) and Second Readers-Writers Problem (no reader starvation).
+
+8. The Bridge Crossing Problem  
+   Models traffic from both directions on a one-lane bridge. It’s a metaphor for mutual exclusion and fairness.
+
+9. The Train Deadlock Problem  
+   Trains on a circular track can deadlock if each occupies a segment and waits for the next. It’s a visual way to understand circular wait conditions.
+
+10. Banker's Algorithm  
+   Not a problem per se, but a classic algorithm to avoid deadlock by simulating resource allocation and ensuring safe states.
+

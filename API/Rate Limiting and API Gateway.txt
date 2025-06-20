@@ -1,0 +1,40 @@
+
+
+Rate Limiting & API Gateways: Strategies for API Protection
+
+Rate Limiting:
+Rate limiting is a crucial mechanism for controlling the number of requests a client can make to an API within a specific timeframe. It helps prevent abuse, ensures fair resource allocation, and protects APIs from malicious attacks like DDoS (Distributed Denial of Service) and brute force attacks.
+
+Common Rate Limiting Strategies
+1. Fixed Window Counting – Limits requests within a fixed time window (e.g., 100 requests per minute). Simple but can lead to traffic spikes.
+2. Sliding Window Log – Maintains a log of timestamps for each request, allowing smoother traffic control.
+3. Token Bucket Algorithm – Assigns tokens to users at a fixed rate; each request consumes a token.
+4. Leaky Bucket Algorithm – Processes requests at a steady rate, smoothing out bursts of traffic.
+5. Dynamic Rate Limiting – Adjusts limits based on user behavior and real-time traffic patterns.
+
+
+Best Practices
+- Use IP-based and user-based throttling to prevent abuse.
+- Implement exponential backoff to gradually reduce API access for repeated violations.
+- Combine rate limiting with AI-driven anomaly detection for adaptive security.
+
+
+
+API Gateways
+An API Gateway acts as an intermediary between clients and backend services, managing API requests, authentication, rate limiting, and security enforcement.
+
+Key Functions of an API Gateway
+- Request Routing – Directs API calls to the appropriate backend services.
+- Authentication & Authorization – Implements OAuth 2.0, JWT, and API key-based access control.
+- Traffic Management – Handles rate limiting, request throttling, and load balancing.
+- Caching – Stores frequently accessed data to improve performance.
+- Protocol Mediation – Translates between different API protocols (REST, GraphQL, SOAP).
+- Monitoring & Analytics – Tracks API usage and detects anomalies.
+
+Security Strategies
+- Role-Based Access Control (RBAC) – Restricts API access based on user roles.
+- TLS/SSL Encryption – Ensures secure data transmission.
+- DDoS Protection – Filters excessive API requests to prevent overload.
+- Bot Detection & Mitigation – Identifies and blocks automated threats.
+- Logging & Monitoring – Tracks API activity for security audits.
+

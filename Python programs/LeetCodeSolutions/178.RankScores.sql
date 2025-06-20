@@ -1,0 +1,39 @@
+-- 178. Rank Scores
+-- https://leetcode.com/problems/rank-scores/
+--
+-- Write an SQL query to rank scores. If there is a tie between two scores, both should have the same ranking. After a tie, the next ranking number should be the next consecutive integer value. In other words, there should be no "holes" between ranks.
+--
+-- Table: Scores
+-- +-------------+-------+
+-- | Column Name | Type  |
+-- +-------------+-------+
+-- | id          | int   |
+-- | score       | int   |
+-- +-------------+-------+
+-- id is the primary key for this table.
+-- Each row of this table contains the score of a game. Score is a non-negative integer.
+--
+-- Example:
+-- Scores table:
+-- +----+-------+
+-- | id | score |
+-- +----+-------+
+-- | 1  | 3     |
+-- | 2  | 3     |
+-- | 3  | 2     |
+-- | 4  | 1     |
+-- +----+-------+
+--
+-- Result table:
+-- +-------+------------+
+-- | score | Rank       |
+-- +-------+------------+
+-- | 3     | 1          |
+-- | 3     | 1          |
+-- | 2     | 2          |
+-- | 1     | 3          |
+-- +-------+------------+
+--
+-- Solution:
+SELECT score, DENSE_RANK() OVER (ORDER BY score DESC) AS Rank
+FROM Scores;

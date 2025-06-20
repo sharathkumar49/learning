@@ -19047,3 +19047,2416 @@ class CoreConfig(AppConfig):
 
 
 
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Django Part - 3
+
+
+
+🔰 Getting Started
+
+✅ Purpose  
+This is the final part of a 3-part Django series. Parts 1 & 2: built a REST API for an online store.  
+In this part → focus on real-world, production-ready features.
+
+📦 Topics Covered  
+- File Uploads : How to accept and manage file input in forms, store files in the server, and serve uploaded files securely.  
+- Email Support ('send_mail'): Techniques to send emails using Django's built-in send_mail() function and configuring email backends.  
+- Background Tasks (Celery + Redis): Leveraging tools like Celery + Redis to offload long-running tasks for performance.  
+- Automated Testing ('unittest', coverage): Writing unit tests using Django's test client, unittest, and coverage analysis.  
+- Performance Testing (Locust, JMeter): Measuring system responsiveness using tools like Locust or Apache JMeter.  
+- Caching (Redis, Memcached, file-based cache): Implementing caching via Memcached, Redis, or Django’s file-based cache for optimizing load times.
+
+⚠️ Pre-requisite  
+Requires completion of Parts 1 & 2:  
+- Project architecture  
+- DRF concepts  
+- Authentication  
+- Shortcuts & best practices
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2. Setting Up the Project:
+
+
+
+🚀 Project Setup – Storefront Part 3
+
+This phase lays the groundwork for working with advanced Django features. Even if you’ve cloned the repo, make sure to follow all steps precisely to avoid configuration issues.
+
+
+
+✅ Step-by-Step Setup Guide:
+
+1. Create a New MySQL Database
+Open DataGrip (or your preferred DB tool) and create a fresh database:
+
+'''sql
+CREATE DATABASE storefront3;
+'''
+
+This ensures you're working in isolation from previous project phases.
+
+
+
+2. Download the Project Starter Files
+Download the '.zip' file attached with the course and extract it. Inside:
+
+'''
+📂 code/
+   └── 📂 section-1/
+         └── 📂 start/
+'''
+
+Open the 'start' folder in VS Code.
+
+
+
+3. Update Database Credentials
+Navigate to:
+
+'''
+storefront3/settings.py
+'''
+
+Update the 'DATABASES' section with your local MySQL password:
+
+'''python
+'PASSWORD': 'your_mysql_password',
+'''
+
+
+
+4. Install Dependencies
+Open the terminal in VS Code and run:
+
+'''bash
+pipenv install
+'''
+
+This installs all required Python packages from 'Pipfile'.
+
+
+
+5. Activate the Virtual Environment
+'''bash
+pipenv shell
+'''
+
+Then, configure VS Code to use this Python interpreter:
+- Run 'which python' (Linux/Mac) or 'where python' (Windows) inside the shell.
+- Copy the path and open the Command Palette (⇧⌘P / Ctrl+Shift+P).
+- Search: 'Python: Select Interpreter'
+- Choose 'Enter interpreter path', paste the path, and replace 'activate' with 'python' at the end.
+
+
+6. Run Migrations
+'''bash
+python manage.py migrate
+'''
+
+> Creates all database tables based on models.
+
+
+
+7. Populate the Database (New Approach!)
+We’ll seed data using a custom management command rather than a raw '.sql' import.
+
+📁 File Structure:
+'''
+store/
+└── management/
+    └── commands/
+        └── seed_db.py  ← custom command
+        └── seed.sql    ← SQL data file
+'''
+
+
+
+📌 'seed_db.py' Implementation
+
+from django.core.management.base import BaseCommand
+from django.db import connection
+from pathlib import Path
+import os
+
+class Command(BaseCommand):
+    help = 'Populates the database with collections and products'
+
+    def handle(self, *args, options):
+        print('Populating the database...')
+        current_dir = os.path.dirname(__file__)
+        file_path = os.path.join(current_dir, 'seed.sql')
+        sql = Path(file_path).read_text()
+
+        with connection.cursor() as cursor:
+            cursor.execute(sql)
+
+
+📌 Run the command:
+'''bash
+python manage.py seed_db
+'''
+
+✅ “Populating the database...” – your data is now seeded.
+
+
+
+8. Create a Superuser
+'''bash
+python manage.py createsuperuser
+'''
+Fill in:
+- Username: 'admin'
+- Email: 'admin@example.com'
+- Password: 'yourpassword'
+
+
+
+9. Run the Server
+'''bash
+python manage.py runserver
+'''
+
+Visit:
+- [http://localhost:8000/](http://localhost:8000/) → Blank homepage
+- [http://localhost:8000/store/collections](http://localhost:8000/store/collections) → Confirm seeded collections
+- [http://localhost:8000/store/products](http://localhost:8000/store/products) → Should show 1000 products with pagination
+
+
+
+10. Login to Admin Panel
+Go to:
+'''
+http://localhost:8000/admin
+'''
+
+Login with the credentials created in step 8.
+
+
+
+📊 Summary Flow Diagram:
+┌──────────────────────────────────────────────┐
+│        Project Setup Flow (Storefront 3)     │
+├───────────────────────┬──────────────────────┤
+│ Create DB             │ storefront3          │
+│ Download project      │ Code → Section 1     │
+│ Update DB settings    │ settings.py          │
+│ pipenv install        │ Install dependencies │
+│ pipenv shell          │ Activate env         │
+│ Interpreter setup     │ Use env Python       │
+│ migrate               │ Create tables        │
+│ seed_db               │ Populate DB          │
+│ createsuperuser       │ Create admin user    │
+│ runserver             │ Launch server        │
+└───────────────────────┴──────────────────────┘
+
+
+💡 Troubleshooting Tip
+If you face any errors during setup:
+- ✅ Check forums: [forum.codewithmosh.com](https://forum.codewithmosh.com)
+- ✅ Use Google or Stack Overflow
+
+
+
+
+
+
+Codes and other notes in this discussion: 
+
+storefront3\store\management\commands\seed_db.py:
+
+from django.core.management.base import BaseCommand
+from django.db import connection
+from pathlib import Path
+import os
+
+
+class Command(BaseCommand):
+    help = 'Populates the database with collections and products'
+
+    def handle(self, *args, **options):
+        print('Populating the database...')
+        current_dir = os.path.dirname(__file__)
+        file_path = os.path.join(current_dir, 'seed.sql')
+        sql = Path(file_path).read_text()
+
+        with connection.cursor() as cursor:
+            cursor.execute(sql)
+
+
+
+Then in the terminal:
+python manage.py seed_db
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Uploading Files:
+----------------
+In this section, we're going to talk about uploading files. So together, we'll build a RESTful API that client apps can call for uploading images. It's going to be a lot of fun, so let's jump in and get started.
+
+Managing Media Files:
+---------------------
+
+
+
+
+📌 Managing Media Files in Django
+To support file uploads (e.g. images), Django must know where to store user-uploaded files and how to serve them in development. These files are commonly referred to as media files, and they must be configured separately from static files.
+
+
+
+📌 1. Creating the 'media/' Directory
+✔ In the root of your project, create a folder named:
+'''
+media/
+'''
+
+✔ This is where Django will save user-uploaded content.  
+✔ Although you could name it something like 'uploads', 'media/' is standard and widely used in Django documentation.
+
+
+
+
+📌 2. Configuring 'settings.py'
+
+Open your 'settings.py' and add the following:
+
+'''python
+import os
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+'''
+
+# 🔍 Explanation:
+| Setting       | Purpose                                                                 |
+|---------------|-------------------------------------------------------------------------|
+| 'MEDIA_URL'   | Public-facing URL path where media files will be served ('/media/').   |
+| 'MEDIA_ROOT'  | Absolute filesystem path to the folder where uploaded files are stored. |
+
+✔ 'BASE_DIR' is already defined in 'settings.py', pointing to the root project directory.
+
+
+
+
+
+📌 3. Testing the Setup (Optional)
+✔ Place any image (e.g. 'dog.jpg') into the 'media/' directory.  
+✔ This simulates a file that might have been uploaded by a user.
+
+
+
+
+
+📌 4. Updating 'urls.py' to Serve Media
+
+✔ In development, Django must be explicitly told to serve media files via a URL route.
+
+In 'storefront/urls.py':
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('playground/', include('playground.urls')),
+    path('store/', include('store.urls')),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.jwt')),
+    path('__debug__/', include(debug_toolbar.urls)),
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+🔍 Explanation:
+- 'static()' connects the '/media/' URL endpoint to the actual 'MEDIA_ROOT' on the disk.
+- Only executes in development ('DEBUG = True'), not in production.
+
+> ⚠️ In production, you should serve media files using a dedicated web server (e.g. NGINX) instead.
+
+
+
+
+
+📌 5. Verifying Your Setup
+✔ Run your development server:
+'''bash
+python manage.py runserver
+'''
+
+✔ Visit this URL in your browser:
+'''
+http://localhost:8000/media/dog.jpg
+'''
+
+✅ If the image loads, Django is correctly serving files from the 'media/' folder.
+
+
+
+
+
+
+Codes and other notes in this discussion: 
+
+settings.py:
+
+MEDIA_URL = '/media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+
+urls.py:
+from django.conf import settings 
+from django.conf.urls.static import static
+
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('playground/', include('playground.urls')),
+    path('store/', include('store.urls')),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.jwt')),
+    path('__debug__/', include(debug_toolbar.urls)),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+A better way to write this code: 
+
+if settings.DEBUG:
+	urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+
+
+
+
+📌 Key Takeaways
+✔ Media files are user-uploaded content and must be handled separately from static assets.  
+✔ Define 'MEDIA_URL' and 'MEDIA_ROOT' in 'settings.py'.  
+✔ Use 'static()' in 'urls.py' only in development (guarded by 'if settings.DEBUG').  
+✔ In production, serve media files using a web server—not Django.  
+✔ Placing files in 'media/' and verifying via browser confirms proper configuration.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Adding Images to Products: 
+--------------------------
+📌 Adding Images to Products in Django
+Each product can now have zero or more images, which requires creating a new model and establishing a one-to-many relationship between 'Product' and 'ProductImage'.
+
+
+
+📌 1. Defining the 'ProductImage' Model
+✔ Add this new class right after the existing 'Product' model in 'store/models.py', since they are closely related.
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(
+        upload_to='store/images',
+        validators=[validate_file_size])
+
+
+
+
+
+📌 2. Explanation of Fields
+➤ 'product = models.ForeignKey(...)'
+- Relation: One-to-many — each product can have multiple images.
+- on_delete=models.CASCADE': If a product is deleted, its images are deleted too.
+- related_name='images'': Enables reverse lookup using 'product.images.all()'.
+
+➤ 'image = models.ImageField(...)'
+- Purpose: Stores image files associated with products.
+- upload_to='store/images'': Images are stored under 'MEDIA_ROOT/store/images/'.
+- validators=[validate_file_size]': Optional custom validator to restrict max file size.
+
+✔ Note: Use 'ImageField' for image validation and dimension support. Use 'FileField' only for generic files (e.g., PDFs, DOCs).
+
+
+
+
+
+📌 3. Why Store Image Files in the Filesystem
+✔ Do NOT store images in the database.  
+✔ Images are stored in the filesystem, and only their file paths are saved in the DB.
+
+ ✳️ Advantages:
+- Keeps the database lightweight.
+- Improves query performance.
+- Easier to serve files directly from disk (or a CDN in production).
+
+
+
+
+
+📌 4. Installing Pillow (Image Support Library)
+pipenv install pillow
+
+✔ 'Pillow' is required for Django to process and validate image files.
+
+
+
+
+
+📌 5. Creating and Running Migrations
+python manage.py makemigrations
+python manage.py migrate
+
+✔ This will create the corresponding database table to store product image references.
+
+
+
+
+
+📌 6. Project Structure Reference
+Media files will be stored in the following structure:
+
+project_root/
+├── media/               ← MEDIA_ROOT
+│   └── store/
+│       └── images/      ← Image upload folder
+├── store/
+│   └── models.py        ← Product & ProductImage models
+
+
+
+
+
+Codes and Other Notes in this discussion: 
+
+store/models.py:
+class ProductImage(models.Model):
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(
+        upload_to='store/images',
+        validators=[validate_file_size])
+		
+		
+pipenv install pillow 
+
+python manage.py makemigrations
+python manage.py migrate 
+
+
+
+
+
+📌 Key Takeaways
+✔ A ProductImage model adds image upload functionality with a clear one-to-many structure.  
+✔ ImageField ensures proper validation for image uploads.  
+✔ Uploaded files are saved under 'MEDIA_ROOT/store/images/', not in the database.  
+✔ Use 'related_name' for clean reverse lookups like 'product.images.all()'.  
+✔ Install Pillow to enable Django’s image handling features.
+
+
+
+Next up: Building an API that enables clients to upload images tied to specific products. Let me know if you'd like to bundle this and the next section into a printable PDF cheat sheet 🧾📁.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Building an API to Upload Images: 
+----------------------------------
+
+
+
+📌 Uploading Images for Products in Django
+To allow users to upload images for products, we implement a one-to-many relationship between 'Product' and a new model 'ProductImage', and expose it through a nested API endpoint.
+
+
+
+📌 1. Defining the Image Upload Endpoint
+✔ The endpoint is designed as:  
+'''
+/products/<product_id>/images/
+'''
+✔ Follows a nested resource structure, where each product can have multiple images.
+
+✔ Django REST Framework requires three core components:
+- Serializer
+- ViewSet
+- Router
+
+
+
+
+
+📌 2. Creating the Serializer
+✔ In 'store/serializers.py', define 'ProductImageSerializer'.
+
+class ProductImageSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        product_id = self.context['product_id']
+        return ProductImage.objects.create(product_id=product_id, validated_data)
+
+    class Meta:
+        model = ProductImage
+        fields = ['id', 'image']
+
+
+✔ Why product ID isn't included in 'fields':
+- It is already present in the URL ('product_pk'), so no need to duplicate it in the form body or JSON.
+
+✔ 'create()' method uses the 'product_id' from 'context' to associate the image.
+
+
+
+
+
+📌 3. Creating the ViewSet
+✔ In 'store/views.py', define 'ProductImageViewSet'.
+
+
+class ProductImageViewSet(ModelViewSet):
+    serializer_class = ProductImageSerializer
+
+    def get_serializer_context(self):
+        return {'product_id': self.kwargs['product_pk']}
+
+    def get_queryset(self):
+        return ProductImage.objects.filter(product_id=self.kwargs['product_pk'])
+
+
+✔ 'product_pk' is automatically extracted from the URL using 'kwargs'.
+✔ 'get_queryset()' filters only images for the specified product.
+
+
+
+
+
+📌 4. Configuring the Nested Router
+✔ In 'store/urls.py', use 'NestedDefaultRouter' to register the image sub-resource.
+
+'''python
+router = routers.DefaultRouter()
+router.register('products', views.ProductViewSet, basename='products')
+
+products_router = routers.NestedDefaultRouter(router, 'products', lookup='product')
+products_router.register('reviews', views.ReviewViewSet, basename='product-reviews')
+products_router.register('images', views.ProductImageViewSet, basename='product-images')
+'''
+
+✔ 'lookup='product'' creates a route like '/products/<product_pk>/images/'.
+
+
+
+
+
+📌 5. Handling Form Uploads
+✔ When posting an image using a form or JSON, you don’t include the 'product_id'—it’s derived from the route.
+
+✔ If you see the error:
+'''
+Column 'product_id' cannot be null
+'''
+➡ It means the 'product_id' wasn’t manually injected, which is why we override 'create()' and use 'context'.
+
+
+
+
+
+📌 6. Testing the API
+- Upload images at '/products/1/images/'.
+- Files are stored in:
+  '''
+  media/store/images/
+  '''
+- Django automatically appends suffixes to filenames if duplicates are uploaded (e.g., 'dog_xxx.jpg').
+
+
+
+
+
+📌 7. Key Takeaways
+✔ Use a nested router to expose image upload routes per product.  
+✔ Do not include 'product_id' in the form—it is inferred from the URL.  
+✔ Override 'create()' in the serializer to inject 'product_id'.  
+✔ Use 'get_serializer_context()' to pass the context into the serializer.  
+✔ Uploaded files are saved to the file system, not the database.  
+✔ This design keeps the API clean, secure, and scalable.
+
+
+
+
+
+
+Codes and Other Notes in this Discussion: 
+
+/products/1/images/1
+
+
+serializers.py:
+class ProductImageSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        product_id = self.context['product_id']
+        return ProductImage.objects.create(product_id=product_id, **validated_data)
+
+    class Meta:
+        model = ProductImage
+        fields = ['id', 'image']
+
+		
+
+
+views.py:
+class ProductImageViewSet(ModelViewSet):
+    serializer_class = ProductImageSerializer
+
+    def get_serializer_context(self):
+        return {'product_id': self.kwargs['product_pk']}
+
+    def get_queryset(self):
+        return ProductImage.objects.filter(product_id=self.kwargs['product_pk'])
+
+
+
+
+urls.py:
+
+router = routers.DefaultRouter()
+router.register('products', views.ProductViewSet, basename='products')
+
+
+products_router = routers.NestedDefaultRouter(
+    router, 'products', lookup='product')
+products_router.register('reviews', views.ReviewViewSet,
+                         basename='product-reviews')
+products_router.register(
+    'images', views.ProductImageViewSet, basename='product-images')
+
+
+
+
+
+
+📌 8. Summary
+| Component                    | Purpose                                                                      |
+|------------------------------|------------------------------------------------------------------------------|
+| 'ProductImageSerializer'     | Validates and saves uploaded image. Uses 'context' to retrieve 'product_id'. |
+| 'ProductImageViewSet'        | Filters images by 'product_pk' and injects it into serializer context.       |
+| 'products_router.register()' | Sets up the nested route '/products/<product_pk>/images/'.                   |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Returning Images from the API:
+------------------------------
+
+
+📌 Returning Images with Products via the API
+
+After implementing the product image upload feature, we want to ensure that product images are included in the product list API response. This avoids requiring the client to make multiple requests to fetch images for each product, improving efficiency and performance.
+
+
+
+📌 1. Extending the Product Serializer
+
+📄 File: 'store/serializers.py'
+
+✔ Modify the 'ProductSerializer' to include an 'images' field:
+
+class ProductImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductImage
+        fields = ['id', 'image']
+
+
+✔ Move 'ProductImageSerializer' above 'ProductSerializer' in the file to avoid reference issues.
+✔ Then add the nested field to 'ProductSerializer':
+
+class ProductSerializer(serializers.ModelSerializer):
+    images = ProductImageSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Product
+        fields = [
+            'id', 'title', 'description', 'slug', 'inventory',
+            'unit_price', 'price_with_tax', 'collection', 'images'
+        ]
+
+    price_with_tax = serializers.SerializerMethodField(
+        method_name='calculate_tax')
+
+    def calculate_tax(self, product: Product):
+        return product.unit_price * Decimal(1.1)
+
+
+🔍 Explanation:
+- 'many=True': Because a product can have multiple images.
+- 'read_only=True': Prevents images from being submitted during product creation.
+- 'ProductImageSerializer': Used to serialize the nested list of images for each product.
+
+
+
+
+
+📌 2. Eager Loading Images to Avoid Duplicate Queries
+✔ Without optimization, Django performs a separate query to fetch images for each product, leading to duplicate queries and inefficient performance.
+✔ To prevent this, update the 'ProductViewSet' to use eager loading via 'prefetch_related()':
+
+📄 File: 'store/views.py'
+
+class ProductViewSet(ModelViewSet):
+    queryset = Product.objects.prefetch_related('images').all()
+    serializer_class = ProductSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_class = ProductFilter
+    pagination_class = DefaultPagination
+    permission_classes = [IsAdminOrReadOnly]
+    search_fields = ['title', 'description']
+    ordering_fields = ['unit_price', 'last_update']
+
+    def get_serializer_context(self):
+        return {'request': self.request}
+
+
+🔍 Explanation:
+- 'prefetch_related('images')': Preloads all product images in a single query.
+- Prevents N+1 query problem, reducing the number of queries from one per product to just two.
+
+
+
+
+
+📌 3. Testing in Browser
+✔ Navigate to '/store/products/'.  
+✔ Each product now includes an 'images' key, which is a list of associated image objects:
+
+"images": [
+    {
+        "id": 1,
+        "image": "http://localhost:8000/media/store/images/dog.jpg"
+    }
+]
+
+
+✔ Clicking the image URL should display the uploaded image.
+✔ Confirm performance using Django Debug Toolbar:  
+- Before optimization: ~14 queries  
+- After adding 'prefetch_related('images')': reduced to ~6 queries
+
+
+
+
+
+
+Codes and Other Notes in this Discussion: 
+
+
+serializer.py:
+class ProductSerializer(serializers.ModelSerializer):
+    images = ProductImageSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Product
+        fields = ['id', 'title', 'description', 'slug', 'inventory',
+                  'unit_price', 'price_with_tax', 'collection', 'images']
+
+    price_with_tax = serializers.SerializerMethodField(
+        method_name='calculate_tax')
+
+    def calculate_tax(self, product: Product):
+        return product.unit_price * Decimal(1.1)
+		
+		
+		
+views.py:
+class ProductViewSet(ModelViewSet):
+    queryset = Product.objects.prefetch_related('images').all()
+    serializer_class = ProductSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_class = ProductFilter
+    pagination_class = DefaultPagination
+    permission_classes = [IsAdminOrReadOnly]
+    search_fields = ['title', 'description']
+    ordering_fields = ['unit_price', 'last_update']
+
+    def get_serializer_context(self):
+        return {'request': self.request}
+
+    def destroy(self, request, *args, **kwargs):
+        if OrderItem.objects.filter(product_id=kwargs['pk']).count() > 0:
+            return Response({'error': 'Product cannot be deleted because it is associated with an order item.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+        return super().destroy(request, *args, **kwargs)
+
+
+
+
+📌 Key Takeaways
+✔ To include related media in list responses, use nested serializers.  
+✔ Set 'many=True' and 'read_only=True' when returning related lists that aren't modified directly.  
+✔ Always use 'prefetch_related()' in the view to optimize query performance.  
+✔ Including images in the product list response avoids excessive API calls by the client.  
+✔ This approach keeps the API lean and responsive under load.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Validating Uploading Files:
+---------------------------
+
+
+📌 Validating Uploaded Files in Django
+Django provides some built-in mechanisms for validating uploaded content. However, certain validations—such as file size checks—require custom logic. This note outlines how image and file validation works, including how to implement custom validators for uploads.
+
+
+
+📌 1. Default Validation via 'ImageField'
+✔ In 'ProductImage' model, the 'image' field is defined using 'models.ImageField'.  
+✔ This field automatically validates that the uploaded file is a valid image format (e.g. JPEG, PNG).  
+✔ Internally, Django uses the Pillow library to perform this check.
+
+📌 Therefore, we must install Pillow:
+pipenv install pillow
+
+
+✔ If a user uploads a non-image file (like '.pdf'), Django will raise an error automatically.
+
+
+
+
+
+📌 2. Validating File Size (Custom Validator)
+Django does not validate the size of an uploaded file by default. To implement this, create a custom validator.
+
+📄 File: 'store/validators.py'
+from django.core.exceptions import ValidationError
+
+def validate_file_size(file):
+    max_size_kb = 500
+
+    if file.size > max_size_kb * 1024:
+        raise ValidationError(f'Files cannot be larger than {max_size_kb}KB!')
+
+
+📌 This validator:
+- Limits uploaded files to 500 KB
+- Raises a 'ValidationError' with a descriptive message
+
+
+
+
+
+📌 3. Applying the Validator to 'ImageField'
+
+In 'store/models.py':
+
+from .validators import validate_file_size
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(
+        upload_to='store/images',
+        validators=[validate_file_size])
+
+
+✔ The 'validators' argument accepts a list of one or more validator functions.
+
+
+
+
+📌 4. Testing the File Size Validator
+
+To test:
+- Upload an image larger than 500 KB via '/products/<id>/images/'
+- Django will raise:
+Files cannot be larger than 500KB!
+
+
+✔ ✅ This confirms the custom size validator works as expected.
+
+
+
+
+
+📌 5. Validating File Extensions (For 'FileField')
+✔ When using 'FileField' (for generic uploads like PDFs or docs), Django does not check file types.  
+✔ To restrict allowed extensions (e.g. '.pdf' only), use 'FileExtensionValidator'.
+
+🧪 Temporary demo — change 'ImageField → FileField' in 'models.py':
+
+from django.core.validators import FileExtensionValidator
+
+file = models.FileField(
+    upload_to='store/files',
+    validators=[FileExtensionValidator(allowed_extensions=['pdf'])]
+)
+
+
+✔ This restricts uploads to only files with '.pdf' extension.
+✔ If a '.jpg' file is uploaded, error:
+File extension “jpg” is not allowed. Allowed extensions are: pdf.
+
+
+⚠️ You do not need this with 'ImageField' since it validates file type automatically using Pillow.
+
+
+
+
+📌 6. Final Cleanup
+✔ After testing 'FileField' + 'FileExtensionValidator', switch back:
+
+- Replace 'FileField' with 'ImageField'
+- Restore the custom file size validator
+
+image = models.ImageField(
+    upload_to='store/images',
+    validators=[validate_file_size])
+
+
+
+
+
+Codes and Other Notes in this discussion: 
+
+validators.py:
+from django.core.exceptions import ValidationError
+
+
+def validate_file_size(file):
+    max_size_kb = 500
+
+    if file.size > max_size_kb * 1024:
+        raise ValidationError(f'Files cannot be larger than {max_size_kb}KB!')
+
+
+
+
+models.py:
+class ProductImage(models.Model):
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(
+        upload_to='store/images',
+        validators=[validate_file_size])
+		
+		
+		
+For files --> from django.core.validators import FileExtensionValidator		
+
+validators = [FileExtensionValidator(allowed_extensions=['pdf'])
+
+
+
+
+
+
+📌 Key Takeaways
+✔ 'ImageField' automatically validates uploaded images using Pillow  
+✔ Create a custom validator to limit file size  
+✔ Use 'FileExtensionValidator' to restrict file type for FileField uploads  
+✔ Apply validators using the 'validators=[...]' argument  
+✔ Raising 'ValidationError' ensures clean feedback for invalid uploads
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Setting Up the Client App:
+--------------------------
+
+
+📌 Setting Up the Client App for File Uploads
+In this lesson, we set up a simple front-end client to test file uploads to our Django API. The client is a basic JavaScript application, but no prior knowledge of JavaScript is required to follow this setup.
+
+
+
+📌 1. Locate the Client App Folder
+✔ Inside the provided course zip file, under:
+Section 2 → Uploading Files → client-app/
+
+✔ This folder contains the complete source code of a lightweight client built for demo and testing purposes.
+✔ Purpose: Help full-stack developers understand how file uploads work from both the front-end and back-end.
+
+
+
+
+📌 2. Open the Project in VS Code
+✔ Launch a new instance of Visual Studio Code.
+✔ Drag and drop the 'client-app' folder into the new window to open it as a project workspace.
+
+
+
+
+
+📌 3. Install Node.js (if not already installed)
+✔ This project runs on Node.js, a JavaScript runtime environment.
+
+✔ If Node.js is not installed:
+- Visit [https://nodejs.org](https://nodejs.org)
+- Download and install the latest LTS version
+
+✔ You can verify installation using the terminal:
+node -v
+
+
+📌 Example:
+v17.x.x
+
+
+
+
+📌 4. Install Project Dependencies
+✔ In the terminal (within the 'client-app' folder), run:
+npm install
+
+✔ This will install all required packages from 'package.json'.
+✔ You may see warnings during installation — they are harmless and can be ignored for now.
+
+
+
+
+📌 5. Start the Development Server
+
+✔ Run the app locally using:
+npm start
+
+✔ This will spin up a development server on 'localhost:8001'.
+✔ Open your browser and navigate to:
+http://localhost:8001
+
+
+
+
+
+
+📌 6. Confirm the Interface Loads
+✔ You’ll see a simple web page with an input field for uploading images.
+✔ Note: The upload feature doesn’t work yet — there’s a cross-origin issue that will be addressed in the next lesson.
+
+
+
+📌 Key Takeaways
+✔ A minimal JavaScript client project is provided to simulate file uploads to the Django API.  
+✔ Node.js is required to run the app — install it from nodejs.org if not already installed.  
+✔ Use 'npm install' to install dependencies and 'npm start' to launch the app.  
+✔ The app runs at 'http://localhost:8001' and provides a basic upload interface.  
+✔ Current functionality is limited — we’ll fix connectivity with the Django server in the next lesson.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Enabling CORS:
+--------------
+📌 Enabling CORS in Django for File Uploads
+When a frontend application (hosted on a different port or domain) attempts to make requests to a Django API, it triggers browser-enforced Cross-Origin Resource Sharing (CORS) restrictions. This step outlines how to configure Django to safely accept such requests, especially for file uploads.
+
+
+
+
+📌1. Understanding the Problem
+
+➤ Scenario:
+- Client app is served at: 'http://localhost:8001'
+- Django API runs at: 'http://localhost:8000'
+
+Even though both run on the same machine, they are considered different origins due to port mismatch.
+
+➤ Result:
+The browser blocks requests from the client to the API, showing:
+Could not reach the server.
+
+
+
+
+
+📌 2. What Is CORS?
+CORS (Cross-Origin Resource Sharing) is a browser security mechanism that:
+- Prevents unauthorized cross-origin requests
+- Ensures APIs only accept requests from approved sources
+
+In our case, we must tell Django to explicitly allow requests from 'localhost:8001'.
+
+
+
+
+
+📌 3. Installing Required Library
+Use the official package: ['django-cors-headers'](https://pypi.org/project/django-cors-headers/)
+pipenv install django-cors-headers
+
+
+
+
+📌 4.Configuration in 'settings.py'
+
+➤ a) Add to Installed Apps:
+
+INSTALLED_APPS = [
+    # Django built-ins
+    'django.contrib.admin',
+    ...
+
+    # Third-party apps
+    'corsheaders',
+
+    # Local apps
+    'store',
+    ...
+]
+
+
+➤ b) Add Middleware (must be near the top):
+MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    ...
+]
+
+🔍 *CORS middleware must appear before 'CommonMiddleware' to ensure proper processing.*
+
+
+➤ c) Define Allowed Origins:
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8001',
+    'http://127.0.0.1:8001',
+]
+
+
+✔ This allows requests from both domain variants.
+
+
+
+
+📌 5. Testing the Setup
+
+➤ Initial Behavior:
+- Uploading a file from client app: Fails with CORS error
+
+➤ After Enabling CORS:
+- Upload succeeds
+- Backend returns an image URL
+- Upload progress is visible via the progress bar
+
+
+
+
+📌 6. Using Chrome DevTools to Inspect Requests
+
+✔ Go to Developer Tools → Network Tab → Throttling → Slow 3G  
+✔ Upload a file to watch request flow in slow motion
+
+🔍 Request Breakdown:
+1. OPTIONS request  
+   - Used for preflight check
+   - Server responds with headers:
+     '''
+     Access-Control-Allow-Origin: http://localhost:8001
+     '''
+2. POST request  
+   - File upload is executed upon CORS approval
+
+✔ After successful upload, Chrome shows both requests sequentially.
+
+
+
+
+
+📌 7. Restoring Default Network Mode
+
+✔ Don’t forget to disable throttling after testing:
+- DevTools → Network tab → Throttling → No throttling
+
+
+
+
+Codes and Other Notes in this discussion: 
+
+django cors headers --> https://pypi.org/project/django-cors-headers/
+
+
+in settings.py:
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8001',
+    'http://127.0.0.1:8001',
+]
+
+
+
+
+
+📌 Key Takeaways
+✔ CORS prevents clients from different origins from accessing APIs by default.  
+✔ Use 'django-cors-headers' to allow trusted frontend domains to send requests.  
+✔ Register the middleware early in the list.  
+✔ Use 'CORS_ALLOWED_ORIGINS' to explicitly whitelist client domains.  
+✔ Preflight 'OPTIONS' requests are automatically handled by the middleware.  
+✔ Use browser dev tools to confirm CORS headers and troubleshoot file uploads.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Managing Images in the Admin:
+-----------------------------
+📌 Managing Product Images in the Django Admin Interface
+This section covers the full implementation of managing and previewing product images inside the Django admin using inline editing and thumbnail previews.
+
+
+
+
+📌 1. Displaying Product Images Inline
+
+➤ Context:
+By default, the Product admin page doesn't show associated images.  
+We want to manage images just like we do with tags—using inlines.
+
+➤ Refresher: Admin Layers
+| Admin Class Location | Responsibility                                                              |
+|----------------------|-----------------------------------------------------------------------------|
+| 'store/admin.py'     | Reusable logic specific to the store app (e.g. 'ProductAdmin')              |
+| 'core/admin.py'      | Project-specific logic that extends 'ProductAdmin' via 'CustomProductAdmin' |
+
+
+
+
+📌 2. Defining an Inline for ProductImage
+
+📄 store/admin.py:
+class ProductImageInline(admin.TabularInline):
+    model = models.ProductImage
+    readonly_fields = ['thumbnail']
+
+    def thumbnail(self, instance):
+        if instance.image.name != '':
+            return format_html(f'<img src="{instance.image.url}" class="thumbnail" />')
+        return ''
+
+
+✔ 'thumbnail()' renders the image as an HTML tag  
+✔ 'readonly_fields' registers it in the UI  
+✔ 'format_html()' is used to safely inject HTML  
+
+
+
+
+📌 3. Registering the Inline in Both Admin Classes
+
+📄 In 'store/admin.py' → ProductAdmin:
+
+@admin.register(models.Product)
+class ProductAdmin(admin.ModelAdmin):
+    ...
+    inlines = [ProductImageInline]
+
+
+
+📄 In 'core/admin.py' → CustomProductAdmin
+
+class CustomProductAdmin(ProductAdmin):
+    inlines = [TagInline, ProductImageInline]
+
+✔ Django combines reusable logic from the 'store' app with project-specific enhancements in 'core'.
+
+
+
+
+
+📌 4. Styling the Image as a Thumbnail
+
+➤ Define a CSS class:
+📁 'store/static/store/styles.css'
+
+'''css
+.thumbnail {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+'''
+
+✔ 'width' & 'height': Forces a square frame  
+✔ 'object-fit: cover': Prevents image distortion
+
+
+
+
+
+📌 5. Loading the CSS in Admin via Media Class
+
+📄 Inside ProductAdmin:
+class ProductAdmin(admin.ModelAdmin):
+    ...
+
+    class Media:
+        css = {
+            'all': ['store/styles.css']
+        }
+
+
+✔ This loads 'styles.css' on all product admin views  
+✔ ''all'' is a CSS media type (applies to screen, print, etc.)
+
+
+
+
+
+📌 6. Namespacing Static Files to Avoid Conflicts
+
+✔ By default, Django collects all static files from installed apps  
+✔ If two apps have a file named 'styles.css', one could overwrite the other
+
+📁 Organize like this:
+
+store/
+└── static/
+    └── store/
+        └── styles.css
+
+
+✔ Update the 'Media' class to use: ''store/styles.css''
+
+
+
+
+
+
+Codes and Other Notes in this Discussion: 
+
+
+core/admin.py:
+
+class TagInline(GenericTabularInline):
+    autocomplete_fields = ['tag']
+    model = TaggedItem
+
+
+class CustomProductAdmin(ProductAdmin):
+    inlines = [TagInline, ProductImageInline]
+
+
+admin.site.unregister(Product)
+admin.site.register(Product, CustomProductAdmin)
+
+
+
+
+store/admin.py:
+from django.utils.html import format_html, urlencode
+
+class ProductImageInline(admin.TabularInline):
+    model = models.ProductImage
+    readonly_fields = ['thumbnail']
+
+    def thumbnail(self, instance):
+        if instance.image.name != '':
+            return format_html(f'<img src="{instance.image.url}" class="thumbnail" />')
+        return ''
+
+
+@admin.register(models.Product)
+class ProductAdmin(admin.ModelAdmin):
+    autocomplete_fields = ['collection']
+    prepopulated_fields = {
+        'slug': ['title']
+    }
+    actions = ['clear_inventory']
+    inlines = [ProductImageInline]
+    list_display = ['title', 'unit_price',
+                    'inventory_status', 'collection_title']
+    list_editable = ['unit_price']
+    list_filter = ['collection', 'last_update', InventoryFilter]
+    list_per_page = 10
+    list_select_related = ['collection']
+    search_fields = ['title']
+
+    def collection_title(self, product):
+        return product.collection.title
+
+    @admin.display(ordering='inventory')
+    def inventory_status(self, product):
+        if product.inventory < 10:
+            return 'Low'
+        return 'OK'
+
+    @admin.action(description='Clear inventory')
+    def clear_inventory(self, request, queryset):
+        updated_count = queryset.update(inventory=0)
+        self.message_user(
+            request,
+            f'{updated_count} products were successfully updated.',
+            messages.ERROR
+        )
+
+    class Media:
+        css = {
+            'all': ['store/styles.css']
+        }
+		
+
+
+store\static\store\styles.css:
+		
+.thumbnail {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+
+
+
+📌 Key Takeaways
+
+✔ Define a 'TabularInline' for displaying related 'ProductImage' entries.  
+✔ Render thumbnails via a method using 'format_html()' and 'instance.image.url'.  
+✔ Apply custom CSS to style images as thumbnails.  
+✔ Use 'Media' class to load static assets in the admin.  
+✔ Namespace static files inside 'static/store/' to avoid conflicts across apps.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sending Emails:
+---------------
+In this section, we'll be talking about sending emails from your Django applications. 
+
+
+
+Setting up a Fake SMTP Server:
+------------------------------
+📧 Setting Up a Fake SMTP Server for Email Testing
+In order to simulate email sending in a development environment, we need a local SMTP server. Instead of using a real (often paid) SMTP provider during development, we'll set up a fake SMTP server using SMTP4DEV, a powerful testing tool.
+
+
+
+📌 1. What Is SMTP?
+- SMTP stands for *Simple Mail Transfer Protocol*.
+- It is a protocol used to send and receive emails.
+- Real SMTP servers (e.g., Gmail, SendGrid) are used in production, and usually require authentication and sometimes cost money.
+
+
+
+
+
+📌 2. Why Use a Fake SMTP Server in Development?
+✔ Avoids sending real emails  
+✔ Lets developers preview emails sent by the application  
+✔ Offers an admin panel to visualize email content
+
+
+
+
+📌 3. Introducing SMTP4DEV
+
+GitHub link: [https://github.com/rnwood/smtp4dev](https://github.com/rnwood/smtp4dev)
+SMTP4DEV is a fake SMTP server designed for developers. It captures sent emails and displays them in a web-based interface.
+
+
+
+
+📌 4. Installation Options
+
+You can install SMTP4DEV in one of two ways:
+
+➤ Option 1: Using .NET Core (v3.1+)
+dotnet tool install Rnwood.Smtp4dev --global
+smtp4dev
+
+✔ Recommended for systems that already use .NET SDK.
+
+
+
+➤ Option 2: Using Docker (Preferred)
+Docker is a container platform used to run applications in isolated environments.
+
+📌 If Docker is not installed:
+- Visit [https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop)
+- Download and install Docker Desktop for your OS
+
+📌 Then run the following command:
+docker run --rm -it -p 3000:80 -p 25:25 rnwood/smtp4dev
+
+
+✔ This pulls the SMTP4DEV Docker image from Docker Hub and exposes:
+- Port 25 for sending emails
+- Port 3000 for the browser-based admin panel
+
+
+
+
+
+📌 5. Confirming It Works
+
+➤ Access the Admin Panel
+- Open your browser and navigate to:
+  '''
+  http://localhost:3000
+  '''
+
+- This panel functions like a mock email inbox.
+- Any emails sent by your Django app during development will appear here.
+
+
+
+📌 Visual Overview:
+[Django App] --(send email)--> [SMTP4DEV @ localhost:25]
+                             ↳ View messages at http://localhost:3000
+
+
+✔ Acts like an inbox (Outlook/Webmail)  
+✔ Helps visualize subject, recipients, headers, HTML content, and attachments
+
+
+
+Codes and Other Notes in this discussion:
+
+smtp4dev --> https://github.com/rnwood/smtp4dev
+
+
+
+📌 Key Takeaways
+✔ SMTP4DEV helps you test email functionality without sending real emails  
+✔ You can view and debug email content in a browser-friendly admin panel  
+✔ Installation is quick using Docker or .NET CLI  
+✔ This setup is only for local development — production uses real SMTP providers
+
+
+
+Once set up, you’re ready to configure your Django project to use this SMTP server. That’s what we’ll cover next. Let me know if you want a Docker-free setup or help integrating this with Django's 'EMAIL_BACKEND'. 📮🚀
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Configuring the Email Backend: 
+------------------------------
+
+
+📩 Configuring the Email Backend in Django
+Django provides multiple email backends for different environments and use cases. This setup explains how to configure Django to send emails via an SMTP server, specifically using a fake SMTP server like smtp4dev in a development environment.
+
+
+
+📌 1. What is an Email Backend?
+
+An email backend in Django is a component responsible for handling the actual sending of emails. Django supports various backends for different scenarios:
+
+| Backend Type | Description |
+|--------------|-------------|
+| SMTP         | Default backend. Sends emails via an SMTP server. |
+| Console      | Prints emails to the terminal instead of sending them (used for local dev/testing). |
+| File         | Writes emails to files in a designated directory. |
+| LocMem       | Stores emails in memory (typically for testing). |
+| Dummy        | Discards all email actions (used for disabling email entirely). |
+
+📌 Reference: ''django.core.mail.backends.smtp.EmailBackend'' is Django’s default backend.
+
+
+
+
+
+📌 2. Configuring the SMTP Backend in 'settings.py'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'localhost'             # Address of the SMTP server
+EMAIL_HOST_USER = ''                 # Not required for fake SMTP
+EMAIL_HOST_PASSWORD = ''            # Not required for fake SMTP
+EMAIL_PORT = 2525                   # Default SMTP is 25; smtp4dev uses 2525
+DEFAULT_FROM_EMAIL = 'from@moshbuy.com'
+
+
+✅ Even though the SMTP backend is default, specifying it makes the configuration explicit.  
+✅ 'localhost' refers to where our SMTP server (e.g., smtp4dev) is hosted.  
+✅ 'EMAIL_PORT = 2525' because smtp4dev maps port 2525 for incoming email requests.
+
+
+
+
+
+📌 3. Avoid Hardcoding Credentials in Production
+
+For real SMTP services (SendGrid, Mailgun, etc.):
+- You will need to supply valid 'EMAIL_HOST_USER' and 'EMAIL_HOST_PASSWORD'.
+- Avoid hardcoding passwords in 'settings.py'.
+
+⚠️ Best Practice:
+Use environment variables to securely store credentials:
+
+import os
+
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+
+You can load these using '.env' files and libraries like 'python-decouple' or 'django-environ'.
+
+
+
+
+✅ Final Sample Snippet for Development
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 2525
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+DEFAULT_FROM_EMAIL = 'from@moshbuy.com'
+
+
+
+
+
+
+Codes and Other Notes in this discussion: 
+
+Backends: 
+SMTP(Default)
+Console
+File
+Locmem
+Dummy
+
+
+settings.py:
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'localhost'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 2525   #by default smtp servers runs on port 25
+DEFAULT_FROM_EMAIL = 'from@moshbuy.com'
+
+
+
+
+
+📌 Key Takeaways
+✔ Django provides several email backends; SMTP is the default.  
+✔ Use 'smtp4dev' during development for safe and local email testing.  
+✔ Set 'EMAIL_BACKEND', 'EMAIL_HOST', and 'EMAIL_PORT' to connect to your SMTP server.  
+✔ In real applications, use environment variables to protect credentials.  
+✔ You can switch to the console backend for quick debugging:
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sending Emails:
+---------------
+📧 Sending Emails in Django
+With the email backend and SMTP server (like smtp4dev) configured, Django can now send emails using its built-in utilities. This note covers how to send emails to users and site admins with support for plain text and HTML content, and how to handle common errors safely.
+
+
+
+📌 1. Django’s Built-in Email Utilities
+
+Import these tools from 'django.core.mail':
+
+from django.core.mail import send_mail, mail_admins, BadHeaderError
+
+
+Available Functions:
+
+| Function          | Purpose                                   |
+|-------------------|-------------------------------------------|
+| 'send_mail()'     | Sends a single email                      |
+| 'send_mass_mail()'| Sends multiple emails over one connection |
+| 'mail_admins()'   | Sends email to site admins (from settings)|
+| 'mail_managers()' | Sends email to site managers              |
+
+⚠️ 'send_mail()' opens a new connection per email;  
+'send_mass_mail()' reuses a single connection — better for bulk sending.
+
+
+
+
+
+📌 2. Sending a Basic Email:
+
+Example: 'playground/views.py'
+
+def say_hello(request):
+    try:
+        send_mail(
+            subject='subject',
+            message='message',
+            from_email='info@moshbuy.com',        # overrides DEFAULT_FROM_EMAIL
+            recipient_list=['bob@moshbuy.com']
+        )
+    except BadHeaderError:
+        pass  # should ideally return an error response
+    return render(request, 'hello.html', {'name': 'Mosh'})
+
+
+🔍 Notes:
+- 'BadHeaderError' is raised if malicious users inject headers (e.g., spoofing).
+- Always catch and handle this exception securely.
+
+
+
+
+
+📌 3. Verifying in smtp4dev (Port 3000)
+
+After triggering this view (e.g., visiting '/playground/hello'), smtp4dev will display the sent email:
+- View subject, recipient, and body
+- Confirm delivery without actually sending to external servers
+
+
+
+
+
+📌 4. Sending Email to Site Admins
+
+Django can email site admins using 'mail_admins()'.
+
+def say_hello(request):
+    try:
+        mail_admins(
+            subject='subject',
+            message='message',
+            html_message='<strong>message</strong>'
+        )
+    except BadHeaderError:
+        pass
+    return render(request, 'hello.html', {'name': 'Mosh'})
+
+
+🧩 Configuration in 'settings.py'
+
+ADMINS = [
+    ('Mosh', 'admin@moshbuy.com')
+]
+
+'mail_admins()' ignores the 'User' model — it relies solely on the 'ADMINS' setting.
+
+
+
+
+
+📌 5. Plain Text vs HTML Emails
+
+- 'message' → plain text content (suitable for all mail clients)
+- 'html_message' → optional HTML version of the email
+
+🔍 Why Send Both?
+Some clients (e.g., screen readers or legacy devices) may only support plain text. Including both ensures maximum compatibility.
+
+💡 smtp4dev Insight:
+In the "Parts" tab of the email preview:
+- You’ll see both 'text/plain' and 'text/html' versions.
+- Clients will render the preferred format based on support.
+
+
+
+
+
+
+Codes and Other Notes in this Discussion: 
+
+playground/views.py:
+
+from django.core.mail import send_mail, mail_admins, BadHeaderError 
+
+def say_hello(request):
+	try:
+		send_mail('subject', 'message', 'info@moshbuy.com', ['bob@moshbuy.com'])
+	except BadHeaderError:
+		pass
+	return render(request, 'hello.html', {'name': 'Mosh'})
+	
+	
+#to mail_admins
+def say_hello(request):
+	try:
+		mail_admins('subject', 'message', html_message='message')
+	except BadHeaderError:
+		pass
+	return render(request, 'hello.html', {'name': 'Mosh'})
+	
+in settings.py:
+ADMINS = [
+    ('Mosh', 'admin@moshbuy.com')
+]
+	
+	
+	
+	
+	
+✅ Summary
+
+| Task                        | Description                                                  |
+|-----------------------------|--------------------------------------------------------------|
+| 'send_mail()'               | Sends a user-facing email                                    |
+| 'mail_admins()'             | Sends site-wide alerts to configured admins                  |
+| 'BadHeaderError'            | Protects against header injection attacks                    |
+| 'html_message'              | Sends a formatted HTML version along with plain text         |
+| 'ADMINS' in settings        | Registers recipients for admin-level notifications           |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Attaching Files:
+----------------
+
+
+📎 Attaching Files in Django Emails
+By default, Django provides utility functions like 'send_mail()' and 'mail_admins()' for basic email functionality. However, if you want finer control over email content—such as adding attachments, CC/BCC support, or setting specific headers—you should use the 'EmailMessage' class directly.
+
+
+
+📌 1. Why Use 'EmailMessage'?
+Internally, helper functions like 'send_mail()' use 'EmailMessage' behind the scenes. But by constructing an 'EmailMessage' yourself, you unlock additional features like:
+- File attachments
+- Multiple recipients
+- CC/BCC support
+- Inline image support (advanced use cases)
+
+
+
+📌 2. Attaching a File to an Email
+✔️ Step-by-Step Setup
+🧱 File Structure (Relative to Project Root):
+
+playground/
+└── static/
+    └── images/
+        └── dog.jpg
+
+
+You can drag-and-drop your image into this folder to simulate attaching a file.
+
+
+
+🧾 Sample Implementation
+📄 File: 'playground/views.py':
+from django.core.mail import EmailMessage, BadHeaderError
+from django.shortcuts import render
+
+def say_hello(request):
+    try:
+        message = EmailMessage(
+            subject='subject',
+            body='message',
+            from_email='from@moshbuy.com',
+            to=['bob@moshbuy.com']
+        )
+        message.attach_file('playground/static/images/dog.jpg')
+        message.send()
+    except BadHeaderError:
+        pass  # In production, log and return proper error response
+
+    return render(request, 'hello.html', {'name': 'Mosh'})
+
+
+
+
+
+📌 3. Explanation of Key Elements
+
+| Parameter          | Description                                          |
+|--------------------|------------------------------------------------------|
+| 'subject'          | Email subject line                                   |
+| 'body'             | Body of the message (can be plain text or HTML)     |
+| 'from_email'       | Sender’s email address                               |
+| 'to'               | List of recipient email addresses                    |
+| 'attach_file(path)'| Attaches the file from the given path                |
+
+⚠️ The file path is relative to the project root.
+
+
+
+✅ Result
+
+After triggering the view (e.g., reloading '/playground/hello/'), smtp4dev will show:
+- An email with the subject line and body message
+- A file attachment: 'dog.jpg'
+- You can preview and download the attached file in the admin UI
+
+
+
+
+
+Codes and Other Notes in this discussion: 
+
+from django.core.mail import EmailMessage, BadHeaderError
+from django.shortcuts import render
+
+
+def say_hello(request):
+    try:
+       message = EmailMessage('subject', 'message', 'from@moshbuy.com', ['bob@moshbuy.com']
+       message.attach_file('playground/static/images/dog.jpg')
+	   message.send()
+    except BadHeaderError:
+        pass
+    return render(request, 'hello.html', {'name': 'Mosh'})
+	
+	
+		
+
+📌 Key Takeaways
+
+✔ Use 'EmailMessage' when you need more control than 'send_mail()' provides  
+✔ Attach files using '.attach_file(path)' with correct file path  
+✔ Always wrap 'send()' in a 'try-except' block to catch 'BadHeaderError'  
+✔ Use smtp4dev to test your email setup without sending real emails  
+✔ Useful for order receipts, invoices, downloadable reports, or any file delivery use case
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+Sending Templated Emails:
+-------------------------	
+📩 Sending Templated Emails in Django
+Hardcoding email messages directly in your views can quickly become unmanageable—especially when emails grow in length or need to support dynamic content. Instead, we can use the 'django-templated-mail' library to manage email messages through reusable templates.
+
+
+
+📌 1. Install 'django-templated-mail'
+
+pipenv install django-templated-mail
+
+This package provides the 'BaseEmailMessage' class—an extension of Django’s built-in 'EmailMessage'—with support for rendering subject, plain text, and HTML bodies via Django templates.
+
+
+
+📌 2. Create a Templated Email:
+📁 File: 'playground/templates/emails/hello.html'
+
+{% block subject %}This is a long subject{% endblock %}
+
+{% block html_body %}
+<h1>Hello</h1>
+My name is {{ name }}
+{% endblock %}
+
+
+🔍 Explanation:
+- '{% block subject %}' → Defines the email subject
+- '{% block html_body %}' → Contains HTML-formatted message content
+- '{{ name }}' → Dynamically rendered using a context dictionary
+
+✔ You may also define a '{% block text_body %}' for plain-text clients (optional).
+
+> ⚠️ To avoid formatting issues in VS Code when editing block templates, use Auto Save and avoid manual saving (which may reformat blocks poorly).
+
+
+
+📌 3. Using 'BaseEmailMessage' in Views
+
+📄 File: 'playground/views.py':
+from django.shortcuts import render
+from templated_mail.mail import BaseEmailMessage
+from django.core.mail import BadHeaderError
+
+def say_hello(request):
+    try:
+        message = BaseEmailMessage(
+            template_name='emails/hello.html',
+            context={'name': 'Mosh'}
+        )
+        message.send(['john@moshbuy.com'])
+    except BadHeaderError:
+        pass
+    return render(request, 'hello.html', {'name': 'Mosh'})
+
+
+🔍 Key Points:
+| Parameter        | Purpose                                               |
+|------------------|--------------------------------------------------------|
+| 'template_name'  | Relative path to the email template                    |
+| 'context'        | Dictionary of variables to be rendered in the template |
+| '.send(to=[])'   | Required list of recipient emails                      |
+
+✔ 'BaseEmailMessage.send()' expects the 'to' parameter to be passed explicitly.
+
+
+
+✅ Final Output (via smtp4dev):
+
+When triggered:
+- The recipient receives an email with the subject:  
+  _"This is a long subject"_
+- The body renders:
+  '''html
+  <h1>Hello</h1>
+  My name is Mosh
+  '''
+
+✔ You can preview both HTML and plain text sections in the 'Parts' tab of smtp4dev.
+
+
+
+
+
+Codes and Other Notes in this Discussion: 	
+		
+pipenv install django-templated-mail	
+
+playground\templates\emails\hello.html:
+{% block subject %}This is a long subject{% endblock %}
+
+{% block html_body %}
+<h1>Hello</h1>
+My name is {{ name }}
+{% endblock %}
+
+
+views.py:	
+from django.core.mail import EmailMessage, BadHeaderError
+from django.shortcuts import render
+from templated_mail.mail import BaseEmailMessage
+
+
+def say_hello(request):
+    try:
+       message = BaseEmailMessage(
+           template_name='emails/hello.html',
+           context={'name': 'Mosh'}
+       )
+       message.send(['john@moshbuy.com'])
+    except BadHeaderError:
+        pass
+    return render(request, 'hello.html', {'name': 'Mosh'})
+	
+	
+	
+	
+	
+📌 Key Takeaways
+✔ Use 'django-templated-mail' to cleanly separate email content from Python logic.  
+✔ Email content is stored and rendered from template files.  
+✔ Templates support plain text and HTML blocks—along with dynamic variables.  
+✔ Use 'BaseEmailMessage' with 'template_name' and 'context' to generate and send the email.  
+✔ Always namespace your templates (e.g., 'emails/hello.html') to avoid collisions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Running Background Tasks:
+-------------------------
+
+In this section, we'll be talking about running background tasks in Django applications. 
+
+
+Introduction to Celery:
+-----------------------
+📌 Introduction to Celery — Running Background Tasks in Django
+
+Modern web applications often deal with resource-intensive tasks like:
+- Sending emails
+- Processing uploaded files (images, videos)
+- Generating reports
+- Running machine learning models
+- Importing/exporting large data sets
+
+These operations are typically slow and CPU-heavy, and should not block the request-response cycle of the main application. For a responsive and scalable system, such tasks should be offloaded to the background.
+
+
+
+🔄 Real-World Scenario
+Let’s say a user uploads a video to your app.  
+❌ If the backend processes the video in the same request cycle, the user experiences long wait times.  
+✅ Instead, we send the video to a background worker, and respond immediately:  
+
+“We’re processing your video. You’ll be notified when it’s ready.”
+
+
+
+
+🧠 Why Offload Background Tasks?
+
+| Problem                         | Background Solution                     |
+|---------------------------------|-----------------------------------------|
+| Long-running tasks block server | Offload work to background worker       |
+| Risk of request timeouts        | Reduce load on main process             |
+| Poor user experience            | Immediate response improves UX          |
+| Inflexible scaling              | Easily add workers to process more jobs |
+
+
+
+🚀 Meet Celery
+Celery is a popular Python framework for executing asynchronous tasks and scheduling periodic jobs.  
+Website: [https://docs.celeryq.dev](https://docs.celeryq.dev)
+
+
+🌟 Key Benefits:
+- Offloads long-running tasks from the Django app
+- Manages distributed task queues
+- Supports scheduling (e.g., run every Monday 9 AM)
+- Scales easily with multiple worker processes
+- Is fault-tolerant: if a task fails, the Django app isn’t impacted
+
+
+
+⚙️ How Celery Works (Conceptual Flow):
+[Django App] ──▶ [Task Queue] ◀──▶ [Celery Workers]
+       │                               ▲
+       └─────────── Immediate Response │
+
+
+1. App pushes a task to the queue (e.g., send email).
+2. Celery worker picks up the task.
+3. Worker processes the task and marks it complete.
+4. Django remains responsive to other users.
+
+
+
+🕒 Bonus: Task Scheduling
+Celery can run periodic (cron-like) jobs:
+- Run cleanup every day at midnight
+- Rebuild cache every 6 hours
+- Send weekly reports
+
+This is done using Celery Beat (a scheduler that kicks off tasks based on a defined interval).
+
+
+
+
+
+Codes and Other Notes in this Discussion: 
+
+Processing images and videos
+Generating reports 
+Sending emails
+Running machine learning models 
+
+
+
+
+
+📌 Key Takeaways:
+✔ Celery enables running tasks asynchronously, outside the main Django process  
+✔ Great for heavy, blocking, or scheduled tasks  
+✔ Frees up Django to continue handling user requests instantly  
+✔ Makes your app more responsive, scalable, and robust
+
+
+

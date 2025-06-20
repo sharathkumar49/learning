@@ -2741,3 +2741,66 @@ Output:
 Explanation: 
 Product 0 is available in all three stores with prices 95, 100, and 105 respectively.
 Product 1 is available in store1 with price 70 and store3 with price 80. The product is not available in store2.    
+
+
+
+
+
+SELECT product_id, 'store1' AS store, store1 AS price
+FROM Products
+WHERE store1 IS NOT NULL
+UNION
+SELECT product_id, 'store2' AS store, store2 AS price
+FROM Products
+WHERE store2 IS NOT NULL
+UNION
+SELECT product_id, 'store3' AS store, store3 AS price
+FROM Products
+WHERE store3 IS NOT NULL
+
+
+
+product_id    |    store    |    price 
+0                  store1         95
+1                  store1         70
+
+
+product_id    |    store    |    price 
+0                  store2         100
+
+
+product_id    |    store    |    price 
+0                  store3         105
+1                  store3          80
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1783. Grand Slam Titles
+
+
+WITH cte AS
+(SELECT year, 'Wimbledon' AS championship, Wimbledon AS player_id
+FROM championships
+UNION
+SELECT year, 'Fr_open' AS championship, Fr_open AS player_id
+FROM championships
+UNION
+SELECT year, 'US_open' AS championship, US_open AS player_id
+FROM championships
+UNION    
+SELECT year, 'Au_open' AS championship, Au_open AS player_id
+FROM championships),
+cte2 AS 
+(SELECT player_id, COUNT(player_id) AS grand_slams_count
+FROM cte
+GROUP BY player_id)
+
+SELECT c.player_id, p.player_name, c.grand_slams_count
+FROM cte2 c
+LEFT JOIN Players p
+ON c.player_id = p.player_id
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1308. Running Total for Different Genders
