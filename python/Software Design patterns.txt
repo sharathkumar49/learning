@@ -42,7 +42,7 @@ print(s1 is s2)  # True, both reference the same instance
 Defines an interface for creating objects but lets subclasses decide which class to instantiate.
 
 # Example:
-'''python
+
 from abc import ABC, abstractmethod
 
 class Animal(ABC):
@@ -68,7 +68,9 @@ class AnimalFactory:
 # Test Factory
 animal = AnimalFactory.get_animal("dog")
 print(animal.speak())  # Outputs: Woof!
-'''
+
+
+
 
 
 
@@ -77,8 +79,8 @@ print(animal.speak())  # Outputs: Woof!
 3. Abstract Factory Pattern  
 Used to create families of related objects without specifying their concrete classes.
 
-# Example:
-'''python
+Example:
+
 from abc import ABC, abstractmethod
 
 # Abstract Product Interfaces
@@ -89,6 +91,7 @@ class Chair(ABC):
 class Table(ABC):
     @abstractmethod
     def use(self): pass
+
 
 # Concrete Products
 class ModernChair(Chair):

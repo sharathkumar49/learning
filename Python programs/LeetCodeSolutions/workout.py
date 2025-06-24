@@ -1,6 +1,6 @@
 
 import os
-def find_missing_ids(directory='.\LeetCodeSolutions', max_id=1089):
+def find_missing_ids(directory='.\LeetCodeSolutions', max_id=1247):
     missing_ids = []
     file_list = [False] * (max_id + 1)  # Initialize a list to track existing IDs
     print("file_list:", len(file_list))

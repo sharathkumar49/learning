@@ -72,7 +72,7 @@ stk.pop(); // returns 89
 
 
 
-Lets see how we can manage browing history 'back' functionality using list in python:
+Let's see how we can manage browing history 'back' functionality using list in python:
 
 
 s = []
@@ -107,8 +107,6 @@ The recommended approach in python is to use 'collections.deque'
 
 
 You can look at collections.deque documentation 
-
-
 
 
 from collections import deque

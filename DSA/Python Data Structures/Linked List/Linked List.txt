@@ -83,6 +83,13 @@ Insert/Delete Element at End      O(1)-amortized           O(n)
 
 The reason for the complexity of array which is O(1)-amortized is,because if you have dynamic array and if you're reaching the capacity, you have to copy those elements. So there is some additional cost. The same operation in linked list is O(n)
 
+
+
+
+
+
+
+
                                    Array               Linked List
 
 Insert Element in Middle        O(n)                      O(n)
