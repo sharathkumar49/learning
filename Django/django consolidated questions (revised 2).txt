@@ -320,3 +320,80 @@ For improved organization, this section is divided into two subsections: one foc
 This consolidated list is designed to cover a comprehensive range of topics—from foundational concepts and data modeling to advanced features, security, testing, and deployment—making it suitable for Django interviews at any level. The rephrased questions aim to elicit detailed, example-driven responses while preserving essential markers like **done** where noted.
 
 Feel free to modify, extend, or reorganize any section based on your specific interview needs or focus areas.
+
+
+
+
+
+
+
+Questions respective to wsgi and asgi:
+
+
+
+Below is a consolidated list of potential interview questions covering both WSGI and ASGI aspects for Django applications. These questions span the basics, technical details, use cases, and comparisons between the two protocols.
+
+---
+
+### **WSGI-Focused Questions**
+
+1. **What is WSGI and why is it fundamental for running Python web applications like Django?**  
+   (Discuss its role as a standardized synchronous interface between web servers and applications.)
+
+2. **How does the `wsgi.py` file in a Django project work, and what is its primary purpose?**  
+   (Explain how it exposes the WSGI application used by the server.)
+
+3. **Can you describe how WSGI servers such as Gunicorn, uWSGI, or mod_wsgi handle HTTP requests for a Django project?**  
+   (Focus on the blocking, synchronous nature of processing.)
+
+4. **What are the advantages of using WSGI for traditional web applications?**  
+   (Highlight reliability, maturity, and simplicity for typical HTTP request/response cycles.)
+
+5. **What limitations does WSGI present when it comes to modern web application requirements, such as real-time communication?**  
+   (Mention challenges with non-blocking I/O, long-lived connections, or handling WebSockets.)
+
+6. **In which scenarios would you choose to maintain a WSGI setup over transitioning to an asynchronous protocol like ASGI?**
+
+---
+
+### **ASGI-Focused Questions**
+
+1. **What is ASGI and how does it extend the capabilities of WSGI?**  
+   (Discuss its support for asynchronous processing and modern protocols.)
+
+2. **Explain the role of the `asgi.py` file in a Django project. What does it expose, and how does it differ from `wsgi.py`?**
+
+3. **How does ASGI enable Django to handle asynchronous views and long-lived connections, such as WebSockets?**  
+   (Talk about the event-driven, non-blocking I/O model.)
+
+4. **Which ASGI servers (e.g., Daphne, Uvicorn, Hypercorn) are commonly used with Django, and what are some key considerations when deploying with them?**
+
+5. **How does Django support a mixed environment of asynchronous and synchronous views under ASGI?**  
+   (Discuss the role of utilities like `sync_to_async` and `async_to_sync`.)
+
+6. **What challenges might developers face when migrating or integrating ASGI into an existing Django project originally built for WSGI?**  
+   (Consider topics such as compatibility, middleware adjustments, and testing.)
+
+---
+
+### **Comparative and Advanced Questions**
+
+1. **Compare and contrast the architectural differences between WSGI and ASGI, especially in terms of processing and concurrency.**
+
+2. **Under what circumstances would you choose ASGI over WSGI for a Django application?**  
+   (Include discussion on scalability, real-time features, and non-blocking operations.)
+
+3. **How does the choice between WSGI and ASGI affect the design and implementation of middleware in Django?**
+
+4. **In a deployment scenario, what differences in server configuration and performance optimization might you encounter when operating under ASGI versus WSGI?**
+
+5. **How do you manage legacy synchronous Django code when migrating to an ASGI-based deployment?**  
+   (Look into the use of adapters like `sync_to_async` and possible refactoring strategies.)
+
+6. **What are the implications for testing and debugging when working with asynchronous code under ASGI compared to traditional synchronous models under WSGI?**
+
+7. **How might the use of ASGI affect caching strategies, session management, and error handling in a Django application?**
+
+---
+
+These questions not only assess a candidate's understanding of the technical underpinnings of Django's deployment paradigms but also gauge their ability to apply this knowledge to real-world scenarios and system design considerations. They provide a comprehensive look at both the established WSGI approach and the emerging ASGI protocol, ensuring thorough preparation for modern Django deployments.

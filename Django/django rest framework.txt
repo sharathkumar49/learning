@@ -1,8 +1,6 @@
 
 
 What is Django REST Framework (DRF), and why is it used?
-
-
 Django REST Framework (DRF) is a powerful, flexible, and widely used toolkit for building Web APIs in Django. It extends Django’s capabilities to make it easy to create RESTful APIs that can be consumed by web, mobile, or other client applications.
 
 
@@ -64,7 +62,7 @@ In Django REST Framework (DRF), both function-based views (FBVs) and class-based
 
 
 
-## Function-Based Views (FBVs)
+Function-Based Views (FBVs):
 
  Definition
 - FBVs are simple Python functions that take a request and return a response.
@@ -93,7 +91,9 @@ Limitations
 
 
 
-## Class-Based Views (CBVs)
+
+
+Class-Based Views (CBVs)
 
 Definition
 - CBVs are Python classes that inherit from DRF’s generic or base view classes (like 'APIView', 'GenericAPIView', or viewsets).
@@ -151,7 +151,7 @@ A serializer in Django REST Framework (DRF) is a component that converts complex
 
 
 
-## Key Purposes of Serializers in DRF
+Key Purposes of Serializers in DRF
 
 1. Serialization:  
    Converts Django model instances or other complex data into Python datatypes (like dictionaries and lists), which can then be rendered as JSON or XML for API responses.
@@ -167,7 +167,7 @@ A serializer in Django REST Framework (DRF) is a component that converts complex
 
 
 
-## Types of Serializers in DRF
+Types of Serializers in DRF
 
 1. Serializer Class
 - The base class for defining custom serialization logic.
@@ -196,7 +196,6 @@ class BookSerializer(serializers.Serializer):
 - A shortcut for creating serializers that automatically generate fields based on a Django model.
 - Handles 'create()' and 'update()' methods automatically.
 
-'''python
 from rest_framework import serializers
 from .models import Book
 
@@ -204,11 +203,10 @@ class BookModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
         fields = ['id', 'title', 'author', 'published_date']
-'''
 
 
 
-## How Serializers Are Used
+How Serializers Are Used
 A. In Views:
 Serializers are used to convert querysets to JSON and to validate and save incoming data.
 
@@ -261,8 +259,8 @@ class BookSerializer(serializers.ModelSerializer):
 
 
 
-## Advanced Features
 
+Advanced Features
 - Custom Fields: You can define custom fields and methods for complex data representation.
 - Read-only and Write-only Fields: Control which fields are included in input/output.
 - Partial Updates: Support for PATCH requests with 'partial=True'.
@@ -270,7 +268,7 @@ class BookSerializer(serializers.ModelSerializer):
 
 
 
-## Summary Table
+Summary Table
 
 | Feature                | Purpose/Usage                                         |
 |------------------------|------------------------------------------------------|

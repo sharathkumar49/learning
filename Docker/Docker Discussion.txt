@@ -1,0 +1,2830 @@
+
+
+Remember to Use Think Deeper in Copilot
+
+Docker 
+
+
+Introduction: 
+Welcome to the ultimate Docker course. In this course, I'm going to take you on a journey and teach you everything you need to know about Docker from the basics to more advanced concepts. So by the end of this course, you'll be able to use it like a pro as part of your software development workflow. 
+
+If you're looking for a comprehensive and highly practical course that takes you from zero to hero, this is the Docker course for you. We're going to start off with a really simple project. So you understand the basics, then we'll use Docker run and deploy a full stack application with a front end, back end and a database. 
+
+So you learn all the necessary techniques and apply them to your own projects. I'm Mosh Hamadani and I've taught millions of people how to advance their software engineering skills through my YouTube channel and online school CodeWithMosh.com. Now let's jump in and get started.
+
+
+
+Prerequisites:
+Let's quickly talk about what you need to know to take this course. To take this course, you don't need any prior knowledge of Docker, because I'm going to teach you everything from scratch, but you should have at least 3 months of programming experience. Ideally, you should have built at least one application, so you should know concepts like frontend, backend, API, and database. 
+
+It doesn't matter what languages and frameworks or what database engines you're familiar with, but you should know what these concepts are all about. Also, you should be familiar with basic git commands, like cloning a GitHub repository, committing code, pushing and pulling. Just the basics, nothing more. 
+
+With all that, let's move on to the next lesson.
+
+
+
+How to Take This Course:
+Now, we all have different ways of learning things. But let me tell you what I think is the best way to take this course. This course is highly practical so you should be active while watching this course.
+In my opinion, it's best if you watch each lesson, take some notes, you can either take notes on a piece of paper or using your favorite note taking tool, just write some keywords, some keywords that help you remember what we talked about. Then, after each lesson, go through your notes and repeat the same steps I've taken in that lesson. So if I talked about a bunch of commands, play with those commands, make sure you understand how they work.
+If you follow that, I promise you, by the end of this course, you're going to master docker and use it like a pro.
+
+
+
+
+
+
+
+
+
+
+
+Introduction to Docker:
+
+
+Introduction: 
+Alright. Our journey to master Docker begins here. In every section, you're going to discover something new about Docker. In this section, we're going to talk about what Docker is and why it's so popular. Then we're going to talk about virtual machines and containers.
+
+Next, we're going to talk about the architecture of Docker so you understand how it works. Then we're going to install Docker and get our hands dirty. I'm going to give you an overview of your development workflow with Docker and then we're going to see that in action using a really simple example. So by the end of this section, you will have an idea of what Docker is all about. I'm so excited about this section, I hope you are too, so let's jump in and get started.
+
+
+
+Codes and Other Notes in this Discussion: 
+
+In this Section: 
+What is Docker?
+Virtual Machines vs Containers
+Architecture of Docker
+Installing Docker
+Development Workflow
+Docker in Action 
+
+
+
+
+
+
+
+
+
+What is Docker?
+
+So what is docker and why is everyone using it these days? Well, docker is a platform for building, running and shipping applications in a consistent manner, so so if your application works on your development machine, it can run and function the same way on other machines. If you have been developing software for a while, you've probably come across this situation where your application works on your development machine but doesn't somewhere else. Can you think of three reasons why this happens? Well, this can happen if one or more files are not included as part of your deployment, so your application is not completely deployed, it's missing something.
+
+This can also happen if the target machine is running a different version of some software that your application needs. Let's say your application needs node version 14, but the target machine is running node version nine. This can also happen if the configuration settings like environment variables are different across these machines. And this is where Docker comes to the rescue. With Docker, we can easily package up our application with everything it needs and run it anywhere on any machine with Docker.
+
+So if your application needs a given version of node and mongo db, all of these will be included in your applications package. Now you can take this package and run it on any machine that runs docker. So if it works on your development machine, it's definitely going to work on your test and production machines. Now there's more, if someone joins your team, they don't have to spend half a day or so setting up a new machine to run your application. They don't have to install and configure all these dependencies, they simply tell docker to bring up your application and docker itself will automatically download and run these dependencies inside an isolated environment called a container.
+
+And this is the beauty of docker, this isolated environment allows multiple applications use different versions of some software side by side. So one application may use note version 14, another application may use note version nine. Both these applications can run side by side on the same machine without messing with each other. So this is how docker allows us to consistently run an application on different machines. Now there is one more benefit here, when we're done with this application and don't want to work on it anymore, we can remove the application and all its dependencies in one go.
+
+Without Docker, as we work on different projects, our development machine gets cluttered with so many libraries and tools that are used by different applications and then after a while, we don't know if we can remove one or more of these tools because we're always afraid that we would mess up with some application. With docker, we don't have to worry about this. Because each application runs with its dependencies inside an isolated environment, we can safely remove an application with all its dependencies to clean up our machine. Isn't that great? So in a nutshell, Docker helps us consistently build, run and ship our applications, and that's why a lot of employers are looking for people with Docker skills these days.
+
+So if you're pursuing a job as a software or dev ops engineer, I highly encourage you to learn docker and learn it well. And that's exactly what this course is all about. I'm going to take you on a journey and teach you everything you need to know about docker so you can use it like a pro. No copy pasting commands here.
+
+
+
+
+Codes and Other Notes in this Discussion: 
+
+Reasons:
+
+One or more files missing
+Software version mismatch  
+Different Configuration settings 
+
+
+
+docker-compose up
+
+docker-compose down --rmi all 
+
+
+
+
+
+
+
+
+
+
+
+
+
+Virtual Machines vs Containers: 
+
+So in the last lesson, I briefly talked about containers. A container is an isolated environment for running an application. Now one of the questions that often comes up is how are containers different from virtual machines or VM's? Do you know the differences? Well, a virtual machine as the name implies is an abstraction of a machine or physical hardware.
+
+So we can run several virtual machines on a real physical machine. For example, we can have a Mac and on this Mac we can run two virtual machines, one running Windows, the other running Linux. How do we do that? Using a tool called hypervisor. I know, it's one of those computer science names.
+
+In simple terms, a hypervisor is software we use to create and manage virtual machines. There are many hypervisors available out there like VirtualBox and VMware, which are cross platform so they can run on Windows, macOS and Linux, and hyper v which is only for windows. So with a hypervisor, we can manage virtual machines. Now what is the benefit of building virtual machines? Well, for us software developers, we can run an application in isolation inside a virtual machine.
+
+So on the same physical machine, we can have two different virtual machines, each running a completely different application and each application has the exact dependencies it needs. So application one may use node version 14 and mongo db version four, while application two may use node version nine and mongo db version three. All these are running on the same machine, but in different isolated environments. That's one of the benefits of virtual machines. But there are a number of problems with this model.
+
+Each virtual machine needs a full copy of an operating system that needs to be licensed, patched and monitored. And that's why these virtual machines are slow to start because the entire operating system has to be loaded just like starting your computer. Another problem is that these virtual machines are resource intensive because each virtual machine takes a slice of the actual physical hardware resources, like CPU, memory and disk space. So if you have eight gigabytes of memory, that memory has to be divided between different virtual machines. Of course, we can decide how much memory to allocate to each virtual machine, but at the end of the day, we have a limit in terms of the number of v m's we can run on a machine.
+
+Usually a handful, otherwise we're going to run out of hardware resources. Now let's talk about containers. Containers give us the same kind of isolation, so we can run multiple applications in isolation, but they are more lightweight. They don't need a full operating system. In fact, all containers on a single machine share the operating system of the host, so that means we need to license, patch and monitor a single operating system.
+
+Also, because the operating system has already started on the host, a container can start up pretty quickly, usually in a second, sometimes less. And also, these containers don't need a slice of the hardware resources on the host, So we don't need to give them a specific number of CPU cores or a slice of memory or disk space. So on a single host, we can run tens or even hundreds of containers side by side. So these are the differences between containers and virtual machines.
+
+
+
+Codes and Other Notes in this Discussion: 
+
+Problems with VMs:
+Each VM needs a full-blown OS
+Slow to start 
+Resource intensive
+
+
+Containers: 
+Allow running multiple apps in isolation
+Are lightweight 
+Use OS of the host
+Start quickly 
+Need less hardware resources 
+
+
+
+
+
+
+
+
+
+
+
+
+
+Docker Architecture:
+
+Let's talk about the architecture of Docker so you understand how it works. Docker uses a client server architecture, so it has a client component that talks to a server component using a restful API. The server also called the docker engine sits on the background and takes care of building and running docker containers. Now technically a container is just a process, like other processes running on your computer, but it's a special kind of process which we're going to talk about soon. Now as I told you, unlike virtual machines, containers don't contain a full blown operating system.
+
+Instead, all containers on a host share the operating system of the host. Now more accurately, all these containers share the kernel of the host. What's a kernel? A kernel is the core of an operating system. It's like the engine of a car, it's the part that manages all applications as well as hardware resources like memory and CPU.
+
+Every operating system has it's own kernel or engine and these kernels have different API's, that's why we cannot run a windows application on Linux because under the hood this application needs to talk to the kernel of the underlying operating system, okay? So, that means on a Linux machine we can only run Linux containers because these containers need Linux. On a Windows machine however, we can run both windows and Linux containers, because Windows 10 is now shipped with a custom built Linux kernel. This is in addition to the Windows kernel that's always been in Windows, it's not a replacement. So with this Linux kernel, now we can run Linux applications natively on Windows.
+
+So on Windows, we can run both Linux and Windows containers. Our Windows containers share the Windows kernel and our Linux containers share the Linux kernel, okay. Now what about macOS? Well, macOS has it's own kernel which is different from Linux and Windows kernels and this kernel does not have native support for containerized applications. So docker on mac uses a lightweight Linux virtual machine to run Linux containers.
+
+Alright, enough about the architecture, next we're going to install Docker, and that's where the fun begins.
+
+
+Codes and Other Notes in this Discussion: 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Installing Docker: 
+
+
+All right, now let's install the latest version of Docker. If you have an existing version of Docker on your machine, I highly encourage you to upgrade to the latest version because your version might be old and not compatible with the version I'm using in this course. So here I'm using Docker version twenty point ten point five, okay? So to get Docker, go to this page, docs.docker.com/getdocker. Or you can just Google get Docker or install Docker.
+
+Now on this page you can see instructions for downloading and installing Docker desktop for Mac and Windows as well as Docker engine for Linux. So on Mac and Windows we have Docker desktop which is the combination of Docker engine plus a bunch of other tools. At the time of recording this, we don't have Docker desktop for Linux, we only have the Docker engine. But of course that might change in the future. So a couple of notes for my Mac and Windows users, let's go to this page, so over here you can download the latest version from Docker Hub, but before doing this, I highly encourage you to go through system requirements and make sure your computer satisfies these requirements.
+
+Otherwise, you might encounter weird issues. So the installation is pretty straight forward, when you go to this page, you're going to download a dm g file, just drag and drop this onto the applications folder, and then start it. This is very important, a lot of people miss that step. So when you start Docker engine, by double clicking on this application, you're going to see the Docker icon on the top status bar. If you don't see this, Docker engine is not running and there is nothing you can do, so you have to wait for this to start.
+
+The same applies to my Windows users. So, back to this page, let's look at the instructions for Windows, so once again you can download the latest version from Docker Hub, but once again make sure to read system requirements. One of the things that is really important is enabling hyper v and containers windows features. So I don't have a windows machine to show you here, but just go to the page where you can turn on or turn off windows features, there make sure you have enabled hyper v and containers. It's pretty straightforward, but if you can't find it, just Google it, I'm pretty sure there are tons of articles out there.
+
+Also, at the end of the installation, you might get an error saying ws two installation is incomplete. Basically, what this error is saying is that you need to upgrade the Linux kernel that is shipped with your Windows. So just click on this link, this is going to take you to this page on microsoft.com, where you can download the latest Linux kernel. So just click on this link to get an MSI file, run it and then you have to restart your computer. Now, once your computer is restarted, you need to wait a little while until Docker engine is started.
+
+Depending on your machine, this might take several seconds or up to a minute. So wait a little while, then open up a terminal window and run docker version. So over here, you can see the version of the client and the server. If the server, which is docker engine is not running, you are not going to see this information. And this applies to all operating systems, Windows, Mac OS, and Linux.
+
+So make sure Docker engine is running before going forward. If you encounter any errors, you can post your question on our forum at forum.codewithmosh.com, or if you want a faster response, just Google the error message, I'm pretty sure hundreds of people have encountered the same problem as you.
+
+
+
+Codes and Other Notes in this Discussion: 
+
+docker version
+
+https://docs.docker.com/get-started/get-docker/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Development Workflow: 
+
+Now let's talk about your development workflow when using Docker. So to start off, we take an application, it doesn't matter what kind of application it is or how it's built, we take that application and dockerize it, which means we make a small change so that it can be run by docker. How? We just add a docker file to it. A docker file is a plain text file that includes instructions that docker uses to package up this application into an image.
+
+This image contains everything our application needs to run, everything. Typically, a cut down operating system, a run time environment like node or python, it also contains application files, third party libraries, environment variables and so on. So we create a docker file and give it to docker for packaging our application into an image. Once we have an image, we tell docker to start a container using that image. So a container as I told you is just a process, but it's a special kind of process because it has its own file system which is provided by the image.
+
+So our application gets loaded inside a container or a process and this is how we run our application locally on our development machine. So instead of directly launching the application and running it inside a typical process, we tell docker to run it inside a container, an isolated environment. Now here's the beauty of docker, once we have this image, we can push it to a docker registry like docker hub. Docker hub to docker is like github to git, it's a storage for docker images that anyone can use. So once our application image is on docker hub, then we can put it on any machines running docker.
+
+This machine has the same image we have on our development machine which contains a specific version of our application with everything it needs. So we can start our application the same way we started it on our development machine, we just tell docker to start a container using this image. So with docker, we no longer need to maintain long complex release documents that have to be precisely followed. All the instructions for building an image of an application are written in a Docker file, with that we can package our application into an image and run it virtually anywhere, this is the beauty of Docker. Next we're going to see this workflow in action.
+
+
+Codes and Other Notes in this Discussion: 
+
+
+Image: 
+
+A cut-down OS
+A runtime environment (eg. Node)
+Application Files 
+Third Party Libraries 
+Environment Variables 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Docker in Action: 
+
+In this lesson, I'm going to walk you through a typical development workflow. Now don't try to memorize anything in this lesson, because I just want you to see the big picture. So everything I show you in this lesson, we're going to cover in-depth later in the course. So, here in this terminal window, I'm currently on my desktop, I'm going to create a new directory called hello docker, then go inside this directory and open it in visual studio code. So I'm going to use Versus code as my editor, but you can use any editor that you prefer, okay?
+
+Now in this directory, I'm going to add a new file called app dot js. You're going to write one line of JavaScript code, you don't have to be a JavaScript developer, you don't even need to learn JavaScript. So just follow along with me. So here we're going to write console in lower case dot log hello docker. So with this we're going to print a message on the terminal.
+
+Let's say this is an application, and we want to dockerize this application. So we want to build, run, and ship it using docker. So typically without docker, if you want to ship this application or more accurately this program to a different computer, on that computer we need to install node, and then we can go to the terminal and type node app dot js. So we get the output. So here are the instructions for deploying this program.
+
+We need to start with an operating system, then we need to install node which is an execution environment for javascript code, next we need to copy our application files, and finally we need to run node app dot js. So we have to follow four steps just for a simple program. What if we were working with a really complex application? You would end up with a complex release document that had to be precisely followed. Now this is where Docker comes to the rescue.
+
+We can write these instructions inside a Docker file, and let docker package up our application. So back to Versus code, we're going to add another file to this project called docker file, so capital d and all the other letters are lower case, and this file doesn't have any extensions. Okay, now, yes code is asking if you want to install the recommended extensions for Docker. We can go ahead with that, good, so back to this Docker file, here we write instructions for packaging our application. So typically we start from a base image.
+
+This base image has a bunch of files, we're going to take those files and add additional files to it. This is kind of like inheritance in programming, okay? So what is the base image? Well, we can start from a linux image and then install node on top of it, or we can start from a node image. This image is already built on top of linux.
+
+Now how do I know these names? Well, these images are officially published on docker hub. So if you go to hub.docker.com and search for node, you can see the official node image here. So docker hub is a registry for docker images. Now back to our Dockerfile.
+
+So we start from a node image, now if you look at Docker hub, you will see that there are multiple node images. These node images are built on top of different distributions of Linux. So Linux has different distributions or different flavors used for different purposes. Now here we can specify a tag using a colon to specify which Linux distribution we want to use. For this demo I'm going to use alpine, which is a very small Linux distribution.
+
+So the size of the image that we're going to download and build on top of is going to be very small, okay? So we start from that image, then we need to copy our application or program files. For that we use the copy instruction or copy command, we're going to copy all the files in the current directory into the app directory into that image. So that image has a file system and in that file system we're going to create a directory called app, okay? Now finally, we're going to use the command instruction to execute a command.
+
+What command should we execute here? Node app dot js. But this file is inside the app directory, so we have to prefix it with the directory name. Alternatively, here we could set the current working directory, work dir to slash app, and then we don't need to prefix this with the directory name. So when we use this instruction, all the following instructions assume that we're currently inside the app directory, okay?
+
+So these instructions clearly document our deployment process, now we go to the terminal and tell docker to package up our application. So, we say docker build, we need to give our image a tag, a tag to identify. So, dash t, here we specify a name like hello docker, and then we need to specify where docker can find a docker file. So we are currently inside hello docker directory and our docker file is right here, so we use a period to reference the current directory. Let's go with that.
+
+Now you might be expecting an image file inside the current directory, but back in versus code, look, there is nothing here. Because the image is not stored here, and in fact, an image is not a single file. How Docker stores this image is very complex, and we don't have to worry about it. So back to the terminal, to see all the images on this computer, we type Docker images or Docker image ls which is short for list. So, take a look, on this machine we have a repository called hello docker, in this repository we have an image with this tag latest, so docker added this by default, we'll talk about this later in the course, but basically we use these tags for versioning our images.
+
+So each image can contain a different version of our application, okay? Now, each image also has a unique identifier, here we can see when the image was created and the size of this image. So because we used node from Linux alpine, we ended up with 112 megabytes of data in this image. So this image contains alpine linux, node and our application files. And the total size is one twelve megabytes.
+
+Now if we use a different node image that was based on a different distribution of Linux, we would end up with a larger image. And then when deploying that image, we would have to transfer that image from one computer to another. So that's why we use node alpine because this is a very small image, okay? So we have built this image, now we can run this image on any computer running docker. So on this machine, which is my development machine, I can say docker run, and then type the image name, hello, docker, and it doesn't matter which directory I'm in, because this image contains all the files for running our application.
+
+Now, look, we see the message on the terminal. Now, I can go ahead and publish this image to Docker Hub, so anyone can use this image. Then I can go on another machine like a test or a production machine and pull and run this image. In fact, I've done this before recording this video. So back to Docker Hub, look, I have this repository code with Mosh slash hello Docker, now we can take this image and run it on any computer.
+
+Let me show you something really cool. So let's search for play with docker, let's go to this page, and log in, here we need to sign in with our Docker ID, anyone can create this ID on docker.com. So, let's go ahead and start a lab. Over here we can start a new virtual machine, so let's add a new instance, now this virtual machine is a blank machine, it only has an operating system which is Linux and Docker. So in this terminal window, if we type node look, node command not found.
+
+So node is not installed here. But because we have docker, we can pull and run the image that I published on docker hub. So let me maximize this window by pressing alt and enter. First let's run docker version, so on this machine we're running docker version 20.10.0. So to pull and run my program, first we type docker pull, code with Mosh hello docker, alright, docker downloaded this image, we can verify it by typing docker, what command should we run here?
+
+Docker images or image els. So on this machine we have this repository, go to moshhello docker, and this repository contains a single image with this tag, latest. So now we can run this application exactly the same way we ran it on my development machine. So from any directory we can type docker run code with mosh slash hello dash docker. And here's the message, beautiful.
+
+Of course, I had to cut this down in editing, it took a little while to start this application on this very slow virtual machine, but you got the point. So we can take any application and dockerize it by adding a docker file to it. This docker file contains instructions for packaging an application into an image. Once we have an image, we can run it virtually anywhere, on any machine with docker.
+
+
+
+
+Codes and Other Notes in this Discussion: 
+
+Instructions: 
+
+Start with an OS
+Install Node 
+Copy app files 
+Run node app.js
+
+
+https://hub.docker.com/
+
+
+
+Dockerfile:
+
+FROM node:alpine
+COPY . /app
+WORKDIR /app
+CMD node app.js
+
+
+docker build -t hello-docker .
+
+
+docker image ls 
+
+
+docker run hello-docker
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Summary:
+
+Terms Involved:
+Client/server architecture
+Containers
+Dockerfiles
+Docker daemon (engine)
+Docker registries
+Hypervisors
+Images
+Kernel
+Process
+Virtual machines
+
+
+
+Summary
+• Docker is a platform for consistently building, running, and shipping applications.
+• A virtual machine is an abstraction of hardware resources. Using hypervisors we can create and manage virtual machines. The most popular hypervisors are VirtualBox, VMware and Hyper-v (Windows-only).
+• A container is an isolated environment for running an application. It’s essentially an operating-system process with its own file system.
+• Virtual machines are very resource intensive and slow to start. Containers are very lightweight and start quickly because they share the kernel of the host (which is already started).
+• A kernel is the core of an operating system. It’s the part that manages applications and hardware resources. Different operating system kernels have different APIs. That’s why we cannot run a Windows application on Linux because under the hood, that application needs to talk to a Windows kernel.
+• Windows 10 now includes a Linux kernel in addition to the Windows kernel. So we can run Linux applications natively on Windows.
+• Docker uses client/server architecture. It has a client component that talks to the server using a RESTful API. The server is also called the Docker engine (or daemon) runs in the background and is responsible for doing the actual work.
+• Using Docker, we can bundle an application into an image. Once we have an image, we can run it on any machine that runs Docker.
+• An image is a bundle of everything needed to run an application. That includes a cutdown OS, a runtime environment (eg Node, Python, etc), application files, thirdparty libraries, environment variables, etc.
+• To bundle an application into an image, we need to create a Dockerfile. A Dockerfile contains all the instructions needed to package up an application into an image.
+• We can share our images by publishing them on Docker registries. The most popular Docker registry is Docker Hub.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The Linux Command Line: 
+
+Introduction: 
+
+Alright, the next stop in our journey is the Linux command line. But why Linux? What if you're a Windows user? Well, you still need to know a bit of Linux for a number of reasons. For starters, Docker has its foundations built on top of basic Linux concepts.
+
+So if you want to be productive and troubleshoot issues easily, you need to know some of the basic Linux commands. Also, most tutorials online are based on Linux commands, so if you don't understand these basic commands, you're not going to get far. In my opinion, learning Linux is like learning English. I think everybody should know some English these days. You don't need to speak it or write a book in it, but you need to understand it.
+
+So unless you're a power Linux user, do not skip this section. It's going to be super easy and extremely useful. So, let's jump in and get started.
+
+
+
+
+
+
+
+
+Linux Distributions: 
+
+Let's start off this section by talking about Linux distributions, also called Linux distros. So as you probably know, Linux is open source software, and for this reason, many individuals and communities have created their own version of Linux called Linux distributions. Each of these distributions is made to fit specialized needs like running servers, desktop computers, mobile phones and so on. So we have Ubuntu which is one of the most popular Linux distributions, we also have Debian, Alpine which we briefly talked about, it's a very small Linux distribution. We also have Fedora, CentOS and so on.
+
+Believe it or not, there are more than 1,000 Linux distributions out there. Now, most of these distributions support pretty much the same set of commands, but sometimes you might discover differences along the way, so be aware of that. In this section, we're going to use Ubuntu Linux because it's one of the most popular distributions, But if you have a preference for another distribution, that's totally fine.
+
+
+Codes and Other Notes in this Discussion: 
+
+Distros:
+
+Ubuntu
+Debian 
+Alpine 
+Fedora
+CentOS
+
+
+
+
+
+
+
+
+
+
+
+
+
+Running Linux:
+
+Alright, let's see how we can run Ubuntu on this machine. From this lesson, I want you to start taking notes, so watch this video, take some notes, and then after the video, repeat the steps I have shown you. Okay? So, we go to hop.docker.com and search for Ubuntu, over here you can see the official Ubuntu image that's been downloaded more then 10,000,000 times, let's have a quick look here, so for each image, you can see the command to pull that image onto your machine. Now in this lesson, I'm not going to use the pull command, I'm going to show you a shortcut.
+
+So here in the terminal, instead of running docker pull ubuntu, I'm going to run docker run ubuntu. Now, if you have this image locally, docker is going to start a container with this image, otherwise, it's going to pull this image behind the scene and then start a container. So, take a look, see, docker is unable to find this image locally, and now it's pulling it from Docker Hub. Now what happened? Well, Docker started a container, but because we didn't interact with this container, the container stopped.
+
+Let me prove this to you. So if you're on Docker ps, we can see the list of running processes or running containers. Look, we don't have any containers running here, but if you type docker ps dash a for all, we can see the stopped containers as well. Let me increase the size of this window so we can see it clearly, good. So we have two stop containers.
+
+The first one is using the Ubuntu image, this is the one that we just started. And the second one is hello docker which we started earlier in the course. So to start a container and interact with it, we have to type docker run dash it, that is short for interactive, we're going to start a container in the interactive mode. And in this container we're going to load the Ubuntu image which we have locally. Good, now what we have here is called the shell.
+
+A shell is a program that takes our commands and passes them to the operating system for execution. Okay? Now what we have here is called the shell prompt, let me break it down for you so it doesn't look mysterious. The first part, root represents the currently logged in user, so by default I'm logged in as the root user which has the highest privileges. Then after the at sign, we have the name of the machine.
+
+So this container has this id which is automatically generated by Docker, and in this case, it's like the name of a machine, okay? And after colon, you can see forward slash, that represents where we are in the file system. A forward slash represents the root directory, that is the highest directory in the file system, we'll talk about that soon. Then we have a pound, and this means I have the highest privileges, because I've logged in as the root user. If I logged in as a normal user, instead of a pound, we would see a dollar sign, okay?
+
+So in this shell, we can execute a bunch of commands, for example we can say echo, hello, and this prints hello on the terminal, we can also say who am I, this shows the current user, so this commands that we are running here, this shell program that I told you about takes this command and passes them to the kernel for execution. Now let me show you something really cool. If we type echo dollar sign zero, we can see the location of this shell program. So, that is forward slash bin slash bash. So bin is a folder or a directory, and inside this directory we have a program called bash, which is short for born again shell.
+
+So apparently, Steve Bourne is the first person who created a shell program, bash or born again shell is a reference to Steve Bourne. So bash is an enhanced version of the original shell program, okay. Now one thing you probably notice is that in Linux, we use a forward slash to separate files and directories. But in Windows, we use a backslash. So that's one of the first differences.
+
+The other difference is that Linux is a case sensitive operating system. So if you type echo with a capital e, it's not going to work. Bash tells us echo command not found. So lower case and upper case letters are different. And this is not limited to commands, it's applicable everywhere.
+
+If you want to reference a file or a directory or a user, pretty much anything, we should always spell it properly with the right upper case and lower case letters. Now one last thing for this lesson, using the up and down arrows, we can go through the commands we have executed so far, so this is a pretty useful shortcut you need to know because you don't want to type these commands manually all the time. Also, using the history command, we can see all the commands we have executed lately. So, take a look, so earlier we used who am I, we also used echo and so on. Now we can replay any of these commands by typing an exclamation mark followed by the command number.
+
+So if I type two, this is exactly like writing who am I. Now it's your turn, I want you to pause the video, go through your note and execute the commands I have shown you in this video.
+
+
+Codes and Other Notes in this Discussion: 
+
+
+docker run ubuntu 
+
+docker ps 
+
+docker ps -a 
+
+docker run it ubuntu 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Managing Packages: 
+
+
+These days, most operating systems and development platforms come with a package manager. You've probably worked with tools like npm, yarn, pip and so on. Here in Ubuntu, we also have a package manager called apt which is short for advanced package tool. So let's execute this command, look, this command has a bunch of sub commands. So using list, we can see the list of packages, we can also search for them, we can show details about the package, we can install, reinstall, and remove a package and so on.
+
+Now technically, apt is the newer package manager, we also have apt get which you see a lot in online tutorials. Going forward, we're going to use apt because it's easier to work with. So let's say we're going to install a package called nano. Nano is a basic text editor for Linux. Now if you press enter here, we get an error because this image, this Ubuntu image we are running does not have nano.
+
+So this is where we use apt to install this package. So if you type apt install nano, we get an error saying unable to locate package nano. Why is this happening? Well, here in Linux, we have a package database and this database might contain hundreds of packages, but not all these packages are installed. So if you want to see all the packages in this database, we type apt list, look, these are all the packages, now in front of these packages you can see some of them are installed.
+
+But not all packages in this database are installed. When we type app install nano, this command looks at the package database, and in this database it cannot find a package called nano. So this is where we use the update command to update the package database. Now, let me press enter, then it's going to all these sources like security.ubuntu.com and all these other websites to download the list of packages. So now our package database is updated, so if you run apt list, we see far more packages.
+
+And as you can see, most of these packages are not installed, because we don't have installed in front of them. So now we can run app install nano, and nano is installed. So here is what you need to take away. Before installing a package, you should always run app update, to update your package database, and then you can install a package like nano. Now we'll talk about nano later in this section, but before going forward, let's make sure that this package is installed properly.
+
+So if you type nano, great. So here we have a text editor, we can type something, let me resize the window, so down below you can see the shortcuts, to exit, you have to press control and x. Now it's asking if you're going to save the changes, no, so we're going to press n, good. We're back here, we can clear the terminal window by pressing control and l, okay? So we have installed nano, now let's say we want to remove it.
+
+So we type apt remove nano. It's asking for confirmation, let's go ahead, great. So nano is gone, if I type nano, we get this error saying no such file or directory. Now here's a little exercise for you. In this image we don't have python, so we get an arrow, so I want you to use app to install python in this image, make sure it works and then remove it.
+
+
+
+Codes and Other Notes in this Discussion: 
+
+Package Managers: 
+npm
+yarn
+pip
+NuGet
+
+
+apt install nano 
+
+apt list 
+
+apt update 
+
+
+apt remove nano 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Linux File System: 
+
+So in Linux, just like Windows, our files and directories are organized in a tree, in a hierarchical structure. So in Windows we have a structure like this, with c drive on top of the hierarchy, then below that we have directories like program files, windows and so on. In Linux, we have the root directory on top of the hierarchy. Below that we have a bunch of standard directories, for example we have bin which includes binaries or programs, we have boot which includes all the files related to booting. Then we have dev, the first time I saw this I thought this is short for development, it's not.
+
+It's short for devices. So in Linux, everything is a file, including devices, directories, network sockets, pipes and so on. So the files that are needed to access devices are stored in this directory. Then we have etc, there are different opinions, what is this short for? But one common opinion is this is short for editable text configuration.
+
+So this is where we have configuration files. We also have home, this is where home directories where users are stored. So on a machine with multiple users, each user is going to have a home directory here. We also have root, which is the home directory of the root user. Only the root user can access this directory.
+
+Then we have lib, which is used for keeping library files like software library dependencies. We have var, which is short for variable, and this is where we have files that are updated frequently, like log files, application data and so on. And finally we have proc, which includes files that represent running processes, so once again, in Linux, everything is a file. Processes, devices, even directories are files. Now, you don't need to memorize any of these directories, I just listed them here so as we go through the course, these directories look familiar to you.
+
+That's all. Next, I'm going to show you how to navigate the file system, and there you will see these directories one more time.
+
+
+
+
+
+
+
+
+
+Navigating the File System: 
+
+Let's see how we can navigate the Linux file system. So the first command we're going to talk about is pwd which is short for print working directory. With this we can see where we are in the file system. So a forward slash represents the root directory. Now to see the files and directories here, we type l s which is short for list, so we have bin which we talked about earlier, that is short for binaries, this is where we have binary files and programs, we have dev which includes files for devices, we have boot which includes boot files, etc which includes configuration files, and so on.
+
+Now, by default, l s lists these items on multiple lines, if you don't like this layout, and want to show one item per line, you need to pass an option, that is dash one. You might prefer this layout. We have another option, dash l for seeing a long listing. This listing includes more details. So in the first column, we have the permissions of this file or directory, the first time you see this, it might look really scary, but trust me, it's easier then you think, we'll talk about that later in this section.
+
+Over here, you can see the user that owns this file or directory, we can see the size, we can see the date and so on. Now to change the current directory, we use the c d command, we have the same command in Windows. Now here we can type a relative or an absolute path. A relative path is relative to where we are, so in this root directory, we have directories like bin, boot and so on. So this is a relative path.
+
+Now in contrast, an absolute path always starts from the root directory. So let's go to a directory starting with e, now we can press tab to get auto completion, beautiful, now let's go to a directory starting with a. Now if you press tab, nothing happens, because we have multiple directories starting with a. So we have to press tab one more time, great, so we have three entries, three directories, add user dot conf, alternatives and apt. So let's type the second letter, p, and then press tab, beautiful, now let's see what we have in this directory.
+
+So these blue items are directories and sources dot list is a file. Now to get out of this directory, we can go one level up by typing two periods. Again, I'm pretty sure you're familiar with this, but I want to cover it to make this section comprehensive. So we can go one level up to get to the etsy directory, or two levels up to get to the root directory. Look, we're currently in the root directory.
+
+Now, when using l s, we can optionally specify a path. Let's say I'm somewhere in the file system, but I want to look at the content of another directory, I don't want to navigate to that directory. So I'm currently in the root directory, I want to know what files and directories we have inside the bin directory. So once again, we can type a relative path or an absolute path starting from the root directory. So here are the binaries in this directory, look at p w d, that's the command that we just executed.
+
+So p w d is a program in this directory. Here's another example, look at echo. So most of the commands we have been exploring so far are programs or binaries in the bin directory, okay? Now let me show you a shortcut. Earlier I told you that here we have this home directory where each user has a home directory.
+
+But the root user has a special home directory called root. Now to get here, there are two options. We can type an absolute or relative path and go to root, but there is a shortcut. So let me get out of this directory, so I'm currently in the root directory, to get to my home directory, I can type a tilde, and this applies to all users, not just the root user. Whenever we type c d tilde, we go to our home directory.
+
+Now, right now, there is nothing here, but in the next lesson, I will show you how to create some files in this directory. So, before moving on to the next lesson, I want you to spend a couple of minutes and play with the commands we explored in this lesson. Navigate the file system, get adventurous, see what you can discover. I'll see you in the next lesson.
+
+
+
+
+Codes and Other Notes in this Discussion: 
+
+pwd
+ls
+ls -1
+ls -l
+
+ls /bin
+
+
+cd /root
+
+or 
+cd ..
+cd ~
+
+
+
+
+
+
+
+
+
+
+Manipulating Files and Directories:
+
+
+
+Let's see how we can manipulate files and directories. So I'm currently in the root directory, and I want to go to my home directory. How can I do that? Do you remember? We type c d, tilde.
+
+Right? Now, in this directory I want to create a directory called test. So we type mk dir test, let's verify, it's right here, as I told you before, blue represents a directory. Now let's say we want to rename this directory, how do we do that? We use the move command, with this we can rename files and folders, or move them somewhere else.
+
+So, we can move or rename test to docker. Alright, beautiful. Now, let's go in this directory, now to create a new file, we use the touch command. So we can create hello. Txt, look, we have this new file here, this is a new empty file.
+
+In the next lesson, I will show you how to edit files. So for now, don't worry about it. Also, using the touch command, we can create multiple files in one go. So we can create file one, file two, and file three, now take a look, beautiful. Now I've got a question for you.
+
+How do we list these files with a single file per line? Do you remember? We type ls dash one. Now let's say we want to rename hello dot txt to something else. Once again, we can use the move command, so we type h, press tab to get auto completion, we can rename this to hello dash docker dot txt, or we can move it to a different directory.
+
+For example, we can move it to the etsy directory, and here I'm using an absolute path, because my path has started from the root directory. Now in this lesson, I don't want to move this anywhere, so I just want to rename this to hello dash docker dot txt. And if you're wondering how I remove this entire word in one go, I press control and w. So, let's bring it back, hello docker dot txt, take a look, good. Now let's see how we can remove one or more files.
+
+To do that, use the r m command. Now here we can type one or more files, so we can say file one dot txt, file two dot txt, or we can use a pattern. For example, I can say I want to remove all files that start with five. Let's verify it, beautiful, we only have hello docker. Now, let's get out of this directory and remove the directory itself.
+
+So, we type r m docker. Now we get an error saying docker is a directory. So to remove directories, we have to use the r option, which is short for recursive. So we want to remove this directory and all it's content recursively. Now we press d, tab, beautiful.
+
+So, let's verify there is nothing here. So, let's quickly recap. We use mk dir to create a new directory, we use touch to create a new file, we use move to move or rename files or directories, and we use r m to remove files and directories. Now, as an exercise, go to your home directory, create a bunch of files and directories, rename them and then remove them. In the next lesson, I'm going to show you how to view and edit files.
+
+
+
+
+Codes and Other Notes in this Discussion: 
+
+mkdir test 
+mv test docker 
+touch hello.txt 
+touch file1.txt file2.txt file3.txt 
+
+mv hello.txt /etc 
+mv hello.txt hello-docker.txt 
+
+rm file1.txt file2.txt 
+rm file*
+
+
+rm -r docker/ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Editing and Viewing Files: 
+
+
+Alright, let's see how we can edit and view files. So earlier we briefly talked about nano. Nano is a basic text editor for Linux. Now on this image that we are running, we don't have nano, so we have to install it. Do you remember the command for installing nano?
+
+That is apt install nano. Alright, now we have nano, so we can launch it, and optionally supply a file name. Let's say file one dot txt. So here we have a basic text editor, we can type whatever we want, and when we are done, look down below, the shortcut for exiting is control and x. So I'm going to press that, now it's asking if you want to save the changes, so we press yes, and here we confirm the file name.
+
+We can keep the same file or change the file name. Let's go ahead, so now in this directory we have file one dot txt. Beautiful. Now, to see the content of this file, we have a few different commands. The simplest one is cat, and this has nothing to do with cat, it's short for concatenate.
+
+So later I will show you how we can use this command to concatenate or combine multiple files. But with cat we can also see the content of a file, so if you say cat file one dot txt, we can see the content of this file. Now, cat is useful if our file is short and fits on one page, but if you're dealing with a long file, it's better to use the more command. Let me give you an example. So, I'm going to use cat to show the content of this file.
+
+Slash etc, slash add user dot conf. This is a really long file, so if I scroll up, look, we have a lot of text. Now, sometimes you don't want to see all the content in one go, you want to scroll down, you want to go page by page. This is where we use the more command. So more, slash etc,/adduser.com.
+
+Now down below, look, you can see more 15%, so we are seeing 15% of this file. Now if you press space, we can go to the next page, so now we're at the position 33%, alternatively, we can press enter to go one line at a time. Now the problem with more is that we can only scroll down, we cannot scroll up. So to do that, we have to use a different command called less. So to exit here, we press q, good, now in this image we don't have less, so once again we have to manually install it.
+
+So apt install less. So less is a newer command that is supposed to replace more. Let's go ahead, great. So let's look at the same file using the last command. Slashhc/adduser.com.
+
+So now using the up and down arrows, we can scroll down or up. So just by pressing up and down arrows. We also have space, we can go to the next page, and enter, just like the more command, and when we are done, we can press q. Now we have a couple more commands for viewing the content of a file, we have head which we can use to display the first few lines, so here we can supply an option and say the number of lines we want to see is five. Let's look at the same file, so this shows the first five lines of this file.
+
+Similarly we have tail, which shows the last few lines, so we supply an option and say we want to look at the last five files. That's it. So, to recap, we can use nano to write something to a file, we can use cat to view the content of small files, less to view the content of long files in an interactive way, and head and tail to view the first few or the last few lines of a file.
+
+
+
+Codes and Other Notes in this Discussion: 
+
+
+apt install nano
+nano file1.txt 
+
+cat file1.txt 
+
+more /etc/adduser.conf 
+
+less /etc/adduser.conf 
+
+head -n 5 /etc/adduser.conf  
+
+tail -n 5 /etc/adduser.conf
+
+
+
+
+
+
+
+
+
+
+Redirection: 
+
+One of the important concepts in Linux is the concept of standard input and output. So standard input represents the keyboard and standard output represents the screen. But we can always change the source of the input or the output, this is called redirection. Let me show you using a few examples. So we talked about the cat command to see the content of a file.
+
+Let's say file one dot txt. When we execute this command, this command or this program reads data from this file and prints it on the standard output which is the screen. That is why we see the content here. But using the redirection operator, which is the greater than sign, we can redirect the output from the screen to let's say a different file. So now, cat will read the content from this file and write it to this file.
+
+Take a look. So, we have file two dot txt, if we view it, we see the exact same content as file one, okay? Now what is the point of this? Well, earlier I told you that we can use the cat command to concatenate or combine multiple files. So here we can say cat file one dot txt, and file two dot txt, if you press enter, cat is going to read the data from both these files and print it on the terminal, which is the standard output.
+
+But once again, using the redirection operator, we can write the result to a different file. Combine dot txt. So this is how we can use this command to combine multiple files. Now, the redirection operator is not limited to the cat command, we can use it pretty much anywhere. For example, earlier we talked about the echo command.
+
+If we say echo hello, we see the result on the terminal. But if we say echo hello to hello dot txt, Now we have a new file here, hello. Txt which contains hello. So if you want to write a single line to a file, we don't have to use nano, we can use the echo command. So echo whatever to whatever file dot txt, okay?
+
+Now here's a little exercise for you. I want you to get a long listing of the files in the etsy directory, and write the output to a file. So pause the video and work on this for a few seconds. So, here's the solution. To get a long listing, we type ls dash l, then we specify the path, the etc directory, now instead of printing the result on the terminal, we're going to write it to a file called files dot txt.
+
+Okay? Now let's view this file, perfect. Now one more thing before we finish this lesson. Using the greater than sign, we can redirect the standard output, but we also have the less than sign to redirect the standard input. I personally haven't found many use cases for this, so I didn't cover it in this lesson.
+
+Alright, that's all about redirection, next we're going to talk about searching for text in files.
+
+
+
+
+Codes and Other Notes in this Discussion: 
+
+cat file1.txt > file2.txt 
+cat file1.txt file2.txt > combined.txt
+
+echo hello > hello.txt 
+
+
+ls -l /etc > files.txt 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Searching for Text: 
+
+
+Let's see how we can search for a string in a file. So we have this grep command which is short for global regular expression print. I know, it's such a mouthful. But let's say you want to search for the word hello in file one dot txt. What happened?
+
+Didn't we write hello to file one dot txt? Yes we did, but this search is case sensitive, just like everything else in Linux. If you want to remove case sensitivity, we have to use an option, that is dash I. So case insensitive, okay? Now we see the word hello highlighted in red.
+
+Let's look at another example, this time I want to search for the word root int slash etsy slash password. This file contains the list of user accounts on this machine, not their passwords, just their accounts. So, take a look, on this line, which I think is the first line in this file, we have three occurrences of root, and that's why they are displayed in red. Now we can also search in multiple files. So, let's search for hello in file one dot txt and file two dot txt.
+
+That's one way, we can also use a pattern. So we can say we want to search in all files whose name starts with file. So we use a wild card here. Now we can see in file one dot txt we have hello and the same is true in file two dot txt. Now we can also search in a directory, so instead of typing a file name, we can type a directory name, or we can use a period to refer to the current directory.
+
+Now we get an error saying period is a directory, so here we have to use an additional option dash r which is short for recursive, so with this we can search this directory and all its sub directories recursively. Now look, in all these files, we have references to hello. Now one last thing, in Linux, we can combine multiple options. So instead of having two different options dash I and dash r, we can combine them into one option. This gives us the exact same result.
+
+So using the grep command, we can search for a string in one or more files.
+
+
+Codes and Other Notes in this Discussion: 
+
+
+grep hello file1.txt 
+grep -i hello file1.txt 
+
+grep -i root /etc/passwd 
+
+
+grep -i hello file1.txt file2.txt 
+grep -i hello file*
+
+grep -i hello /etc
+grep -i -r hello .
+
+grep -ir hello .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Finding Files and Directories: 
+
+
+Let's talk about finding files and directories. So I'm currently in my home directory, as you can tell from the tilde, let's run ls, so here we have combined file one, file two, files and hello dot txt. Now of course on your machine, you might have different files, it doesn't matter. Now, in Linux we have the find command for finding files and directories. If we execute this command without any arguments, we see all the files and directories in the current directory recursively.
+
+So this command is going to go through every directory in this directory and list their files. So on the top we have dot bash r c and dot profile, these are two hidden files in the current directory. You didn't see this earlier when I executed ls, because by default, ls doesn't show the hidden files and directories. Now, what options should we use to see the hidden files and directories? Do you remember?
+
+Dash a, which is short for all. So now we can see bash r c, profile, and local which is a directory because it's blue. So back to the find command, here you can see all the files and directories in the current directory. Now, if you want to look somewhere else, we can supply a path. So we can search in the etsy directory.
+
+Now we can see all the files and directories starting from etsy, okay? Now, let's get back to the current directory, let me show you various ways to filter the result. If you want to see only the directories, you pass an option called type with the value of d. Now you can see only the directories in the current directory. Alternatively, we can search for files, we can also filter by name, so let's say I want to find all the files whose name start with let's say f, here in double quotes, we can type a pattern, we can say f star.
+
+Now just remember that this search is case sensitive just like everything else in Linux, so if you type a capital f here, we don't find anything. Now to make the search case insensitive, instead of name we use a different option that is iname. Alright, beautiful. Now here's a little exercise for you. Using the find command, I want you to find all the python files in this image and then write the result to a file called Python files dot txt.
+
+So pause the video, work on this for a few seconds, then come back and see my solution. Alright, so using the file command, we're going to look at all the files starting from the root directory, now we're going to supply an option, type f, so we only look at files, we're going to supply a second option for searching by name, here I'm going to type a pattern like star dot py, because all Python files have the py extension. Now if you didn't know this, don't worry, it doesn't really matter, So this way, we can find all the Python files in this image. Let's verify it, beautiful, now to write the result to a file, we're going to use the redirection operator. So, we can write it to a file called python files dot txt.
+
+Good, now let's verify that everything is working, beautiful.
+
+
+
+Codes and Other Notes in this Discussion: 
+
+find 
+
+ls -a  -> to show the hidden files 
+
+find /etc
+
+find -type d 
+
+find -type f 
+
+find -type f -name "f*"
+
+find -type f -name "F*"
+
+find -type f -iname "F*"
+
+
+find / -type f -name "*.py" > python-files.txt 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Chaining Commands: 
+
+In Linux, we have a few different ways for chaining or combining multiple commands. So once again, I'm in my home directory, let's say I want to create a directory called test, and right after this I want to go into this directory and echo something to the terminal. Now I don't want to press enter here and then type the second command, I want to type multiple commands and execute them in one go. So here we type a semi colon, and then type the second command which is c d test. Now once again, we type a semi colon, and type the third command.
+
+So echo, done. Now if I press enter, all these commands will get executed one after another. Now, some people prefer to add a space around these semicolons to make their command sequence more clear, more readable, that's optional, it's entirely up to you. So look, we see the done message, and we're currently inside the test directory. Now, if we go one level up, and execute the last command, we're going to get an error because we already have the test directory.
+
+But the other two commands will get executed. Take a look. So, look, here's the error saying the test directory exists, but we also see the done message and we're currently inside the test directory. Now what if you want to stop execution? So if one command fails, the other commands are not going to get executed.
+
+Well, this is where we use the and operator. So let me go up and clear the screen, now instead of a semi colon, we're going to use double ampersands. That is the and operator. So, if this command fails, the other commands will not get executed. Take a look.
+
+Alright, we saw an error saying the directory exists, but we're still inside the home directory, we didn't go inside the test directory. Now we also have the or operator, so if we say create the test directory, or echo directory exists. If this command gets executed, this command will not get executed, but if this command fails, this command gets executed. Make sense? So essentially it's saying create this directory or print directory exists.
+
+Let's try it, so we got this message because the directory already exists. But if I bring up this command and change the directory name to test two, this time, we are not going to see this message because we can successfully create this directory. There you go. So these techniques are very powerful, you'll use them a lot when it comes to deploying your applications using Docker. You'll see more examples in the future.
+
+Now, another way to chain commands is piping. And this is extremely powerful. So, let's look at the content of the bin directory, so here we have a long list of files, but what if you want to look at this list using the less command. So, remember, earlier we talked about the less command, with this we can look at the content of a file, and then we have the ability to scroll up and down or go line by line and then quit. This is where we can use piping.
+
+So, we use the ls command, get the content of the bin directory, and then create a pipe. So we get the output of this command and then send it to the last command. So essentially we're creating a pipe, what comes out of this command goes into the second command. So now less doesn't need a file name because it gets the input from the first command. Take a look.
+
+So now, we are seeing the output of the last command, using the up and down arrows, we can scroll, using a space, we can go to the next page, and then we can exit using q. We can also use the head and tail commands here, pretty much any commands. So, if we use head, by default we can see the first 10 lines, we can supply an option and see the first five lines. Pretty useful. Now, one last thing before we finish this lesson, sometimes when dealing with a long command, our command sequence might look a little bit hard to read, so let me show you how you can split it into multiple lines.
+
+So, I'm going to create a directory called hello, then I'm going to go into this directory and echo done. Now this is a fairly short command, but imagine this was really long and we had to scroll horizontally. We don't want to do that. So we create a directory, and then terminate this command using a semi colon, now if we type a backslash and press enter, we go to the second line, and the command prompt changes, so we can type the rest of the command here. Now we're going to go to the hello directory, then terminate this command and add a backslash, so on the third line, we can echo, done.
+
+And of course, we can keep going as much as we want. So this is how we can break up a long command into multiple lines, by using a back slash. There you go.
+
+
+
+
+Codes and Other Notes in this Discussion: 
+
+mkdir test;cd test;echo done
+
+mkdir test && cd test && echo done  
+
+mkdir test || echo "directory exists"
+
+
+ls /bin | less 
+ls /bin | head -n 5 
+
+mkdir hello;\
+cd hello;\
+echo done; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+Environment Variables: 
+
+
+Let's talk about environment variables. This is one of the areas that a lot of people are confused about. So just like we have variables in our programming languages, in Linux, we have environment variables which we can set for storing configuration settings for our applications. So our applications can read configuration settings from these environment variables. In this lesson, I'm going to show you a few different commands for viewing all these environment variables and setting them.
+
+So the first command is print env, with this we can see all the environment variables in this machine. Take a look. So, let me scroll up, alright, so here we have a bunch of key value pairs, separated by an equal sign, the first variable is host name, which is set to the id of our container. And as you know, this is generated by Docker automatically. Then we have p w d, home, l s colors and so on.
+
+Now down below, we have a very important environment variable called path. Have you noticed that sometimes when you run a program from the command line, you get an error saying the program or the command was not found, even though you have installed that program. Quite often that happens because your operating system whether it's Linux or Windows cannot find that program. Now, here's the interesting part, to find a program, your operating system is not going to go through your entire hard drive, it's only going to look at specific directories. And those directories are specified using the pass variable.
+
+So this is set to a list of directories separated by colon. So here's the first directory, then we have a colon, here's the second directory and so on. These are the directories that Linux or Windows searches for to find a program or a command, okay? Now, what if you want to see the value of a particular variable? We can type print m and then path.
+
+That's another way. Now, once again, everything is case sensitive here, so if I type path in lower case, we're not going to see anything, okay? Now there is another way to see the value of an environment variable. Instead of print m, we can use echo, but here we have to prefix the variable with a dollar sign. So Linux knows that, we are referring to an environment variable, like path.
+
+Now how can we set a variable? Using the export command. So let's define a variable called db underline user, and I'm going to set that to MOSH. Now this variable is stored in the current session, in the current terminal session. So we can read it using the echo command, db user, we can also read it using print env, however, this variable is only available in the current terminal session.
+
+So if I close this terminal session, and open a new terminal session, this variable will not exist. Let me show you. So we can terminate this session by typing exit, now we're outside of our container environment, so we're back on my mac terminal. Now, let's run docker p s to see all the docker processes or containers, there is nothing here, our container is stopped. Now to see all the containers, including stopped containers, we type docker ps dash a, that is short for all.
+
+So, let me expand this window, so we can see clearly, so we have two stuffed containers, one was running our Ubuntu image, and the other was running hello docker. This container was the one that we have been working with throughout this section. Now I want to start this container so we can work with it again. So just like virtual machines, we can stop or start a container, okay? So look at this container ID, 2F whatever, I'm going to grab the first few letters, 2F7.
+
+So to start this container, we type docker start, we use dash I so we can interact with it, and then type the container id. Quite often we can type only the first two or three letters, unless there is another container whose id starts with the same sequence of characters. Then we have to type more characters, okay? So, let's start it again, we are back in the same Linux machine, and if we type echo db underline user, you don't see anything. Because that variable does not exist anymore, it was only available in that terminal session.
+
+Now, to make it persistent, we have to write it to a special file. So, we go to our home directory, now we list all the files, including hidden files, earlier you saw this file, bash r c, this file is a user's personal start up file. So every time a user logs in, Linux loads this command from the user's home directory. So this is where we have to write permanent environment variables. Now we can edit this using nano, so nano dot bash r c, but let me show you another technique.
+
+Earlier we talked about redirection. So using echo, I want to write something to this file. I want to set db underline user to Mosh, and then I want to redirect the result to dot bash r c. Don't execute this yet. Because if you do this, you will overwrite the entire bash r c file.
+
+We don't want to overwrite it here, we want to append something to it. So we add another greater than sign, and this will append db user to bash r c. Okay? Now to verify our work, let's look at bash r c, so take a look, the last line contains our permanent environment variable. And of course we can always come back and change this value.
+
+Now, one thing I want to emphasize here is that you should never store sensitive information in environment variables. Because at the end of the day, these variables are stored in plain text files. So we don't want to store d b password here, because anyone who has access to this machine can read the d b password. So just be aware of this, I think most software engineers have made this mistake at least once in their career, and I'm no exception. So, we have set db user permanently in this file, now if we exit, and open a new terminal session, we can still read the value of that variable.
+
+So, let's look at all the stop containers, here's our container, we're going to start it one more time. Docker start dash I two f seven. We're back here, so let's echo db user. Beautiful. Now one last thing before we finish this lesson, the changes we make to bash r c file are only effective in the next terminal session.
+
+So if you write another environment variable here, that variable is not going to be available until we open another terminal session. Let me show you. So, let's go to my home directory, and echo, let's say color equals blue, we're going to write that to dot dash r c file. Now if I echo color, look, that variable is not there, even though we wrote it to this file. Because this file is loaded only once when we start a terminal session.
+
+So now we have two solutions, we can terminate the session and come back in, or we can use the source command to reload the bash r c file. So, source dot bash r c. And we have to execute this from our home directory. If you're not in our home directory, we can type source home directory slash dot bash rc. Good, now let's echo color, and here's the result.
+
+Beautiful.
+
+
+
+Codes and Other Notes in this Discussion: 
+
+printenv 
+
+printenv PATH 
+
+echo $PATH 
+
+export DB_USER=mosh 
+echo $DB_USER
+prinenv DB_USER
+
+
+
+docker ps -a 
+docker start -i container-id
+
+
+
+nano .bashrc 
+or 
+echo DB_USER=mosh >> .bashrc 
+
+
+echo COLOR=blue >> .bashrc 
+echo $COLOR 
+
+
+source .bashrc 
+source ~/ .bashrc 
+
+
+
+
+
+
+
+
+
+
+
+
+Managing Processes:
+
+Let's talk about processes. Do you know what's a process? A process is an instance of a running program. To see all the running programs or all the running processes, we can use the ps command. So, we have two processes, one is running bash, the other is running ps.
+
+Now technically ps was a very short lived process, it only existed while this command was producing this output. So now it doesn't exist anymore, however, if we run ps one more time, we see ps again, because once again, while ps was preparing this command, it was being executed, okay? So technically the only process that is running right now is bash. Do you remember bash? Bash is short for born again shell.
+
+It's the program that we're interacting with here. The program that takes our commands and sends them to Linux for execution. That's bash. Now as you can see, each process has a unique identifier that is generated by the operating system. Now what is tty?
+
+That is short for teletype. And over here we can see the type of terminal the user is logged into. So p ts is short for pseudo terminal, don't worry about what it really means, there is some long history, but a short explanation is that this kind of terminal window that we are using, this is called a pseudo terminal. So pts slash zero, that represents the first terminal window. So if I open another terminal window and start this container and then execute the same command, we are going to see pts slash one.
+
+So in this column, we can see which terminal the user is logged into, okay. Now, time is the amount of CPU time each process consumed, so both these processes are very lightweight, they're not taking much of CPU time. But sometimes you notice your system getting slow, that's because some process is taking so much of CPU time. In that case, you want to kill that process. Let me show you how to do that.
+
+First, I want to create a process and put it in the background. So in Linux we have the sleep command, if I type sleep three, now the prompt sleeps for three seconds and then wakes up. Now, what if you want to put this in the background so we can execute other commands. We append an ampersand here. Now this is in the background, and we can execute other commands.
+
+So let's run sleep with a longer wait, let's say one hundred seconds, and we want to put this in the background. Now, if we run ps, we can see the sleep command, as we can see, this command is not taking much of CPU time, so it's a light process. But let's say we want to kill this. This is where we use the kill command, and here we specify the process id for the bad boy. So that is 38.
+
+Now that is gone, so let's run ps one more time, that process is terminated. Beautiful.
+
+
+
+
+Codes and Other Notes in this Discussion: 
+
+ps 
+
+sleep 100 &
+
+kill 38 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Managing Users: 
+
+
+Alright, let's talk about managing users. So in this lesson, I'm going to show you how to create a new user and then log in as that user. It's going to be fun. So in Linux we have this command user add for adding a new user, we also have user mod for modifying a user and user del for deleting a user. So, we're going to call user add, now let's look at the options.
+
+Here we have a bunch of options and none of them are mandatory. We can use them based on our needs. In this lesson, I'm going to use an option, this one, each option as you can see has two forms. The short form with one hyphen and the long descriptive form with two hyphens. Different people have different preferences.
+
+So with this option, we can create the home directory for this user. So we're going to say user add dash m and the name of the user is John. Okay, where is this user? Well, this user is stored in a configuration file in the etc directory. So using cat, we can look at that, cat slash etc slash password.
+
+Now, the name is misleading, passwords are not stored here, we only have user account information. So, take a look. So, down below, look over here, we have John, so we have multiple fields separated by colon. First we have the username, then we have a colon as a separator, x means the password is stored somewhere else. I'll show you that in a second.
+
+Then we have this field, that's the user id, now on your machine you're probably going to see 1,000, because prior to recording this video, I created another user, Mosh, and the id of that user is one thousand. So John's id is one thousand and one, then we have the group id, we'll talk about this in the next lesson. Over here we have the home directory of this user, so slash home slash john. And then we have the shell program used when this user logs in. So slash bin slash shell represents the old original shell program.
+
+But we also have bash which is born again shell which is the enhanced version of this program, okay? Now let's say when I log in, instead of using shell, I want to use bash. So we're going to use user mod to modify this record. So, let's look at user mod, the option that I'm going to use in this lesson is dash s or shell, this is for setting the shell for this user. So, we're going to say user mod dash s, now which shell are we going to use?
+
+Slash bin slash bash. Which user? John. Okay, now let's look at etc slash password one more time, so, look over here, we have John's record and his shell program is bin slash bash. Beautiful.
+
+Now where are the passwords? Well, in the same directory, we have another file that is shadow. So this is where passwords are stored in encrypted format. I don't know how this really works, but just be aware of this file, this file is only accessible to the root user. Okay?
+
+Now let's say we want to log in as Mosh, how do we do that? So we open up a new terminal window to log into our container as John. First we run Docker ps, to see the running containers, so here's our container id, now we're going to execute a bash session inside this container. So we type Docker execute, then we paste the container id, or we can type the first few letters, okay? Now, you want to run a bash session here.
+
+Now if I press enter, nothing happens, because we didn't interact with bash. So we have to specify dash it interactive, okay? Now if we run this, we'll log in as root, so now we have two back sessions, one is in this window, the other is in this other window, okay? Now, we don't want to log in as root, we want to log in as John. So let's terminate this session one more time.
+
+You're going to execute a back session in this container, but before the container name, we're going to supply another option for specifying the user. So dash u, which user? John. Now, I've logged in as John, you can see that, so John at and here's the container id which acts like the host name, now look at the prompt, here we have a dollar sign which means I'm not a root user, I'm just a regular user. In contrast, in this other window, where we logged in as root, we have a pound.
+
+So here we have extra privileges. So, back to John's Reno, let's see what happens if I try to access the shadow file. So, cat slash etsy slash shadow. We get a permission denied error. So this verifies that I'm not a root user, okay?
+
+Also, John has a home directory, so if you type c tilde, we go to John's home directory, let's look at the path for this directory, so that is home slash John. So in this directory, we can store John's files. And when we are done, we can remove John by typing user dell John. Now I'm not going to delete John, because in the next lesson we're going to add John to a group. So we're going to keep him for now.
+
+Now one last thing before we finish this lesson. Back to our first window, with the root user, we talked about user app. Now we also have another command that is add user. What is the difference? Well, user app is the original API that was built, but add user is a pro script that is more interactive and uses user ad under the hood.
+
+Let's look at it real quick. So I'm going to execute add user and say Bob. So, let's see what's going on here. We see a few messages, adding new user Bob, adding new group Bob, so every user that is created is automatically placed inside a group with the same name. So here we can see the group was created and then this user was inserted in this group.
+
+Next we can see the home directory was created, and some files were copied, I don't really understand what that means, but here we have a chance to set the password. So this is what I meant by this command is more interactive then the old command. So here we can set the password and then confirm it, and then we can specify additional information about this user. For example, we can specify the full name, we can specify the room number, work phone and so on. So this is the difference between add user and user app.
+
+Quite often, when using Docker for deploying our application, we don't want to use add user because we don't want to interact with this command. So we want this command to be executed under the hood. So be aware of the differences between these two commands. Next we're going to talk about managing groups.
+
+
+
+Codes and Other Notes in this Discussion: 
+
+useradd 
+usermod
+userdel 
+
+useradd -m john 
+
+cat /etc/passwd 
+
+
+usermod -s /bin/bash john 
+
+cat /etc/shadow 
+
+
+docker exec -it container-id bash
+
+
+docker exec -it -u john container-id bash 
+
+
+adduser bob 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Managing Groups:
+
+So we created a new user in the last lesson, now let's talk about managing groups. So in the last lesson we talked about three commands that start with user, we have user add, user mod and user del, we have similar commands for managing groups, so we have group add, group mod and group del. So let's add a new group called developers, now why do we need groups? You probably know this but we use groups so all users in the same group have the same kind of permission, okay? So now we have a new group, where is this group?
+
+It's in a file in the etc directory. So, cat etc group. Here are all the groups in this image. So down the bottom, you can see the group of developers and this is the id of this group, 1003. Now we want to add John to this group.
+
+How to do that? Let's bring up user mod, so here we have an option for setting the group, here it is, again we have a short form with a capital g, and a long form that says groups. With this we can set the supplementary groups for this user. But we also have another option with a lower case g or gid, that is for setting the primary group of the user. So what is the difference?
+
+Well, every linux user has one primary group and zero or more supplementary groups. Now why are these groups separated? Well, let's say John is part of five groups, and now he wants to create a new file. Every file, as I will show you in the next lesson, is owned by one user and one group. Here's a question, if John is part of five groups, which group should we use for owning that new file that John is going to create?
+
+That's why we need a primary group. Now the primary group is automatically created when we create a new user. It's the group with the same name as the user. So here, I'm going to use this other option to set the supplementary groups for John. So, we say user mod dash capital g, now here we type the group name, that is developers, and then we add John to this group.
+
+Great, now let's look at the password file one more time, so cat etc password, now what if we only want to see the record for John? We can just pipe in again. So, here we can use grep and search for John. That's one way, another way is to use grep and search for John in etcpassword. So, in this record, I told you that this is the user id for John, and this is the group id, this is the id of John's primary group.
+
+Now where the secondary groups are stored I can't recall on top of my head, and it doesn't really matter. We actually have a command for seeing the groups of a user. We type groups and then the name of the user, so John. So John is currently part of two groups. One group is John, which is John's primary group, and the other one is developers which is a supplementary group, okay?
+
+Now of course we can add John to more supplementary groups, and that's what I want you to do as an exercise. So pause the video, add John to a new group called artists. In the next lesson we're going to talk about file permissions.
+
+
+
+
+Codes and Other Notes in this Discussion: 
+
+groupaddd developers 
+cat /etc/group 
+
+usermod -G developers john 
+
+cat /etc/passwd  | grep john 
+
+
+groups john  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+File Permissions:
+
+Alright, the last thing we're going to talk about in this section is file permissions. This is one of those areas that a lot of people find confusing or complicated, it's actually very easy. Let me make it super simple for you. So I've logged in as root, and I'm in my home directory, let's go to the home directory, and in this directory I want to create a file called deploy dot sh. Files with this extension are called shell scripts.
+
+In this file, we can write any of the linux commands we have learned so far. So we can combine all these commands and create a deployment script. Okay, so to write to this file, I'm going to use the echo command, I'm going to write echo hello to deploy dot sh. So I'm writing this line to this file. Let's go ahead, and now let's verify it, so we have echo hello, so when we execute this file, we're going to see hello on the terminal, okay.
+
+Now to see the permissions for this file, we have to get a long listing. Take a look, so in this directory we have three directories, Bob, John and Mosh and one file. Now in the first column, we can see the permissions for each item. Now look at the first letter, if the first letter is d, that means this is a directory, if it's a hyphen, that means this is a file. Pretty straightforward.
+
+Now what about the other letters? Well, these letters are actually nine letters divided into three groups. Here's the first group, then we have the second group and the third group. In each group we have read, write and execute permissions. So for this item, for deploy dot sh, for this file we only have read and write permissions, but the execute permission is missing because we have a hyphen.
+
+In contrast, look at the permissions for this directory. We have read, write and execute. Execute is used so we can go into that directory, so we can use the c d command with it. So by default, all directories have the execute permission. Now, in the second group, we only have the read permission, and this is true for the third group.
+
+But what are these groups for? Well, the first group represents the permissions for the user who owns this file. That is the root user here. The second group represents the permissions for the group that owns this file, and that is this group. So by default, every user that is created is automatically placed inside a group with the same name, okay?
+
+Now, the third group represents permissions for everyone else. Now, to execute this file, we have to type period, referring to the current directory, then forward slash deploy dot sh. We get a permission error because even I as the root user do not have to execute permission on this file. This is where we use the change mode command. So, we type ch mod, and here we can change the permissions for the user that owns the file, or the group, or others.
+
+For the user, I'm going to add the execute permission. If I want to remove the execute permission, I would have to use a hyphen, okay? So we're going to add the execute permission to where? To deploy that sh. Now, let's get a long listing one more time, look at the color of this file, it turned green because now it's executable.
+
+Now look at the first group, we have read, write, and execute. So, I can call deploy dot sh and we see hello on the terminal, beautiful. Now, with this setup, the root user is the only user who can execute this file. So if you go to this other window where I've logged in as John, we're currently in John's home directory, so let's go one level up, now we are inside the home directory of all users, and over here we have the deployment script. But if we try to execute this file, we get a permission error.
+
+So how do we enable John to execute this file? Well, back to our first window, we're going to use chmod one more time. This time we're going to apply the permission for others, we we want to enable the execute permission to deploy dot sh. Good, now, back to John's window, we can call deploy dot sh and we see hello on the terminal. Beautiful.
+
+So this is how we can change permissions for files. Now, let's talk about variations of this command. So, we can also combine groups, so we can say o g, that means others and the group that owns this file, it's not short for original gangster, so for others and the group owner, we can add the execute permission, we can also add the write permission, and we can remove the read permission. So this is the syntax to use this command. And of course, we don't have to type a single file name, we can type multiple file names or use patterns for example, we can apply these permissions to any files with the shell extension.
+
+So we're done with this section, I hope you have learned a lot. With the foundation that you have built in this section, now you're ready to learn docker the right way. So, I will see you in the next section.
+
+
+Codes and Other Notes in this Discussion: 
+
+echo echo hello > deploy.sh 
+
+cat deploy.sh 
+
+ls -l 
+
+chmod u+x deploy.sh 
+
+
+chmod o+x deploy.sh 
+
+chmod og+x+w-r deploy.sh 
+chmod og+x+w-r *.sh 
+   
+   
+   
+   
+   
+   
+   
+   
+   
+Summary: 
+
+The Linux Command Line
+
+Managing Packages
+apt update
+apt list
+apt install nano
+apt remove nano
+
+
+Navigating the file system
+
+pwd # to print the working directory
+ls # to list the files and directories
+ls -l # to print a long list
+cd / # to go to the root directory
+cd bin # to go to the bin directory
+cd .. # to go one level up
+cd ~ # to go to the home directory   
+
+
+
+Manipulating files and directories
+
+mkdir test # to create the test directory
+mv test docker # to rename a directory
+touch file.txt # to create file.txt
+mv file.txt hello.txt # to rename a file
+rm hello.txt # to remove a file
+rm -r docker # to recursively remove a directory
+
+
+
+
+Editing and viewing files
+
+nano file.txt # to edit file.txt
+cat file.txt # to view file.txt
+less file.txt # to view with scrolling capabilities
+head file.txt # to view the first 10 lines
+head -n 5 file.txt # to view the first 5 lines
+tail file.txt # to view the last 10 lines
+tail -n 5 file.txt # to view the last 5 lines 
+
+
+
+
+Searching for text
+
+grep hello file.txt # to search for hello in file.txt
+grep -i hello file.txt # case-insensitive search
+grep -i hello file*.txt # to search in files with a pattern
+grep -i -r hello . # to search in the current directory
+
+
+
+
+Finding files and directories
+
+find # to list all files and directories
+find -type d # to list directories only
+find -type f # to list files only
+find -name “f*” # to filter by name using a pattern
+
+
+
+
+Managing environment variables
+
+printenv # to list all variables and their value
+printenv PATH # to view the value of PATH
+echo $PATH # to view the value of PATH
+export name=bob # to set a variable in the current session
+
+
+
+
+Managing processes
+
+ps # to list the running processes
+kill 37 # to kill the process with ID 37
+
+
+
+
+
+Managing users and groups
+
+useradd -m john # to create a user with a home directory
+adduser john # to add a user interactively
+usermod # to modify a user
+userdel # to delete a user
+
+groupadd devs # to create a group
+groups john # to view the groups for john
+groupmod # to modify a group
+groupdel # to delete a group
+
+
+
+
+
+File permissions
+
+chmod u+x deploy.sh # give the owning user execute permission
+chmod g+x deploy.sh # give the owning group execute permission
+chmod o+x deploy.sh # give everyone else execute permission
+chmod ug+x deploy.sh # to give the owning user and group
+					 # execute permission
+chmod ug-x deploy.sh # to remove the execute permission from
+					 # the owning user and group 
+					 
+					 
+					 
+					 
+					 
+					 
+					 
+					 
+
+
+
+Building Images: 
+
+Introduction: 
+The first step in using Docker to build and deploy applications is creating images. So having a solid understanding of Docker images is crucial for you, and that's what this section is all about. We'll be talking about creating Docker files, versioning images, sharing them, saving and loading them, and a few optimization techniques for reducing the image size and speeding up builds. I'm so excited about this section, I hope you are too, so let's jump in and get started.
+
+In this Section: 
+
+Creating Docker files 
+Versioning Images 
+Sharing Images 
+Saving and Loading Images 
+Reducing the Image Size 
+Speeding up builds 
+
+
+
+
+
+
+
+
+
+
+
+
+Images and Containers: 
+
+
+Alright, before we get started, let's make sure you have the right understanding of images and containers. Can you define what an image is and how it's different from a container? Pause the video and think about it for a few seconds. Here's the answer, an image includes everything an application needs to run. So it contains a cut down operating system like Linux or Windows, it also contains third party libraries, application files, environment variables and so on.
+
+So an image contains all the files and configuration settings needed to run an application. Once we have an image, we can start a container from it. A container is kind of like a virtual machine in the sense that it provides an isolated environment for executing an application. And similar to virtual machines, we can stop and restart containers. Now technically, a container is just an operating system process, but it's a special kind of process because it has its own file system which is provided by the image.
+
+Now, let me show you something interesting. In the previous section, we started a container from the ubuntu image, right? Now I'm going to open up another terminal window, let's run docker ps to see the running processes or running containers. So here's the container that we started in the previous section. Now I'm going to start a new container from the same image.
+
+Let's see what happens. So do you remember how to start a container from an image? We type docker run, we want to run this in the interactive mode so we can work with it, and then we type the name of the image, so ubuntu. Alright, here's the container id, and as you can see, this is different from this other container. Now, back to our first container, I'm currently inside the home directory, so in the previous section we created a bunch of directories and this deployment file, now back to our new container, let's go to the home directory and see what is here.
+
+There is nothing here. Here's the reason, a container gets it's file system from the image, but each container has it's own right layer. So what we write in a given container is invisible from other containers. Of course, there is a way to share data between containers, and we'll talk about that later in the course. But what I want you to understand here is that each container is an isolated environment for executing an application.
+
+It's an isolated universe. So whatever happens inside that universe is invisible to other containers, okay? Now that you have a proper understanding of images and containers, you're ready to dockerize an application. So in the next lesson, we're going to take a front end application built with react and start dockerizing it.
+
+Code and Other Notes in this Discussion: 
+
+Image:
+A cut-down OS
+Third-party libraries 
+Application Files 
+Environment Variables  
+
+
+Container: 
+Provides an isolated environment 
+Can be stopped & restarted 
+Is just a process!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sample Web Application: 
+
+
+So over the next few lessons, we're going to take a front end application built with react and package it into a docker image. I've attached this application below this video, so go ahead and download the zip file, then extract it somewhere on your machine. Now, I want to emphasize, you don't need to know react or even javascript to go through this course, because docker is not about javascript or react. So if you're a c sharp or java or a python developer, you can still go through the course and learn a lot about Docker. In this course, we're only going to take this application as an example so we can learn about Docker.
+
+Now, let me give you a quick overview of what we have in this project in case you are not familiar with JavaScript or React projects. So in this project, we have this file, package dot json, which is basically like an identification card for our application. So on the top we have the name and the version of our application, and over here, we can see the dependencies of this application. These are the third party libraries that our application needs to run. Now, let's say you want to take this application and run it on a brand new machine, so on this machine, we don't have anything but an operating system, whether it's windows or linux, it doesn't matter.
+
+So there are a number of steps we have to follow, take a note of this. First we have to install node. Once we have node, then we can use node's package manager or npm to install the dependencies of this application. Let me run this command, npm is going to look at package dot JSON, then it's going to automatically download and store all these third party libraries in this project. So, let's go ahead, this is going to take a few seconds, so I'll be right back.
+
+Alright, back to our project, now we have a new directory called node modules. In this directory, you can see all the dependencies of this application and their dependencies. So this is a very large directory with hundreds or even thousands of sub directories, okay? So let's quickly recap. To run this project on a new machine, first we have to install node, then using npm we have to install third party dependencies, and finally to start the project we have to type npm start.
+
+We have the same concept in other development stacks, so whether you use c sharp or java or python or ruby, you have some tool to manage the dependencies of your application, and then you have a way to start your application. Here we have to use npm start. So, let's go ahead, this started a development server listening on port 3,000. So, if you go to local host port 3,000, we can see our react application. This is just a basic react application, like a brand new project, I haven't done anything here, and it doesn't really matter.
+
+Later in the course, I'm going to show you a real project that I have built using react and node. So now that you understand what this project is and how we can run it on a new machine, let's see how we can use docker so we don't have to repeat all these steps every time we want to deploy this on a new machine. So, throughout the rest of this section, we're going to dockerize this application and package it into an image. Once we have that image, we can deploy this application virtually anywhere.
+
+
+
+Codes and Other Notes Discussion: 
+
+react.js application contains:
+
+package.json 
+
+
+Steps:
+
+Install Node 
+npm install 
+npm start 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Dockerfile Instructions: 
+
+
+The first step to Docker as an application is adding a Dockerfile to it. Do you remember what a Dockerfile is? It contains instructions for building an image. You saw a few of these instructions before, but let's go through the complete list so you know what is available. We have from for specifying the base image, so we take that base image which contains a bunch of files and directories and then we build on top of it.
+
+Then we have work dir for specifying the working directory, Once we use this command, all the following commands will be executed in the current working directory. We have copy and at for copying files and directories, we have run for executing operating system commands, So all the Linux commands that we talked about in the previous section, you can execute them using run. Now if you're on Windows, you can execute Windows commands using run as well. We have n for setting environment variables, expose for telling Docker that our container is starting on a given port, user for specifying the user that should run the application. Typically we want to run our application using a user with limited privileges.
+
+And we have command and entry point for specifying the command that should be executed when we start a container. So that's the big picture. Now over the next few lessons, we're going to explore each of these commands in detail.
+
+
+Codes and Other Notes in this Discussion: 
+
+
+DockerFile: 
+FROM
+WORKDIR 
+COPY 
+ADD 
+RUN 
+ENV 
+EXPOSE 
+USER
+CMD 
+ENTRYPOINT 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Choosing the Right Base Image: 
+
+
+Alright, let's start off by adding a Dockerfile to this project. So here in the root of this project, we're going to add a new file called Dockerfile. Now the first instruction we're going to use is from, which we use for specifying the base image. The base image can be an operating system like Linux or Windows or it can be an operating system plus a run time environment. For example, if you're a c sharp developer, you want to start from a dot net image, if you're a python developer, you want to start from a python image, if you're a javascript developer, you want to start from a node image.
+
+Now if you Google docker samples, you can find this page, docs.docker.com/samples. Over here, you can see various examples of docker files for different technology stacks. For example, for an aspen.net core application, you can see a docker file right here, now look at the from instruction, over here, we have a full URL instead of an image, because Microsoft images are not hosted on Docker Hub, they're hosted in Microsoft container registry, that's why we have m c r which is short for Microsoft container registry. So an image can be in any registries. The default registry that Docker uses is Docker Hub.
+
+For any images, in other registries, we have to type the full URL. Okay. Now don't just blindly take this URL, because the URL can change or the version can change, so always do your own research. So that's one example. If you're a Django developer, you want to start from Python three.
+
+Or in the future, you might want to use Python four. Now what about this project? Well, for this project we need node, because as you saw, we need npm to install the application dependencies and store the application. So let's go to hop.docker.com, and search for node. Now this is where things get a little bit interesting.
+
+Because node repository on docker hop has hundreds of node images. And this can be a little bit confusing. So let's go to the tags, here you can see various node images, so if you scroll down you can see there are tons of node images for different versions built on different versions of linux. For example, we have node version 14.16, on top of buster, which if I'm not wrong, is Debian Linux version 10. So we have different versions of node on different versions of Linux.
+
+The image you should choose really depends on your application. What version of node do you want to target? We can go to our Dockerfile and say you want to start from node, and by default, Docker assumes the latest tag, do not ever use this. Because if you build your application against the latest version of node, next time there is a new version of note, if you rebuild your application's image, your application will be built with a different version of note, and things can get unpredictable. So always use a specific version.
+
+So back to Docker Hub, let's say I want to build this application against node version 14. So here we search for 14, now once again we have tens or maybe hundreds of node images for version 14. Here's one we just talked about, there's more, we have version 14 on top of buster, so this one doesn't have the minor build number, it's just a major version number. Now look at the size of this image. It's around 300 megabytes.
+
+And why do we have multiple items in this list? Well, this image is built for different operating system and CPU architectures, so there's two more here, as you can see all of these are built on top of linux. So as far as I know, we don't have a node image built on top of windows, I could be wrong, but if you want to run on top of windows, you have to start from a windows image and then install node on top of it. There's no reason you want to do this because windows images are really large. I think they're over two gigabytes.
+
+So, back to the story, depending on your CPU architecture, when you pull an image, docker will automatically download the right docker image for your CPU architecture, okay. Now, I don't want to use any of these images because these are way too large. And this is the compressed size. When this is uncompressed, it's going to be around one gigabyte. I want to go for a smaller image because I want to make my builds and deployments faster.
+
+So on this page, let's search for alpine, earlier I told you that alpine images are really small. Look at this. The compressed size is around 40 megabytes. This image is almost 10 times smaller than the other image you saw. Now look at the image tag, it's very specific.
+
+Version 14.16 of node built on top of alpine 3.13. I'm happy with this version, so I'm going to copy this, and then paste it here. Okay, so that was the first step. Now, back to our terminal window, here in the project directory, we're going to build an image. So, we run docker build dash t for tagging the image, we're going to call this image react app, and we type a period to tell docker where it can find a Docker file.
+
+That means in the current directory. Let's go ahead, okay, the image was built, so now we're going to look at all the images we have on this machine using docker images or docker image ls. So currently we have three images, here's the image that I just built, now let's start a container with this image and see what happens. So, docker, run, we want to run this in the interactive mode so we can play with it, and the image is react app. What's going on here?
+
+We're inside a node environment. So here we can write javascript code, and node will execute it. For example, we can define a constant, and then log the constant, so we're inside a node environment. We don't want this. We want to run bash, so we can look at the file system.
+
+So, we press control and c, now it says to exit, press control and c one more time. Good. So the container is stopped, let's run it one more time, so docker run interactive react app, now at the end, we can specify the command to run when starting this container. We want to run bash. Now look, we get an error saying this module is not found.
+
+Why is that? Because alpine linux doesn't come with bash, that's why it's a very small Linux distribution, so it doesn't have many of the utilities you are familiar with. Instead of bash, it comes with shell, the original shell program. So one more time, docker, run interactive, react app, instead of bash, we're going to use shell, s h. Okay, now we're doing a shell session inside this container.
+
+So let's look around, we have all these directories you are familiar with, we talked about this in the previous section, I hope you didn't miss that. So this is alpine linux, and in this image we also have node. So if you type node dash dash version, we can see the version of node which is 14.16. Now in this image, we don't have our application files, we only have alpine linux and node. So in the next lesson, I'm going to show you how to copy application files into this image.
+
+
+
+Codes and Other Notes in this Discussion: 
+
+https://docs.docker.com/reference/samples/
+
+
+Dockerfile: 
+
+FROM node:14.16.0-alpine3.13
+
+
+docker build -t react-app .
+
+
+docker images 
+
+
+docker run -it react-app sh 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Copying Files and Directories:
+
+Now that we have a base image, the next step is to copy the application files into the image. So for that we have two instructions, one is copy the other is add, they have the exact same syntax but add has a couple additional features, we'll talk about that later in this lesson. So, let's start with copy, with this we can copy one or more files or directories from the current directory, meaning this directory over here into the image. So we cannot copy anything outside of this directory. Here's the reason, when we execute the build command, look at the last argument, a period means the current directory.
+
+So when we execute this command, docker client sends the content of this directory to docker engine. This is called the build context. So docker client sends the build context to docker engine and then docker engine will start executing these commands one by one. So at that point, docker engine does not have access to any files or directories outside of this directory, okay? So here we can copy one or more files, for example we can copy package dot JSON into slash app into the image.
+
+Now if this directory doesn't exist, docker will automatically create it. We can also copy more than one file, so we can say readme dot md, and by the way remember this is case sensitive, because under the hood we are using Linux. Now here we have a syntax error, look, when using copy with more than one source file, the destination must be a directory and end with a forward slash. So here we need to add a forward slash, okay? We can also use patterns, so let's say we want to copy all files that start with package and end with JSON.
+
+So whatever comes in between we don't care, that's why we're using a wild card. So in this directory we have two files that match this pattern, we have package dash lock dot json and package dot json. Package dot json as I told you before, includes the list of dependencies and their versions. But the actual versions that may be installed on this machine might be a little bit different from what we see here. So package lock JSON keeps track of the exact version of these dependencies installed on this machine, okay?
+
+Now, what if you want to copy everything in the current directory into the app directory? We use a period. So this is all about source files and directories. Now, let's talk about the destination. So here we're using an absolute path because our path starts with a forward slash.
+
+We can also use a relative path if we set the working directory first. So using the work directory, we can set the working directory, now all the instructions that come after will be executed inside this working directory. And with this, we can replace this absolute path with a relative path. So we can use a period meaning the current directory, okay? Now, one last thing about copy.
+
+What if you want to copy a file that has a space in it? So, let's say we have a file called hello world dot txt. Look, we immediately get a syntax error. This is where we use the other form of the copy instruction. So copy has another form where we can pass an array of strings.
+
+So multiple strings, each string represents an argument of the copy instruction. So here, we're going to wrap all these arguments inside brackets, then we're going to wrap the first item, which is our source file in double quotes, then we add a comma, and wrap the second argument in double quotes. It's not a form that you use that often, but I thought to cover it to make this lesson comprehensive. So, let's simplify things, we're going to copy everything in our context directory, which is the current directory into the current working directory of the image, okay? Now, we also have add, it has the exact same syntax as copy, but add has two additional features.
+
+With add, we can add a file from a url, so here we can type http some url and let's say some file. Json, so if you have access to this file, we can add it to our image. The other feature is that if you pass a compressed file, add will automatically uncompress this into a directory. So you can use either of these instructions but the best practice is to use copy because it's more straight forward, there's no magic around it, use that only if you need one of these additional features. If you want to add a file from a URL or if you want to uncompress a compressed file.
+
+So, let's get rid of this, we're going to copy everything in the current directory, enter image, so let's go ahead and rebuild our image. Alright, now look at this line. Transferring context. So all the files and directories in our current directory are being sent to Docker engine. Alright, the image is built, so let's start a container with this image.
+
+Docker, run, interactive, react app, we're going to run shell so we can look at the file system. Okay, look, we're inside the app directory, because in our docker file, we set this directory as the current working directory. Now let's run ls, so here you can see all the files and directories we have in our project, including node modules. So this is all about copying files. Now, what if you want to exclude some files or directories?
+
+We'll talk about that next.
+
+
+
+Codes and Other Notes in this Discussion: 
+
+Dockerfile:
+
+FROM node:14.16.0-alpine3.13
+WORKDIR /app
+COPY . .
+ 
+
+docker build -t react-app .
+
+
+docker run -it react-app sh 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Excluding Files and Directories: 
+
+
+In the last lesson, you saw that when we build our application, Docker client takes everything in this directory which is called the build context or the context directory. So Docker client takes everything here and sends it to Docker engine or Docker Damon. Now for this simple application which has absolutely no features, our build context was about 150 megabytes. But why is it so large? That's the result of the node modules directory.
+
+So if you look over here, you can see tons of directories and subdirectories and this is a very simple project. As our application gets more complex and we use more third party libraries, this node modules directory gets larger and larger. Now, there's a problem here. Later in the course when we talk about deployment, you will see that our docker client will talk to a docker engine on a different machine. So that means whatever we have in the build context has to be transferred over the network.
+
+So if you have a large build context with a million files in it, all these files have to be sent to the docker engine on the remote machine. We don't want that. We don't really need to transfer this node modules directory, because all these dependencies are defined in package dot JSON. So we can simply exclude this directory and copy everything else and then restore these dependencies on the target image. And this has two benefits.
+
+The first benefit is that our build context is smaller, so we transfer less data over the network, the second benefit is that our build is going to be faster, so we don't have to wait for all these files to be transferred to Docker engine, okay? Now how do we exclude this directory? Very easy. You are probably familiar with this file, dot git ignore. With this file, we can exclude some files and directories from git.
+
+Now we have the same concept in docker, so we can create a file in the root of this project, called dot docker ignore, and everything is in lower case, and here we can list the files and directories that should be excluded. So we can exclude node modules. Now, when we build a new image, Docker will no longer transfer this large gigantic directory to Docker engine. Let's take a look. So, I'm going to run the build command one more time, good, okay, look at our build context, it's only 10 kilobytes, so we reduce our build context from 150 megabytes to 10 kilobytes, that's a huge improvement.
+
+There is a problem though, if you start a new container and look at the file system of that container, we're not going to see the node modules directory because we excluded it, right? Let's verify it. So I'm going to run a new container from react app and then run shell inside that container. Now in the app directory, let's look at all the files and directories, look, we only have two directories here, public and source. So node modules is not here.
+
+This is where we need to run npm install to install these dependencies. And that's what we will do next.
+
+
+Codes and Other Notes in this Discussion: 
+
+
+.dockerignore 
+node_modules/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Running Commands: 
+
+
+Alright, the next step is to install our project dependencies using npm. This is where we use the run command. With this command, we can execute any commands that we normally execute in a terminal session. So we can run npm install, we can also run any of the linux or windows commands, for example, let's say we want to install python on this image as well. We can use apt or apt get to install python.
+
+Now if you run this, we're going to get an error because alpine linux doesn't have apt package manager. It has another package manager called apk. So be aware of these differences depending on the type of linux or windows you are using. Okay? So, we don't need to do this in this lesson, let's just install the dependencies of our project.
+
+So now, back to our terminal, let's rebuild the image. Alright, so now, Docker engine is running npm install to download and install these dependencies, this is going to take a few seconds so I'll be right back. Alright, our image is ready, so let's start a new container with this image and run shell. Good, now let's look at our app directory, alright and here we have the node modules directory, beautiful. So we're done with this step, next I'm going to talk about setting environment variables.
+
+
+
+Codes and Other Notes in this Discussion: 
+
+Dockerfile:
+
+FROM node:14.16.0-alpine3.13
+WORKDIR /app
+COPY . .
+RUN npm install 
+
+
+docker build -t react-app . 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Setting Environment Variables: 
+
+Sometimes we need to set environment variables. For example, let's say this front end application needs to talk to a back end or an API. Quite often we set the URL of the API using an environment variable. This is where we use the end instruction, so we can set api url to let's say httpapimyapp.com, whatever, it doesn't really matter. We also have an older syntax without an equal sign, that also works, I personally prefer to have an equal sign so we can clearly see the value of environment variables.
+
+But that's just my personal preference. Now, let's rebuild the image and inspect this environment variable in our container. So, we're going to rebuild the image, alright, the image is built, so let's start a new container. Now, do you remember the command that we use for inspecting environment variables? We have a few options.
+
+One way is to use print env to see all environment variables, so you can see, API URL over here, beautiful. We can also print the value of a particular environment variable, another option is to use echo, but here we have to use a dollar sign to print API URL. Okay, so now whenever we start this container, this environment variable is automatically set for us.
+
+
+
+Codes and Other Notes in this Discussion: 
+
+Dockerfile:
+
+FROM node:14.16.0-alpine3.13
+WORKDIR /app
+COPY . .
+RUN npm install 
+ENV API_URL=http://api.myapp.com/
+
+
+
+docker build -t react-app . 
+
+docker run -it react-app sh 
+
+printenv
+printenv API_URL 
+echo $API_URL 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Exposing Ports: 
+
+
+Alright, let's take a quick break from our Dockerfile and start this application outside of Docker. The way we have always started it. So from the project directory we run npm start. Now this starts at development server on port 3,000, so if you go to local host port 3,000, we can access this application. Now in the future, when we run this application inside a docker container, this port, port 3,000 will be open on the container, not on the host.
+
+This is something important you need to understand. So on the same machine, we can have multiple containers running the same image. All these containers will be listening to port 3,000, but the port 3,000 on the host is not going to be automatically mapped to these containers. So later in the next section I will show you how to map a port on the host to a port on these containers. But for now we're going to go back to our Dockerfile and use the expose command to tell what port this container will be listening on.
+
+That is port 3,000. So I just want to clarify something, the expose command doesn't automatically publish the port on the host, it's just a form of documentation to tell us this container will eventually listen on port 3,000. So later when we properly run this application inside a docker container, we know that we should map a port on the host to Port 3000 on the container. We'll do that in the next section.
+
+
+Codes and Other Notes in this Discussion: 
+
+Dockerfile:
+
+FROM node:14.16.0-alpine3.13
+WORKDIR /app
+COPY . .
+RUN npm install 
+ENV API_URL=http://api.myapp.com/
+EXPOSE 3000
+
+
+
+
+
+
+
+
+
+
+
+
+
+Setting the User: 
+
+
+Alright, now let's talk about users. So by default, Docker runs our application with the root user that has the highest privileges. So that can open up security holes in our system. So to run this application, we should create a regular user with limited privileges. But before doing that in a docker file, let's open up a shell session on alpine linux and play with a few commands.
+
+Now if you're a windows user, I still want you to follow along, even though the commands I'm going to show you are not going to be relevant, the approach I'm taking is absolutely relevant. So take this approach and implement it on top of windows, you just have to use different commands, okay? So we're going to run docker run-in the interactive mode, alpine. So here we have a shell session, now in this image we don't have the user add command. Instead we have add user, okay?
+
+So look at these options, there are two options we're going to use, one of them is dash g for setting the primary group of the user and the other is dash s for creating a system user. We're going to use a system user because this user is not a real user, it's just for running an application, okay? Now, before using this command, we have to create a group so we can add this user to that group, okay? So to do that, we're going to use add group, we're going to give this group a name, let's say app, okay, now we can run add user dash s for creating a system user, dash g for setting the primary group, which is app, and finally we specify the name of the user. We're going to use the same name, this is a common best practice in Linux.
+
+So whenever we create a new user, we create a primary group for that user with the same name, okay? Now we have a new user, let's verify that this user is in the right group. So, we type groups app, this shows the groups for the app user. Perfect. Now, we're going to combine these two commands into a single command.
+
+So let's create another group on a user. We type add group, we can say Mosh or whatever, we use double ampersands to combine two commands, add user dash s dash g, Mosh, Mosh. So we use a single command to perform two tasks, okay? Now let's verify the groups for Mosh, perfect. So this is the command that we're going to run in our Dockerfile.
+
+So let's copy this, now, back to our Dockerfile, we're going to run a command. How do we do this? We use the run instruction. Then we paste our command, and instead of Mosh, we're going to use app. So we're going to create a group and a user called app, okay?
+
+Once we do that, then we can set the user using the user command. So all the following commands will be executed using this user. Let's save the changes and rebuild our image. So, here's the build command, let's go ahead, alright, our image is ready, now look at the fifth step. That is our run command for creating a new group and a new user.
+
+Now you might have noticed that building this image took probably a long time, that was because of this step. Installing the dependencies. Now you might argue that earlier, we excluded the node modules directory, so our builds would be faster, But our builds are still slow, because every time we build this image, all these dependencies have to be installed. Don't worry about that, we're going to optimize this later in this section. Now let's start a new container and make sure the current user is the app user, not the root user, okay?
+
+So, docker run, in the interactive mode, we're going to run react app and start a shell session. Good? Now, what command should we use to print the current users name? Do you remember? I told you at the beginning of the linux section, that is who am I?
+
+So the app user, beautiful. Now let's look at something interesting. I'm going to get a long listing, these are the files in our application, now all these files as you can see are owned by the root user. And in this column, you can see the permissions of the root user. So the root user can write to any of these files or directories, but the current user running this session is the app user.
+
+So this user falls into the others group, that means the app user is not able to write to any of these files. In contrast, if we executed this application with the root user, a hacker could potentially rewrite something in our application. So we're done with users, next we're going to talk about defining entry points.
+
+
+
+Codes and Other Notes in this Discussion: 
+
+
+docker run -it alpine 
+
+addgroup app 
+
+adduser -S -G app app
+
+groups app 
+
+addgroup mosh && adduser -S -G mosh mosh 
+groups mosh 
+
+
+
+Dockerfile:
+
+FROM node:14.16.0-alpine3.13
+WORKDIR /app
+COPY . .
+RUN npm install 
+ENV API_URL=http://api.myapp.com/
+EXPOSE 3000
+RUN addgroup app && adduser -S -G app app 
+USER app  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Defining Entrypoints: 
+
+Alright, our Dockerfile is almost ready, now how do we start our application? Well, earlier you saw that. Here in the project directory, we can start the application by running npm start. So this is the command that we should execute when starting a container. So, let's start a container, docker, run, now we're not going to use the interactive mode, because we don't want to interact with this container.
+
+We're not going to run a shell session. We just want to start the application. So, we type the image name, now let's see if we execute this command up to this point. Our container started and then stopped, because we didn't specify a command or a program to execute. So this is where we're going to type npm start.
+
+Take a look. Alright, we got a permission error, look over here, permission denied. Can you tell why we're getting this error? Think about it for a few seconds, and I'll give you a hint. Look at the dockerfile.
+
+Here's the answer. In our dockerfile, we set the user at the end. So we executed all these previous instructions as the root user, but then we switched to a regular user with limited privileges. So, we should move these two lines on the top. So first, we set the user, then we create the working directory, copy files and so on.
+
+Now we have to rebuild our image and start a new container. So back in the terminal, let's stop this process by pressing control and c, good, now, docker build dash t, react app, period. Alright, our image is ready, so let's start a new container, alright, our web server started on port 3,000, but as I told you before, this is port 3,000 of the container, not local host. So if you go to this address, you're not going to be able to access the application. In the next section, I will show you how to map a port from the host to a port on the container, okay?
+
+Now, let's start this process, let's bring up the run command, now here's the problem, we don't want to have to specify this command every time we start the container. This is where we use the command instruction. So back to our Dockerfile, at the end, using the command instruction, we can supply a default command to be executed. So, npm start. Now, back to our terminal, once we rebuild the image, then we can start a container by simply running docker run react app, we don't have to specify the command here.
+
+Great. Just remember, because the command instruction is for supplying the default command, it doesn't make sense to have multiple command instructions in a docker file. If you have multiple command instructions, only the last one will take effect, okay? Be aware of that. Now you might be wondering what is the difference between the command instruction and run.
+
+Because with both these we can execute commands. Here's the difference, the run instruction is a build time instruction. So this is executed at the time of building the image. So when building the image, we're installing npm dependencies, and these dependencies are stored in the image. In contrast, the command instruction is a run time instruction.
+
+So it's executed when starting a container. Okay? Now, this command instruction has two forms. What you see here is called the shell form, we also have another form called execute form, which takes an array of strings. So, npm and start.
+
+What is the difference? Well, if you use this syntax, Docker will execute this command inside a separate shell, that is why it's called the shell form. Now, on Linux, that shell is slash bin slash shell, the original shell program, on Windows, is cmd or command prompt. Now the common best practice is to use the execute form, because with this we can execute this command directly and there's no need to spin up another shell process. Also, this makes it easier and faster to clean up resources when you stop containers.
+
+So always use the execute form. So, let's get rid of these, so here's our command instruction, now we also have another instruction called entry point which is very similar to command. So it has two forms, the shell form, or the execute form. So it takes an array of strings. Now, what is the difference?
+
+Well, we can always override the default command when starting a container. So, back to the terminal, when we run this container, we can supply another command. So, we can say echo hello, and this will override this command over here. So for the same reason, here we can run a shell session and of course we want to use the interactive mode. Now, in contrast, we cannot easily override the entry point when running a container.
+
+If you want to do that, we have to use the entry point option. Now a lot of people forget to use this, that's why it's a little bit harder to overwrite the entry point. So in practical terms, we often want to use entry point when we know for sure that this is the command or this is the program that should be executed whenever we start a container. There is no exception. In contrast, with the command instruction we have a bit more flexibility, we can always overwrite this, so we want to use this instruction for executing adhoc commands in a container.
+
+Now, which instruction you use is a matter of personal preference, with both these instructions we can supply a default command. Some people prefer the command instruction, other people prefer the entry point. I personally prefer the former, so I'm going to get rid of this, good, so our Dockerfile is in good shape, but if you have noticed, our builds are slow. We'll talk about optimizing them next.
+
+
+
+Codes and Other Notes in this Discussion: 
+
+docker run react-app npm start 
+
+
+
+Dockerfile:
+
+FROM node:14.16.0-alpine3.13
+RUN addgroup app && adduser -S -G app app 
+USER app  
+WORKDIR /app
+COPY . .
+RUN npm install 
+ENV API_URL=http://api.myapp.com/
+EXPOSE 3000
+CMD npm start 
+
+
+docker run react-app 
+
+
+#shell form 
+CMD npm start 
+
+#Exec form 
+CMD ["npm", "start"]
+
+
+ENTRYPOINT npm start 
+
+ENTRYPOINT ["npm", "start"]
+
+
+
+
+
+
+
+
+
+
+
+
+
+Speeding Up Builds: 
+
+
+
+You've probably noticed that our builds are fairly slow, every time we make a small change, we have to rebuild and wait almost half a minute. So let's see how we can optimize these builds. The first thing you need to understand here is the concept of layers in docker. An image is essentially a collection of layers. You can think of a layer as a small file system that only includes modified files.
+
+So when docker tries to build an image for us, it executes each of these instructions and creates a new layer. That layer only includes the files that were modified as a result of that instruction. So for our first instruction, docker is gonna take the node image and put it in a layer. Now more accurately, the node image itself is several layers, but let's not worry about that for now. Let's just imagine we have a single layer and this layer includes all the linux and node files.
+
+Then docker is going to execute the second instruction to add a group and a user. Once again, it's going to create a new layer because as you saw in the previous section, when we add a user or a group, something is written to the file system. So a couple of files are modified. So this layer will only include the modified files, okay? Similarly, Docker will execute all these other instructions and create several layers.
+
+Let's have a quick look at these layers. So here in the terminal we type Docker history and the name of our image, react app. Alright, let me move this window around so we can see things clearly. Okay, we're only going to look at these two columns, created by and size. In this column you can see the instruction that created a new layer, and in the size column you can see the size of that layer.
+
+Now we have to read this list from bottom to top. So, look over here, first we have this group of layers that come from node and linux. So earlier I told you that when we use the from instruction, that instruction is going to bring in several layers that belong to Linux and node, and then we're going to build on top of those layers, okay? Now look at our run instruction for adding a new user. That's the command that we typed earlier, right?
+
+Now look at the size of this layer, it's four kilobytes because only a couple of files are modified as a result of this command. Now look at how this instruction is executed. It's executed inside slash bin slash shell because we use this instruction in the shell form. In contrast, if we use the execute form, this command would be executed directly, okay? Next we set the current user, the size of this layer is zero, no files are changed, then we set the working directory, then we copy all the application files, and over here you can see the size of this layer is 1.6 megabytes.
+
+Then we run npm install, and once all these dependencies are installed, they are stored in this layer and the size of this layer is 178 megabytes. So an image is essentially a collection of these layers. So you understand what layers are. Now, docker has an optimization mechanism built into it. So next time we ask docker to build this image, it's going to look at the first instruction and see if the instruction is changed or not.
+
+If it's not changed, it's not going to rebuild this layer, it's going to reuse it from it's cache. That's the optimization I was talking about. Then docker is going to look at the second instruction, once again, nothing has changed here, so docker is going to reuse this layer from it's cache. In contrast, if we made a tiny change here, let's say if we changed app to app two, then docker had to rebuild this layer, okay? Now, look at this line, copy all these files, this is a special instruction because with this instruction, docker cannot tell if anything has changed or not.
+
+So it has to look at the content of files as well. And that means if we make a tiny change in our application, if we write one extra line of code, docker cannot reuse this layer from it's cache, it has to rebuild it. And this is where the problem happens, once the layer is rebuilt, all the following layers have to be rebuilt as well. So docker cannot reuse this layer from it's cache. It has to install all npm dependencies, and this is exactly where we have a bottleneck.
+
+We have to wait half a minute for all these dependencies to be installed. It doesn't make sense. So to optimize our build, we have to separate the installation of third party dependencies from copying our application files. How do we do that? Very easy.
+
+Instead of copying all the files in one go, first we want to copy the files needed for installing third party dependencies. Do you know which files I'm talking about? These two files, package dash lock dot json and package dot json. These are the only files that we need for running npm install, okay? So we're going to copy package star dot JSON, then we run npm install, and finally we copy all the application files.
+
+Now, with this new setup, if you haven't changed any of our application dependencies, Docker is going to reuse this layer from it's cache because package dot JSON is not modified, right? Similarly, Docker is not going to reinstall all npm dependencies because this instruction is not changed. If it changes to npm update, then yes, docker had to rebuild this layer, okay? But nothing has changed here, so docker can reuse it's cache. Then we're copying our application files and of course, this layer should always be rebuilt, and that's totally fine.
+
+So let's run a quick test. Back to the terminal, let's rebuild this image. Alright, now look over here. On this line you can see cache, because docker is reusing the layer cache for this instruction. The same is true for setting the working directory.
+
+Now this is the first time I'm building this Dockerfile, that's why this is a new layer that we have, this layer has to be built, and of course, dependencies have to be installed as well, so let's wait until this is done. Alright, the image is built, now let's go modify our application code and do another build. So, I'm going to go to this file, readme. Md and add a plus here, very simple. Now, let's do another build, alright, our build was super fast, because we didn't have to wait for the installation of third party dependencies.
+
+Look at this line, once again we are using layer caching. So here's what you need to take away from this lesson. To optimize your build, you should organize your docker file such that the instructions that don't change frequently should be on the top, and the instructions or files that change frequently should be down the bottom.
+
+
+
+
+Codes and Other Notes in this Discussion: 
+
+docker history react-app 
+
+
+Dockerfile:
+
+FROM node:14.16.0-alpine3.13
+RUN addgroup app && adduser -S -G app app 
+USER app  
+WORKDIR /app
+COPY package*.json .
+RUN npm install 
+COPY . .
+ENV API_URL=http://api.myapp.com/
+EXPOSE 3000
+CMD npm start 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Removing Images: 
+Let's talk about removing images. So first we run docker images, now in this list we have a bunch of images that have no name and no tag. These are what we call dangling images, meaning loose images. These are essentially layers that have no relationship with a tagged image. So as we were changing our docker file and rebuilding our image, docker was creating these layers and at some point, these layers lost their relationship with our react app image.
+
+So as you work with Docker, you see these dangling images popping up all the time. To get rid of them, we have to use the prune command. So we type Docker image, prune. It's asking for confirmation, yes, alright. Nothing was deleted in this case because we still have containers running an older react app image.
+
+Let's verify. So we run docker ps, currently we have no running containers, but you probably have a bunch of containers in the stopped state. So, we run docker ps dash a, that is short for all, so look, we have tons of containers that are currently stopped. So we can get rid of these containers as well. How?
+
+Very easy, docker container prune. So it's asking if you want to remove all stopped containers. Yes, good, so all these stopped containers are deleted and this frees up on this machine, 60 megabytes of space. Now, let's run docker image prune one more time. Yes, great.
+
+So all these dangling images are removed, now, if you run docker images, we only see the proper images we have created or pulled from Docker hop. Great. Now how do we remove one of those images? We run docker image, so all image management operations start with docker image. If we simply press enter here, you can see all these sub commands.
+
+So we can build an image, this is equivalent to running docker build. We can also see the history of an image, we can load an image, we can prune images and so on. Now in this list we also have remove for removing one or more images. So, let's bring up the list of images one more time, because here we need the name or the id of an image. So we can run docker image remove, we can either reference an image by it's name, for example we can remove react app, or we can reference using it's image id, d f three.
+
+And if you want to remove multiple images, we type them all here, separated by a space. Now in this demo, I want to delete hello docker image. Okay, let's verify it's gone, docker images, good.
+
+
+Codes and Other Notes in this Discussion: 
+
+docker images 
+
+docker image prune 
+
+
+docker ps -a 
+
+docker container prune 
+
+docker image rm react-app 
+
+docker image rm df3
+
+docker image rm hello-docker 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Tagging Images: 
+
+Alright, let's talk about tags. If you have noticed, whenever we build an image or pull it from Docker hub, by default Docker uses the latest tag. Now this latest tag is just a label, there is nothing special about it. So it doesn't necessarily mean this is the latest version of your image. If you don't tag your images properly, latest can point to an older image.
+
+I will show you that in a second. Also keep in mind that latest is totally fine for development, but you shouldn't use it in production. You don't want to put an image with the latest tag in your production or staging server because if something goes wrong, you cannot easily troubleshoot issues. Because you don't know what version you're really running in production. If you want to do a rollback or an upgrade, how can you tell what version you're running in production if it's always latest?
+
+So you should always use explicit tags to identify what version you're running in each environment, in your test environment, staging and production. For development, latest is totally fine. Now, in this lesson I'm going to show you how to tag your images properly, but before we get started, I want to do a clean build, so we start on a clean canvas. So, docker build dash t, react app, period. Good, so, let's look at our images, we have three images and all of them have the latest tag.
+
+Now how can we tag an image? Well, there are two ways. One way is to tag an image while building it. So, we type docker build dash t four tag, so far we have just typed the image name, but we can type a colon followed by a tag. Now what tag should we use?
+
+Well, this is where different teams have different preferences, some teams like code names, let's say you have a version called buster, and everyone in your team knows what buster version is all about, Then you can use it as a tag. Other teams prefer semantic versioning, like three point one point five. This approach is common amongst teams that don't release that often. Now teams that release frequently prefer build numbers, let's say build 76 or 77. Now quit often this is done automatically by continuous integration and deployment tool, so if you use a continuous integration or deployment tool in your organization, you can configure your tool to check out the latest code from your repository, build an image and automatically tag it with the current build number.
+
+Now, that's also the scope of this course. So let's go ahead and give this image a tag like version one, and build it. Alright, our build was blazing fast, let's look at the images one more time, alright, here we have an interesting situation. This react app image that we have has two tags, one and latest. So it's the same image with multiple tags.
+
+How do I know? Look at the image id, both these images have the same identifier. So an image can have multiple tags. Now, what if we made a mistake and what if we remove this tag? Well, we use the remove command, so docker image remove, and here we type the image name followed by the tag.
+
+Okay, the tag is gone, so let's look at the images, perfect, we only have the latest tag, so one way to tag an image is while building it. But what if you want to tag an image after? We use the tag command. So docker images tag, first we identify our source image, we can use the full image name and it's tag, or we can use an image id. Whatever you prefer.
+
+So we're going to get this image and apply a new tag to it. React app version one. I made a mistake because I spelled images as plural. So, that should be docker, image tag, react app, latest, we're going to give it a new tag. Good?
+
+Now let's verify that everything is in the right shape, perfect. Now, earlier I told you that the latest tag can get out of order. Let's see that in action. So, I'm going to go back to our project, and make a tiny change. In this readme file, I'm going to add a couple more pluses simulating a change in the applications code.
+
+Now we're going to build a new image. So, let's say docker build dash t, react app, let's say this is version two. Okay, great. Now, let's look at the images. So, we have two versions of this image, version two and version one.
+
+Now look at the latest tag, it's pointing to the first version, because both these tags are pointing to the same image, which is older, I built this image at the beginning of this lesson. So here is what you need to take away, the latest tag doesn't necessarily reference the latest image. You have to explicitly apply it to the latest image. So how do we do that? Pause the video and do this on your own.
+
+Here's how we do it. Docker image tag, we're going to identify our image, this time I'm going to use the image id, so we can type B06. We're going to give this image a new tag, react app colon latest. Okay, now let's look at the images again, good, so now the latest tag is pointing to version two of our image. Great.
+
+Next we're going to talk about sharing images.
+
+
+
+
+Codes and Other Notes in this Discussion:  
+
+docker build -t react-app:buster 
+
+docker build -t react-app:3.1.5
+
+docker build -t react-app:76
+
+
+docker image remove react-app:1
+
+
+docker image tag react-app:latest react-app:1
+
+
+docker image tag b06 react-app:latest 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sharing Images: 
+Let's see how we can share our images with others. So head over to hop.docker.com and create a new account. It's absolutely free and it's going to take only a few seconds. Now let me log in with my account, good. So on this page we can create a new repository, and this is similar to creating a github repository.
+
+So we can have a repository and in this repository we can have multiple images with different tags. So, let's create a new one, we're going to give it a name, I'm going to use the same name that I used for our image, now we can give it a description, we can make it public or private, if you have a free account you only get one private repository, but you can always upgrade to get additional private repositories. Now optionally, we can connect our account to our github account, so every time we do a push, Docker Hub automatically pulls the latest code and builds a new image. Now I'm not going to do that in this lesson, so let's go ahead and create, good. So here we have a repository and this is the name of our repository.
+
+So our username slash our image name. Now, to push our image to this repository, we have to give it this tag, code with Mosh or whatever your username is, slash react app. So back to the terminal, let's look at our images, let's say I want to publish the latest version of this image. So, docker, image, tag, we're going to tag this image, I'm going to use the image id, so B06, I'm going to give it a new tag, go with Mosh, slash, react app. Now if you don't specify a tag, docker will automatically use latest, we don't want to do that, we want to use an explicit tag.
+
+Okay, now, let's look at our images one more time, so now this image with this id has three tags. Here's the first tag, tag two, we also have the latest tag, but we also have code bin mosh slash react app with tag two. All these tags are pointing to the same image on my machine. Okay? So now we are ready to push this image.
+
+First we have to log in. So docker login, we use our credentials, good, I'm logged in, now we type docker push, and here we specify our image. So code with MOSH slash react app version two. Alright, now Docker is pushing each of the layers in our image. So the first time we push this image, this is going to take a little while, because one of our layers, the layer that includes all npm dependencies is fairly large.
+
+So once we push this image, our future pushes will be faster, assuming that we have not changed our application dependencies. So our image is pushed, now let's refresh this page. So in this repository, we have one tag that is tagged two, which is built for Linux. Great. Now back to our project, let's make a small change to this readme file, and do another push.
+
+Back to the terminal, first we need to build this image, so build dash t, react app, let's say version three, that was super fast, now, let's look at the images, this is our version three, now we want to give this image an extra tag that starts with code with Mosh, or our username. So, docker, image, tag, I'm going to tag react app version three with code with Mosh slash react app version three, good, so, let's say docker push, code with Mosh, react app version three. Alright, now look, some of these layers already exist, so this push is a lot faster than the previous push. Done. Now back on docker hub, let's refresh, now in this repository we have two text, beautiful.
+
+Alright, now that our image is on Docker Hub, we can put it on any machine that runs Docker. Just like pulling any other images from Docker Hub.
+
+
+
+Codes and Other Notes in this Discussion: 
+
+
+docker image tag b06 codewithmosh/react-app:2 
+
+
+docker login 
+
+docker push codewithmosh/react-app:2 
+
+
+docker build -t react-app:3 . 
+
+docker image tag react-app:3 codewithmosh/react-app:3
+
+docker push codewithmosh/react-app:3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Saving and Loading Images: 
+
+
+Alright, the last thing we're going to talk about in this section is saving and loading images. Let's say you have an image on this machine, and you want to put it on another machine but without going through docker hop. In this case, you can save that image as a compressed file, and load it on the other machine. So, let's run Docker image save, now for any of these commands, if you want to learn more about them, you can always add double hyphen help at the end. So here's the syntax, docker image save, we have to use one of these options, like o which is the short form or output which is the long form, here we specify the file to write to, and then we identify the image.
+
+So I'm going to say docker image save dash o, so I'm going to save this to a file in the current directory called react app dot tar, a tar file on linux is like a zip file on Windows, it's a compressed file. And then we specify our image. Let's say react app version three. Now, this is going to take a while, so I'll be right back. Alright, our image is saved, so here we have a tar file, we can double click it to uncompress it.
+
+Now let's see what we have here. Each of these folders represent a layer. Now if you're adventurous, we can go inside each of these layers and see what is really inside that layer. So each layer contains a JSON file and a tar file which contains all the files in that layer. So let's open this up, here we have an app folder, so that means this is the layer that represents our application code.
+
+You can go look at other layers, you will find a layer for Linux, you'll find a layer for node and so on. So we have the save command for saving an image into a file, we also have the load command, let's look at that real quick. So we type docker image load and then use one of those options. We can use I or input to specify the file name, and optionally we can use the quiet option to suppress the load output. So to demonstrate this, first I'm going to delete the image from this machine, and then load it using our image file.
+
+So, Docker, image, remove, react app version three, it's gone, let's look at the images, good, now technically we still have this image, because there is another tag pointing to this image. So let's remove that tag as well, docker image remove, in fact you know what, I'm going to use the image ID, that's easier. Good, now let's look at the images one more time, alright, perfect. That image is gone from this machine, now I'm going to load it using our image file. So, we type docker image load dash I react app dot tar.
+
+Alright, we can see this image is loaded, so let's verify it. And here we have react app with tag three. And this is the same image I did that we had earlier. So, that brings us to the end of this section, I know this was a long section, we had a lot of ground to cover, but now that you have a solid understanding of images and how to work with them, everything is going to go smoothly from the following sections. So, I'll see you in the next section.
+
+
+
+Codes and Other Notes in this Discussion: 
+
+
+docker image save --help 
+
+docker image save -o react-app.tar react-app:3 
+
+docker image load --help
+
+docker image load -i react-app.tar 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Summary: 
+Images
+
+Dockerfile instructions
+
+FROM # to specify the base image
+WORKDIR # to set the working directory
+COPY # to copy files/directories
+ADD # to copy files/directories
+RUN # to run commands
+ENV # to set environment variables
+EXPOSE # to document the port the container is listening on
+USER # to set the user running the app
+CMD # to set the default command/program
+ENTRYPOINT # to set the default command/program
+
+
+
+Image commands:
+
+docker build -t <name> .
+docker images
+docker image ls
+docker run -it <image> sh
+
+
+
+Starting and stopping containers:
+
+docker stop <containerID>
+docker start <containerID>
+
+
+
+Removing containers:
+
+docker container rm <containerID>
+docker rm <containerID>
+docker rm -f <containerID> # to force the removal
+docker container prune # to remove stopped containers
+
+
+
+
+Volumes:
+
+docker volume ls
+docker volume create app-data
+docker volume inspect app-data
+docker run -v app-data:/app/data <image>
+
+
+
+Copying files between the host and containers:
+
+docker cp <containerID>:/app/log.txt .
+docker cp secret.txt <containerID>:/app
+
+
+
+
+Sharing source code with containers:
+
+docker run -v $(pwd):/app <image>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Working With Containers: 
+
+Introduction: 
+
+Welcome back to another section of the Ultimate Docker course. In this section we're going to explore containers in more detail. We'll talk about starting and stopping containers, publishing ports, viewing container logs, executing commands in running containers, removing containers, persisting data using volumes, and sharing source code with containers so we don't have to rebuild our image every time we make a change in our code. This is a short and sweet section, so let's jump in and get started.
+
+In this Section: 
+
+Starting & stopping containers 
+Publishing ports 
+Viewing Container logs 
+Executing commands in containers 
+Removing containers 
+Persisting data using volumes 
+Sharing source code 
+
+
+
+
+
+Starting Containers: 
+
+Alright, we briefly talked about container commands throughout the course, so you're already familiar with many of them. In this section, we're going to review them one more time, but I'm also going to give you some extra tips along the way. For starters, let's look at our images. So I've cleaned up some of the images that I created in the previous section, now we only have react app with the latest tag. We also have Ubuntu and alpine which we're not going to use in this section.
+
+Now hopefully you completed the previous section, but if you didn't, I highly encourage you to download the zip file app attached to this lesson. In this zip file, we can find a react application as well as the docker file that we created in the previous section. Use that docker file to build an image, and now we are on the same page. Okay? Now, question for you, how can we see the running containers?
+
+Using docker what? Docker ps, short for processes. Because a container is just a process, but it's a special kind of process because it has it's own file system which is provided by the image. Okay, currently there are no running containers here, so I want to run a new container using the react app image. This is going to start a development web server, so I'll be right back.
+
+Okay, our web server is ready, now there's a problem, I cannot type any additional commands on the terminal window. If I press control and c to get out of this, our container stops. Let's verify that. So docker ps, look, no container is running. So let me show you a cool technique.
+
+Let's bring up the run command one more time, now this time we're going to use an option dash d that is short for detached. With this, we can run this container in the detached mode which means in the background. So, look, that's it. Now the terminal window is free and we can do whatever we want. Of course, the container is going to take a few seconds to start because that's the time we need for the web server to start, okay?
+
+So that's one option. Now, let's look at the running processes, so here we have one container, here's my container id, now if you look on the far right column which is not visible in my recording window, and I don't want to resize this window because the text is going to get small. In the last column you can see the names column. So docker automatically associates each container with a random name. So in the future when we want to reference a container, we can either use it's id or it's name.
+
+But we can also give our container a name when starting them. So, let's start another container in detached mode, this time we're going to use dash dash name to give it a name. I'm going to call this blue dash sky. It's easier to work with then a randomly generated name by docker. And we're going to use the react app image, good, so, let's look at the running containers, now we have two containers, and one of them is called blue sky.
+
+
+
+Codes and Other Notes in this Discussion: 
+
+docker ps 
+
+docker run -d react-app 
+
+docker run -d --name blue-sky react-app
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Viewing the Logs: 
+
+So now we have two containers running in the background, but there's a problem. We don't know what is going on inside these containers. What if something goes wrong? What if our server generates an error? That's where we need to use the log command.
+
+But first, let's bring up our running containers, so now we're going to look at the logs for this container. We type docker logs, and then the container id. Of course, on your machine, the container id is different. So whatever it is, just type the first few letters. Okay, so here we can see the output of our web server, this is exactly the same output that we saw when we started this container in the foreground.
+
+Now, this logs command has some additional options, so as I told you before, whenever you want to play with the docker command, always use dash dash help to learn about various options, so one of the options here that is useful is dash f or follow, this is useful if your container is continuously producing output. So instead of running docker logs, some container id multiple times, you can just use dash f to follow the log. Then whatever is written to the log, you can see it in real time on the terminal. Of course you have to press control and c to get out of that. Let's look at the other options.
+
+Another option is dash n or tail, and with this we can specify the number of lines to show. This is useful if we have a really long log. So docker logs, what was that container ID? 655. I'm going to use dash n five to look at the last five lines.
+
+That's it. Pretty useful. Now what if you want to see time stamps? We can use dash t. So, dash t, and now we see the time stamp in front of each message.
+
+So if you encounter any issues when running your applications inside Docker, the first thing I want you to look at is the logs. Next we're going to talk about publishing parts.
+
+
+
+Codes and Other Notes in this Discussion: 
+
+docker logs 655
+
+docker logs --help
+
+docker logs -f 123
+
+docker logs -n 5 655 
+
+docker logs -n 5 -t 655 
+
+
+
+
+
+
+
+
+
+
+
+Publishing Ports: 
+
+So currently we have two containers running our react application. But if you go to local host port 3,000, we cannot access this application. Can you explain why? Because as I told you earlier, port 3,000 is published on the container, not on the host. So on the same machine we have multiple containers, each of these containers is listening on port 3,000, but the host itself is not listening on this port.
+
+So this port is currently closed, there is no way to send traffic into local host at this port. This is where we need to publish a port. So first of all, let's look at our running containers, Now here we have a column called ports, let me resize the window, it's going to look a little bit ugly, but bear with me. So we have wrapping here, here's the ports column. In this column, you can see the ports and their mapping.
+
+As you can see, both these containers are listening to port 3,000. Now I'm going to start a new container and publish a port at the same time. So just like before we run docker run dash d for detached, here we're going to use another option called p that is for port, we're going to publish a port on the host, let's say port 3,000 to port 3,000 of the container. And of course, these numbers don't have to be the same. So I can publish port 80 of the host to port 3,000 of this container.
+
+Now I can give this container a name so we can identify it, I'm going to call this c one. Now, what image? React app. Good? So this is going to take a few seconds until our web server is ready.
+
+Now if you go to local host, port 80, we can see our react application, beautiful. Now, let's look at the running containers one more time. Now look at the port mapping for our c1 container. You can see port 80 of the host is mapped to port 3,000 of the container. We do not have this notation for other containers.
+
+
+
+Codes and Other Notes in this Discussion: 
+
+docker run -d -p 80:3000 --name c1 react-app 
+
+
+
+
+
+
+
+
+
+
+Executing Commands in Running Containers: 
+
+
+So you'll learn that when you start a container, it executes the default command that we specified in our docker file. Now what if you want to execute a command in a running container later on? Let's say you want to troubleshoot something and you want to look at the file system of that container. Let me show you how to do that. So we have docker exec or execute, and with this we can execute a command in a running container.
+
+Now some people say what is the difference between docker exec and docker run? With docker run, we start a new container and run a command, whereas with docker exec, we execute a command in a running container. Okay? Now for this I'm going to use my c one container, this is the benefit of using friendly names. Now what do we want to execute here?
+
+We can type any commands, any operating system commands. So this can be linux commands or windows commands, let's run ls here, now we can see the content of our app directory. But why the app directory? Can you explain why? Here's the answer.
+
+Because earlier in our docker file, we set the working directory to the app directory. So, when we run ls, we see the content of this directory, okay? Now using the same command, we can open up a shell session. So we can say Docker exec, we want to do this in the interactive mode so we can interact with it, our container is c one, and the shell we want to run is sh. Good, so now we have a shell session inside this container, we can run ls, we can run print working directory, we can do anything we want.
+
+Now, when we are done, we type exit, and this doesn't impact the state of our container. Our container is still running, let's verify it. Docker p s, so our c1 container is the first item you see here. So using the exit command, we can execute any commands in a running container.
+
+
+
+
+Codes and Other Notes in this Discussion: 
+
+docker exec c1 ls 
+
+docker exec -it c1 sh 
+
+
+
+
+
+
+
+
+
+
+
+
+Stopping and Starting Containers: 
+
+Earlier in the course, I told you that a container is like a lightweight virtual machine, so it can be stopped and then restarted. Let's see this in action. So I'm going to stop our c1 container, good, now let's verify that it's not running, it's not running anymore, great. So now if you go back to our browser and refresh this page, look, our application is not available. Because that container that was serving this application is no longer running.
+
+It stopped. So we need to bring it back up. And that is very easy. We just type docker start c1. Now what is the difference between docker start and docker run?
+
+With docker run, we start a new container, whereas with docker start, we start a stopped container, okay? Next we're gonna talk about removing containers.
+
+
+
+Codes and Other Notes in this Discussion: 
+
+docker stop c1 
+
+docker start c1 
+
+
+
+
+
+
+
+
+
+
+Removing Containers:
+
+There are two ways to remove a container. We can type docker container remove, and then specify the name, or we can use the shortcut, docker remove. I prefer this. So, let's go with that, we get an error saying you cannot remove a running container. So here we have two options, One option is to stop the container and then remove it.
+
+The other option is to use the force option. So if you want to force the removal, we bring up the last command and type dash f here. Okay, that container is gone, so let's look at the running containers, it's definitely not here. Now how can we see the stock containers? Do you remember?
+
+Docker ps dash auth. Now even though we have a bunch of containers here, that container c one is not in this list. Now let me show you a cool trick. Let's say you have so many containers here and you only want to look at c one. Here we can use piping.
+
+We talked about piping linux commands earlier in the course. So we can say docker ps dash a, here we type a pipe, and then use grep to filter by c1. Of course, this only works on linux. So, let's go with that, look, we don't have a stub container called c1. Here we also have the prune command, so docker container prune, and with this we can get rid of all the stub containers in one go.
+
+Take a look. Good. So, let's look at the running containers one more time, two containers here and all containers, two containers. Great. Next we're going to talk about persistent data using volumes.
+
+
+
+Codes and Other Notes in this Discussion: 
+
+docker container rm c1 
+
+docker rm c1 
+
+docker rm -f c1 
+
+docker ps -a 
+
+docker ps -a | grep c1 
+
+docker container prune 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Containers File System: 
+
+Earlier in the course, I told you that each container has it's own file system that is invisible to other containers. So let's do a quick experiment together. First, we look at the running containers, so on this machine I'm running two containers, I want you to run two containers as well. So if you are not, start two containers from the react app image. Then, I want you to start a shell session on the first container, and write something to a file in the application directory.
+
+Then start a new shell session on the second container and see if that file is there or not. So pause the video and work on this for a minute. Alright, here's my solution. We're going to run docker exec in the interactive mode, the container ID is 655 and we're going to run shell. Now here in the app directory, I'm going to echo data to data dot txt, then I'm going to terminate this session and start a new shell session on the second container, so six e b.
+
+Good? Now, I'm going to list all the files and I want to filter using grab to find all files that have data in their name. Nothing. So data is not here because each container has its own file system that is invisible to other containers and that means if we delete this container, it's file system will also go with it and we'll lose our data. So we should never store our data in a container's file system.
+
+That's what volumes are for, we'll talk about them next.
+
+
+
+Codes and Other Notes in this Discussion: 
+
+docker exec -it 655 sh 
+
+echo data > data.txt 
+
+
+docker exec -it 6eb sh 
+
+ls | grep data
+
+
+
+
+
+
+
+
+
+
+
+
+Persisting Data Using Volumes: 
+
+Let's talk about volumes. A volume is a storage outside of containers. It can be a directory on the host or somewhere in the cloud. So let's see how we can work with volumes. We have this command, docker volume, that has a bunch of sub commands, so we can create volumes, we can inspect them, we can list them, we can also prune and remove them.
+
+So let's create a new volume called app data, and of course we can call it anything, it doesn't really matter. Now let's inspect this volume, so, docker volume inspect app data. Now here we have a bunch of properties, we can see when this volume was created, we can see the driver which is local by default, that means this is a directory on the host. We also have drivers for creating volumes in the cloud, so if you use a cloud platform, you need to do your own research and find a driver for creating a volume in that cloud platform, okay? Now look at mount point, this is where that directory is created on the host.
+
+So this is a linux path, if you're on Windows, you would probably see something like c drive backslash program files, whatever. Now a note for my Mac users, earlier in the course I told you that Docker on Mac runs inside a lightweight Linux virtual machine. So this path that you see here is a path inside that virtual machine, it doesn't exist on your Mac. So if you try to go to this directory, you're not going to find anything, okay? So now we have a volume, let's see how we can start a container and give it this volume for persisting data.
+
+So, docker run, we're going to run it in detached mode, I'm going to map let's say port 4,000 of the host to port 3,000 of the container. Now we're going to use a new option, dash v for volume, we're going to map app data to a directory in the file system of the container. So here we type a colon followed by an absolute path in the file system of the container. So we can go to slash app slash data. Now we don't have to explicitly create this volume before running this command, so if I type a new volume here, Docker will automatically create it.
+
+The same is true for this directory, currently we don't have a data directory inside our app directory, so Docker will automatically create this, But there's a problem with this, we'll talk about it in a second. So we give it a volume, and then the image, react app. Good? So here's our container id, let's start a shell session, so Docker exec interactive, 7.16 shell. Good, now, let's go to the data directory, and write something to a file.
+
+So data to data dot txt. We get a permission arrow, can you explain why this is happening? I want you to pause the video and think about it for a few seconds. Here's the reason. Let's go out of this directory, and get a long listing.
+
+So, here's our data directory, now look at the owner of this directory, it's the root user. And over here, as we can see, the owner is the only user that has right permission. So the app user which is the user that runs our app belongs to the others group, and in this group we don't have a write permission. The reason we're facing this issue is because we let docker automatically create this directory for us. So to prevent this from happening, we have to go to our Dockerfile, so back to our Dockerfile, after we create the app directory, we're going to run mkdir data.
+
+We're going to create this directory using the app user that we set earlier in this file. With this, this directory will be owned by this user and it will automatically have the right permission. But now we have to rebuild our image because we have modified our docker file. So, let's get out of this, so Docker build dash t, react app, period. Okay, our build was super fast, great.
+
+So let's start a new container. Docker, run dash t, this time I'm going to use a different port mapping, let's say port 5,000 of the host to 3,000 of the container. And for volume, we're going to map app data to slash app slash data. But this time, the data directory already exists inside the file system of this container, and the app user owns this directory, okay? Now we give it our image, which is react app.
+
+Good, now let's run a shell session inside this container. So docker exec interactive double zero seven shell. Now let's go to the data directory and write something over here. Perfect. Now here's the beauty of volumes, if I delete this container, this file will still exist.
+
+Because this directory is stored outside of this container, it's actually a directory on the host. Let's see that in action. So, I'm going to exit and remove this container. So remove dash force, we have to force it because this container is still running. 007.
+
+That's gone, Now let's start a new container with the same volume mapping. So this is a brand new container, now we're going to run a shell session here, so docker exec interactive e one c shell. Let's go to the data directory, and list, look, our data file is here, beautiful. So volumes are the right way to persist data in Dockerized applications because they have different lifecycles from containers. If we delete a container, the associated volume is not deleted, it still exists.
+
+Also, we can share a volume amongst multiple containers.
+
+
+
+
+Codes and Other Notes in this Discussion: 
+
+docker volume 
+
+docker volume create app-data 
+
+docker volume inspect app-data 
+
+docker run -d -p 4000:3000 -v app-data:/app/data react-app
+
+
+
+Dockerfile:
+
+FROM node:14.16.0-alpine3.13
+RUN addgroup app && adduser -S -G app app 
+USER app  
+WORKDIR /app
+RUN mkdir data 
+COPY package*.json .
+RUN npm install 
+COPY . .
+ENV API_URL=http://api.myapp.com/
+EXPOSE 3000
+CMD ["npm", "start"] 
+
+
+
+docker run -d -p 5000:3000 -v app-data:/app/data react-app
+
+
+docker exec -it 007 sh 
+
+
+
+
+
+
+
+
+
+
+
+
+Copying Files between the Host and Containers: 
+Sometimes we need to copy files between the host and a container. For example, let's say we have this log file in our container, and we want to bring it to the host and analyze it. So let's look at the running containers, alright, I'm going to go to this first container, and create a log file in the application directory. Then I'm going to copy that file from the container to the host. So, let's run docker exec interactive shell, now here in the app directory, I'm going to echo hello to log dot txt, so we have this log file inside the app directory, inside the container, and we want to copy it to the host.
+
+Let me show you how to do this. First, let's get out of here, now docker has a copy command for this, here we need to specify a source and a destination. In this case, our source is the container, Now here we add a colon and then type the full path to a file or directory. So we're going to go to our app directory and copy log dot txt to where we use a period to reference the current directory in the host, which is our project directory. Okay, now let's list the files, so here's our log file.
+
+Beautiful. Now we can also copy a file from the host to a container. So let's create a secret file here and copy it to the container. So echo hello to secret dot txt. And of course, this only works on Linux to the best of my knowledge, if you're on Windows, you can just create a file using your favorite text editor, okay?
+
+Now we have a file in our project directory in the host, and this file is not part of our version control system, it's not part of our git repository. So we want to manually copy this file into the container. So I'm going to copy the container name one more time, so one more time, Docker, copy, now this time the source is secret dot txt, and the destination is the container followed by a colon and the path, slash app. Done. Now let's run a shell session and list all the files.
+
+So here's our secret file inside the container's file system.
+
+
+
+Codes and Other Notes in this Discussion: 
+
+docker cp e1c9043ea8ce:/app/log.txt . 
+
+docker cp secret.txt e1c9043ea8ce:/app
+
+
+
+
+
+
+
+
+
+
+
+
+Sharing the Source Code with a Container: 
+
+So we have this react application available at local host port 5,000, now let's see how we can publish our application changes. So back to v s go, we're going to go to the public directory and open index dot html. Here I'm going to update the title of this app to dockerized react app. This title is what we see in the browser window. So let's save the changes, now back in the browser, if we refresh, we don't see anything.
+
+We still see the old title. So what should we do here? Well, for production machines, we should always build a new image, tag it properly, and then deploy it. We'll talk about that later when we get to the deployment section. But what about development machines?
+
+We don't want to rebuild the image every time we make a tiny change in our code. That's just too time consuming. Now you might say, what about copying? Well, that's a pain in the butt as well. We don't want to manually copy files from our development machine into a container every time we change our code.
+
+So let me show you a cool trick. We can create a mapping or a binding between a directory on the host and a directory inside the container. So this way, any changes we make to any files in this directory are immediately visible inside the container. So back to the terminal, we're going to start a new container. Docker run dash t, this time I'm going to use a different port so we can distinguish it.
+
+We're going to map this port to port 3,000. Now earlier we used a volume mapping, so we mapped the app data volume to slash app slash data directory inside the container. Now using the same syntax, we can map a directory on the host to a directory inside the container. So instead of using a named volume, which is a directory that docker manages, we're going to use the current directory, the directory that holds our application. So we don't want to type the full path here, this is where we use the p w d command, print working directory.
+
+Now if we execute this command as is, docker thinks this is a named volume, we don't want that, we want a full path. So we're going to wrap this with a dollar sign and put it in parenthesis. Now when we execute this command, this part of the command will be evaluated first and the result will be a full path to the current working directory. Then we're going to map this to not the data directory, we're going to map it to the app directory inside the container. Okay?
+
+Now what about a named volume? Well we can still add another option and use a named volume here if you want to, but this react application doesn't really store anything on the disk, it doesn't have a database, it's just a basic front end application. So we don't need a named volume here. Now, let's add the image, good, so here's the container id, let's look at the logs, this time I'm going to use the follow option so we can see the changes as they come up. Okay, we're waiting for the web server to start, so I'll be right back.
+
+Alright, our web server is ready, so let's go to local host, port five thousand and one. Alright, we can certainly see the updated title, now let's make one more change to the applications code. So I'm going to add an exclamation mark at the end, save the changes, now back in the browser, I didn't even have to refresh. Look, we've got the exclamation mark here. Because in react we have this feature called hot reloading, so whenever we change any of our files, our application gets automatically reloaded in the browser, okay.
+
+So to share our source code with the container, once again we use the volume option to map the project directory to a directory in the container's file system. Now you might say, but Mosh, running applications with docker is a pain in the ass. We have to remember all these options and type them every time we want to run an application. No No, you don't. In the next section, we're going to talk about docker compose, and you will see how easy it is to bring up an application with multiple components.
+
+I had to cover all these commands and options so when we get to the next section, you know exactly how docker compose works under the hood. So, I will see you in the next section.
+
+
+
+
+Codes and Other Notes in this Discussion: 
+
+docker run -d -p 5001:3000 -v $(pwd):/app react-app
+
+
+
+
+
+
+
+
+
+
+
+
+Summary:
+
+Containers
+
+Running containers:
+
+docker run <image>
+docker run -d <image> # run in the background
+docker run —name <name> <image> # to give a custom name
+docker run —p 3000:3000 <image> # to publish a port HOST:CONTAINER
+
+
+
+Listing containers:
+
+docker ps # to list running containers
+docker ps -a # to list all containers
+
+
+
+Viewing the logs:
+
+docker logs <containerID>
+docker logs -f <containerID> # to follow the log
+docker logs —t <containerID> # to add timestamps
+docker logs —n 10 <containerID> # to view the last 10 lines
+
+
+
+Executing commands in running containers:
+
+docker exec <containerID> <cmd>
+docker exec -it <containerID> sh # to start a shell 
+
+
+
+
+Starting and stopping containers:
+
+docker stop <containerID>
+docker start <containerID>
+
+
+
+
+
+Removing containers:
+
+docker container rm <containerID>
+docker rm <containerID>
+docker rm -f <containerID> # to force the removal
+docker container prune # to remove stopped containers
+
+
+
+
+Volumes:
+
+docker volume ls
+docker volume create app-data
+docker volume inspect app-data
+docker run -v app-data:/app/data <image>
+
+
+
+
+Copying files between the host and containers:
+
+docker cp <containerID>:/app/log.txt .
+docker cp secret.txt <containerID>:/app
+
+
+
+Sharing source code with containers:
+
+docker run -v $(pwd):/app <image>

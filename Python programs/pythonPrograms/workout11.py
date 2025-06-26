@@ -1,26 +1,23 @@
-
 import os
-def find_missing_ids(directory='.\LeetCodeSolutions', max_id=1247):
-    missing_ids = []
-    file_list = [False] * (max_id + 1)  # Initialize a list to track existing IDs
-    print("file_list:", len(file_list))
-    print(file_list[0], file_list[-1])
-    for filename in os.listdir(directory):
-        if '.py' in filename or '.sql' in filename or '.md' in filename or '.sh' in filename:
-            if 'workout' in filename or 'txt' in filename:
-                continue
-            # print("filename:", filename)
-            match_id = filename.split('.')[0]
-            file_list[int(match_id)] = True
+import shutil
 
-    for i, value in enumerate(file_list):
-        if value == False:
-            missing_ids.append(i)
-    return missing_ids
+companies = ['amazon', 'google', 'microsoft', 'meta', 'apple','walmart', 'turing', 'facebook', 'tesla', 'netflix', 'adobe', 'nvidia', 'ibm', 'oracle', 'salesforce', 'twitter', 'snapchat', 'spotify']
+current_dir = os.getcwd()
+# print(current_dir)
+files = [f for f in os.listdir(current_dir) if os.path.isfile(f)]
 
+for file_name in files:
+    for company in companies:
+        if company.lower() in file_name.lower():
+            dest_folder = company.capitalize()
+            dest_path = os.path.join(current_dir, dest_folder)
+            
+            # Create destination folder only if it doesn't exist
+            if not os.path.exists(dest_path):
+                os.mkdir(dest_path)
+                print(f"Created folder '{dest_folder}'.")
 
-# Run the function in your directory
-print(find_missing_ids())
-
-
-
+            shutil.copy2(file_name, dest_path)
+            os.remove(file_name)
+            print(f"Moved and deleted '{file_name}' to '{dest_folder}' folder.")
+            break
