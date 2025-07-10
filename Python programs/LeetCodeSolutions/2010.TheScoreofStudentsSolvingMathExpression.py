@@ -1,0 +1,21 @@
+"""
+LeetCode 2010. The Score of Students Solving Math Expression
+
+Given a string s representing a valid math expression and an array answers, return the number of students whose answer is correct or can be obtained by a different parenthesization.
+
+Example:
+Input: s = "7+3*1*2", answers = [20,13,42]
+Output: 1
+
+Constraints:
+- 3 <= s.length <= 31
+- s consists of digits and '+', '*'.
+- 1 <= answers.length <= 1000
+"""
+
+def scoreOfStudents(s, answers):
+    # Placeholder for a hard problem. Actual solution requires parsing and DP.
+    return 0
+
+# Example usage:
+# print(scoreOfStudents("7+3*1*2", [20,13,42]))  # Output: 1

@@ -1,0 +1,239 @@
+
+SOLID Principles: Definition, Why, and Deep Dive with Python
+
+SOLID is a set of five design principles coined by Robert C. Martin to guide object-oriented development. They ensure your code is modular, maintainable, and easy to evolve.
+
+1. What Is SOLID?  
+   SOLID stands for:  
+   - Single Responsibility Principle (SRP)  
+   - Open/Closed Principle (OCP)  
+   - Liskov Substitution Principle (LSP)  
+   - Interface Segregation Principle (ISP)  
+   - Dependency Inversion Principle (DIP)  
+
+2. Why We Need SOLID  
+   - Manage Complexity: Breaks monolithic classes into focused components.  
+   - Reduce Coupling: Changes ripple less when responsibilities are isolated.  
+   - Boost Testability: Small, predictable units are easier to mock and verify.  
+   - Facilitate Extension: New features plug in without rewriting existing code.
+
+3. Why It’s an Industry Best Practice  
+   - Proven at Scale: Adopted in enterprise codebases at Microsoft, Amazon, Google.  
+   - Language-Agnostic: Though rooted in OOP, principles apply across paradigms.  
+   - Tooling Support: Linters and architecture review tools surface SOLID violations.  
+   - Onboarding & Maintenance: New developers grasp small, single-purpose modules faster; regressions drop.
+
+
+
+S – Single Responsibility Principle (SRP)  
+“A class should have one—and only one—reason to change.”
+
+ Violation Example  
+'''python
+class Order:
+    def __init__(self, items):
+        self.items = items
+
+    def calculate_total(self):
+        return sum(i.price for i in self.items)
+
+    def save_to_db(self, db_conn):
+        db_conn.insert(self)
+
+    def to_json(self):
+        import json
+        return json.dumps({"total": self.calculate_total()})
+'''
+*Problems*: One class handles business logic, persistence, and serialization.
+
+SRP-Compliant Refactor  
+'''python
+class OrderCalculator:
+    def calculate(self, items):
+        return sum(i.price for i in items)
+
+class OrderRepository:
+    def __init__(self, db_conn): self.db = db_conn
+    def save(self, order): self.db.insert(order)
+
+class OrderSerializer:
+    def to_json(self, order):
+        import json
+        return json.dumps({"total": order.total})
+
+# Usage
+calculator  = OrderCalculator()
+repository  = OrderRepository(db_conn)
+serializer  = OrderSerializer()
+
+total = calculator.calculate(items)
+order = Order(items, total)
+repository.save(order)
+print(serializer.to_json(order))
+'''
+
+
+
+O – Open/Closed Principle (OCP)  
+“Software entities should be open for extension, but closed for modification.”
+
+ Violation Example  
+'''python
+class Discount:
+    def apply(self, amount, kind):
+        if kind == "summer":   return amount * 0.10
+        if kind == "winter":   return amount * 0.20
+        # New discount? Edit here.
+'''
+
+OCP-Compliant Refactor  
+'''python
+from abc import ABC, abstractmethod
+
+class DiscountStrategy(ABC):
+    @abstractmethod
+    def apply(self, amount): pass
+
+class SummerDiscount(DiscountStrategy):
+    def apply(self, amount): return amount * 0.10
+
+class WinterDiscount(DiscountStrategy):
+    def apply(self, amount): return amount * 0.20
+
+class Discount:
+    def __init__(self, strategy: DiscountStrategy):
+        self.strategy = strategy
+
+    def apply(self, amount):
+        return self.strategy.apply(amount)
+
+# Extend by adding a new class—no existing code changes
+'''
+
+
+
+L – Liskov Substitution Principle (LSP)  
+“Subtypes must be substitutable for their base types without altering correctness.”
+
+ Violation Example  
+'''python
+class Bird:
+    def fly(self): pass
+
+class Ostrich(Bird):
+    def fly(self):
+        raise NotImplementedError("Ostriches can’t fly")
+'''
+*Client code expecting 'fly()' breaks.*
+
+ LSP-Compliant Design  
+'''python
+from abc import ABC, abstractmethod
+
+class Animal: pass
+
+class Flyer(ABC):
+    @abstractmethod
+    def fly(self): pass
+
+class Bird(Animal): pass
+
+class Sparrow(Bird, Flyer):
+    def fly(self): print("Sparrow flies")
+
+class Ostrich(Bird):
+    def run(self): print("Ostrich runs")
+'''
+*Code that uses 'Flyer' never sees 'Ostrich' where 'fly()' is required.*
+
+
+
+
+
+I – Interface Segregation Principle (ISP)  
+“Clients should not be forced to depend on methods they do not use.”
+
+ Violation Example  
+'''python
+class Worker(ABC):
+    @abstractmethod
+    def code(self): pass
+    @abstractmethod
+    def test(self): pass
+    @abstractmethod
+    def deploy(self): pass
+
+class Intern(Worker):
+    def code(self): pass
+    def test(self): pass
+    def deploy(self):  # Irrelevant
+        raise NotImplementedError
+'''
+
+ISP-Compliant Refactor  
+'''python
+class Coder(ABC):
+    @abstractmethod
+    def code(self): pass
+
+class Tester(ABC):
+    @abstractmethod
+    def test(self): pass
+
+class Deployer(ABC):
+    @abstractmethod
+    def deploy(self): pass
+
+class JuniorDev(Coder, Tester):
+    def code(self): pass
+    def test(self): pass
+
+class DevOps(Deployer):
+    def deploy(self): pass
+'''
+
+
+
+D – Dependency Inversion Principle (DIP)  
+“High-level modules should not depend on low-level modules. Both should depend on abstractions.”
+
+ Violation Example  
+'''python
+class MySQLClient:
+    def query(self, sql): pass
+
+class UserService:
+    def __init__(self):
+        self.db = MySQLClient()   # Tight coupling
+
+    def get_user(self, uid):
+        return self.db.query(f"SELECT * FROM users WHERE id={uid}")
+'''
+
+ DIP-Compliant Refactor  
+'''python
+class DBClient(ABC):
+    @abstractmethod
+    def query(self, sql): pass
+
+class MySQLClient(DBClient):
+    def query(self, sql): pass
+
+class SQLiteClient(DBClient):
+    def query(self, sql): pass
+
+class UserService:
+    def __init__(self, db_client: DBClient):
+        self.db = db_client
+
+    def get_user(self, uid):
+        return self.db.query(f"SELECT * FROM users WHERE id={uid}")
+
+# Compose at application setup
+db = SQLiteClient()
+service = UserService(db)
+'''
+
+
+
+Takeaway: By internalizing SOLID, your Python code becomes modular, adaptable, and testable. Which principle will you tackle first in your next refactoring?

@@ -21384,11 +21384,9 @@ These operations are typically slow and CPU-heavy, and should not block the requ
 🔄 Real-World Scenario
 Let’s say a user uploads a video to your app.  
 ❌ If the backend processes the video in the same request cycle, the user experiences long wait times.  
+
 ✅ Instead, we send the video to a background worker, and respond immediately:  
-
 “We’re processing your video. You’ll be notified when it’s ready.”
-
-
 
 
 🧠 Why Offload Background Tasks?
@@ -21428,7 +21426,6 @@ Website: [https://docs.celeryq.dev](https://docs.celeryq.dev)
 4. Django remains responsive to other users.
 
 
-
 🕒 Bonus: Task Scheduling
 Celery can run periodic (cron-like) jobs:
 - Run cleanup every day at midnight
@@ -21440,7 +21437,6 @@ This is done using Celery Beat (a scheduler that kicks off tasks based on a defi
 
 
 
-
 Codes and Other Notes in this Discussion: 
 
 Long-Running Tasks:
@@ -21448,8 +21444,6 @@ Processing images and videos
 Generating reports 
 Sending emails
 Running machine learning models 
-
-
 
 
 
@@ -21474,10 +21468,8 @@ Running machine learning models
 
 Message Brokers:
 ----------------
-
 📌 Understanding Message Brokers in Celery
 In Celery-based architecture, tasks are sent to a queue by the main application and picked up by Celery workers for background execution. The message broker serves as the middleman between the application and the workers.
-
 
 
 📌 1. What Is a Message Broker?
@@ -21489,9 +21481,7 @@ A message broker is software that:
 Think of it like a pipe that holds tasks and delivers them to available workers in order.
 
 
-
 📌 2. Real-World Analogy
-
 In English, the word "broker" means a middleman. For example:
 - If you want insurance, instead of contacting every company yourself, you talk to an insurance broker.
 - The broker connects you with the best option based on your needs.
@@ -21500,10 +21490,9 @@ In the same way, a message broker connects sender and receiver systems — even 
 
 
 
-📌 3. Message Flow Architecture
+📌 3. Message Flow Architecture:
 
 [Django App] ── Send Task ──▶ [Message Broker (Queue)] ──▶ [Celery Worker]
-
 
 - The Django app creates a task and sends it to the message broker.
 - The broker queues the task for the next available Celery worker.
@@ -21545,8 +21534,6 @@ RabbitMQ(real, enterprise-grade broker)
 
 
 
-
-
 ✅ Summary
 
 ✔ A message broker is essential for offloading tasks from Django to Celery workers.  
@@ -21574,13 +21561,11 @@ Installing Redis:
 To enable background task processing with Celery, we need a message broker, and in this course we’ll be using Redis. The fastest and most convenient way to install Redis locally is via Docker, a lightweight containerization platform.
 
 
-
 📌 1. What Is Redis?
 - Redis is an in-memory data store that can be used as:
   - A database
   - A cache
   - A message broker for Celery tasks
-
 
 
 
@@ -21595,12 +21580,9 @@ To enable background task processing with Celery, we need a message broker, and 
 
 
 
-
 📌 3. Running Redis in Detached Mode
-
 Open your terminal and run:
 docker run -d -p 6379:6379 redis
-
 
 🔍 Command Breakdown:
 | Part               | Description                                      |
@@ -21614,13 +21596,9 @@ docker run -d -p 6379:6379 redis
 
 
 
-
-
 📌 4. Verifying the Redis Container
-
 To confirm Redis is running:
 docker ps
-
 
 You should see output similar to:
 CONTAINER ID   IMAGE     PORTS                    STATUS
@@ -21632,17 +21610,11 @@ CONTAINER ID   IMAGE     PORTS                    STATUS
 
 
 
-
-
 📌 5. Installing the Redis Python Package
-
 For Django to communicate with Redis, install the 'redis' Python client in your Pipenv environment:
 pipenv install redis
 
-
 ✔ This will allow libraries like Celery to connect to Redis via Python.
-
-
 
 📌 Visual Summary:
 
@@ -21656,8 +21628,6 @@ Redis now acts as a message queue that will later be consumed by Celery workers.
 
 
 
-
-
 Code and Other Notes in this Discussion: 
 
 docker run -d -p 6379:6379 redis 
@@ -21665,7 +21635,6 @@ docker run -d -p 6379:6379 redis
 docker ps
 
 pipenv install redis 
-
 
 
 
@@ -21686,21 +21655,10 @@ pipenv install redis
 
 
 
-
-
-
-
-
-
-
-
-
-
 Celery and Windows:
 -------------------
 📌 Using Celery on Windows with WSL
 Celery no longer supports Windows natively since version 4. This means you cannot run Celery workers directly on a standard Windows environment.
-
 
 
 🧭 Why Celery Doesn’t Work on Windows
@@ -21712,7 +21670,7 @@ Celery no longer supports Windows natively since version 4. This means you canno
 🖥️ Solution: Windows Subsystem for Linux (WSL)
 ➤ What is WSL?
 - WSL stands for Windows Subsystem for Linux
-- It allows you to run a complete Linux distribution alongside your Windows OS—no need for dual boot or full virtualization.
+- It allows you to run a complete Linux distribution alongside your Windows OS —no need for dual boot or full virtualization.
 - Provides access to a separate Linux file system, Bash shell, and package manager ('apt', 'pip', etc.)
 
 💡 Think of it as a lightweight Ubuntu shell running side-by-side with Windows apps.
@@ -21726,7 +21684,6 @@ Celery no longer supports Windows natively since version 4. This means you canno
 | Separate environment       | Doesn’t interfere with your Windows system       |
 | Access to Linux utilities  | Use Bash, 'apt', 'systemd', etc.                 |
 | Persistent environment     | Installed packages stay even after reboot        |
-
 
 
 
@@ -21753,7 +21710,6 @@ Windows (host)
 pipenv shell
 celery -A storefront worker -l info
 python manage.py runserver
-
 
 
 
@@ -22430,7 +22386,7 @@ However, many of these actions are governed by rules. For instance:
 🔐 Only admin users can modify products.  
 ❌ Anonymous users or regular users should be restricted.
 
-Testing these rules manually in the browser is fine at first—but over time:
+Testing these rules manually in the browser is fine at first, but over time:
 - The number of edge cases increases
 - Test coverage becomes inconsistent
 - Repeating tests slows down your workflow
@@ -23295,12 +23251,12 @@ Let’s say a test fails and you want to explore why.
 Authenticating the User:
 ------------------------
 ✅ Authenticating the User in API Tests (Non-Admin Scenario)
-This note explains how to simulate an **authenticated** user who is **not an admin** and test authorization behavior in your Django REST Framework API.
+This note explains how to simulate an authenticated user who is not an admin and test authorization behavior in your Django REST Framework API.
 
 
 
 📌 Use Case
-We’re testing the '/store/collections/' endpoint which is **restricted to admin users** for POST requests (i.e., creating new collections).
+We’re testing the '/store/collections/' endpoint which is restricted to admin users for POST requests (i.e., creating new collections).
 
 Goal:
 Verify that an authenticated **non-admin** user receives a **403 Forbidden** response when attempting to create a collection.
@@ -23416,7 +23372,7 @@ class TestCreateCollection:
 Single or Multiple Assertions:
 ------------------------------
 ✅ Single vs Multiple Assertions in API Testing:
-When writing automated tests, there’s a common principle that each test should have a single responsibility. However, that doesn't mean you must limit yourself to only *one* assertion per test. This note explains how to handle multiple logically related assertions effectively, with practical examples.
+When writing automated tests, there’s a common principle that each test should have a single responsibility. However, that doesn't mean you must limit yourself to only one assertion per test. This note explains how to handle multiple logically related assertions effectively, with practical examples.
 
 
 

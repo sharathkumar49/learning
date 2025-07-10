@@ -1,0 +1,206 @@
+
+
+# Kubernetes Topics List
+
+Below is a structured outline—mirroring our Docker course—that covers Kubernetes end-to-end, from fundamentals through advanced deployment and troubleshooting.
+
+
+
+Getting Started  
+1. Introduction  
+2. Prerequisites  
+3. How to Take This Course  
+4. Supplementary Files (YAML examples, Charts)  
+5. Getting Help & Community Resources  
+6. Learning Paths (CNCF Certifications, Further Reading)  
+
+
+
+Introduction to Kubernetes  
+1. What Is Kubernetes?  
+2. Kubernetes vs. Docker Swarm vs. Other Orchestrators  
+3. Key Concepts:  
+   - Pods, Nodes, Clusters  
+   - Control Plane vs. Data Plane  
+4. Kubernetes Architecture:  
+   - kube-apiserver, etcd, kube-scheduler, kube-controller-manager  
+   - kubelet, kube-proxy  
+5. Core Terminology:  
+   - Namespaces, Labels, Selectors  
+   - Annotations, Annotations vs. Labels  
+6. Kubernetes Use Cases & Real-World Examples  
+7. Summary  
+
+
+
+Installing Kubernetes  
+1. Local Single-Node Solutions:  
+   - Minikube  
+   - kind (Kubernetes in Docker)  
+   - k3s (Lightweight Kubernetes)  
+2. kubeadm-Based Cluster Install  
+3. Managed Kubernetes Services:  
+   - GKE (Google)  
+   - EKS (AWS)  
+   - AKS (Azure)  
+4. Installing & Configuring `kubectl`  
+5. Verifying Your Installation (Nodes, Pods, `kubectl version`)  
+6. Troubleshooting Common Install Issues  
+7. Summary  
+
+
+
+Working with kubectl  
+1. `kubectl` CLI Basics: `get`, `describe`, `apply`, `delete`  
+2. Contexts & kubeconfig Management  
+3. Namespaces: Create, Switch, Clean Up  
+4. Imperative vs. Declarative Commands  
+5. Labels & Selectors for Targeted Operations  
+6. Executing into Pods & Viewing Logs  
+7. Port-Forwarding & Proxy  
+8. Dry-Run & Output Formatting (`-o yaml|json`)  
+9. Summary  
+
+
+
+Kubernetes Objects: Pods, ReplicaSets & Deployments  
+1. Pod Definition & Lifecycle  
+2. ReplicaSets: Ensuring Desired Pod Count  
+3. Deployments: Rolling Updates & Rollbacks  
+4. Declarative YAML Manifests  
+5. Updating Applications with `kubectl apply`  
+6. Revision History & Rollback Strategies  
+7. Summary  
+
+
+
+Services & Networking  
+1. Service Types: ClusterIP, NodePort, LoadBalancer  
+2. Headless Services & DNS  
+3. Ingress Controllers & Ingress Resources  
+4. Network Policies (Pod-to-Pod Restrictions)  
+5. Service Discovery Internals  
+6. CoreDNS Configuration  
+7. Summary  
+
+
+
+Configuration & Secrets  
+1. ConfigMaps: Usage & Mounting  
+2. Secrets: Kubernetes Secret Types & Security Best Practices  
+3. Environment Variables vs. Volume Mounts  
+4. Inline vs. Externalized Config  
+5. Rolling Out Config Changes Safely  
+6. Summary  
+
+
+
+Storage & Volumes  
+1. Kubernetes Volume Types: `emptyDir`, `hostPath`, `configMap`, `secret`  
+2. PersistentVolumes (PVs) & PersistentVolumeClaims (PVCs)  
+3. StorageClasses & Dynamic Provisioning  
+4. CSI Drivers & Cloud-Provider Storage  
+5. Stateful Application Storage Patterns  
+6. Summary  
+
+
+
+StatefulSets, DaemonSets, Jobs & CronJobs  
+1. StatefulSets: Stable Network IDs & Persistent Storage  
+2. DaemonSets: Running One Pod per Node  
+3. Jobs: One-Off Batch Workloads  
+4. CronJobs: Scheduled Tasks  
+5. Use-Case Examples & Best Practices  
+6. Summary  
+
+
+
+Scaling & Self-Healing  
+1. Horizontal Pod Autoscaler (HPA)  
+2. Vertical Pod Autoscaler (VPA) Overview  
+3. Cluster Autoscaler Basics  
+4. Readiness & Liveness Probes  
+5. Pod Disruption Budgets  
+6. Summary  
+
+
+
+Helm & Kustomize  
+1. Introduction to Helm Charts  
+2. Chart Structure & Template Syntax  
+3. Helm Repositories & Chart Versioning  
+4. Kustomize: Patch Overlays & Variants  
+5. When to Use Helm vs. Kustomize  
+6. Summary  
+
+
+
+Monitoring, Logging & Observability  
+1. Cluster Metrics: `metrics-server` & `kubectl top`  
+2. Prometheus & Grafana Integration  
+3. Centralized Logging (Fluentd, Elasticsearch, Kibana)  
+4. Tracing with Jaeger or Zipkin  
+5. Kubernetes Dashboard & Lens  
+6. Summary  
+
+
+
+Security & RBAC  
+1. Role-Based Access Control (RBAC)  
+2. Service Accounts & Pod-Identity  
+3. Network Policy Enforcement  
+4. PodSecurity Standards (PSP / OPA Gatekeeper)  
+5. Image Security Scanning & Admission Controllers  
+6. Summary  
+
+
+
+Advanced Topics  
+1. Custom Resource Definitions (CRDs)  
+2. Operators & Controller Patterns  
+3. Admission Webhooks  
+4. API Aggregation & Extension  
+5. Multi-Cluster & Federation (Introductory Concepts)  
+6. Summary  
+
+
+
+Deploying Applications on Kubernetes  
+1. Creating Production-Ready YAML Manifests  
+2. CI/CD Pipelines with GitOps (Argo CD, Flux)  
+3. Canary & Blue/Green Deployments  
+4. Rolling Updates & Rollbacks  
+5. Managing Secrets & Config in CI/CD  
+6. Summary  
+
+
+
+Troubleshooting & Debugging  
+1. Common Failure Modes & Events (`kubectl describe pod`)  
+2. Pod Logs & Debug Containers  
+3. Node & Kubelet Diagnostics  
+4. Network Debugging Tools (`kubectl exec`, `nslookup`, `tcpdump`)  
+5. Heapster & cAdvisor Metrics  
+6. Summary  
+
+
+
+Kubernetes in the Cloud & On-Premises  
+1. Cloud-Provider Native Integrations (LoadBalancers, Volumes)  
+2. Hybrid & Edge Deployments  
+3. Cost Management & Autoscaling Policies  
+4. Disaster Recovery & Backup Strategies  
+5. Summary  
+
+
+
+Course Wrap-Up  
+1. Recap of Key Concepts  
+2. Next Steps in Your Kubernetes Journey  
+3. CNCF Certifications & Further Learning  
+4. Additional Resources & Community Links  
+5. Final Q&A and Best Practices  
+
+
+
+This comprehensive outline will guide your Kubernetes learning path—from core concepts to production deployments and ongoing operations.
