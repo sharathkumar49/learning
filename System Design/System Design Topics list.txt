@@ -1,0 +1,154 @@
+
+
+Comprehensive System Design Study List:
+Below is a structured roadmap—modeled after our Docker and Kubernetes outlines—for mastering large-scale system design, from fundamentals through advanced patterns and real-world case studies.
+
+
+
+Getting Started  
+1. Course Overview  
+2. Prerequisites (programming, basic networking, data structures)  
+3. How to Take This Course (project-based, incremental complexity)  
+4. Supplementary Resources (books, blogs, videos)  
+5. Community & Discussion Forums  
+
+
+
+1. Introduction to System Design  
+1. What Is System Design?  
+2. When & Why It Matters (scale, reliability, performance)  
+3. High-Level vs. Low-Level Design  
+4. Design Thinking & the Design Process  
+5. The “Design Interview” Format  
+
+
+
+2. Requirements & Constraints  
+1. Functional vs. Non-Functional Requirements  
+2. Availability, Scalability, Performance, Reliability  
+3. Consistency, Latency, Throughput SLAs  
+4. Data Size & Growth Projections  
+5. Cost, Regulatory, Operational Constraints  
+
+
+
+3. Capacity Planning & Estimation  
+1. Traffic Modeling (QPS, Bandwidth)  
+2. Storage Requirements (data volume, retention)  
+3. Compute Sizing (CPU, memory, concurrency)  
+4. Cost Estimation (cloud vs. on-premises)  
+5. Sizing Diagrams & Formulas  
+
+
+
+4. Core Building Blocks  
+1. Clients & API Gateways  
+2. Load Balancers (L4 vs. L7)  
+3. Application Servers & Microservices  
+4. Data Stores:  
+   - Relational (SQL)  
+   - NoSQL (Key-Value, Document, Wide-Column, Graph)  
+5. Caching Layers (CDN, in-memory caches)  
+6. Message Queues & Streaming (Kafka, RabbitMQ)  
+
+
+
+5. Data Modeling & Storage  
+1. Schema Design Principles  
+2. Denormalization & Indexing Strategies  
+3. Partitioning (Sharding) & Replication  
+4. CAP Theorem & Consistency Models  
+5. ACID vs. BASE Guarantees  
+
+
+
+6. Performance & Caching  
+1. Cache Invalidation Strategies (LRU, TTL, Write-through)  
+2. CDN Integration for Static Content  
+3. Compression & Serialization Formats (JSON, Protobuf)  
+4. Asynchronous Processing & Queues  
+5. Backpressure & Rate Limiting  
+
+
+
+7. Reliability & Fault Tolerance  
+1. Redundancy & Failover Patterns  
+2. Circuit Breakers & Bulkheads  
+3. Health Checks & Heartbeats  
+4. Replication & Consensus (Raft, Paxos)  
+5. Disaster Recovery & Backups  
+
+
+
+8. Security & Compliance  
+1. Authentication & Authorization (OAuth, JWT, mTLS)  
+2. Encryption (in-transit, at-rest)  
+3. API Security & Throttling  
+4. Audit Logging & Compliance Standards (PCI, GDPR)  
+5. Network Isolation & Zero Trust  
+
+
+
+9. Observability & Monitoring  
+1. Metrics (Prometheus, StatsD)  
+2. Logging (ELK Stack, Fluentd)  
+3. Distributed Tracing (Jaeger, Zipkin)  
+4. Alerting & Incident Response  
+5. Capacity & Cost Monitoring  
+
+
+
+10. Deployment & Operations  
+1. CI/CD Pipelines & Blue/Green Deployments  
+2. Immutable Infrastructure & Docker/Kubernetes Integration  
+3. Configuration Management (Ansible, Terraform)  
+4. Feature Flags & Progressive Rollouts  
+5. Scaling Strategies (horizontal vs. vertical)  
+
+
+
+11. Design Patterns & Anti-Patterns  
+1. Microservices vs. Monoliths  
+2. Strangler Fig Pattern  
+3. Saga & Two-Phase Commit  
+4. CQRS & Event Sourcing  
+5. Anti-Patterns (Thundering Herd, Single Point of Failure)  
+
+
+
+12. Real-World Case Studies  
+1. Design Instagram Feed  
+2. Build a URL Shortener (TinyURL)  
+3. Scalable Chat Service  
+4. Distributed File Storage (Dropbox/Google Drive clone)  
+5. Designing a Rate-Limiter Service  
+
+
+
+13. Interview Prep & Best Practices  
+1. Structuring Your Response (requirements → high-level → deep dive)  
+2. Asking Clarifying Questions  
+3. Estimating & Communicating Trade-Offs  
+4. Whiteboarding Tips & Diagrams  
+5. Mock Interviews & Feedback Loops  
+
+
+
+14. Advanced & Emerging Topics  
+1. Serverless Architectures & FaaS  
+2. Service Mesh (Istio, Linkerd)  
+3. Edge Computing & IoT Scaling  
+4. AI/ML-Powered Systems (recommendations, personalization)  
+5. Multi-Cloud & Hybrid Cloud Strategies  
+
+
+
+15. Course Wrap-Up  
+1. Recap of Key Concepts  
+2. Next Steps: Projects & Certifications  
+3. Additional Learning Paths (Cloud Architecture, Site Reliability Engineering)  
+4. Final Q&A & Resources  
+
+
+
+Study Tip: Tackle one section at a time. Build simple prototypes (e.g., a mini-URL shortener), iterate by adding complexity (caching, sharding, failover), and document your architecture diagrams and trade-off decisions. Good luck on your system design journey!
