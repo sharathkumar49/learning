@@ -31,4 +31,4 @@ def minimumBuckets(hamsters):
     return res
 
 # Example usage:
-# print(minimumBuckets("H..H"))  # Output: 2
+print(minimumBuckets("H..H"))  # Output: 2

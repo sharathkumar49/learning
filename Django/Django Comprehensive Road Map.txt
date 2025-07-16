@@ -1,0 +1,343 @@
+
+
+The Ultimate Django Series: Part 1
+
+Getting Started 
+1- Introduction
+2- Prerequisites
+3- How to Take this Course
+4- Supplementary Materials
+5- Getting Help
+6- Learning Paths
+7- Follow Me Around
+
+
+
+Django Fundamentals 
+1- Introduction
+2- What is Django
+3- How the Web Works
+4- Setting Up the Development Environment
+5- Creating Your First Django Project
+6- Using the Integrated Terminal in VSCode
+7- Creating Your First App
+8- Writing Views
+9- Mapping URLs to Views
+10- Using Templates
+11- Debugging Django Applications in VSCode
+12 - Using Django Debug Toolbar
+
+
+
+Building a Data Model 
+1- Introduction
+2- Introduction to Data Modeling
+3- Building an E-commerce Data Model
+4- Organizing Models in Apps
+5- Creating Models
+6- Choice Fields
+7- Defining One-to-one Relationships
+8- Defining a One-to-many Relationship
+9- Defining Many-to-many Relationships
+10- Resolving Circular Relationships
+11- Generic Relationships
+
+
+
+Setting Up the Database 
+1- Introduction
+2- Supported Database Engines
+3- Creating Migrations
+4- Running Migrations
+5- Customizing Database Schema
+6- Reverting Migrations
+7- Installing MySQL
+8- Connecting to MySQL
+9- Using MySQL in Django
+10- Running Custom SQL
+11- Generating Dummy Data
+
+
+
+Django ORM 
+1 - Introduction
+2- Django ORM
+3- Resetting the Database
+4- Managers and QuerySets
+5- Retrieving Objects
+6- Filtering Objects
+7- Complex Lookups Using Q Objects
+8- Referencing Fields using F Objects
+9- Sorting
+10- Limiting Results
+11- Selecting Fields to Query
+12- Deferring Fields
+13- Selecting Related Objects
+14- Aggregating Objects
+15- Annotating Objects
+16- Calling Database Functions
+17- Grouping Data
+18- Working with Expression Wrappers
+19- Querying Generic Relationships
+20- Custom Managers
+21- Understanding QuerySet Cache
+22- Creating Objects
+23- Updating Objects
+24- Deleting Objects
+25- Transactions
+26- Executing Raw SQL Queries
+
+
+
+The Admin Site 
+1- Introduction
+2- Setting Up the Admin Site
+3- Registering Models
+4- Customizing the List Page
+5- Adding Computed Columns
+6- Selecting Related Objects
+7- Overriding the Base QuerySet
+8- Providing Links to Other Pages
+9- Adding Search to the List Page
+10- Adding Filtering to the List Page
+11- Creating Custom Actions
+12- Customizing Forms
+13- Adding Data Validation
+14- Editing Children Using Inlines
+15- Using Generic Relations
+16- Extending Pluggable Apps
+17- What's Next
+18- The Ultimate Django- Part 2
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+The Ultimate Django Series: Part 2
+
+Getting Started 
+1- Introduction
+2- Setting Up the Project
+3- Supplementary Materials
+4- Getting Help
+5- Learning Paths
+6- Follow Me Around
+
+
+Building RESTful APIs with Django REST Framework 
+1- Introduction
+2- What are RESTful APIs
+3- Resources
+4- Resource Representations
+5- HTTP Methods
+6- Installing Django REST Framework
+7- Creating API Views
+8- Creating Serializers
+9- Serializing Objects
+10- Creating Custom Serializer Fields
+11- Serializing Relationships
+12- Model Serializers
+13- Deserializing Objects
+14- Data Validation
+15- Saving Objects
+16- Deleting Objects
+17- Exercise- Building the Collections API
+
+
+
+Advanced API Concepts 
+1- Introduction
+2- Class-based Views
+3- Mixins
+4- Generic Views
+5- Customizing Generic Views
+6- ViewSets
+7- Routers
+8- Building the s API
+9- Nested Routers
+10- Filtering
+11- Generic Filtering
+12- Searching
+13- Sorting
+14- Pagination
+
+
+
+Designing and Implementing a Shopping Cart API 
+1- Introduction
+2- Designing the API
+3- Revisiting the Data Model
+4- Creating a Cart
+5- Getting a Cart
+6- Deleting a Cart
+7- Getting Cart Items
+8- Adding a Cart Item
+9- Updating a Cart Item
+10- Deleting a Cart Item
+
+
+
+Django Authentication System 
+1- Introduction
+2- Django Authentication System
+3- Customizing the User Model
+4- Extending the User Model
+5- Creating user Profiles
+6- Groups and Permissions
+7- Creating Custom Permissions
+
+
+
+Securing APIs 
+1- Introduction
+2- Token-based Authentication
+3- Adding the Authentication Endpoints
+4- Registering Users
+5- Building the Profile API
+6- Logging In
+7- Inspecting a JSON Web Token
+8- Refreshing Tokens
+9- Getting the Current User
+10- Getting Current User's Profile
+11- Applying Permissions
+12- Applying Custom Permissions
+13- Applying Model Permissions
+14- Applying Custom Model Permissions
+
+
+
+Designing and Building the Orders API 
+1- Introduction
+2- Designing the API
+3- Getting the Orders
+4- Applying Permissions
+5- Creating an Order
+6- Creating Order Items
+7- Returning the Created Order
+8- Data Validation
+9- Revisiting the Permissions
+10- Updating an Order
+11- Signals
+12- Creating Custom Signals
+13- Course Wrap Up
+14- The Ultimate Django- Part 3
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+The Ultimate Django Series: Part 3
+
+Getting Started 
+1- Welcome
+2- Setting Up the Project
+3- Getting Help
+4- Learning Paths
+5- Follow Me Around
+
+
+
+Uploading Files 
+1- Introduction
+2- Managing Media Files
+3- Adding Images to Products
+4- Building an API to Upload Images
+5- Returning Images from the API
+6- Validating Uploaded Files
+7- Setting Up the Client App
+8- Enabling CORS
+9- Managing Images in the Admin
+
+
+
+Sending Emails 
+1- Introduction
+2- Setting up a Fake SMTP Server
+3- Configuring the Email Backend
+4- Sending Emails
+5- Attaching Files
+6- Sending Templated Emails
+
+
+
+Running Background Tasks 
+1- Introduction
+2- Introduction to Celery
+3- Message Brokers
+4- Installing Redis
+5- Celery and Windows
+6- Setting Up Celery
+7- Creating and Executing Tasks
+8- Scheduling Periodic Tasks
+9- Monitoring Celery Tasks
+
+
+
+Automated Testing 
+1- Introduction
+2- What is Automated Testing
+3- Test Behaviours, Not Implementations
+4- Tooling
+5- Your First Test
+6- Running Tests
+7- Skipping Tests
+8- Continuous Testing
+9- Running and Debugging Tests in VSCode
+10- Authenticating the User
+11- Single or Multiple Assertions
+12- Fixtures
+13- Creating Model Instances
+
+
+
+Performance Testing 
+1- Introduction
+2- Why Performance Testing
+3- Installing Locust
+4- Creating a Test Script
+5- Running a Test Script
+6- Running a Performance Test
+7- Performance Optimization Techniques
+8- Profiling with Silk
+9- Verifying Optimizations
+10- Stress Testing
+
+
+
+Caching 
+1- Introduction
+2- What is Caching
+3- Cache Backends
+4- Simulating a Slow API
+5- Getting a Baseline Performance Benchmark
+6- Installing Redis
+7- Configuring Caching
+8- Using the Low-level Cache API
+9- Caching Views
+10- Verifying Optimizations
+11- Managing Redis Cache Content
+
+
+
+Preparing for Production 
+1- Introduction
+2- Adding the Home Page
+3- Adding Static Assets
+4- Collecting Static Assets
+5- Serving Static Assets
+6- Configuring Logging
+7- Logging
+8- Managing Development and Production Settings
+9- Serving the Application with Gunicorn
+
+
+
+Deployment 
+1- Introduction
+2- Hosting Options
+3- Adding Project to Git
+4- Getting Started with Heroku
+5- Creating a Heroku App
+6- Setting Environment Variables
+7- Creating a Procfile
+8- Provisioning a MySQL Database
+9- Provisioning a Redis Instance
+10- Provisioning an SMTP Server
+11- Deploying the Application
+12 - Populating the Database
+13- Dockerizing the App
+14- Course Wrap Up

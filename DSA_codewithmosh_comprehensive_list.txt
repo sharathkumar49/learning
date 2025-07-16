@@ -1,0 +1,329 @@
+
+
+The Ultimate Data Structures & Algorithms: Part 1
+
+Getting Started
+1- Course Outline
+2- Source Code
+
+
+
+The Big O Notation 
+1- Introduction
+2- What is Big O
+3- O(1)
+4- O(n)
+5- O(n^2)
+6- O(log n)
+7- O(2^n)
+8- Space Complexity
+9- Cheat Sheet
+
+
+
+Arrays 
+1- Introduction
+2- Understanding Arrays
+3- Working with Arrays in Java
+4- Exercise- Array Class
+5- Solution- Creating the Class
+6- Solution- insert()
+7- Solution- removeAt()
+8- Solution- indexOf()
+9- Dynamic Arrays
+10- Arrays- Exercises
+11- Summary
+
+
+
+Linked Lists 
+1- Introduction
+2- What are Linked Lists
+3- Working with Linked Lists
+4- Exercise- Building a Linked List
+5- Solution- addLast
+6- Solution- addFirst
+7- Solution- indexOf
+8- Solution- contains
+9- Solution- removeFirst
+10- Solution- removeLast
+11- Implementing size()
+12- Converting Linked Lists to Arrays
+13- Cheat Sheets
+14- Arrays vs Linked Lists
+15- Types of Linked Lists
+16- Exercise- Reversing a Linked List
+17- Solution- Reversing a Linked List
+18- Exercise- Kth Node from the End
+19- Solution- Kth Node from the End
+20- Linked Lists- Exercises
+21- Summary
+A Quick Note
+
+
+
+Stacks 
+1- Introduction
+2- What are Stacks
+3- Working with Stacks
+4- Exercise- Reversing a String
+5- Solution - Reversing a String
+6- Exercise- Balanced Expressions
+7- Solution- A Basic Implementation
+8- Solution- Supporting Other Brackets
+9- Solution- First Refactoring
+10- Solution- Second Refactoring
+11- Exercise- Building a Stack Using an Array
+12- Solution- Implementing a Stack Using an Array
+13- Stacks- Exercises
+14- Summary
+
+
+
+Queues 
+1- Introduction
+2- What are Queues
+3- Queues in Java
+4- Exercise- Reversing a Queue
+5- Solution- Reversing a Queue
+6- Exercise- Building a Queue Using an Array
+7- Solution- A Basic Implementation
+8- Solution- Circular Arrays
+9- Exercise- Implementing a Queue Using a Stack
+10- Solution- Building a Queue Using a Stack
+11- Priority Queues
+12- Exercise- Building a Priority Queue
+13- Solution- Building a Priority Queue
+14- Solution- Refactoring
+15- Queues- Exercises
+16- Summary
+
+
+
+Hash Tables 
+1- Introduction
+2- What are Hash Tables
+3- Working with Hash Tables
+4- Exercise- Find the First Non-repeated Character
+5- Solution- First Non-repeating Character
+6- Sets
+7- Exercise- First Repeated Character
+8- Solution- First Repeated Character
+9- Hash Functions
+10- Collisions
+11- Chaining
+12- Open Addressing- Linear Probing
+13- Open Addressing- Quadratic Probing
+14- Open Addressing- Double Hashing
+15- Exercise- Build a HashTable
+16- Solution- put()
+17- Solution- get()
+18- Solution- remove()
+19- Solution- Refactoring
+20- Hash Tables- Exercises
+21- Summary
+22- Course Wrap Up
+23- ThankYou
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+The Ultimate Data Structures & Algorithms: Part 2
+
+Getting Started
+1- Introduction
+2- Source Code
+3- Follow Me Around
+4- Learning Paths
+
+
+
+Binary Trees 
+1- Introduction
+2- What are Trees
+3- Exercise- Populating a Binary Search Tree
+4- Exercise- Building a Tree
+5- Solution- insert()
+6- Solution- find()
+7- Traversing Trees
+8- Exercise- Tree Traversal
+9- Recursion
+10- Depth First Traversals
+11- Depth and Height of Nodes
+12- Minimum Value in a Tree
+13- Exercise- Equality Checking
+14- Solution- Equality Checking
+15- Exercise- Validating Binary Search Trees
+16- Solution- Validating Binary Search Trees
+17- Exercise- Nodes at K Distance
+18- Solution- Nodes at K Distance from the Root
+19- Level Order Traversal
+20- Trees- Exercises
+21- Summary
+
+
+
+AVL Trees 
+1- Introduction
+2- Balanced and Unbalanced Trees
+3- Rotations
+4- AVL Trees
+5- Exercise: AVL Rotations
+6- Exercise- Building an AVL Tree
+7- Solution- insert()
+8- Exercise- Height Calculation
+9- Solution- Height Calculation
+10- Exercise- Balance Factor
+11- Solution- Balance Factor
+12- Exercise- Detecting Rotations
+13- Solution- Detecting Rotations
+14- Exercise- Implementing Rotations
+15- Solution- Implementing Rotations
+16- AVL Trees- Exercises
+17- Summary
+A Quick Note
+
+
+
+Heaps 
+1- Introduction
+2- What are Heaps
+3- Exercise- Working with Heaps
+4- Exercise- Building a Heap
+5- Solution- insert()
+6- Solution- remove()
+7- Solution - Edge Cases
+8- Heap Sort
+9- Priority Queues
+10- Exercise- Heapify
+11- Solution- Heapify
+12- Solution- Optimization
+13- Exercise- Kth Largest Item
+14- Solution- Kth Largest Item
+15- Heaps- Exercises
+16- Summary
+
+
+
+Tries 
+1- Introduction
+2- What are Tries
+3- Exercise- Populating a Trie
+4- Exercise- Building a Trie
+5- Solution- Building a Trie
+6- An Implementation with a HashTable
+7- A Better Abstraction
+8- Exercise- Looking Up a Word
+9- Solution- Looking Up a Word
+10- Traversals
+11- Exercise- Removing a Word
+12- Solution- Removing a Word
+13- Exercise- Auto Completion
+14- Solution- Auto Completion
+15- Tries- Exercises
+16- Summary
+A Quick Note
+
+
+
+Graphs 
+1- Introduction
+2- What are Graphs
+3- Adjacency Matrix
+4- Adjacency List
+5- Exercise- Building a Graph
+6- Solution- Adding Nodes and Edges
+7- Solution- Removing Nodes and Edges
+8- Traversal Algorithms
+9- Exercise- Traversal Algorithms
+10- Exercise- Depth-first Traversal (Recursive)
+11- Solution- Depth-first Traversal (Recursive)
+12- Exercise- Depth-first Traversal (Iterative)
+13- Solution- Depth-first Traversal (Iterative)
+14- Exercise- Breadth-first Traversal (Iterative)
+15- Solution- Breadth-first Traversal
+16- Exercise- Topological Sorting
+17- Solution- Topological Sort
+18- Exercise- Cycle Detection (Directed Graphs)
+19- Solution- Cycle Detection (Directed Graphs)
+20- Graphs Summary
+
+
+
+Undirected Graphs 
+1- Introduction
+2- Exercise- Weighted Graphs
+3- Solution- Weighted Graphs
+4- An Object-oriented Solution
+5- Dijkstra's Shortest Path Algorithm
+6- Exercise- Getting the Shortest Distance
+7- Solution- The Shortest Distance
+8- Solution- Shortest Path
+9- Exercise- Cycle Detection (Undirected Graphs)
+10- Solution- Cycle Detection (Undirected Graphs)
+11- Minimum Spanning Tree
+12- Exercise- Prim's Algorithm
+13- Solution- Prim's Algorithm
+14- Course Wrap Up
+15- Thank You
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------The Ultimate Data Structures & Algorithms: Part 3
+
+Getting Started 
+1- Introduction
+2- Course Code
+3- Follow Me Around
+4- Learning Paths
+
+
+
+Sorting Algorithms 
+1- Introduction
+2- Bubble Sort
+3- Bubble Sort- Implementation
+4- Selection Sort
+5- Selection Sort- Implementation
+6- Insertion Sort
+7- Insertion Sort- Implementation
+8- Merge Sort
+9- Merge Sort- Implementation
+10- Quick Sort
+11- Partitioning
+12- Quick Sort- Implementation
+13- Counting Sort
+14- Counting Sort- Implementation
+15- Bucket Sort
+16- Bucket Sort- Implementation
+
+
+
+Searching Algorithms 
+1- Introduction
+2- Linear Search
+3- Linear Search- Implementation
+4- Binary Search
+5- Binary Search- Recursive Implementation
+6- Binary Search- Iterative Implementation
+7- Ternary Search
+8- Ternary Search- Implementation
+9- Jump Search
+10- Jump Search- Implementation
+11- Exponential Search
+12- Exponential Search- Implementation
+
+
+
+String Manipulation Algorithms 
+1- Introduction
+2- Exercises
+3- Useful Java Methods
+4- Count Vowels
+5- Reverse a String
+6- Reverse Words
+7- Rotations
+8- Remove Duplicates
+9- Most Repeated Char
+10- Sentence Capitalization
+11- Anagrams- Using Sorting
+12- Anagrams- Using Histogramming
+13- Palindrome
+14- Course Wrap Up

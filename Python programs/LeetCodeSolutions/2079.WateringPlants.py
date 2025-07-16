@@ -25,4 +25,4 @@ def wateringPlants(plants, capacity):
     return res
 
 # Example usage:
-# print(wateringPlants([2,2,3,3], 5))  # Output: 14
+print(wateringPlants([2,2,3,3], 5))  # Output: 14

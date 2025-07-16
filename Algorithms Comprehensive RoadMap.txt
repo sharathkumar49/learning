@@ -1,0 +1,260 @@
+
+
+Comprehensive Algorithms Roadmap:  
+An end-to-end, master’s-level curriculum covering algorithmic techniques and concrete algorithms—from absolute beginner through cutting-edge research topics.
+
+
+
+1. Foundations  
+
+1.1 Mathematical Prerequisites  
+- Discrete Mathematics: sets, relations, graphs, combinatorics  
+- Proof Techniques: induction, contradiction, exchange, amortized analysis  
+- Probability & Statistics: expectation, variance, tail bounds  
+
+1.2 Complexity Theory  
+- Time/Space Complexity: Big-O, Θ, Ω  
+- Amortized Analysis (aggregate, banker’s, potential methods)  
+- Lower Bounds & NP-completeness fundamentals  
+
+1.3 Algorithm Design Paradigms  
+- Brute Force & Exhaustive Search  
+- Divide & Conquer  
+- Greedy Methods  
+- Dynamic Programming  
+- Backtracking & Branch-and-Bound  
+- Randomized & Approximation  
+
+
+
+2. Beginner Algorithms  
+
+2.1 Searching & Sorting  
+- Linear Search, Binary Search (iterative/recursive)  
+- Elementary Sorts: Bubble, Selection, Insertion  
+- Efficient Sorts: Merge Sort, Quick Sort, Heap Sort  
+
+2.2 Basic Recursion  
+- Factorial, Fibonacci  
+- Recursive tree traversals  
+
+2.3 Elementary Data-Driven Algorithms  
+- Prefix/Suffix sums  
+- Two-pointer & Sliding-window techniques  
+
+
+
+3. Core Algorithmic Techniques  
+
+3.1 Divide & Conquer  
+- Merge Sort, Quick Sort, Binary Search  
+- Closest Pair of Points  
+- Strassen’s Matrix Multiplication  
+
+3.2 Greedy Algorithms  
+- Activity/Interval Scheduling  
+- Huffman Coding  
+- Fractional Knapsack  
+- Kruskal’s & Prim’s for MST  
+
+3.3 Dynamic Programming  
+- 1D/2D DP (knapsack, coin change)  
+- Longest Common Subsequence/Edit Distance  
+- Matrix Chain Multiplication  
+- Bitmask DP (TSP, subset DP)  
+- Tree & DAG DP  
+
+3.4 Backtracking & Branch-and-Bound  
+- Permutations, Combinations  
+- N-Queens, Sudoku Solver  
+- 0/1 Knapsack (branch-and-bound)  
+
+3.5 Randomized Algorithms  
+- Quickselect, randomized BST/Treap  
+- Monte Carlo: primality testing (Miller-Rabin)  
+- Las Vegas: randomized hashing  
+
+
+
+4. Graph & Network Algorithms  
+
+4.1 Graph Traversals  
+- Breadth-First Search (BFS)  
+- Depth-First Search (DFS), discovery/finish times  
+
+4.2 Shortest Paths  
+- Dijkstra (binary/Fibonacci heap)  
+- Bellman-Ford, SPFA caveats  
+- All-pairs: Floyd-Warshall, Johnson’s  
+
+4.3 Minimum Spanning Trees  
+- Kruskal, Prim, Borůvka  
+
+4.4 Network Flow & Matching  
+- Ford-Fulkerson, Edmonds-Karp  
+- Dinic’s, Push–Relabel  
+- Bipartite Matching (Hopcroft-Karp)  
+- Max-flow applications: circulation, assignment  
+
+4.5 Advanced Graph Concepts  
+- Strongly Connected Components (Kosaraju, Tarjan)  
+- 2-SAT via implication graphs  
+- Lowest Common Ancestor (binary lifting, Euler tour)  
+- Tree Decomposition: Heavy-Light, Centroid  
+
+
+
+5. String & Text Algorithms  
+
+5.1 Pattern Matching  
+- Knuth–Morris–Pratt (KMP)  
+- Z-Algorithm, Rabin–Karp  
+- Aho–Corasick Automaton  
+
+5.2 Suffix Structures  
+- Suffix Array & LCP array (construction in n or n log n)  
+- Suffix Tree, Ukkonen’s algorithm  
+- Suffix Automaton  
+
+5.3 Trie & Prefix Algorithms  
+- Insertion, search, deletion  
+- Applications: autocomplete, IP routing  
+
+5.4 Palindromes & Text Queries  
+- Manacher’s algorithm  
+- Palindromic Tree (Eertree)  
+- Range queries on strings  
+
+
+
+6. Computational Geometry  
+
+6.1 Basic Primitives  
+- Orientation test, cross/dot product  
+
+6.2 Convex Hull  
+- Graham scan, Andrew’s monotone chain  
+
+6.3 Proximity  
+- Closest pair of points (divide & conquer)  
+- k-d tree nearest neighbor  
+
+6.4 Line Segment Intersection  
+- Sweep-line (Bentley–Ottmann)  
+- Segment tree for stabbing queries  
+
+6.5 Polygon Algorithms  
+- Point-in-polygon (ray casting)  
+- Polygon area, centroid  
+- Rotating calipers (diameter, width)  
+
+
+
+7. Numeric & Algebraic Algorithms  
+
+7.1 Number Theory  
+- GCD/LCM, extended Euclid  
+- Fast exponentiation, modular inverse  
+- Sieve of Eratosthenes, segmented sieve  
+- Pollard’s Rho factorization, Miller–Rabin  
+
+7.2 Fast Fourier Transform  
+- Cooley–Tukey FFT  
+- Number-Theoretic Transform (NTT) for integer convolution  
+
+7.3 Matrix & Linear Algebra  
+- Gaussian elimination, LU/QR decomposition  
+- Strassen & advanced matrix multiply  
+- Eigenvalues via power method  
+
+
+
+8. Advanced & Specialized Algorithms  
+
+8.1 Data Stream & Sketching  
+- Count-Min sketch, Bloom filter, HyperLogLog  
+
+8.2 External Memory & Cache-Oblivious  
+- B-trees, buffer trees  
+
+8.3 Parallel & Distributed  
+- PRAM algorithms, MapReduce patterns  
+- Parallel BFS/DFS, parallel sorting  
+
+8.4 Approximation Algorithms  
+- PTAS/FPTAS, greedy approximation (vertex cover, set cover)  
+- Metric TSP, k-center  
+
+8.5 Online Algorithms  
+- Competitive analysis, ski rental, caching (LRU)  
+
+8.6 Optimization  
+- Linear programming (Simplex, interior-point)  
+- Quadratic programming, semidefinite programming  
+
+8.7 Metaheuristics  
+- Genetic algorithms, simulated annealing, tabu search, particle swarm  
+
+8.8 Cryptographic Algorithms  
+- Symmetric (AES, DES), asymmetric (RSA, ECC)  
+- Hash functions (SHA, MD5)  
+- Zero-knowledge proofs fundamentals  
+
+
+
+9. Algorithmic Engineering & Practice  
+
+9.1 Profiling & Benchmarking  
+- Time/memory profiling tools (gprof, Valgrind)  
+- Micro-benchmarks, cache performance  
+
+9.2 Low-Level Optimizations  
+- Bit-level hacks, loop unrolling, SIMD intrinsics  
+- Cache-friendly data layouts  
+
+9.3 Parallel Programming  
+- Multithreading (OpenMP, TBB), GPU kernels (CUDA, OpenCL)  
+
+9.4 Robustness & Precision  
+- Numerical stability, rounding error mitigation  
+
+
+
+10. Research Frontiers  
+
+10.1 Quantum Algorithms (Intro)  
+- Shor’s factorization, Grover’s search  
+
+10.2 Sublinear & Property Testing  
+- Streaming algorithms, graph sparsification  
+
+10.3 Learning-Augmented Algorithms  
+- Algorithms with ML-based heuristics  
+
+10.4 Bioinformatics & Specialized Domains  
+- Sequence alignment (Needleman–Wunsch), genome assembly algorithms  
+
+
+
+11. Mastery & Project Work  
+
+1. Implementation & Verification:  
+   - Re-implement core algorithms from scratch  
+   - Prove correctness, analyze complexity  
+
+2. Capstone Projects:  
+   - Build a mini-compiler (lexing, parsing, codegen)  
+   - Design a distributed graph processing engine  
+   - Implement a cryptographic library with benchmarks  
+
+3. Interview & Contest Prep:  
+   - Solve 200+ problems across categories  
+   - Mock contests and peer reviews  
+
+4. Continuous Learning:  
+   - Read and implement 5–10 research papers per year  
+   - Contribute to open-source algorithm libraries  
+
+
+
+This Algorithms Roadmap spans from absolute basics (sort/search) to state-of-the-art research, equipping you with the deep expertise required in academia, high-performance systems, and top-tier technical interviews.

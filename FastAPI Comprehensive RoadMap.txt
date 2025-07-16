@@ -1,0 +1,178 @@
+
+
+The Ultimate FastAPI Series: Part 1
+
+Getting Started  
+1. Introduction  
+2. Prerequisites  
+   - Python 3.8+  
+   - Virtual environments (venv, Poetry)  
+   - Basic HTTP/REST concepts  
+3. How to Take This Course  
+4. Supplementary Materials (sample projects, Postman collection)  
+5. Getting Help & Community Resources  
+6. Learning Paths & Further Reading  
+
+
+
+FastAPI Fundamentals  
+1. What Is FastAPI? ASGI vs WSGI  
+2. Installing FastAPI & Uvicorn  
+3. Creating Your First FastAPI Application  
+4. The '@app.get/post/put/delete' Decorators  
+5. Path & Query Parameters  
+6. Request Body & Data Validation with Pydantic  
+7. Automatic Interactive Docs (Swagger UI & ReDoc)  
+8. Running & Reloading the Server  
+9. Debugging FastAPI in VS Code / PyCharm  
+
+
+
+Pydantic Data Models  
+1. Defining Pydantic 'BaseModel' Classes  
+2. Field Types, Defaults & Aliases  
+3. Data Validation & Custom Validators  
+4. Nested Models & Recursive Schemas  
+5. Response Models & 'response_model' Parameter  
+6. Model Configuration (ORM mode, title, description)  
+7. JSON Serialization & 'schema_extra'  
+
+
+
+Dependency Injection  
+1. Introduction to Dependencies  
+2. Creating Simple Dependencies (shared logic)  
+3. 'Depends()' in Path Operations  
+4. Separation of Concerns & Reusability  
+5. Handling Required vs Optional Dependencies  
+6. Overriding Dependencies for Testing  
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+The Ultimate FastAPI Series: Part 2
+
+Async Programming & Concurrency  
+1. 'async def' Endpoints vs Normal 'def'  
+2. Starlette’s Event Loop & ThreadPool  
+3. Running Blocking I/O in Background Tasks  
+4. Concurrency Pitfalls & Solutions  
+5. Using 'httpx' for Asynchronous HTTP Calls  
+
+
+
+Building CRUD APIs  
+1. Project Structure & Router Organization  
+2. Implementing Create/Read/Update/Delete Endpoints  
+3. Path Operation Configuration (tags, summaries)  
+4. Pagination, Sorting & Filtering  
+5. Bulk Operations & Batch Endpoints  
+6. API Versioning Strategies  
+
+
+
+Database Integration  
+1. SQLAlchemy Core & ORM with FastAPI  
+2. 'asyncpg' & Databases Library  
+3. Tortoise ORM & Aerich Migrations  
+4. Alembic Migrations (Sync & Async)  
+5. Dependency-Injected DB Sessions  
+6. Connection Pooling & Session Lifespan  
+
+
+
+Authentication & Authorization  
+1. Introduction to Security in FastAPI  
+2. OAuth2 Password Flow with JWT Tokens  
+3. Dependency-Based Security Requirements  
+4. Role-Based Access Control & Scopes  
+5. Social Logins & OAuth2 Third-Party (Google, GitHub)  
+6. Securing OpenAPI Docs Endpoints  
+
+
+
+Background Tasks & WebSockets  
+1. FastAPI 'BackgroundTasks' Utility  
+2. Long-Running Tasks & Notification Patterns  
+3. Introduction to WebSockets in FastAPI  
+4. Event Handlers: '@app.on_event("startup"/"shutdown")'  
+5. Broadcast to Multiple Clients with 'WebSocketEndpoint'  
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+The Ultimate FastAPI Series: Part 3
+
+ Testing FastAPI Applications  
+1. Introduction to Testing Principles  
+2. Using 'pytest' with Test Clients  
+3. Dependency Overrides for Isolation  
+4. Mocking External Services (HTTP, DB)  
+5. Coverage, Fixtures & Parametrized Tests  
+6. CI Integration (GitHub Actions, GitLab CI)  
+
+
+
+Caching & Performance Optimization  
+1. In-Memory Caching with 'functools.lru_cache'  
+2. Redis/MemoryBackend for Request-Level Caching  
+3. Response Caching Headers & ETag Support  
+4. Profiling Endpoints (pyinstrument, cProfile)  
+5. GZip & Brotli Compression Middleware  
+6. Uvicorn/Gunicorn Configuration Tuning  
+
+
+
+Security Best Practices  
+1. HTTPS & TLS Configuration  
+2. Rate Limiting (Redis, Starlette Middleware)  
+3. CORS Configuration & Origins  
+4. HTTP Headers (HSTS, CSP, X-Frame-Options)  
+5. Input Sanitization & SQL Injection Prevention  
+6. Security Audit Tools (Bandit, Snyk)  
+
+
+
+Logging, Monitoring & Observability  
+1. Structured Logging with Loguru or Python 'logging'  
+2. Request/Response Logging Middleware  
+3. Metrics with Prometheus & 'starlette_exporter'  
+4. Distributed Tracing (OpenTelemetry, Jaeger)  
+5. Health Checks & Liveness/Readiness Endpoints  
+
+
+
+GraphQL & Web Framework Interop  
+1. Integrating Graphene or Strawberry GraphQL  
+2. Using 'FastAPI' as GraphQL Server  
+3. Combining REST & GraphQL in One App  
+4. gRPC Endpoints with 'grpclib'  
+
+
+
+Deployment & DevOps  
+1. Containerizing with Docker & Multi-Stage Builds  
+2. Kubernetes Deployment (Ingress, Services, Deployments)  
+3. Serverless Options (AWS Lambda via API Gateway, Azure Functions)  
+4. Reverse Proxy with Nginx/Traefik  
+5. Zero-Downtime Deployments & Blue/Green Strategies  
+6. Infrastructure as Code (Terraform, Helm)  
+
+
+
+Real-World Case Studies & Capstone Projects  
+1. Building a SaaS CRUD Backend with User Management  
+2. Real-Time Chat App with WebSockets & Pub/Sub  
+3. ETL API with File Uploads & Background Processing  
+4. Microservices Architecture with FastAPI & Kafka  
+5. Monitoring & Scaling Under Load  
+
+
+
+Course Wrap-Up  
+- Recap of Key Concepts & Best Practices  
+- Next Steps: Contribute to FastAPI Core & Starlette  
+- Community Engagement: GitHub, Discord, Conferences  
+- Further Learning: Advanced Starlette Features, Custom ASGI Middleware  
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
