@@ -1,0 +1,101 @@
+Revise the above discussion in proper understandable format that can be taken into my notes
+Note: every minute details which are discussed should be included
+Also add any necessary information or pictorial representation if needed
+
+
+Codes and other notes in this discussion:
+
+
+
+
+Revise the below discussion in proper understandable format that can be taken into my notes
+Note: every minute details which are discussed should be included
+Also add any necessary information and pictorial representation if it's absolutely necessary
+
+
+
+
+
+Queries and other notes in this discussion:
+
+
+
+I have attached six files where 'asyncio_discussion.txt' is the main file which they talk about asyncio explicitly. For clarification I've attached another file 'asyncio_codes_in_the_discussion.txt' which contain all the codes used in this discussion 
+
+
+I want you to Revise the discussion and make it in a proper understandable format that can be taken into my notes
+Note: every minute details which are discussed should be added
+Also add any necessary information if needed
+All the codes in the 'asyncio_codes_in_the_discussion.txt' should be present in the notes
+you can also refer other '.png' files for representation. 
+
+Kindly take your time (5 to 10 min) exploring all of this and provide me a elaborate notes on asyncio. so that I don't need to refer any other resource in future. The generating notes should contain every information. 
+
+
+
+
+
+
+
+
+Revise the attached discussion 'Binary Tree Discussion.txt' in proper understandable format that can be taken into my notes
+Note: every minute details which are discussed should be included
+Also add any necessary information and pictorial representation if needed
+
+I've taken some points and codes from the discussion in the files 'Binary Tree.txt'  and 'Binary search tree problems.txt'
+
+Consider all these things and come up with an long comprehensive detailed notes 
+
+
+
+
+
+
+
+Revise the attached discussion 'Binary search Tree Deletion Discussion.txt' in proper understandable format that can be taken into my notes
+Note: every minute details which are discussed should be included
+Also add any necessary information and pictorial representation if needed
+
+I've taken some points and codes from the discussion in the file 'Binary Search Tree Deletions.txt'  and few QnA in 'Binary Tree Deletions questions and answers.txt'
+
+I didn't understand most of the things in the Binary search tree deletions. So, make it super easier for me
+
+Consider all these things and come up with an long comprehensive detailed notes, most importantly, add some more concepts from the various sources to these notes  
+
+
+
+
+
+I need coding challenges in the interview -style manner
+
+
+I really appreciate the opportunity to speak with you today and learn more about the company. Based on our conversation, do you see me as a good fit for the team? I would love to understand how my skills align with the company’s expectations."
+
+
+
+
+
+
+https://tophire.co/home?
+
+
+www.linkedin.com/in/sharath-kumar-8260512b8
+
+
+https://developers.turing.com/dashboard/jobs?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjUyNzQ5MTUsImVtYWlsIjoic2hhcmF0aGt1bWFycjE0OEBnbWFpbC5jb20iLCJpYXQiOjE3NDcwNzM5NjIsImV4cCI6MTc0OTY2NTk2Mn0.IySzM3Fsrz60nHISTtTaYofUOEePIeKBScplZwgs-aY
+
+
+
+
+
+
+
+This current directory 'LeetCodeSolutions' is dedicated to have LeetCode problems along with solutions. I've collected till problem no. 2210. 
+I want you to continue adding further problems form where I have left. I have attached sample files of how it should look like.
+
+Note: 
+1. Each problem should be added as a separate file. 
+2. Add 10 problems at each go.
+3. Take your time to analyze and don't rush
+
+Important: Add each problem as a separate file  
