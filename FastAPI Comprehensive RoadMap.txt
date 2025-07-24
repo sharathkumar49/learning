@@ -103,7 +103,7 @@ Background Tasks & WebSockets
 
 The Ultimate FastAPI Series: Part 3
 
- Testing FastAPI Applications  
+Testing FastAPI Applications  
 1. Introduction to Testing Principles  
 2. Using 'pytest' with Test Clients  
 3. Dependency Overrides for Isolation  

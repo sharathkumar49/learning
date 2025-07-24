@@ -1,0 +1,24 @@
+
+
+Which type of data processing involves processing large volumes of data in one go? Batch Data 
+What type of data processing involves analyzing data in real-time as it is generated? Streaming Data
+Which type of data is organized and stored in a predefined structure, such as a database table? Structured Data
+Which type of data does not have a rigid structure but still contains some level of organization? Semi-Structured Data
+Which type of data may include formats such as JSON or XML? Semi-Structured Data
+What is a key characteristic of batch data processing? Defined Start and end of data 
+What is an example of streaming data processing? Stock market data processing 
+Which Google Cloud product is used for streaming data ingestion? Pub/Sub
+What is a characteristic of structured data? Tabular Format with rows and columns 
+Which Google Cloud product is ideal for storing transactional structured data? Cloud Spanner
+Which stage of the data pipeline involves storing data in a durable and cost-efficient manner? Storage 
+Which database is suitable for NoSQL semi-structured data in Google Cloud? Bigtable
+What type of data processing is best suited for analyzing stock market data? Real-time streaming processing
+Which tool in Google Cloud is used for creating dashboards? Data Studio(Now Looker Studio)
+What is a defining feature of semi-structured data? Key-Value pairs
+What is the purpose of zones in GCP? Zones are used to distribute resources within a region for fault tolerance
+How many zones are there within a GCP region by default? 3
+What is the maximum number of GCP regions that can be associated with a single project? Unlimited
+Which of the following statements is true about GCP regions and their associated zones? Zones within a region are physically interconnected with low-latency links. 
+
+
+

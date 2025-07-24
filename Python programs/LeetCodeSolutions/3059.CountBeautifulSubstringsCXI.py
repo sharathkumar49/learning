@@ -1,0 +1,16 @@
+"""
+LeetCode 3059. Count Beautiful Substrings CXI
+
+Given s and k, return the count of beautiful substrings.
+
+Constraints:
+- 1 <= s.length <= 10^5
+- 1 <= k <= s.length
+"""
+
+def beautifulSubstringsCXI(s, k):
+    # Placeholder for string/DP solution
+    pass
+
+# Example usage:
+# print(beautifulSubstringsCXI("abcabc", 2))  # Output: (example)

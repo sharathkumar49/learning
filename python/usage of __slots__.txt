@@ -1,0 +1,43 @@
+
+Question: 
+
+class IPLTeam:
+    """
+    Represents one IPL team’s season summary.
+    __slots__ reduces per-object memory overhead.
+    """
+    __slots__ = ('name', 'played', 'wins', 'losses',
+                 'no_results', 'nrr', 'points')
+
+
+what does it mean ' __slots__ reduces per-object memory overhead.' what does the slots even mean and what we are mentioning inside the brackets?? instance variables??
+
+
+
+Answer: 
+
+Absolutely spot on, Sharath — what you're seeing inside '__slots__' *are* indeed the instance variables (a.k.a. attributes) that will be used per object of 'IPLTeam'. And the reason this reduces memory overhead comes down to how Python normally manages object attributes.
+
+# 🔍 What are '__slots__'?
+
+- '__slots__' is a special declaration in Python classes.
+- It tells Python *exactly* which attributes the object will have.
+- Instead of using a dynamic dictionary ('__dict__') for storing attributes (which is memory-hungry), Python allocates a more compact, static structure.
+
+# 🧠 Why does it reduce memory overhead?
+
+- Normally, every Python object has a '__dict__', which is flexible but heavy — each attribute is stored as a key-value pair in that dict.
+- By using '__slots__', Python skips creating '__dict__' and allocates a fixed space for just the attributes you list.
+- This makes each object lighter — ideal when creating tons of objects, like for an IPL stats engine with hundreds of teams or players.
+
+# 📦 What goes inside the brackets?
+
+- A tuple of attribute names you're planning to use for the object.
+- Example: ''name'', ''played'', ''wins'', etc.
+- You're explicitly saying: *“This object will only ever have these 7 attributes — nothing more.”*
+
+---
+
+Since you're particular about memory efficiency and real-world practicality, I imagine you'd love '__slots__' when modeling large datasets like IPL match stats. If you ever want to benchmark the memory difference or explore edge cases (like inheritance quirks or setting attributes outside '__slots__'), I’d be thrilled to dive into that with you.
+
+Want a quick side-by-side memory comparison or dig into what happens with subclassing when '__slots__' are involved?
