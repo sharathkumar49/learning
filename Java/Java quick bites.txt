@@ -1,0 +1,64 @@
+
+
+difference between fields and members in java
+all the primitive types (full list, and their memory length)
+wrapper classes and what they are 
+
+sout
+
+for object and reference types you have to mention new in the right hand side 
+
+String is a reference type in java 
+
+postfix and prefix (learn the exact difference) 
+
+we can't instantiate numberformat class, since it's an abstract 
+
+learn implicit casting and explicit casting. Mainly about implicit casting and how it works and among two data type how it find itself compatible data type and changes itself 
+
+How the method resolution order works in java as like in python 
+
+learn upcasting and downcasting very well in java
+
+What are the wrapper classes, what is wrapper in general, 
+In java, for every primitive types there is a wrapper class 
+
+
+see what's happening inside the iterator.hasNext and iterator.next() of the itertor which is returned by iterable
+
+
+
+How does the list interface in java, list in python implemented at the low level, look at c or c++ low level language, how are they are implemented 
+
+
+
+
+Collection<String> collection = new ArrayList<>();
+List<String> list = new ArrayList<>();
+
+what is the difference beween above two lines?
+
+The hierarchy is Iterable -> collection -> List
+
+Since in the 2nd one, we are mentioning the List in the LHS, ArrayList can be List and Collection as well? (since list interface extends collection interface)
+
+And the arraylist in 1st one don't get all the benefit of list, Since we are mentioning only Collection in the LHS 
+
+What does it even mean by mentioning anything in the LHS
+
+
+
+
+different programming paradigms or styles of programming, like functional, object oriented, event driven, and so on.
+
+
+https://www.geeksforgeeks.org/java/function-interface-in-java/
+
+
+
+Learn functional interfaces -> lambads of it -> and various implementation like consumer, supplier, function and predicate 
+
+
+
+
+what is collector 
