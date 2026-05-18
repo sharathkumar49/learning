@@ -1,0 +1,1117 @@
+
+Spring Boot Discussion: 
+
+
+Introduction:
+1. Welcome 
+2. Prerequisites 
+3. Course Structure 
+4. Source Code 
+5. Questions and Support 
+6. Connect with Me
+
+
+
+
+Introduction: 
+ 
+1. Welcome:
+Welcome to the ultimate spring boot course. In this course, you'll learn everything you need to know from the basics to more advanced concepts. So by the end, you'll be able to build real world applications with confidence. If you're looking for a comprehensive, easy to follow, well structured, and practical course that takes you from zero to hero, this is the spring boot course for you.I've organized this course in two parts.The first part, which you're watching now, covers the fundamental concepts, and the second part focuses on building web applications and APIs.The course is packed with hands on examples and real world exercises to help you truly absorb and apply what you learn.I've poured my heart and soul into creating this course, and I'm confident it will be a game changer for your skills.I'm Marsh Hamadani, a software engineer with over twenty years of experience, and I've taught millions how to code and become professional software engineers through my YouTube channel and online school, codewithmarsh.com.If you are new here, make sure to subscribe as I upload new videos all the time. So if you're ready to master Spring Boot and build applications with confidence, let's jump in and get started.
+
+
+
+
+
+2. Prerequisites:
+
+To get the most out of this course, you should have a solid understanding of Java. You should be comfortable with object oriented programming, working with classes, methods and interfaces. If you're new to Java or need a refresher, I recommend going through my Java course before starting this one. I'll put the link down below. You should also be familiar with relational databases and SQL. You should know concepts like tables, primary keys, foreign keys and writing basic queries. If this sounds new to you or you want to strengthen your SQL skills, check out my SQL course where I cover everything from the basics to more advanced queries. That's all you need to get started. If you already meet these prerequisites, you're good to go. Otherwise take some time to review Java and SQL before jumping in. Now let's move on to the next lesson.
+
+
+
+Codes and Other Notes Referred in this Discussion:
+
+Prerequisites:
+
+Solid understanding of Java
+Object-oriented programming
+Classes, methods and interfaces 
+
+Basic understanding of databases
+Tables, primary keys, foreign keys, relationships, etc. 
+Write basic SQL statements
+
+
+
+
+
+
+
+
+3. Course Structure:
+Before we dive in, let's talk about how I've structured this course so you know what to expect and how to get the most out of it. This course is divided into two parts. The first part which you are watching now covers the fundamentals of spring boot. The second part will focus on building web applications and APIs. In the first part, we'll go step by step to build a strong foundation, so that when we move on to building applications, you will have all the essential skills you need. Part one is divided into three sections. We'll begin by understanding what spring boot is and why it's such a powerful framework. We'll also set up our development environment and build our first spring boot project so we can get a feel for how everything works. Then we have dependency injection. In this section you will learn how spring boot manages objects and their dependencies behind the scenes, making our applications more modular, testable and maintainable. In the next section we talk about database integration with spring data JPA. This is the bread and butter of part one. We cover concepts that are often overlooked in other courses. You will learn best practices, efficient data access patterns, and tools that are essential for building real world applications. To get the most out of this course, watch every lesson in sequence. I cover a lot of details that build on previous concepts, so skipping around might cause you to miss something important. This course is also packed with exercises to reinforce what you learn. I strongly encourage you to complete each exercise before watching my solution. Struggling a bit before seeing the answer will help you retain the concepts much better. Now that you know how the course is structured, let's move on to the next lesson.
+
+
+
+Codes and Other Notes Referred in this Discussion:
+
+What you'll Learn: 
+
+Getting Started with Spring Boot
+Dependency Injection (DI)
+Database Integration with Spring Data JPA 
+
+
+
+
+
+
+4. Source Code
+
+As you go through the course, you'll often want to check out the exact code I write in each lesson. So to make it easy for you to follow along, I've organized the source code using a github repository that you can find at github.com/mosh-hamedani/spring-store. Now technically, you don't need to know git to take this course, but git is one of those skills that every developer must have. If If you want to dive deep and truly master git, I have a complete git course on my website where I teach everything from the fundamentals to advanced workflows. You can find it on codewithmosh.com. Now, back to our repository, in this repository, each commit represents a lesson. So if you want to see the exact code I write in this lesson, just click here and you can see the changes. Also, I've created tags for the beginning of each section, for example, if you want to start from part one section four, you can use this tag.It's not something that I recommend unless you're an advanced student, because there is so much that we're going to cover in this course and ideally you should watch every lesson in order. So that's all about our git repository, let's move on and continue learning.
+
+
+
+5. Questions and Support 
+6. Connect with Me
+
+
+
+
+
+
+
+Getting Started with Spring Boot:
+1. Introduction  
+2. Introduction to Spring Boot  
+3. Setting up the Development Environment 
+4. Creating a Spring Boot Project 
+5. Understanding the Project Structure 
+6. Dependency Management 
+7. Building Your First Spring Controller 
+8. Running Spring Boot Applications  
+9. Debugging Spring Boot Applications 
+10. Automatic Restarts with Spring Boot DevTools 
+11. Configuring Application Properties  
+12. Summary
+
+
+
+
+Getting Started with Spring Boot:
+1. Introduction:
+Welcome to the first section of the course. In this section, we'll take our first steps with spring boot. We'll start by learning what spring boot is and why it's so popular among Java developers. Next we'll get our development environment set up and create our first Spring Boot project. I'll walk you through the project structure, so you understand how everything is organized. From there, we'll dive into dependency management, then build and run our first Spring Boot application. We'll also cover some essential tools like Spring Boot Dev Tools that make development faster and easier. You will learn how to configure your app with properties and how to debug it when things go wrong. By the end of this section, you'll be comfortable setting up and running Spring Boot projects, and you will have your first application up and running. Now let's get started.
+
+
+Codes and Other Notes Referred in this Discussion:
+
+What you'll Learn: 
+
+Introduction to Spring Boot
+Setting up your development environment
+Creating a Spring Boot project 
+Understanding the project structure
+Managing dependencies
+Building and running your application 
+Using Spring Boot DevTools 
+Configuring your application
+Debugging your application   
+
+
+
+
+
+
+
+
+
+
+
+
+2. Introduction to Spring Boot:
+Before we jump into writing code, let's take a few minutes and talk about what Spring framework is, what it offers, and how Spring Boot builds on it to make our lives easier. Let's start with the Spring framework. It's a popular framework for building Java applications. Think of it as a toolbox for building applications. It has a lot of modules, each designed to handle a specific task. These modules are broadly categorized into a few different layers. At the core, we have modules for handling dependency injection and managing objects. We'll talk about that in detail in the next section. In the web layer, we have modules for building web applications. With these modules we can handle web requests, process data, and return responses. Whether it's HTML for a webpage or JSON for an API. In the data layer, we have modules for working with databases, whether you're using SQL, NoSQL, or even in memory databases. We also have a module for adding cross cutting features like logging or security without cluttering the main code. This is called AOP or aspect oriented programming. We also have a module for testing of spring components. Now the beauty of spring is that it's modular, so you can pick and choose the modules you need for your project. It's powerful and flexible, which is why so many developers love it. Now while the spring framework is powerful, using it often involves a lot of configuration. For example, if you wanna build a web application, you might need to set up a web server, configure routing, and manage dependencies manually. This can make development slower and more complex. That's where Spring Boot comes in. Think of Spring Boot as a layer on top of the Spring framework that takes care of all the tedious setup for you. It simplifies Spring development by providing sensible defaults and ready to use features. So why does this matter? With Spring Boot, you can go from ideal to working application in minutes instead of hours. It saves you time, reduces boilerplate code and lets you focus on what really matters, building great features for your users. By the way, the Spring framework is just one part of a larger family of projects in the Spring ecosystem. These projects extend the capabilities of the framework to address specific needs. For example, we have Spring Data for simplifying database access. We have spring security for adding authentication and authorization to our applications. We have spring batch for batch processing. Spring cloud for building microservices and distributed systems. We have spring integration for messaging and integration between systems and more. Now that you understand what the spring framework and spring boot are, and how they fit in the larger spring ecosystem, let's start building.
+
+
+Codes and Other Notes Referred in this Discussion:  
+
+
+Web Data
+AOP
+Core
+Test
+
+Core - Handling Dependency Injection, Managing Objects 
+Web - Building Web Applications 
+Data - Working with Databases
+AOP - Aspect Oriented Programming 
+Test - Testing Spring Components 
+
+
+Building a web app: 
+Set up a web server
+Configure routing 
+Manage dependencies manually 
+
+
+Springboot: Simplifies Spring development by providing sensible defaults and ready-to-use features. 
+
+
+Spring framework is one part of a larger family of projects in the spring ecosystem: 
+Spring Boot
+Spring Framework
+Spring Batch
+Spring Integration
+Spring Data
+Spring Security
+Spring Cloud
+Spring Shell 
+
+
+
+
+
+
+
+
+
+
+
+
+3. Setting up the Development Environment:
+Before we start building applications with spring boot, we need to get our development environment ready. First you need the latest version of the Java development kit or JDK. So open up your browser and search for download JDK. You can find it on oracle.com. Now at the time of this video the latest version is JDK 23, it is possible that in the future when you are watching this video, there is a newer version of JDK available, that's not going to make this course outdated because what I'm going to teach you in this course will apply to future versions of JDK as well. So download the latest version of JDK here, as you can see there are distributions for different operating systems, Linux, Mac OS and Windows. Once you download and install the latest version of JDK, open up your terminal window and run java dash version to verify that the JDK is installed correctly. So as you can see on this machine I'm running JDK version 23. Next we need a code editor. In this course I'll be using IntelliJ IDEA, that's the most popular IDE for professional Java and Kotlin development. IntelliJ IDEA comes with a variety of built in tools specifically designed for productive development with Spring Boot. You can also consider alternatives like VSCode or Eclipse. I personally love IntelliJ IDEA, especially because of its smart editor. It not only auto completes method names, but also suggests entire chunks of code that you can insert with a single press of tab. You'll see me doing that throughout the course. This makes it much easier to write high quality code faster without getting stuck on syntax or boiler plate. I highly recommend using IntelliJ IDEA for this course because it simplifies your workflow and helps you focus on learning spring boot instead of dealing with setup issues. And here is something great, thanks to JetBrains, the creators of powerful ID's, plugins and services, you can try IntelliJ IDEA ultimate free for three months using the link and promo code below this video. Now the next step is installing a build automation tool for building and packaging our application. Here we have two options, Maven and Gradle. Different people have different preferences, but in this course we'll be using Maven because it's more popular. Now if you're using IntelliJ, you don't need to install Maven separately because IntelliJ has Maven built in. That's one of the reasons I said IntelliJ makes it much easier to get started. It comes with all the tools you need to build Spring Boot applications. But otherwise, if you're using vscode or eclipse, you'll have to install maven separately. You can download maven from maven.apache.org. Now if you're on a mac, you can install maven with home brew, it's much easier, so open up your terminal, first run brew update, and then run brew install maven. It's much easier to install it this way. If you're on Windows, I recommend installing maven using chocolatey. In case you are not familiar with it, it's a package manager for Windows. So first head over to chocolatey.org, download and install chocolatey, then open your terminal window and run choco install maven. Now once you are done, to verify that maven is installed properly, run mvn dash v. So on this machine, I'm running apache maven 3.9.
+
+
+
+
+Codes and Other Notes Referred in this Discussion:   
+
+Prerequisites:
+1. latest version of java development kit (jdk)
+java -version 
+
+2. Code Editor: 
+Intellij Idea
+
+3. Build Tools: 
+Maven, Gradle 
+
+maven.apache.org
+
+brew update
+brew install maven  
+
+Chocolatey.org 
+choco install maven 
+
+mvn -v 
+
+
+
+
+
+
+
+
+
+4. Creating a Spring Boot Project:
+Now, there are two ways to create a new springboard project. One way is to go to start.spring.io. On this page, we can select a few options and generate a new spring boot project. So first we specify our build tool which can be gradle or maven, by default maven is selected, so we keep it as is. Next we select our language, which is Java, then we select the version of spring boot, at the time of this course, the latest stable version is three point four point one. There is a newer version, but that's a snapshot version, so it has experimental features that might be removed in the future. So make sure to select the latest stable version. Now under project metadata, we have group, which is the group or organization that owns this project. By convention we use a reverse domain name. So example.com becomes com.example. Now in my case, I'm going to change this to code with MASH. Next we have artifact which is the name of the project, I'm going to change that to store, because we're going to build an online store in this course. Now name is the same so whenever we change artifact, name gets updated as well. We can leave description as is, now package name is the combination of the group and artifact. Again, we're not going to touch this, next we have the package type, which can be jar or war, we're going to use jar. And then we specify the java version. In this course we'll be using java 23. Next we can select our dependencies, these are third party libraries or frameworks we're going to use in our project. We'll talk about these later in this section. Next we go ahead and click generate. Now this gives us a zip file, once you unpack it, you can open it with your favorite editor, but again, I recommend you to use IntelliJ because when using IntelliJ we don't even have to go to this website to create a new springboard project. We can create a project right inside of IntelliJ. So open IntelliJ and click new project. Now on the left side under generators, select spring boot. Now what you see on the right side is exactly what you saw earlier on start.spring.io. Now I need to highlight that this feature is only available in intelligent idea ultimate edition. If you're using the community edition, which I don't recommend, you won't see this feature. The community edition is quite limited in terms of features, so if you want to do professional development, you should use the ultimate edition. So first we specify our project name, I'm going to change this to store, Next we specify the location, you can put it anywhere you want on your machine, it doesn't matter. Now optionally we can create a git repository. I recommend you to do this so you can properly version your code. Next we specify our language, Java, our build tool, Maven, our group, I'm going to change this to com.code with Mosh. We leave artifact and package name as is. Next we specify the JDK version, right here we have JDK 23, but what is beautiful about IntelliJ is that we can also download the latest version right here. So we don't have to go to our browser to download JDK separately from oracle.com. Okay, Next, we select the Java version, I'm going to change this to 23, and click next. Now up here we can see the version of spring boot, that is 3.4.1, optionally we can select our dependencies, again we're going to leave this for now and come back to it later. So let's go ahead and create our first spring boot project.
+ 
+
+
+Codes and Other Notes Referred in this Discussion:  
+
+start.spring.io 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5. Understanding the Project Structure:
+Alright, now let's talk about our project structure. First we have this folder, dot idea that contains a bunch of configuration files used by IntelliJ. You never have to touch these. Then we have dot mvn, this is part of maven wrapper which is a way to run maven without requiring it to be globally installed on your machine. With this we can ensure consistent Maven builds across different environments. So we can take this project, put it on a different machine and build it with the exact same version of Maven. And with this we can prevent surprises. Let me show you what we have here. So inside this folder, we have the wrapper folder and in this folder, we have a configuration file that specifies the version of maven we are going to build this project with. That is 3.3.2. This is different from the Maven you have globally installed on your machine. Now once again I want to emphasize, if you use IntelliJ, you don't need to install Maven globally on your machine because IntelliJ comes with Maven built in, okay? So this is our configuration file, now in this project we also have two Maven wrapper files in the root, we have mvnw which is for Mac or Linux and mvnw dot cmd for Windows. Both of these files are shell scripts, so here we have some code that would automatically download the version of Maven specified in this configuration file, okay? So that's the mvn folder, then we have a couple of files for our git repositories, that's pretty standard, we're not going to talk about them in this course, we have help dot md which is a markdown file that contains instructions for getting started. Again, we don't care about it. Next we have pom. Xml, this is short for project object model. And this is the heart of a Maven project. So in this file we have some configuration about our project and it's dependencies. Now what you see here is a format called xml, which a lot of younger developers are not familiar with. It's similar to html, so here we have open and close tags, and in between these tags we have some data. So here we have all the attributes we specified at the time of creating our project, we have group id, artifact id, this is the version of our project and so on. Further down below we have a tag called dependencies which we're going to talk about later in this section.So pom. Xml is the heart of Maven projects. Maven uses this file to download dependencies and build our project. Now, back to our project structure, in the source folder we have the actual code for our project, we have main and test, in the test folder we write our automated tests. In the main folder, we write the actual code. Here we have two subfolders, java where we have our java files and resources where we have non java files, like configuration files as well as static assets like html, css, javascript and so on. In the resources folder, we have a configuration file called application dot properties. Here we can have one or more key value pairs, so here is a key, spring dot application dot name, and the value is store. In this file we can specify the server port, our database settings and so on. Now, here in the java folder, we have a package based on the group and artifact we specified when creating this project. In this package we currently have one file, store application, which is the entry point to our application. So here we have a java class and inside this class we have our familiar main method. In this method we have a call to spring application dot run method. So that's the basics of our project structure, next we're going to talk about dependency management.
+
+
+
+Codes and Other Notes Referred in this Discussion: 
+
+
+Store
+ - .idea (bunch of configuration files used by intellij)
+ - .mvn 
+ - src 
+   - main
+     - java
+	 - resources 
+   - test
+   - pom.xml (project object model) 
+   
+   
+
+resources -> application.properties:
+spring.application.name=store
+   
+Package: com.codewithmosh.store
+
+storeApplication.java: 
+
+package com.codewithmosh.store;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class StoreApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(StoreApplication.class, args);
+    }
+
+}   
+
+
+
+
+
+
+
+
+
+
+
+6. Dependency Management: 
+Earlier we talked about dependencies. I told you that dependencies are third party libraries or frameworks we use in our application. For example, to build a web application, we need an embedded web server like Tomcat. We need libraries for handling web requests, building APIs, processing JSON data, logging, and so on. Now in Spring Boot applications, instead of adding multiple individual libraries, we can use a starter dependency, which is a curated collection of libraries and frameworks that are commonly used together. They're tested and verified by the Spring development team. So in this example, if we add the starter web dependency, it will bring in a compatible version of these libraries. Let's see this in action. So open up your browser and search for Maven central, It's right here, central.sonotype.com. Now Maven central is a public repository where we can find dependencies for our projects. It's similar to npm for javascript, pypy for python, nuget for dot net and so on. Now here let's search for spring dash boot dash starter dash web. Alright, here's the first item in the result, this dependency or this project is owned by org springframework.Boot. Now let's click on the dependency name, now to use this in our project, all we have to do is copy this piece of code in our pom file. Now this piece of code is dependent on our build tool, so up here you can see we have Apache Maven, so for Maven projects we have to copy this piece of code, but if we use a different build tool like gradle, then we have to copy a different piece of code, okay? So back to Apache Maven, now here you can see we have a dependency, the group id is org dot springframework dot boot, and the artifact is spring boot starter web. We also have the version. Now, let's copy this to clipboard, back to IntelliJ, let's go to our pom file, now in this file we have a tag called dependencies where we can list the dependencies of our project. This new project that we have created has two dependencies by default, one of them is spring boot starter, the other is spring boot starter test. Now after these two dependency tags, we're going to paste the piece of code that we just copied. Now here we have an error on the version because IntelliJ cannot find this dependency in our local repository. It cannot find it on our machine. To fix this issue, we have to click on this m box up here for synchronizing maven changes. So whenever we add a dependency to our project, we have to click this icon to reload our maven project, and then IntelliJ will download our new dependencies. So I'm going to click this, now look down here, it's resolving these dependencies, okay the error is gone. So this is one way to add a dependency, we go to maven central, we copy a piece of code, add it to our pom file and then reload our maven project. That's one way, but there is an easier way. First, let me remove this new dependency, so delete. Now here we can press command and n on mac, or control and n on Windows to bring up the context menu. Here we select dependency, now in this search box we search for spring boot starter web. Now if this doesn't work on your machine, remove and reinstall IntelliJ, that will solve the problem, okay? Now here you can see various dependencies that match the search pattern, we're going to select this one, from org.springframework.boot. And this is spring boot starter web version 3.3.2. Let's add this to our project, once again, we have an error here because this version doesn't exist in our local repository. So we click on the maven icon here to reload our project, and now IntelliJ downloaded this dependency into our local repository.Now if you look on the right side, we have this maven panel, in this panel we have our project, here we have a node called repositories, so we have two repositories. A local repository, which is a folder on our machine where these dependencies are stored. On mac it's inside our home folder, slash dot m2 slash repository. On windows it's probably somewhere like c drive backslash users backslash whatever. Now we also have a central repository which references maven central, okay? Now let's take a look inside the dependencies node. So currently we have three dependencies in this project, this is the dependency that we just added, spring boot starter web. Now earlier I told you that starter dependencies are curated collection of libraries that work together. So if you expand this, you can see, here we have another dependency for working with JSON data, we'll talk about this in the future. We have a dependency for tomcat which is our embedded web server. We have a dependency to spring web and spring web MVC. These are used for building web applications. With these libraries, we can process web requests and build APIs. Now, one more thing before we finish this lesson. When working with spring boot dependencies, as a best practice, we should remove the version here and let spring boot manage versioning for us. Let me explain what I mean. So, first let's remove the version tag, okay, now let's go to the top, Here on the top we have this parent tag that references a parent project. Look at the artifact ID, it's spring boot starter parent. Now if you hold down the command key on mac or control key on windows and hover our mouse over here, we can click and go to the pom file of this parent project. So now we are inside a separate pom file, once again here we have a parent tag that references a different project, that is spring boot dependencies. So once again hold down command on mac or control on Windows and click here. So here is the actual parent or grandparent of our project. Now if you're on Mac, press command and f, if you're on Windows press control and f, and search for spring dash boot dash starter dash web. Look, here we have a dependency to this package, and the version that is specified here is three point four point one. Similarly we have other dependencies and their versions, and these are tested to work together. So back to our pom file, using this mechanism, we allow the dependencies that we add here inherit their version from this parent project. So if they are listed in the parent project, that version that is compatible with our project will be used here, otherwise, Maven will use the latest version of those dependencies. Now this has two benefits, one benefit is that it simplifies our pom file, so down here, where we specify our dependencies, we don't have to include their version. The other benefit is that if you upgrade the version of spring boot, all dependency versions are automatically updated to their tested compatible counterparts. So, as a best practice, when working with spring boot dependencies, we should remove the version and let spring boot manage versions for us.
+
+
+
+
+Codes and Other Notes Referred in this Discussion: 
+
+
+Dependencies: 
+tomcat 
+web
+webmvc
+jackson
+logging 
+
+starter Dependency -> spring-boot-starter-web -> curated collection of libraries and frameworks that are commonly used together
+
+
+browser -> maven central -> https://central.sonatype.com/ -> search spring-boot-starter-web -> copy the snippet to our pom.xml  
+
+Another way: cmd + n for mac -> Dependency -> search spring-boot-starter-web
+
+
+
+
+
+
+
+
+
+7. Building Your First Spring Controller:
+In this lesson we'll create our first controller to handle requests to the homepage and serve a simple HTML file. But before we start coding, let's take a moment to understand the basics of Spring MVC, which is the foundation of how we handle web requests in Spring Boot. Spring MVC stands for model view controller, and is part of the spring framework that helps us build web applications. It provides a clean way to separate different parts of our application, making it easier to manage and scale. Model is where our applications data lives. It represents the business logic and is usually connected to a database or other data sources. In Spring Boot, the model can be a simple Java class. The view is what the user sees, it's the HTML, CSS or JavaScript that's rendered in the browser. In Spring MVC, views can be static files or dynamically generated using tools like time leaf. The controller is like a traffic controller, it handles incoming requests from the user, interacts with the model to get data and then tells the view what to display. Let's see this in action. So back to our project, here in the java folder, inside this package, let's right click and add a new java class. We're going to call this home controller. Now, IntelliJ is asking if you want to add this to our git repository, I'm going to select don't ask again, so we don't see this in the future. Let's go ahead and add this to our repository, okay. Now to make this a controller, we have to decorate it with the controller annotation. So here we type an at sign followed by controller, and then press enter. So this annotation is defined in this package, org.springframework.stereotype, okay? Now, I believe I covered annotations in my java course, but very briefly an annotation is like a label or tag that we add in the code to give instructions or additional context to the compiler. We can apply them to classes, methods, fields, parameters and so on. So in this example, by adding this annotation to this class, we are telling spring that this class should be used as a web controller for receiving web traffic. Now inside this class, we add a method, public string, we can call this method anything we want, but I'm going to go with index. Now, when we send a request to the root of our website, we want this method to be called. To do that, we have to apply another special annotation here that is request mapping. Now, this other annotation is defined in this package, org.springframework.web. This is part of the web starter dependency that we added in the previous lesson, okay? So we add this annotation and then give it an argument, that is a URL pattern. Here we can type a forward slash, that represents the root of our website. So when a request goes to the root of our website, this method gets called. If you want to receive traffic at a different endpoint like about or contact, we can change the argument here, okay? So, let's go back to the root of our website, now in this method we return the name of the view that should be returned to the browser. So we return index dot html. Okay, now we need to create this view. Back to our project, we go to the resources folder, this is where we add non java files. Now here we add a new folder, called static, and inside the static folder we add a new file, well a new HTML file, called index dot html. Now, in this html file, inside the body element, we type h1 tab and inside the h1 tag, we type hello world. So this is our view. Now we're not going to cover models in this lesson, we'll cover them later in the course. Next I'm going to show you how to build and run this application.
+
+
+
+
+
+Codes and Other Notes Referred in this Discussion: 
+
+
+Spring MVC -> Model View Controller 
+
+Model - Data + Logic 
+View - What the user sees 
+Controller - Mediator 
+
+
+
+src/main/java/com/codewithmosh/store/HomeController.java‎:
+
+package com.codewithmosh.store;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class HomeController {
+    @RequestMapping("/")
+    public String index() {
+        return "index.html";
+    }
+}
+
+
+
+src/main/resources/static/index.html‎:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Hello World</h1>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+8. Running Spring Boot Applications:
+Alright, now let's talk about running our application. If you are using IntelliJ, you can run this application by clicking the play icon on the toolbar.Look at the shortcut, it's control and r. So I'm going to press that, our application is built, now here on the console window, if you scroll to the right, you can see that tomcat which is our embedded web server is initialized with port 8,080. So now if you open our browser and navigate to local host port eight thousand and eighty, we can see our homepage. Beautiful. Now let me show you a different way to run this application. Back to intelliJ, first I'm going to stop this, now if you are not using intelliJ, you can run this application using maven. First we have to open a terminal window and go to our project folder. I've put this project on my desktop, inside spring boot slash demo slash store. So right now I'm inside the project folder, you can see that in the terminal, I'm on the main branch of my git repository. So if you run ls on mac or linux, or dir on windows, we should be able to see our project files. So look, earlier we talked about these two files, mvnw, that is a maven wrapper. So if you don't have maven globally installed on your machine, you can use the maven wrapper. Now here on mac or linux, to run this we have to type period forward slash mvnw. Then we type a space followed by dash v. So as you can see, I'm running maven 3.9.9. Now if you're using Windows, you have to type mvnw. Cmd space dash v. Actually I think dot cmd is optional, but I'm not entirely sure, I haven't used Windows for over ten years, so excuse me if I'm making a mistake here. Anyway, so now with this maven wrapper, we can run our spring boot application, but instead of dash v, we're going to type spring dash boot colon run. Take a look. Maven compiled our application, so now once again, if we go back to our browser and navigate to this address, we should see our homepage.
+
+
+
+
+Codes and Other Notes Referred in this Discussion:   
+
+
+To run the application: the play icon at the top or CTRL and R
+
+we can also run this application using maven: 
+./mvnw spring-boot:run 
+
+
+To check the maven wrapper version inside your project: ./mvnw -v or in the windows(mvn.cmd -v)
+
+
+
+
+
+
+
+
+
+
+
+
+9. Debugging Spring Boot Applications: 
+You have probably seen this guy before in my other courses, his name is John Smith, he's our self proclaimed rock star developer who claims he writes bug free code. According to John, debugging is something other people need to do. But let's be real, bugs happen to all of us, even if you're as perfect as John Smith thinks he is. So in this lesson, I'm going to show you a few different techniques for debugging your Spring Boot applications. Back to our home controller, let's make a few small changes and introduce a bug. First, let's define a private method, that returns a string, we call this get view name, and here we return index instead of index.html. Now back to our index method, first we declare a variable called view name, and here we call get view name. And then we return view name. Obviously this is unnecessary, this code is very redundant, but we are deliberately doing this for the purpose of debugging. Now let's rerun our application. So we press control and r, IntelliJ is saying that this process is running, it's asking us if we want to stop and restart the web server. Let's go ahead, alright good, back to the browser, let's refresh, alright, now we have an error because there is no view called index. Our view file is index dot HTML. So let's see how we can find this bug. Back to our home controller, the simplest way to debug this application is using a print statement. So before we return the name of the view, we can type system dot out dot print line view name. Now, let's rerun this application. Okay, back to the browser, refresh, now we go back to IntelliJ, here on the console window we can see the output of our print statement. So we are returning index which is not a valid view name. So this is a simple way we can debug our applications, but we can also use the debugging tools in IntelliJ or other IDEs. To do that, first let's remove this print statement. Alright, now we're going to start our application in the debug mode and execute it line by line. To do that, first we have to insert a breakpoint in our code. A breakpoint is a marker that tells IntelliJ to pause our application when the program reaches that line of code. For example, here we can add a breakpoint by clicking in the left margin, this red dot represents a break point, we can click it again to remove it. So we insert a break point, now we start the application in the debug mode and the execution stops right here. To do that, instead of clicking the play button, we should click the debug button. Look at the shortcut, it's control and d. So, I press control and d, rerun application in the debug mode, okay, our web server is listening on port 8,080, so now we go back to the browser and refresh this page, so our home controller is hit. So refresh, okay, here we are, and the execution stopped right here on this highlighted line. Now this line is not executed yet. We can execute it line by line using this tool over here, step over. The shortcut is f eight. So if you press f eight, this line is executed, and now inside this little window we have the variables that are meaningful in the current context. So we have this, which is a reference to the current object, which is home controller, we also have view name which is set to index. So using this window, we can verify that our variables have the right values. Now if a variable is not detected here, we can add an expression here, for example view name, and here's the result, okay? Now we don't need this so let's remove it. So this is how we can use step over, now we can step over this line as well, so we press f8, Now we are inside the source code of the spring framework. Now this is not the actual source code, this is the decompiled class. But we don't care about this code because this is not part of our application we want to debug, right? So we want to continue execution until something is rendered in the browser. To do that we have to use a different tool. Look at this button, this is for resuming program. The shortcut on mac is option command and r. So I'm going to press these keys, alright, now all the code has been executed and here is the result. Now back to our home controller, let's say we haven't found the bug yet, so we want to restart the debugging session. Again, we press control and d, now we go back to the browser and refresh this page, so our home controller is hit. But this time, instead of stepping over this line, we're going to step into it. Maybe there is a problem with this method. To do that, we use this button over here, step into. The shortcut is f7, so we press f7, and now we are inside this method, here we have only a single line of code, we could have tens or hundreds of lines of code and this method could call other methods. So again, we could step over or step into those lines until we would find the source of the problem. Now in this case we know the problem is with the string literal that we are returning, so let's change that to index. Html. Now that we're done, we stop the debugger and remove this breakpoint. We don't want to leave these breakpoints all over the code, because they are going to get in the way in future debugging sessions.
+
+
+
+
+Codes and Other Notes Referred in this Discussion: 
+
+
+Debugging: 
+Using terminal 
+Using IntelliJ debugger
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+10. Automatic Restarts with Spring Boot DevTools: 
+You have noticed that every time we change our code, we have to rebuild our project. But in spring boot, we also have the automatic restart feature. It's not ideal, it's not as fast as automatic restart we have in node or react, because there is a little bit of delay. But let me show you how to set it up. First we have to go to our pom file. Now let me show you a cool shortcut. Here we can press shift, command and o on mac, or shift control and o on Windows. Now over here we can search for our files. So pom dot xml, now here we're going to add a dependency. To do that, we press command and n on mac or control and n on windows. We select dependency, and search for spring boot dev tools. Okay, now look at this dependency from org.springframework.boot. So we add this to our project, first we remove the version because this dependency is part of the spring framework, so it's better to allow the parent element to determine the version of this dependency. So let's delete this line, instead we add another tag called optional, and we set it to true. That means this is not part of our application code, it's not going to be packaged with our application to be deployed into production, it's only used during development, okay? Now, we have an error because this dependency does not exist in our local maven repository. So we have to click this button to reload our project, now maven downloaded this dependency, good. Now to use this in IntelliJ, there are two settings we have to modify. We go to the top under IntelliJ IDEA menu, we go to settings, now on Windows I think settings exist under file or edit menus. Okay, regardless find the settings page. Now up here, search for compiler, now under build execution and deployment, here under compiler, check this box, build project automatically. That's the first setting, there is one more setting we have to modify here. On the top, search for advanced settings, right here under advanced settings, check this box. Allow automate to start even if the developed application is currently running. So check this box, alright, now let's restart our application. Alright, with this in place, every time we change our code, after a small delay, our application gets restarted. Let's see it in action. So let's go back to our home controller, and change index dot HTML to index. Okay, now after a few seconds, our application gets restarted. This is not ideal, it's not as fast as what we have in environments like node or react, it is what it is, but I thought to cover it in the course because a lot of people use this tool. Alright, our application got restarted, so back in the browser, if we refresh, we can see the homepage is broken. So this is the dev tools. Now, I personally am not a fan of this tool, so whenever I make changes, I like to restart the application using control and r. But going forward, I'm going to check this box so this doesn't get in the way and we can quickly see the result. Now let's change this to index. Html and move on to the next lesson.
+
+
+
+
+
+Codes and Other Notes Referred in this Discussion: 
+
+shift+cmd+O (mac) or shift+ctrl+O (windows) -> search for files, classes and so on. 
+
+cmd + N/ctrl + N -> Dependency -> spring-boot-devtools
+
+Now to use this in intellij: 
+1. IntellijIdea -> Settings -> Build, Execution, Deployment (Under Compiler section) -> Build project automatically(check the box)
+2. Advanced Settings -> Allow auto-make to start even if developed application is currently running(check the box)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+11. Configuring Application Properties: 
+In every application, there are settings we'll need to configure, like which port the application runs on, database credentials or even custom settings for our application. So let's see how we can configure our application properties. Here in the resources folder, we have this file, application dot properties. We briefly talked about this before. Here we have a bunch of key value pairs, some of them are standard like spring dot application name. We have several standard properties like server dot port. The default value is 8,080, but we can change it to whatever we want and this will be the port our application will listen on. Now I'm going to remove that. We can also define custom properties like app dot whatever, like page dash size. Okay, now to use these properties in our code, we have to use the value annotation. Let's see how this works. So first we go to our home controller, to do that we press shift command and o on mac or shift control and o on Windows. Let's go to our home controller, okay. Now in this controller, we want to define a private field and initialize it with the value of spring.application.name. So, let's declare a private field, private string, we can call that app name or whatever. Now we should annotate this with the value annotation. We press enter, so it's imported on the top, it's defined in this package org.springframework.beans. Factory dot annotation, okay? Now, as an argument, we should pass a string with a special syntax. First we type a dollar sign and inside braces we type the key of an application property. In this case, I'm going to copy this key. Spring dot application dot name. Now at run time, spring will get the value associated with this key and inject it into our private field. So now to see this in action, we can use a print statement. So system dot out dot print line, and here we can print the application name, okay? Let's rerun our application, and refresh the homepage, okay. Now here on the console look, app name is store.
+
+
+
+
+Codes and Other Notes Referred in this Discussion: 
+
+resources/static/application.properties:
+spring.application.name=store
+server.port=8081
+
+
+
+src/main/java/com/codewithmosh/store/HomeController.java‎:
+
+package com.codewithmosh.store;
+
+import org.springframework.beans.factory.annotation.Value; 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class HomeController {
+
+	@Value("${spring.application.name}")
+	private String appName; 
+	
+    @RequestMapping("/")
+    public String index() {
+		System.out.println("appName: " + appName); //store
+        return "index.html";
+		
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+12. Summary:
+
+Getting Started with Spring Boot:
+In this section, we explored the fundamentals of Spring Boot and how to set up a development environment to build Spring applications efficiently. We covered everything from project creation and structure to debugging and configuration.
+
+1. Introduction to Spring Boot
+• Spring Boot is a framework that simplifies Java application development by
+handling configuration, dependency management, and embedded servers.
+• It allows us to quickly build production-ready applications with minimal setup.
+
+
+2. Setting Up the Development Environment
+To build a Spring Boot application, we need:
+• Java Development Kit (JDK) – Spring Boot requires Java 17 or later.
+• An Editor or IDE – Popular choices include:
+• IntelliJ IDEA (Recommended for its smart editor and built-in Spring support)
+  • Eclipse
+  • VS Code
+• A Build Tool – Spring Boot supports:
+• Maven – More widely used and has been around longer.
+• Gradle – More modern, concise, and optimized for performance.
+
+
+3. Creating a Spring Boot Project
+We can generate a Spring Boot project in two ways:
+• Spring Initializr (start.spring.io) – A web-based tool to configure and generate a Spring Boot project.
+• Directly in IntelliJ IDEA Ultimate – IntelliJ provides built-in support for creating and configuring Spring Boot projects.
+Code with Mosh codewithmosh.com
+Spring Boot Essentials: Mastering the Fundamentals
+
+
+4. Understanding the Project Structure
+A Spring Boot project consists of:
+• src/main/java: Contains the application code.
+• src/main/resources: Stores configuration files (application.properties or application.yml).
+• pom.xml or build.gradle: Manages project dependencies using Maven or Gradle.
+
+
+5. Dependency Management:
+• Spring Boot simplifies dependency management through Spring Boot Starters, which bundle commonly used libraries.
+• Maven and Gradle handle versioning automatically, reducing the need for manual dependency updates.
+
+
+6. Running Spring Boot Applications:
+Spring Boot provides multiple ways to run an application:
+• Using IntelliJ's Run button
+• Running mvn spring-boot:run from the terminal
+
+
+
+
+
+
+
+
+Dependency Injection:
+
+1. Introduction: 
+One of the core features of the spring framework is dependency injection. It's a powerful concept that is used in real world applications.In this section, we'll start by breaking down what dependency injection is, why it's important, and how it helps make your code cleaner and easier to maintain. You'll learn how to implement it using constructors and setters. We'll then dive into how Spring Boot handles dependency injection using the IOC container. You'll see how to configure beans with annotations, control which beams are selected when multiple options are available, and externalize configurations to make your application more flexible. Finally, we'll explore advanced topics like configuring beams programmatically, using lazy initialization, managing beam scopes, and controlling the life cycle of your beams. By the end of this section, you'll have a strong understanding of dependency injection and how Spring uses it to manage the components of your application efficiently. Now let's jump in and get started.
+
+
+
+
+Codes and Other Notes Referred in this Discussion: 
+
+What you'll Learn: 
+
+What is dependency injection(DI)?
+Constructor injection
+Setter injection
+The Spring IoC container 
+Configuring beans using annotations 
+Controlling bean selection 
+Externalizing configuration 
+configuring beans using code 
+Lazy initialization 
+Bean scopes 
+Bean lifecycle methods   
+
+
+
+
+
+
+
+
+
+
+
+
+
+2. What is Dependency Injection? 
+So what is dependency injection? Many students find this concept confusing or complex, but it's actually very simple. Let's break it down with a real world example. Imagine we are building an ecommerce application. We have an order service class that handles placing orders. When an order is placed, the customer's payment needs to be processed. So order service depends on a payment service like Stripe payment service. In this case, we say order service is dependent on or coupled to Stripe payment service. At first glance, this might seem fine, but let's talk about the issues that arise when one class is tightly coupled or dependent on another. The first problem is that order service can only use Stripe payment service. If tomorrow we decide to switch to a different payment provider like PayPal, we would have to modify the order service code. And once we change the order service class, it has to be recompiled and retested, which could impact other classes that depend on order service. The second problem is that we cannot test order service in isolation. Because order service is tightly coupled to Stripe payment service, we can test its logic separately from Stripe payment service. Now the problem here isn't that order service depends on Stripe payment service. Dependencies are normal in any application. The issue we have here is about how the dependency is created and managed. Let me give you an analogy. Think of a restaurant. A restaurant business needs a chef, right? So there is a dependency between the restaurant and the chef. If the current chef becomes unavailable, the restaurant can hire another chef. This kind of dependency is totally normal, but what if we replace chef with John? That means our restaurant is now dependent on John, a specific chef. What if John becomes unavailable? We can't replace him with someone else and the restaurant will be in trouble. This is an example of tight or bad coupling. Now back to our ecommerce application, we don't want order service to be tightly coupled to a specific payment service like Stripe. That's like a restaurant being dependent on a specific chef. Instead, we want order service to depend on a payment service which could be Stripe, PayPal or any other provider. To achieve this, we can use an interface to decouple order service from Stripe payment service. An interface in Java is like a contract that defines the capabilities of a class. It doesn't contain any implementation or logic. It simply lists the methods or capabilities a class should have. For example, if order service depends on a payment service interface, it doesn't know anything about Stripe, PayPal, or any other payment provider. As long as these providers implement the payment service interface, they can be used to handle payments and order service wouldn't care which one is being used. So here are the benefits. If you replace Stripe payment service with PayPal payment service, the order service class is not affected. We don't need to modify or recompile order service. Also, we can test order service in isolation without relying on a specific payment provider like Stripe. Now with this setup, we just have to give order service a particular implementation of payment service. This is called dependency injection, meaning we'll have to inject a dependency into a class. Just like how we can inject a drug into a body, we can also inject an object into a class. Now, there are a few different ways we can do this and we're gonna to cover them over the next few lessons. But first, let's jump into the code and set up our example. Alright, back to our project, here in this package, let's add a new class, we're going to call this order service. Now, let's give it a method, public void place order. Now in a real application we should pass an order object here, but let's keep things simple and focus on dependency injection. So no parameters, now here we need to use a payment service like Stripe. So first, we go back to our project and add another class here, Stripe payment service. Now, in this class we add a method, public void process payment, Now in a real application we should pass a payment object here that encapsulates payment information like credit card details, but again to keep things simple, let's just add a simple parameter like a double here, double amount. Now in this method, let's add a print statement, let's change the message to amount, we just print the amount and right above that we add another print statement, and say stripe. Now in the future we can create another payment service like PayPal, and in that class we'll print PayPal, Okay? Now our order service needs to use Stripe payment service. So, back to this method, here we declare a variable, payment service, and set it to a new instance of Stripe payment service. Then we call paymentservice.processpayment, let's hard code a value like $10 okay? Now this is our earlier setup before we introduced an interface to decouple these two classes. So in this implementation, the order service class is dependent or tightly coupled to stripe payment service. So that means we cannot test order service in isolation, because whenever we want to test that, we have to bring in stripe payment service. And also if in the future we decide to switch to a different provider like paypal, we'll have to modify the order service class. As a result of this, the class has to be recompiled, retested, and this can propagate to several other classes in our application. So this is where we use an interface to decouple order service from stripe payment service. To do that, we go back to our stripe payment service, on the top, under the refactor menu, go to extract, and then interface. Now, on this dialog box, first we specify our interface name, we're going to use a more general name so we remove stripe and just call this payment service. We leave it in the same package, and then down here we select the method that we want to include in the interface. By default it's not selected, so make sure to select it and then click refactor. Now IntelliJ is saying that this interface has been successfully created, it's asking if you want to proceed, yes, and then it says use interface where possible. This is called programming against interfaces, okay? Let's go ahead, look what happened. Now Stripe payment service implements payment service, let's take a look here, so we hold down command on mac or control on windows and click here, this is our interface. As you can see, this interface has no implementation, there is no logic here, no algorithm. All we have is a method declaration or a capability. This is like a chef that can cook, but how they cook we don't know. That is dependent on the implementation, okay? Now, with this setup, we have to modify order service, so instead of being coupled to Stripe payment service, it should be coupled to payment service. We'll do that next.
+
+
+
+
+
+
+Codes and Other Notes Referred in this Discussion: 
+
+OrderService --- Depends on/Coupled to ---->  StripePaymentService 
+
+
+Issue: how dependencies are managed 
+
+
+Restaurant ---- Normal --->  Chef
+
+Restaurant ---------------> John 
+
+
+OrderService -------> PaymentService (Interface) <------ Strip, Paypal (Class) 
+
+
+Before introducting a Interface to decouple the classes: 
+
+src/main/java/com/codewithmosh/store/OrderService.java:
+
+package com.codewithmosh.store;
+
+public class OrderService {
+    public void placeOrder() {
+        var paymentService = new StripePaymentService();
+        paymentService.processPayment(10);
+    }
+}
+
+             			 
+src/main/java/com/codewithmosh/store/StripePaymentService.java
+			 			 
+package com.codewithmosh.store;
+
+public class StripePaymentService{
+    public void processPayment(double amount) {
+        System.out.println("STRIPE");
+        System.out.println("Amount: " + amount);
+    }
+}			 
+
+
+
+
+After Introducing the Interface: 
+
+Shortcut: Select the class --> top menu --> Refactor --> Extract --> Interface 
+
+src/main/java/com/codewithmosh/store/PaymentService.java:
+
+package com.codewithmosh.store;
+
+public interface PaymentService {
+    void processPayment(double amount);
+}
+
+
+
+src/main/java/com/codewithmosh/store/StripePaymentService.java:
+
+package com.codewithmosh.store;
+
+public class StripePaymentService implements PaymentService {
+    @Override
+    public void processPayment(double amount) {
+        System.out.println("STRIPE");
+        System.out.println("Amount: " + amount);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3. Constructor Injection:
+One way and the recommended way to inject a dependency into a class is via a constructor. So here in the order service, let's define a constructor, public order service, we press tab to complete the code, now we should pass our dependency as an argument to this constructor. So first, we give it a parameter of type payment service, we press tab and tab again, so we receive a payment service object here, now we should store this in a field in this class so we can use it in the place order method. So we can declare a private field, private payment service, tab, and then initialize it in the constructor. IntelliJ automatically detected the code we want to write, so we can just press tab, and here it is. So when creating an order service, we pass a payment service object, we store it in a field in this class which is declared up here, and then in the place order method, instead of using stripe payment service, we use the payment service object that we have in this class. This is our setup. Now to see this in action, we should go back to our project, and go to the store application class. We're going to take a break from spring, so we're going to comment out this line, so instead of running a spring application, we're going to run a console application. So here in the main method, first we declare a variable called order service, then we set it to a new order service, Now here in the constructor, we have to pass a payment service. This is our chance to inject a dependency into the order service class. So we can pass a new Stripe payment service, or in the future we can pass a different payment service like PayPal. Now we can call order service, but place order. Let's run our application, Alright look, we are using stripe to process $10 Now let's create a new payment service. So in this package we add a new java class called paypal payment service. Now here we say this class implements payment service, so we press tab to complete the code. Now we have an error because this class is not implementing the methods declared in this interface. So we can press alt and enter, and here we select implement methods. In this dialogue box we can see all the methods declared in our payment service interface, by default this is selected, otherwise we have to select it and then we click okay. So here's our implementation, now to save time, I'm going to go back to our Stripe payment service, copy these two lines and paste them in our PayPal class. We just have to change stripe to PayPal. Okay? Now with this change we can go back to our store application, and when creating a new order service, we can give it a new PayPal payment service. Now if you run the application, we can see that PayPal was used to process $10 but here's the interesting part, as a result of supporting PayPal payments, we didn't have to modify our order service. So we extended our application by creating new classes instead of modifying existing ones. In object oriented programming, this is called open closed principle. It's a very important principle in building maintainable software. The open closed principle says that a class should be open for extension, but closed from modification. In other words, we should be able to add new functionality to a class without changing its existing code. Now why is this important? Because by avoiding changes to existing code, we can reduce the risk of introducing bugs and breaking other parts of the application. Now of course this is just a guideline. It doesn't mean we need to blindly apply it everywhere in our application. Like any principle, it's something we should strive for when it makes sense and adds value. Now you might have seen people like our famous rock star developer, Mr. John Smith, who hate object oriented programming. One reason might be that they read principles like the open close principle in a book, apply them blindly to every corner of their application, and ended up with an over engineered mess. And of course, instead of blaming their own misuse of the principles, they blame object oriented programming itself. The takeaway here is that principles like the open close principles are tools not rules. They are meant to guide you in building flexible and maintainable software, but you should always use them with common sense.
+ 
+ 
+ 
+
+
+Codes and Other Notes Referred in this Discussion:  
+
+
+src/main/java/com/codewithmosh/store/OrderService.java:
+
+package com.codewithmosh.store;
+
+public class OrderService {
+    private PaymentService paymentService;
+
+    public OrderService(PaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
+
+    public void placeOrder() {
+        paymentService.processPayment(10);
+    }
+}
+
+
+src/main/java/com/codewithmosh/store/StoreApplication.java:
+
+package com.codewithmosh.store;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class StoreApplication {
+
+    public static void main(String[] args) {
+//        SpringApplication.run(StoreApplication.class, args);
+        var orderService = new OrderService(new StripePaymentService());
+        orderService.placeOrder();
+    }
+
+}
+
+Output: 
+STRIPE
+Amount: 10.0
+
+
+
+
+
+src/main/java/com/codewithmosh/store/PayPalPaymentService.java:
+
+package com.codewithmosh.store;
+
+public class PayPalPaymentService implements PaymentService {
+    @Override
+    public void processPayment(double amount) {
+        System.out.println("PAYPAL");
+        System.out.println("Amount: " + amount);
+    }
+}
+
+
+src/main/java/com/codewithmosh/store/StoreApplication.java:
+
+package com.codewithmosh.store;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class StoreApplication {
+
+    public static void main(String[] args) {
+//        SpringApplication.run(StoreApplication.class, args);
+        var orderService = new OrderService(new PayPalPaymentService());
+        orderService.placeOrder();
+    }
+
+}
+
+Output: 
+PAYPAL
+Amount: 10.0
+
+
+
+
+Open Closed Principle:
+A Class should be open for extension and closed for modification.   
+
+
+
+
+
+
+
+
+
+
+
+
+4. Setter Injection:
+Another way to inject a dependency into a class is via a setter. So here in the order service class we're going to define a setter for setting the payment service. Now we can type that setter by hand or we can have IntelliJ generate it for us. First we put the cursor on the field name, then we press command and n on mac or control and n on windows to bring up the generate context menu. Here we select setter, enter, and proceed. Alright, here's our new setter, so this setter gets a payment service and sets the payment service field in this class. Now I don't like that IntelliJ inserts the generated code on the top because by convention, we put getters and setters in the bottom. So, let me show you another cool shortcut for moving this code. First we put the cursor on the method declaration on the first line, Now we hold down shift and command on mac or shift and control on windows. Now by pressing the down or up arrows, we can move this method around. Okay, I'm going to move it to the bottom. So here it is. Now to use this, we go back to our store application, here we call orderservice.set payment service and pass new PayPal payment service. Now of course, this looks a little bit ugly because we don't want to pass the payment service twice. So it would be better to remove the payment service from constructor, and then pass it to the setter. So back to our order service, we can remove or comment out this constructor. The shortcut to do that is command and slash on mac, or control and slash on windows, Okay? Now back to our store application, we create an order service, we set the payment service and then place the order. Now there's a problem with this code, can you tell? Here's the problem, what if we forget to set the payment service? Now if we run our application, it crashes, we have a null pointer exception. So, we should use this approach for optional dependencies. In other words, our order service should be able to do its job without having that external dependency. In this case, a payment service is not an optional dependency, it's a required dependency, so it doesn't make sense to inject it via setter. Again, for the most part, constructor injection is the more common and the recommended way to inject dependencies.
+
+
+
+
+
+Codes and Other Notes Referred in this Discussion:   
+
+Shortcut: put the cursor on the field name --> Cmd + N /Ctrl + N --> Context menu --> Setter 
+
+To move the block of code: put the cursor on the method declaration --> shift + command /shift + control --> up arrow/down arrow 
+
+To comment block of code: cmd + / or ctrl + /
+
+src/main/java/com/codewithmosh/store/OrderService.java:
+
+package com.codewithmosh.store;
+
+public class OrderService {
+    private PaymentService paymentService;
+
+//    public OrderService(PaymentService paymentService) {
+//        this.paymentService = paymentService;
+//    }
+
+    public void placeOrder() {
+        paymentService.processPayment(10);
+    }
+
+    public void setPaymentService(PaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
+}
+
+
+
+
+
+src/main/java/com/codewithmosh/store/StoreApplication.java:
+
+package com.codewithmosh.store;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class StoreApplication {
+
+    public static void main(String[] args) {
+//        SpringApplication.run(StoreApplication.class, args);
+        var orderService = new OrderService();
+//        orderService.setPaymentService(new PayPalPaymentService());
+        orderService.placeOrder();
+    }
+
+}
+
+
+Problem: What if we forget to set the payment service? and if we run our application, it will crash, we will have a null pointer exception. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+5. The Spring IoC Container:
+So far, we have been manually creating a payment service and passing it to order service. While this works for simple examples, it quickly becomes a headache as our application grows. What if PayPal payment service has its own dependencies? We would have to create more objects and wire them together. Managing all of this manually can get messy, tedious and error prone. This is where Spring comes to the rescue. One of the core features of the spring framework is its ability to create objects and inject them into our classes automatically. At the core of the spring framework, we have what we call an IOC container. We'll talk about IOC in a minute, but this container is responsible for managing the objects in our application. In spring terminology, we refer to these managed objects as beans. So a bean is just a regular java object that is managed by spring. Spring takes care of creating it, injecting its dependencies and even managing its life cycle. Now what is IOC about? Well, IOC is short for inversion of control. The name comes from the fact that it inverts the control of creating objects and managing dependencies. In a traditional application, we are in control. We write the code to create objects and manage dependencies. But with the IOC container, we hand over that control to spring. Let's see this in action. So I'm going to bring back this line, now this run method returns an object of type application context. Application context is our IOC container, it's a storage for our objects. So we can store the result in an object of type application context that is defined in this package org.springframework.context. So we import it and call this object context. Now this context has a method called get bean. With this method we can get a bean or an object that is managed by a spring. In this case, we need a bean of type order service, right? So as an argument we pass order service dot class. Okay, then we store the result in order service, so instead of us manually creating objects and injecting dependencies, we let spring take care of that for us. So, let's remove this line, okay, now let's run our application. Alright, our application crashed with an exception of type no such bean definition exception. The message says no qualifying bean of type order service available. In other words, spring doesn't know how to create an instance of order service. There are two ways we can solve this issue, we'll talk about them next.
+
+
+
+
+
+
+Codes and Other Notes Referred in this Discussion:   
+
+Spring Core: 
+Spring can create objects and inject them into our classes. 
+
+
+IOC Container --> Bean --> is just a regular Java Object that is managed by spring. Spring takes care of creating it, injecting its dependencies and even mananging its lifecycle.  
+
+IOC - Inversion of Control 
+ 
+ 
+src/main/java/com/codewithmosh/store/OrderService.java: 
+
+package com.codewithmosh.store;
+
+public class OrderService {
+    private PaymentService paymentService;
+
+    public OrderService(PaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
+
+    public void placeOrder() {
+        paymentService.processPayment(10);
+    }
+
+    public void setPaymentService(PaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
+} 
+ 
+ 
+
+ 
+src/main/java/com/codewithmosh/store/StoreApplication.java:
+
+package com.codewithmosh.store;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+@SpringBootApplication
+public class StoreApplication {
+
+    public static void main(String[] args) {
+        ApplicationContext context = SpringApplication.run(StoreApplication.class, args);
+        var orderService = context.getBean(OrderService.class);
+        orderService.placeOrder();
+    }
+
+} 
+
+
+
+Error: 
+Exception in thread "main" org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.codewithmosh.store.OrderService' available  	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+6. Configuring Beans Using Annotations:
+There are two ways we can tell spring about objects it should manage for us. One way is using annotations and that's what we are going to cover in this lesson. There is another way using code which we'll look at later in this section. So back to our main method.Look, here we need to get a bean of type order service. So we want spring to manage objects of type order service. To do that, we go to our order service class and annotate this with an annotation called component. This is defined in org.springframework.stereotype. So let's press enter, so this is imported on the top, okay. So with the component annotation, we tell spring to manage objects of type order service. Now component is a general purpose annotation, we have other specialized annotations like service for classes that contain business logic, we have repository for classes that interact with the database, we have another annotation that you have seen before, and that's controller. This is used for marking classes as controllers for handling web requests. So back to our code, order service is a service class, so here we can also use the service annotation. Now technically service is just an alias for the component, so there is really no difference between the two, let me show you what I mean. So hold down command on mac or control on windows, and click service. Look at the implementation, look service is an alias for component. So we can use either of these annotations, but the component annotation is often used for utility classes, we use service for classes that contain business logic. Now look down here, we have an error saying could not auto wire, no bins of payment service type found. What this error is saying is that order service needs a payment service, but payment service is an interface. So spring doesn't know how to create instances of the payment service interface. To solve this problem, we have to go to the PayPal payment service class and annotate this with either component or service. Now technically we should do the same with the Stripe payment service, but don't do that in this lesson, because that's gonna cause an issue that we'll talk about later in this section. Okay? So we simply annotated two classes with service, now if we run our application, we can see that PayPal was used to process $10 Beautiful. Now there is another annotation you need to be familiar with and that is auto wired. Let's go back to our order service class, so here we have a constructor that takes a payment service. Now in the past, we had to annotate this constructor with auto wired to tell spring to auto wire this object with its dependencies. But going forward, this is not necessary if our class has a single constructor. So in this case we can comment this out and everything works, but you might see the auto wire annotation in a lot of older code bases. Now if you have multiple constructors here, we have to use auto wire. Let me show you this in action. So I'm going to temporarily comment this out, now let's create a default constructor, order service. Now, if you run our application, our application crashes with a null pointer exception, because in this example, spring prefers to use the default constructor with no arguments and as a result, payment service will remain uninitialized. To solve this problem, we have to bring back the auto wired annotation, now when we run our application, everything works as expected, because we have told spring to auto wire this class with it's dependencies, okay? Now what if we have another constructor but not a default constructor? So let's add payment service here, and give it a second parameter like int x. It doesn't really matter. Now look what happens if we remove the auto wired annotation. Right away we can see an error here, saying class doesn't contain matching constructor for auto wiring. But let's run the application and see the error we get, because that's a very common error in spring applications. So, let's run this one more time. Alright, now we got an exception of type bean creation exception. And the message is error creating bean with the name order service. This is a very common exception. So, to solve this issue, again, we have to bring auto wire back, so spring auto wires this class with it's dependencies. Let's run our application one more time, Problem solved. So let's remove this other constructor as well as the auto wired annotation, and move on to the next lesson.
+
+
+
+
+
+
+Codes and Other Notes Referred in this Discussion:   
+
+
+Configuring Beans: 
+
+Using annotations
+Using code 
+
+
+
+src/main/java/com/codewithmosh/store/OrderService.java: 
+
+package com.codewithmosh.store;
+
+
+import org.springframework.stereotype.Component;
+
+
+@Component
+public class OrderService {
+    private PaymentService paymentService;
+
+    public OrderService(PaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
+
+    public void placeOrder() {
+        paymentService.processPayment(10);
+    }
+
+    public void setPaymentService(PaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
+} 
+ 
+ 
+ 
+ 
+Annotations: 
+
+@Component
+@Service 
+@Repository 
+@Controller  
+
+
+
+
+src/main/java/com/codewithmosh/store/OrderService.java:
+
+package com.codewithmosh.store;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class OrderService {
+    private PaymentService paymentService;
+
+    public OrderService(PaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
+
+    public void placeOrder() {
+        paymentService.processPayment(10);
+    }
+
+    public void setPaymentService(PaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
+}
+
+
+
+
+src/main/java/com/codewithmosh/store/PayPalPaymentService.java:
+
+package com.codewithmosh.store;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class PayPalPaymentService implements PaymentService {
+    @Override
+    public void processPayment(double amount) {
+        System.out.println("PAYPAL");
+        System.out.println("Amount: " + amount);
+    }
+}
+
+
+
+
+
+src/main/java/com/codewithmosh/store/OrderService.java:
+
+package com.codewithmosh.store;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class OrderService {
+    private PaymentService paymentService;
+
+	public OrderService() {}
+	
+	@Autowired 
+    public OrderService(PaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
+
+    public void placeOrder() {
+        paymentService.processPayment(10);
+    }
+
+    public void setPaymentService(PaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
+}
+
+
+
+if there is one constructor, there is no problem eventhough if you don't use 'Autowired' annotation. You may or may not use 'Autowired' annotation.
+But if there is more than one constructor, it's always advised to use 'Autowired' annotation, else we will get an error. Our application crashes with a null pointer exception.
+
+
+Learn the importance and purpose of 'Autowired' in detail  
+
+
+
+
+
+
+
+
+
+
+
+
+
+7. Controlling Bean Selection:
+
+
+
+
+Codes and Other Notes Referred in this Discussion:   
+
+
+Controlling Bean Selections: 

@@ -4,7 +4,7 @@ difference between fields and members in java
 all the primitive types (full list, and their memory length)
 wrapper classes and what they are 
 
-sout
+sout and other similar shortcuts 
 
 for object and reference types you have to mention new in the right hand side 
 

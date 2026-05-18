@@ -6,22 +6,19 @@ Setting Up the Java Development Environment
 
 1. Installing the Java Development Kit (JDK)
 
-# What Is the JDK?
-
+What Is the JDK?
 The Java Development Kit (JDK) is a software bundle used to develop, compile, and run Java applications. It includes:
 - A compiler ('javac')  
 - The Java Runtime Environment (JRE)  
 - A comprehensive set of reusable libraries (the Java API)  
 - Other utilities (debugger, documentation generator)
 
-# Downloading the JDK
-
+Downloading the JDK:
 1. Open your web browser and search for "JDK download."  
 2. Navigate to the Oracle Java SE (Standard Edition) download page.  
 3. Locate the Java Development Kit section, which lists installers for various platforms (Windows, macOS, Linux).
 
-# Installing on macOS
-
+Installing on macOS:
 1. Choose the macOS installer ('.dmg') and click Accept License Agreement.  
 2. Download the '.dmg' file.  
 3. Open the downloaded file and double-click the package icon.  
@@ -31,8 +28,7 @@ The Java Development Kit (JDK) is a software bundle used to develop, compile, an
    - Enter your macOS password when prompted  
 5. Once installation finishes, you may trash the installer package.
 
-# Verifying the Installation
-
+Verifying the Installation:
 - Open Terminal and run:  
   '''
   java -version
@@ -41,26 +37,23 @@ The Java Development Kit (JDK) is a software bundle used to develop, compile, an
 
 
 
-
 2. Installing a Code Editor or IDE
 
-# Popular Java IDEs
+Popular Java IDEs:
 
 Below is a comparison of three widely used IDEs:
 
-| IDE         | License              | Key Strengths                        |
-|-------------|----------------------|--------------------------------------|
-| NetBeans    | Apache License 2.0   | Tight integration with Oracle tools; good for modular projects  |
-| Eclipse     | Eclipse Public License | Highly extensible; large plugin ecosystem |
-| IntelliJ IDEA | Apache License 2.0 (Community Edition) | Smart code completion; modern UI; deep refactoring support |
+| IDE           | License                                | Key Strengths                                                   |
+|---------------|----------------------------------------|-----------------------------------------------------------------|
+| NetBeans      | Apache License 2.0                     | Tight integration with Oracle tools; good for modular projects  |
+| Eclipse       | Eclipse Public License                 | Highly extensible; large plugin ecosystem                       |
+| IntelliJ IDEA | Apache License 2.0 (Community Edition) | Smart code completion; modern UI; deep refactoring support      |
 
-# Choosing an IDE
-
+Choosing an IDE:
 - If you already have a preferred editor, you can use it throughout this course.  
 - This guide uses IntelliJ IDEA Community Edition (free and sufficient for most Java projects).
 
-# Installing IntelliJ IDEA (Community Edition)
-
+Installing IntelliJ IDEA (Community Edition):
 1. Search for "IntelliJ IDEA download" and go to the JetBrains website.  
 2. Select Community Edition and click Download.  
 3. Once downloaded, open the installer:
@@ -70,9 +63,7 @@ Below is a comparison of three widely used IDEs:
 
 
 
-
-3. Java Development Workflow
-
+3. Java Development Workflow:
 Below is a simplified diagram of the basic Java build–run cycle:
 
 '''
@@ -93,9 +84,7 @@ Below is a simplified diagram of the basic Java build–run cycle:
 
 
 
-
-4. Next Steps
-
+4. Next Steps:
 - Configure the 'JAVA_HOME' environment variable for build tools (e.g., Maven, Gradle).  
 - Familiarize yourself with your IDE’s project structure and settings.  
 - Explore the anatomy of a Java program (packages, classes, methods, 'main' entry point).
@@ -107,8 +96,7 @@ With these tools in place, you’re ready to dive into the anatomy of a Java pro
 
 2. Anatomy of a Java Program:
 
-2.1 Functions and Methods
-
+2.1 Functions and Methods:
 Functions (called *methods* in Java) are the smallest building blocks of a Java program. Each method encapsulates a specific task—much like pressing a particular button on a TV remote triggers one action.
 
 - Access Modifier: determines visibility (e.g., 'public', 'private')  
@@ -125,9 +113,7 @@ void sendEmail() {
 '''
 
 
-
-2.2 Classes as Containers
-
+2.2 Classes as Containers:
 In Java, every method must belong to a class. A class groups related methods (and fields), helping you organize code like supermarket sections organize products.
 
 - Keyword: 'class'  
@@ -145,8 +131,7 @@ class Main {
 
 
 
-2.3 The 'main' Method: Entry Point
-
+2.3 The 'main' Method: Entry Point:
 Every runnable Java application needs one 'main' method. When you launch your program, the Java Virtual Machine (JVM) looks for this method and starts executing its code.
 
 '''java
@@ -162,7 +147,7 @@ public class Main {
 
 
 
-2.4 Access Modifiers
+2.4 Access Modifiers:
 
 | Modifier  | Visibility                              |
 |-----------|-----------------------------------------|
@@ -174,7 +159,7 @@ Most examples in this course use 'public' for both classes and methods.
 
 
 
-2.5 Naming Conventions
+2.5 Naming Conventions:
 
 | Element | Convention   | Example                 |
 |---------|--------------|-------------------------|
@@ -186,7 +171,7 @@ Most examples in this course use 'public' for both classes and methods.
 
 
 
-2.6 Anatomy Diagram
+2.6 Anatomy Diagram:
 
 '''
 +----------------------------------+
@@ -203,13 +188,11 @@ Most examples in this course use 'public' for both classes and methods.
 
 
 
-# Next Steps
-
+Next Steps:
 1. Open your IDE and create a new Java project.  
 2. Define a 'public class Main'.  
 3. Inside it, add 'public void main()' and print a simple message.  
 4. Run the program to see your first Java application in action.
-
 
 
 
@@ -219,7 +202,6 @@ void sendEmail() {
 ...
 
 }
-
 
 
 class Main{
@@ -309,8 +291,7 @@ public class Main {
 
 
 
-3.4 Write Your First Line of Code
-
+3.4 Write Your First Line of Code:
 1. Remove or replace the default comment ('// TODO: …').  
 2. Inside the 'main' method, type:
 
@@ -319,20 +300,18 @@ public class Main {
    '''
 
 3. Breakdown:
-
-   | Expression                  | Type            | Description                                    |
-   |-----------------------------|-----------------|------------------------------------------------|
-   | 'System'                    | Class           | Defined in 'java.lang'                         |
-   | 'out'                       | Field ('PrintStream') | Standard output stream                     |
-   | 'println(...)'              | Method          | Prints text + newline                         |
-   | '"hello world"'             | String literal  | Sequence of characters; enclosed in '"'        |
+| Expression                  | Type            | Description                                    |
+|-----------------------------|-----------------|------------------------------------------------|
+| 'System'                    | Class           | Defined in 'java.lang'                         |
+| 'out'                       | Field ('PrintStream') | Standard output stream                   |
+| 'println(...)'              | Method          | Prints text + newline                          |
+| '"hello world"'             | String literal  | Sequence of characters; enclosed in '"'        |
 
 4. IntelliJ auto-completes parentheses and semicolon.
 
 
 
-3.5 Run Your Program
-
+3.5 Run Your Program:
 - Click the Run ▶️ icon on the toolbar.  
 - (Mac shortcut: Control + R)  
 - Watch IntelliJ build and execute your code.  
@@ -347,14 +326,11 @@ Congratulations—your first Java program works!
 
 
 3.6 What’s Next?
-
 Next up, learn exactly how Java code gets executed under the hood: class loading, bytecode, and the JVM lifecycle.
 
 
 
-
 Codes and Other Notes Referred in this Discussion: 
-
 
 package com.codewithmosh; 
 
@@ -364,82 +340,81 @@ public class Main {
 	}
 }
 
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
 4. How Java Code Gets Executed:
-When you click Run in IntelliJ (or invoke commands manually), two major phases happen under the hood:
 
+When you click Run in IntelliJ (or invoke commands manually), two major phases happen under the hood:
 1. Compilation – your '.java' source files are turned into Java bytecode ('.class' files).  
 2. Execution – the Java Virtual Machine (JVM) loads those bytecode files and converts them into native machine code for your OS.
 
 
-
-4.1 Compilation Step
-
+4.1 Compilation Step:
 1. Locate your source file  
    - In IntelliJ: right-click 'Main.java' → Open in Terminal (Windows: Open in Command Prompt).  
    - You’ll land in the folder that contains 'Main.java'.
 
-2. Run the Java compiler  
-   '''bash
-   javac Main.java
-   '''
-   - On macOS/Linux, file names are case-sensitive: use 'Main.java', not 'main.java'.  
-   - This produces 'Main.class' in the same directory.
 
-3. Verify the '.class' file  
-   | macOS/Linux      | Windows        |
-   |------------------|----------------|
-   | 'ls'             | 'dir'          |
-   | Output:          | Output:        |
-   | 'Main.class'     | 'Main.class'   |
-
-4. IntelliJ’s build output  
-   - IntelliJ compiles into the 'out/' folder by default.  
-   - Project panel view:
-
-     '''
-     hello-world/
-     ├── src/
-     │   └── com/
-     │       └── codewithmosh/
-     │           └── Main.java
-     └── out/
-         └── production/
-             └── hello-world/
-                 └── com/
-                     └── codewithmosh/
-                         └── Main.class
-     '''
+2. Run the Java compiler:  
+'''bash
+javac Main.java
+'''
+- On macOS/Linux, file names are case-sensitive: use 'Main.java', not 'main.java'.  
+- This produces 'Main.class' in the same directory.
 
 
+3. Verify the '.class' file:  
+| macOS/Linux      | Windows        |
+|------------------|----------------|
+| 'ls'             | 'dir'          |
+| Output:          | Output:        |
+| 'Main.class'     | 'Main.class'   |
 
 
-4.2 Java Bytecode: Platform Independence
+4. IntelliJ’s build output: 
+- IntelliJ compiles into the 'out/' folder by default.  
+- Project panel view:
 
+ '''
+ hello-world/
+ ├── src/
+ │   └── com/
+ │       └── codewithmosh/
+ │           └── Main.java
+ └── out/
+	 └── production/
+		 └── hello-world/
+			 └── com/
+				 └── codewithmosh/
+					 └── Main.class
+ '''
+
+
+
+
+4.2 Java Bytecode: Platform Independence:
 - Bytecode ('.class') is a platform-neutral, intermediate form.  
 - Any OS with a JRE can run it—Windows, macOS, Linux, etc.  
 - You can download a JRE from [java.com/download](https://java.com/download).
 
 
 
-
-4.3 Execution Step
+4.3 Execution Step:
 
 1. Invoke the JVM  
-   '''bash
-   # From the directory containing 'com'
-   java com.codewithmosh.Main
-   '''
-   - 'java': starts the JVM.  
-   - 'com.codewithmosh.Main': fully qualified class name (matches 'package' + class).  
-   - JVM locates 'com/codewithmosh/Main.class', loads the bytecode, and JIT-compiles it to native code.
+'''bash
+# From the directory containing 'com'
+java com.codewithmosh.Main
+'''
+- 'java': starts the JVM.  
+- 'com.codewithmosh.Main': fully qualified class name (matches 'package' + class).  
+- JVM locates 'com/codewithmosh/Main.class', loads the bytecode, and JIT-compiles it to native code.
 
 2. See your program run  
-   '''
-   hello world
-   '''
+'''
+hello world
+'''
 
 
 
@@ -464,17 +439,13 @@ When you click Run in IntelliJ (or invoke commands manually), two major phases h
 
 
 
-
 4.5 Why This Matters
 
 - Portability: write once, run anywhere.  
 - Separation of concerns: compile-time checks vs. runtime execution.  
 - Visibility: IntelliJ hides these steps, but knowing them helps troubleshoot build/run issues.
 
-
-
 Tip: Experiment on the command line to reinforce what IntelliJ does for you automatically.
-
 
 
 
@@ -488,14 +459,79 @@ Main.java
 java com.codewithmosh.Main 
 
 
+
+1. JDK (Java Development Kit):
+- What it is: The full toolkit for developers.  
+- What’s inside:
+  - The JRE (so you can run programs).  
+  - Development tools like:
+    - 'javac' → compiler (turns '.java' into '.class').  
+    - 'javadoc' → documentation generator.  
+    - 'jar' → packaging tool.  
+    - 'jdb' → debugger.  
+- Purpose: Needed to write, compile, and debug Java code.  
+- Analogy: Like a carpenter’s toolbox — it has everything to build the house.
+
+
+2. JRE (Java Runtime Environment):
+- What it is: The environment required to run Java applications.  
+- What’s inside:
+  - The JVM (execution engine).  
+  - Core libraries ('java.lang', 'java.util', etc.).  
+- Purpose: Lets you run Java programs but doesn’t include development tools.  
+- Analogy: Like the finished house you live in — you don’t need the tools, just the environment.
+
+
+3. JVM (Java Virtual Machine):
+- What it is: The engine that actually executes Java bytecode.  
+- Responsibilities:
+  - Loads '.class' files.  
+  - Converts bytecode into native machine instructions.  
+  - Manages memory (heap, stack, garbage collection).  
+  - Provides platform independence.  
+- Purpose: Ensures “write once, run anywhere.”  
+- Analogy: Like the electricity system in the house — it makes things run, regardless of location.
+
+
+4. JIT (Just-In-Time Compiler):
+- What it is: A special compiler inside the JVM.  
+- Role: Speeds up execution by converting frequently used bytecode into native machine code at runtime.  
+- Benefit: Avoids interpreting the same instructions repeatedly.  
+- Example: If a loop runs thousands of times, JIT compiles it once into native code for faster performance.  
+- Analogy: Like caching — instead of cooking the same meal every time, you prepare it once and reuse it.
+
+
+5. Other Supporting Concepts:
+- Bytecode: The '.class' file output from 'javac'. Platform-independent instructions.  
+- Garbage Collector (GC): Part of the JVM that automatically frees unused memory.  
+- Class Loader: Loads classes into memory when needed.  
+- JDK vs JRE vs JVM:  
+  - JDK = Development + Running.  
+  - JRE = Running only.  
+  - JVM = Execution engine inside JRE.  
+
+
+Quick Comparison Table:
+| Component | Contains         | Purpose                 | Used By       |
+|-----------|------------------|-------------------------|---------------|
+| JDK       | JRE + tools      | Develop, compile, debug | Developers    |
+| JRE       | JVM + libraries  | Run Java programs       | End-users     |
+| JVM       | Execution engine | Execute bytecode        | Everyone      |
+| JIT       | Part of JVM      | Optimize runtime speed  | JVM internally|
+
+
+In short:  
+- You write code with the JDK.  
+- It compiles into bytecode.  
+- The JRE provides the runtime.  
+- The JVM executes the bytecode.  
+- The JIT makes it fast.
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+5. Five Interesting Facts About Java:
 
-5. Five Interesting Facts About Java
-
-
-1. Java’s Origin and Naming History
-
+1. Java’s Origin and Naming History:
 - Created in 1995 by James Gosling at Sun Microsystems.  
 - Original name: Oak  
   - Named after an oak tree outside Gosling’s office.  
@@ -514,8 +550,7 @@ Oak (1991) → Green → Java (1995)
 
 
 
-2. Four Java Editions
-
+2. Four Java Editions:
 Java is split into specialized editions—each builds upon or subsets the core libraries:
 
 | Edition                   | Abbreviation | Purpose                                                                 |
@@ -535,16 +570,14 @@ Java Editions
 
 
 
-3. Latest Version
-
+3. Latest Version:
 - Java SE 12  
   - Released March 2019  
   - Includes enhancements to JVM, new garbage-collection options, and language features  
 
 
 
-4. Java’s Global Footprint
-
+4. Java’s Global Footprint:
 - Developers: ~9 million worldwide  
 - Mobile devices: ~3 billion run Java  
 - TV sets: ~120 million use Java runtime  
@@ -554,13 +587,11 @@ Java Editions
 
 
 
-5. Java Developer Opportunities
-
+5. Java Developer Opportunities:
 - Average U.S. salary: just over \$100,000/year (source: Indeed.com)  
 - High demand: Java skills drive roles in enterprise back-ends, Android, IoT, and large-scale systems  
 
 *With Java’s pervasiveness across industries, mastering it opens doors in finance, e-commerce, embedded, and cloud engineering.*
-
 
 
 
@@ -573,10 +604,9 @@ Java Card
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-6. Course Structure
+6. Course Structure:
 
-
-6.1 Series Overview
+6.1 Series Overview:
 
 This Java course is the first of a four-part series, each lasting 3–4 hours. You can comfortably complete one part in a day or two. Together, they’ll take you from beginner to advanced Java developer.
 
@@ -587,52 +617,44 @@ This Java course is the first of a four-part series, each lasting 3–4 hours. Y
 | 3    | 3–4 hours    | Core Java APIs (standard library classes)               |
 | 4    | 3–4 hours    | Advanced Java Features (streams, threads, database, etc.)|
 
-'''text
 Part 1 → Part 2 → Part 3 → Part 4
-'''
 
 
-
-6.2 Part 1: Fundamentals of Programming with Java
-
-# 6.2.1 Getting Started
+6.2 Part 1: Fundamentals of Programming with Java:
+6.2.1 Getting Started:
 - Tool setup (JDK, IntelliJ) and project creation  
 - Anatomy of a Java program  
 - Writing & running your first “Hello World”  
 
-# 6.2.2 Type System
+6.2.2 Type System:
 - Primitive types: numbers, 'boolean'  
 - Reference types: 'String', arrays  
 - Hands-on: build a Mortgage Calculator  
 
-# 6.2.3 Control Flow & Algorithms
+6.2.3 Control Flow & Algorithms:
 - Conditional statements ('if', 'switch')  
 - Loops ('for', 'while', 'do-while')  
 - Data validation: enforce correct user input in the calculator  
 
-# 6.2.4 Clean Coding Techniques
+6.2.4 Clean Coding Techniques:
 - Naming conventions & code organization  
 - Writing expressive, maintainable code  
 - Refactoring tips used by professional developers  
 
-# 6.2.5 Debugging & Deployment
+6.2.5 Debugging & Deployment:
 - Finding and fixing runtime errors (exceptions, logging)  
 - Packaging your application (JAR files, command-line launch)  
 
 > By the end of Part 1 you’ll have a solid foundation in Java fundamentals plus a running mortgage-calculator command-line app that you’ll refine throughout this series.
 
 
-
-6.3 Part 2: Object-Oriented Programming
-
+6.3 Part 2: Object-Oriented Programming:
 - Core OOP concepts: classes, objects, inheritance, polymorphism, encapsulation  
 - Designing and modeling real-world systems in Java  
 - Building on your calculator: refactor into classes  
 
 
-
-6.4 Part 3: Core Java APIs
-
+6.4 Part 3: Core Java APIs:
 - In-depth coverage of standard libraries:  
   - Collections ('List', 'Map', 'Set')  
   - I/O ('java.io', 'java.nio')  
@@ -640,25 +662,19 @@ Part 1 → Part 2 → Part 3 → Part 4
 - Practical coding examples using each API  
 
 
-
-6.5 Part 4: Advanced Java Features
-
+6.5 Part 4: Advanced Java Features:
 - Streams & Lambda Expressions for functional-style data processing  
 - Multithreading & Concurrency  
 - Database Programming with JDBC  
 - Network I/O, annotations, modules, and more  
 
 
-
-# 6.6 Next Steps
-
+6.6 Next Steps:
 Stick with me through all four parts—by the end, you’ll master Java: the language powering millions of applications and coveted by employers worldwide.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-Type: 
-
+Types: 
 
 1. Introduction: 
 In this section we're gonna look at the fundamentals of programming in Java. You're gonna learn about variables and constants, primitive and reference types, you're gonna learn about casting or type conversion, you will learn how to work with numbers, strings, and arrays, and how to read input from the user. Once you learn all this, I'm gonna give you a project, you're gonna build a mortgage calculator on your own. So make sure to pay great attention to all the materials you're gonna learn, because you're gonna use most of them in this project. Are you ready?
@@ -670,12 +686,7 @@ Now, let's jump in and get started.
 
 2. Variables: 
 
-
-
-2. Variables
-
 2.1 What Are Variables?
-
 A variable is a named “box” in your computer’s memory where you can store a piece of data temporarily. Think of it like a labeled locker in a hallway:
 
 '''
@@ -693,9 +704,7 @@ Each locker has:
 
 
 
-
 2.2 Declaring & Initializing:
-
 To create a variable, you declare its type, give it a name (identifier), and then assign an initial value:
 
 '''java
@@ -703,7 +712,7 @@ int age = 30;
 '''
 
 - int: the variable’s type (only whole numbers)  
-- age: identifier—how you refer to this locker  
+- age: identifier—how you refer to this locker  (name/label/identifier)
 - =: assignment operator—places the value into the locker  
 - 30: initial value (initialization)  
 
@@ -711,9 +720,7 @@ Key point: you must initialize a variable before reading it.
 
 
 
-
 2.3 Reading & Updating:
-
 Once initialized, you can read and change the value:
 
 '''java
@@ -726,9 +733,7 @@ System.out.println(age);   // prints 35
 
 
 
-
-2.4 Multiple Declarations (Not Recommended)
-
+2.4 Multiple Declarations (Not Recommended):
 Java lets you declare more than one variable on the same line:
 
 '''java
@@ -744,8 +749,7 @@ int temperature = 20;
 
 
 
-2.5 Copying Between Variables
-
+2.5 Copying Between Variables:
 You can assign one variable’s value to another, effectively cloning the contents of one locker into another:
 
 '''java
@@ -758,9 +762,7 @@ System.out.println(herAge);  // prints 30
 
 
 
-
-2.6 Naming Conventions
-
+2.6 Naming Conventions:
 Follow camelCase for variable names to keep code consistent and readable:
 
 - Start with a lowercase letter  
@@ -773,7 +775,7 @@ Examples:
 
 
 
-Visual Recap
+Visual Recap:
 
 '''
 Declare & Initialize:
@@ -793,12 +795,7 @@ Copy:
   herAge ──▶ 35
 '''
 
-
-
 Next Up: Dive into Java’s primitive types, the building blocks that define what your variables can hold.
-
-
-
 
 
 
@@ -834,9 +831,7 @@ public class Main {
 	}
 }
 
-
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 
 3. Primitive Types: 
 
@@ -851,60 +846,45 @@ This section covers the eight built-in primitive types.
 
 
 
-3.2 The Eight Primitive Types
+3.2 The Eight Primitive Types:
 
 | Type     | Size    | Range / Values                                                       | Common Use Case                         |
-|----------|---------|-----------------------------------------------------------------------|-----------------------------------------|
-| byte     | 1 byte  | –128 to 127                                                           | Very small whole numbers                |
-| short    | 2 bytes | –32,768 to 32,767                                                     | Medium-range whole numbers              |
-| int      | 4 bytes | –2,147,483,648 to 2,147,483,647                                       | Default for whole numbers               |
-| long     | 8 bytes | –9,223,372,036,854,775,808 to 9,223,372,036,854,775,807               | Very large whole numbers                |
-| float    | 4 bytes | Approximately 1.4 × 10⁻⁴⁵ to 3.4 × 10³⁸ (single precision)              | Decimal numbers when memory is tight    |
-| double   | 8 bytes | Approximately 4.9 × 10⁻³²⁴ to 1.7 × 10³⁰⁸ (double precision)             | Default for decimal numbers             |
-| char     | 2 bytes | Unicode code unit from '\u0000' (0) to '\uFFFF' (65,535)               | Single Unicode character                |
+|----------|---------|----------------------------------------------------------------------|-----------------------------------------|
+| byte     | 1 byte  | –128 to 127                                                          | Very small whole numbers                |
+| short    | 2 bytes | –32,768 to 32,767                                                    | Medium-range whole numbers              |
+| int      | 4 bytes | –2,147,483,648 to 2,147,483,647                                      | Default for whole numbers               |
+| long     | 8 bytes | –9,223,372,036,854,775,808 to 9,223,372,036,854,775,807              | Very large whole numbers                |
+| float    | 4 bytes | Approximately 1.4 × 10⁻⁴⁵ to 3.4 × 10³⁸ (single precision)             | Decimal numbers when memory is tight    |
+| double   | 8 bytes | Approximately 4.9 × 10⁻³²⁴ to 1.7 × 10³⁰⁸ (double precision)           | Default for decimal numbers             |
+| char     | 2 bytes | Unicode code unit from '\u0000' (0) to '\uFFFF' (65,535)              | Single Unicode character                |
 | boolean  | 1 bit*  | 'true' or 'false'                                                     | Logical values                          |
 
 *Actual storage of boolean is JVM-dependent and may use a full byte or more.
 
 
 
-
-3.3 Choosing the Right Primitive
-
+3.3 Choosing the Right Primitive:
 Choosing the smallest type that comfortably fits your data conserves memory and communicates intent.
 
-3.3.1 Storing Age
-
-'''java
+3.3.1 Storing Age:
 byte age = 30;
-'''
 
 Memory snapshot:
-'''
 age ──▶ [  30  ]  (1 byte)
-'''
 
-3.3.2 Counting Views
 
+3.3.2 Counting Views:
 Use 'int' for counts up to ~2.1 billion. Underscores separate groups of digits for readability (since Java 7):
-
-'''java
 int viewsCount = 1_234_567_890;
-'''
 
 When the value exceeds 'int' range, switch to 'long' and add an 'L' suffix:
-
-'''java
 long viewsCount = 3_000_000_000L;
-'''
 
 Using uppercase 'L' avoids confusion with the digit '1'.
 
 
 
-
-3.4 Decimal Numbers
-
+3.4 Decimal Numbers:
 Floating-point literals default to 'double'. To store in a 'float', add an 'F' suffix:
 
 '''java
@@ -913,11 +893,12 @@ float  priceFloat  = 10.99F;   // OK
 // float priceFloat = 10.99;   // Error: found double, required float
 '''
 
+By default, Java interprets numeric literals as int. To indicate a long literal, append L (uppercase is preferred over lowercase l, which resembles the digit 1).
+Declaring double price = 10.99; works fine, but if we want to use float, we must append F (e.g., float price = 10.99F;). This is because Java interprets decimal literals as double by default.
 
 
 
-3.5 Characters & Booleans
-
+3.5 Characters & Booleans:
 - char holds a single character. Use single quotes:
   '''java
   char letter = 'A';
@@ -931,16 +912,12 @@ Remember: single quotes for 'char', double quotes for 'String'.
 
 
 
-
-3.6 Reserved Keywords
-
+3.6 Reserved Keywords:
 Java reserves words (like 'public', 'class', 'static', 'int') for its own syntax. You cannot use these as variable, method, or class names.
 
 
 
-
-3.7 Complete Example
-
+3.7 Complete Example:
 '''java
 package com.codewithmosh;
 
@@ -957,9 +934,7 @@ public class Main {
 
 
 
-
-3.8 Visual Recap
-
+3.8 Visual Recap:
 '''
 age (byte)         ──▶ [ 30 ]
 viewsCount (long)  ──▶ [ 3_123_456_789 ]
@@ -970,16 +945,12 @@ isEligible (bool)  ──▶ [ false ]
 
 
 
-
-3.9 Key Takeaways
-
+3.9 Key Takeaways:
 - Use the smallest primitive type that fits your data.  
 - Numeric literals default to 'int'/'double'; suffix with 'L' or 'F' for 'long' and 'float'.  
 - Use underscores in large numeric literals to improve readability.  
 - Single quotes for 'char', double quotes for 'String'.  
 - Never use Java’s reserved keywords as identifiers.
-
-
 
 
 
@@ -1002,36 +973,27 @@ public class Main {
 
 4. Reference Types:
 
-
-
-4. Reference Types:
-
-4.1 Primitive vs. Reference Types
-
+4.1 Primitive vs. Reference Types:
 - Primitive types (e.g., 'int', 'byte', 'boolean') store simple values directly in memory.  
 - Reference types store references (addresses) to complex objects created on the heap.  
 - Every built-in type beyond the eight primitives is a reference type (classes, arrays, interfaces).
 
 
 
-
-4.2 Importing Classes & Packages
-
+4.2 Importing Classes & Packages:
 When you use a class from another package, you must import it:
 
 '''java
-import java.util.Date;    // Brings java.util.Date into scope
-
 package com.codewithmosh;  // Your project’s base package
+
+import java.util.Date;    // Brings java.util.Date into scope
 '''
 
 - Packages provide namespaces, allowing classes with the same name (e.g., 'Date') to coexist in different packages ('java.util.Date' vs. 'java.sql.Date').
 
 
 
-
-4.3 Declaring & Initializing Reference Variables
-
+4.3 Declaring & Initializing Reference Variables:
 Syntax differs from primitives:
 
 '''java
@@ -1039,7 +1001,6 @@ Date now = new Date();
 '''
 
 Breakdown:
-
 1. Type: 'Date' (a class)  
 2. Variable name: 'now' (identifier)  
 3. 'new' operator: allocates memory for the object on the heap  
@@ -1048,9 +1009,7 @@ Breakdown:
 
 
 
-
-4.4 Memory Layout
-
+4.4 Memory Layout:
 '''
 Stack Frame (main):
   ├─ age (byte)  ──▶ [30]            // primitive value stored directly
@@ -1067,9 +1026,7 @@ Java’s garbage collector automatically frees unreachable objects; you don’t 
 
 
 
-
-4.5 Classes, Objects & Instances
-
+4.5 Classes, Objects & Instances:
 - Class: blueprint or template (e.g., 'Date', 'Human').  
 - Object (instance): concrete realization of a class (e.g., 'new Date()', 'new Human()').  
 - You can have multiple instances (objects) from one class:
@@ -1080,9 +1037,7 @@ Java’s garbage collector automatically frees unreachable objects; you don’t 
 
 
 
-
-4.6 Accessing Members with the Dot Operator
-
+4.6 Accessing Members with the Dot Operator:
 Reference variables expose fields and methods:
 '''java
 now.getTime();           // calls Date’s getTime() method
@@ -1094,9 +1049,7 @@ System.out.println(now); // uses PrintStream.println(Object)
 
 
 
-
-4.7 IntelliJ Code Snippets
-
+4.7 IntelliJ Code Snippets:
 - sout + Tab expands to:
   '''java
   System.out.println();
@@ -1105,8 +1058,7 @@ System.out.println(now); // uses PrintStream.println(Object)
 
 
 
-4.8 Printing Reference Types
-
+4.8 Printing Reference Types:
 '''java
 System.out.println(now);
 '''
@@ -1116,8 +1068,7 @@ System.out.println(now);
 
 
 
-4.9 Complete Example
-
+4.9 Complete Example:
 '''java
 package com.codewithmosh;
 
@@ -1136,16 +1087,12 @@ public class Main {
 
 
 
-
-4.10 Key Takeaways
-
+4.10 Key Takeaways:
 - Reference types require the new operator (except 'String' literals).  
 - Variables hold references, not the object’s data directly.  
 - Packages & imports organize classes and avoid naming conflicts.  
 - Use the dot operator to access an object’s fields and methods.  
 - IDE features (IntelliSense, snippets) streamline code writing.
-
-
 
 
 
@@ -1163,24 +1110,18 @@ public class Main {
 	}
 }
 
-
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-5. Primitive vs Reference Types: 
-
 
 5. Primitive vs Reference Types:
 
-5.1 Recap of Type Categories
-
+5.1 Recap of Type Categories:
 - Primitive types store simple values directly in their own memory slots.  
 - Reference types store pointers (references) to objects allocated on the heap.  
 - This distinction affects how variables are copied and how updates propagate.
 
 
 
-5.2 Primitive Assignment and Independence
-
+5.2 Primitive Assignment and Independence:
 '''java
 package com.codewithmosh;
 
@@ -1199,10 +1140,8 @@ When you assign one primitive to another, you copy the raw value. After copying:
 - x and y occupy separate memory locations.  
 - Changing x does not affect y.
 
----
 
- Memory Layout (Primitives)
-
+Memory Layout (Primitives):
 '''
 Stack frame for main():
   ├─ x: [1]      // before x = 2
@@ -1215,9 +1154,7 @@ After x = 2:
 
 
 
-
-5.3 Reference Assignment and Sharing
-
+5.3 Reference Assignment and Sharing:
 '''java
 package com.codewithmosh;
 
@@ -1235,16 +1172,12 @@ public class Main {
 '''
 
 Key differences:
-
 - point1 holds the address of the newly created 'Point' object.  
 - point2 receives the same address—both refer to the *same* object.  
 - Mutating via one reference is visible through the other.
 
 
-
-
-Memory Layout (References)
-
+Memory Layout (References):
 '''
 Stack frame for main():
   ├─ point1: 0x100 ─▶ Heap@0x100: Point { x=1, y=1 }
@@ -1256,9 +1189,7 @@ Heap@0x100: Point { x=2, y=1 }
 
 
 
-
-5.4 Step-by-Step Execution
-
+5.4 Step-by-Step Execution:
 1. Line 1 ('new Point(1,1)'):  
    - Heap allocates space at e.g. 0x100.  
    - Stores internal fields 'x=1', 'y=1'.  
@@ -1276,27 +1207,21 @@ Heap@0x100: Point { x=2, y=1 }
 
 
 
-
 5.5 Why “Reference” Types?
-
 - Variables of reference types do *not* store object data directly.  
 - They store an address (reference) pointing to the object in memory.  
 - Copying a reference variable duplicates the pointer, not the object.
 
 
 
-
-5.6 Practical Implications
-
+5.6 Practical Implications:
 - To get an independent copy of an object, use a copy constructor or 'clone()'.  
 - Be cautious when passing reference types into methods—mutations inside the method affect the caller’s object.  
 - Immutable reference types (e.g., 'String') avoid shared-mutation pitfalls.
 
 
 
-
-5.7 Key Takeaways
-
+5.7 Key Takeaways:
 - Primitive assignments copy values; reference assignments copy addresses.  
 - Primitives are independent after assignment; references share the same object.  
 - Mutations on shared objects are seen by all references.  
@@ -1304,11 +1229,7 @@ Heap@0x100: Point { x=2, y=1 }
 
 
 
-
-
-
 Codes and Other Notes Referred in this Discussion: 
-
 package com.codewithmosh; 
 
 public class Main {
@@ -1335,20 +1256,15 @@ public class Main {
 	}
 }
 
-
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 6. Strings: 
-
 6.1 What Is a String?
-
 A string literal like '"Hello World"' is a sequence of characters in double quotes. In Java, any literal text between quotes is a 'String' value.
 
 
 
-
-6.2 Declaring String Variables
-
+6.2 Declaring String Variables:
 '''java
 package com.codewithmosh;
 
@@ -1367,9 +1283,7 @@ public class Main {
 
 
 
-
-6.3 String Immutability & Memory
-
+6.3 String Immutability & Memory:
 Strings are immutable: once created, you cannot change their contents. Any “modification” returns a new 'String' object.
 
  Memory Diagram
@@ -1390,9 +1304,7 @@ message ────────────┘
 
 
 
-
-6.4 Concatenation
-
+6.4 Concatenation:
 Join strings (or strings + primitives) using '+':  
 
 '''java
@@ -1402,21 +1314,19 @@ System.out.println(excited);  // Hello World!!
 
 
 
-
-6.5 Common String Methods
-
+6.5 Common String Methods:
 All 'String' methods are accessed with the dot operator ('.'). Each returns either a value or a brand-new 'String'.
 
-| Method                         | Purpose                                                | Example                              | Result        |
-| ------------------------------ | ------------------------------------------------------ | ------------------------------------ | ------------- |
-| 'endsWith(String suffix)'      | Checks if string ends with given suffix                | 'message.endsWith("!!")'             | 'false'       |
-| 'startsWith(String prefix)'    | Checks if string starts with given prefix              | 'message.startsWith("He")'           | 'true'        |
-| 'length()'                     | Returns the number of characters                       | 'message.length()'                   | '11'          |
-| 'indexOf(String s)'            | First index of 's', or '-1' if not found               | 'message.indexOf("W")'               | '6'           |
-| 'replace(String tgt, String r)'| Replace all occurrences of 'tgt' with 'r' (returns new 'String') | 'message.replace("!", "*")' | '"Hello World"' |
-| 'toLowerCase()'                | Converts to all lower-case characters (new 'String')   | 'message.toLowerCase()'              | '"hello world"' |
-| 'toUpperCase()'                | Converts to all upper-case characters (new 'String')   | 'message.toUpperCase()'              | '"HELLO WORLD"' |
-| 'trim()'                       | Removes leading/trailing whitespace (new 'String')     | '"  Hi  ".trim()'                    | '"Hi"'        |
+| Method                         | Purpose                                                          | Example                              | Result        |
+| ------------------------------ | ---------------------------------------------------------------- | ------------------------------------ | ------------- |
+| 'endsWith(String suffix)'      | Checks if string ends with given suffix                          | 'message.endsWith("!!")'             | 'false'       |
+| 'startsWith(String prefix)'    | Checks if string starts with given prefix                        | 'message.startsWith("He")'           | 'true'        |
+| 'length()'                     | Returns the number of characters                                 | 'message.length()'                   | '11'          |
+| 'indexOf(String s)'            | First index of 's', or '-1' if not found                         | 'message.indexOf("W")'               | '6'           |
+| 'replace(String tgt, String r)'| Replace all occurrences of 'tgt' with 'r' (returns new 'String') | 'message.replace("!", "*")'          | '"Hello World"' |
+| 'toLowerCase()'                | Converts to all lower-case characters (new 'String')             | 'message.toLowerCase()'              | '"hello world"' |
+| 'toUpperCase()'                | Converts to all upper-case characters (new 'String')             | 'message.toUpperCase()'              | '"HELLO WORLD"' |
+| 'trim()'                       | Removes leading/trailing whitespace (new 'String')               | '"  Hi  ".trim()'                    | '"Hi"'        |
 
 > Note on parameters vs. arguments:  
 > - Parameters are the named placeholders in a method signature (e.g., 'String target', 'String replacement').  
@@ -1424,9 +1334,7 @@ All 'String' methods are accessed with the dot operator ('.'). Each returns eith
 
 
 
-
-6.6 Demonstration: 'replace()' and Original String
-
+6.6 Demonstration: 'replace()' and Original String:
 '''java
 public class Main {
     public static void main(String[] args) {
@@ -1447,9 +1355,7 @@ public class Main {
 
 
 
-
-6.7 When to Use Which Method
-
+6.7 When to Use Which Method:
 - Validation: 'length()', 'startsWith()', 'endsWith()'  
 - Search: 'indexOf()'  
 - Transformation: 'replace()', 'toLowerCase()', 'toUpperCase()', 'trim()'  
@@ -1457,17 +1363,11 @@ public class Main {
 
 
 
-
-6.8 IntelliJ Tips
-
+6.8 IntelliJ Tips:
 - Type 'sout' + Tab to generate 'System.out.println();'.  
 - As you type 'message.', IntelliSense lists all available 'String' methods.
 
-
-
 With these tools, you can handle nearly every common string-processing task in Java. Strings remain one of the most frequently used and powerful classes in the language.
-
-
 
 
 
@@ -1488,18 +1388,130 @@ public class Main {
 }
 
 
+
+When we say strings are immutable, it means that once a 'String' object is created, its contents cannot be changed. Any method that looks like it “modifies” a string actually creates and returns a new 'String' object with the modification applied, while the original string remains unchanged.
+
+Example: 'replace':
+'''java
+String message = "Hello World!!";
+String newMessage = message.replace("!", "*");
+
+System.out.println(message);     // Output: Hello World!!
+System.out.println(newMessage);  // Output: Hello World
+'''
+
+- 'message.replace("!", "*")' does not alter 'message'.  
+- Instead, it creates a new string ('newMessage') with the exclamation marks replaced.  
+- The original 'message' still contains '"Hello World!!"'.
+
+
+
+Why immutability matters:
+1. Safety in sharing: Multiple parts of a program can use the same string without worrying that one part will change it unexpectedly.  
+2. Performance optimization: Java can store string literals in a special memory area called the *string pool*. Since strings never change, identical literals can be reused, saving memory.  
+3. Predictability: You always know that once a string is created, its value won’t be altered behind the scenes.
+
+
+
+Another example: 'toLowerCase':
+'''java
+String text = "HELLO";
+String lower = text.toLowerCase();
+
+System.out.println(text);   // Output: HELLO
+System.out.println(lower);  // Output: hello
+'''
+
+Again, 'text' remains unchanged, and 'lower' is a new string.
+
+So, when you see methods like 'replace', 'trim', 'toLowerCase', or 'toUpperCase', remember: they return a new string object. The original string stays exactly as it was.  
+
+
+
+More About Strings in Java
+
+1. String Pool:
+Java maintains a special memory area called the string pool. When you create a string literal like '"Hello"', Java checks if that literal already exists in the pool. If it does, the same reference is reused. This saves memory and improves performance.  
+- Example:  
+  '''java
+  String a = "Hello";
+  String b = "Hello";
+  System.out.println(a == b); // true (same reference from pool)
+  '''
+
+
+
+2. Commonly Used Methods:
+Beyond 'length', 'indexOf', 'replace', and 'trim', the 'String' class has many other useful methods:
+
+- 'substring(int begin, int end)' → Extracts part of a string.  
+- 'contains(CharSequence s)' → Checks if a string contains another sequence.  
+- 'equals(Object obj)' → Compares two strings for equality (case-sensitive).  
+- 'equalsIgnoreCase(String another)' → Compares strings ignoring case.  
+- 'split(String regex)' → Splits a string into an array based on a delimiter.  
+- 'join(CharSequence delimiter, CharSequence... elements)' → Joins multiple strings with a delimiter.  
+- 'isEmpty()' → Checks if a string has length 0.  
+- 'matches(String regex)' → Tests if a string matches a regular expression.  
+
+
+
+3. Strings vs. StringBuilder vs. StringBuffer:
+Just like we compared Arrays and ArrayList, here’s a comparison between String, StringBuilder, and StringBuffer:
+
+- String: Immutable. Any modification creates a new object. Best for fixed text values and when immutability is desired.  
+- StringBuilder: Mutable and faster (not synchronized). Best for building or modifying strings repeatedly in single-threaded contexts.  
+- StringBuffer: Mutable and thread-safe (synchronized). Best for multi-threaded environments where multiple threads modify the same string.  
+
+Example:
+'''java
+StringBuilder sb = new StringBuilder("Hello");
+sb.append(" World");
+System.out.println(sb); // Output: Hello World
+'''
+
+
+
+4. Performance Considerations:
+- Using '+' for concatenation inside loops can be inefficient because each operation creates a new 'String'.  
+- Prefer 'StringBuilder' for repeated modifications.  
+- Example:
+  '''java
+  String result = "";
+  for (int i = 0; i < 100; i++) {
+      result += i; // inefficient
+  }
+
+  StringBuilder sb = new StringBuilder();
+  for (int i = 0; i < 100; i++) {
+      sb.append(i); // efficient
+  }
+  '''
+
+
+
+5. Advanced Features:
+- Interning: You can force a string into the pool using 'intern()'.  
+- Regular Expressions: Strings integrate tightly with regex for powerful text processing.  
+- Unicode Support: Strings in Java are sequences of Unicode characters, making them suitable for internationalization.  
+
+
+
+Key Takeaways:
+- Strings are immutable and stored in the string pool for efficiency.  
+- The 'String' class provides a rich set of methods for searching, comparing, splitting, and transforming text.  
+- For heavy modifications, use 'StringBuilder' (fast, not thread-safe) or 'StringBuffer' (thread-safe).  
+- Immutability ensures safety and predictability, while mutable alternatives provide flexibility when needed.  
+
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 7. Escape Sequences:
 
-7.1 Why Escape Sequences Are Needed
-
+7.1 Why Escape Sequences Are Needed:
 When you include certain special characters directly in a string literal, the compiler misinterprets them as part of the syntax rather than as data. Escape sequences let you embed these special characters by prefixing them with a backslash ('\').
 
 
 
-7.2 Escaping Double Quotes ('"')
-
+7.2 Escaping Double Quotes ('"'):
 Problem:
 '''java
 String msg = "Hello "Mosh"";  
@@ -1510,9 +1522,7 @@ The compiler thinks the second '"' ends the string, so it doesn’t recognize th
 
 
 Solution:
-
 Prefix each internal double quote with a backslash ('\"'):
-
 '''java
 String msg = "Hello \"Mosh\"";
 System.out.println(msg);  // Prints: Hello "Mosh"
@@ -1520,12 +1530,9 @@ System.out.println(msg);  // Prints: Hello "Mosh"
 
 
 
-7.3 Escaping Backslashes ('\')
-
+7.3 Escaping Backslashes ('\'):
 Windows Path Example:
-
 To represent a Windows path like 'C:\Windows\System32', each backslash in code must be escaped ('\\'):
-
 '''java
 String path = "C:\\Windows\\System32";
 System.out.println(path);  // Prints: C:\Windows\System32
@@ -1536,9 +1543,7 @@ System.out.println(path);  // Prints: C:\Windows\System32
 
 
 
-
-7.4 New Line ('\n')
-
+7.4 New Line ('\n'):
 Insert a line break at the escape sequence:
 
 '''java
@@ -1556,9 +1561,7 @@ Second Line
 
 
 
-
-7.5 Tab ('\t')
-
+7.5 Tab ('\t'):
 Insert a horizontal tab to align or indent text:
 
 '''java
@@ -1575,7 +1578,6 @@ Column1    Column2    Column3
 
 
 
-
 7.6 Common Escape Sequences:
 
 | Sequence | Meaning                     | Example Literal        | Printed Output                      |
@@ -1583,7 +1585,7 @@ Column1    Column2    Column3
 | '\"'     | Double quote                | '"She said, \"Hi\""'   | She said, "Hi"                      |
 | '\\'     | Backslash                   | '"C:\\Temp\\file.txt"' | C:\Temp\file.txt                    |
 | '\n'     | New line (line break)       | '"A\nB"'               | A  
-B                                   |
+                                                                    B                                   |
 | '\t'     | Horizontal tab              | '"A\tB"'               | A    B                              |
 
 > Note: Java supports additional escapes ('\r', '\b', '\f', '\''), but they are used less frequently.
@@ -1591,23 +1593,18 @@ B                                   |
 
 
 7.7 Visualizing Escape Mechanics:
-
 '''
 Code                 →  String Literal  →  Runtime String
 ----------------------------------------------------------------
 "Hello \"Mosh\""     →  Hello "Mosh"    →  Hello "Mosh"
 "C:\\Windows\\"      →  C:\Windows\     →  C:\Windows\
 "Line1\nLine2"       →  Line1\nLine2    →  Line1
-                                       Line2
+                                           Line2
 '''
 
 Each '\' in source code signals that the next character is part of the data, not the syntax.
 
-
-
 With these four escape sequences—'\"', '\\', '\n', and '\t'—you can safely embed quotes, backslashes, new lines, and tabs in your Java strings.
-
-
 
 
 
@@ -1624,27 +1621,20 @@ public class Main {
 
 String message = "c:\\Windows\\...";
 
-
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 8. Arrays: 
 
 8.1 What Are Arrays:
-
 Arrays store a fixed-size sequence of elements of the same type, such as numbers, strings, or objects.  
-
 They provide indexed access, letting you read or write each item using its position, starting at zero.  
-
 Use arrays when you know the number of elements up front or don’t need to change the size at runtime.  
 
 
 
-
 8.2 Declaring and Creating an Array:
-
 To declare an array, append square brackets ('[]') to the type.  
 
 To allocate memory, use the 'new' operator with the desired length:
-
 '''java
 int[] numbers = new int[5];
 '''
@@ -1653,18 +1643,14 @@ This creates an 'int' array with room for five elements, all initialized to thei
 
 
 
-
 8.3 Accessing and Modifying Elements:
-
 Each element is accessed by its zero-based index:
-
 '''java
 numbers[0] = 1;
 numbers[1] = 2;
 '''
 
 Reading an element:
-
 '''java
 int first = numbers[0];
 '''
@@ -1673,13 +1659,11 @@ Using an invalid index (e.g., 'numbers[10]') throws an 'ArrayIndexOutOfBoundsExc
 
 
 
-
 8.4 Arrays in Memory (Diagram):
-
 Below is an ASCII diagram of 'int[] numbers = new int[5];' after assigning two values:
 
 '''
-numbers ──> +------+------+------+------+------+
+numbers ──>  +------+------+------+------+------+
              | [0]  | [1]  | [2]  | [3]  | [4]  |
              +------+------+------+------+------+
              |  1   |  2   |  0   |  0   |  0   |
@@ -1687,7 +1671,6 @@ numbers ──> +------+------+------+------+------+
 '''
 
 Indexes run from 0 to length−1. Unassigned 'int' elements default to 0.  
-
 
 
 
@@ -1702,18 +1685,14 @@ Indexes run from 0 to length−1. Unassigned 'int' elements default to 0.
 
 
 
-
 8.6 Printing Arrays:
-
 Printing an array reference directly shows its class name and hash code, not the contents:
-
 '''java
 System.out.println(numbers);
 // e.g., [I@1a2b3c4d
 '''
 
 Use 'Arrays.toString(...)' for a readable representation:
-
 '''java
 import java.util.Arrays;
 
@@ -1724,9 +1703,7 @@ System.out.println(Arrays.toString(numbers));
 
 
 8.7 Array Initialization Shortcut:
-
 If you know the elements at declaration, use brace-enclosed lists:
-
 '''java
 int[] numbers = {2, 3, 5, 1, 4};
 '''
@@ -1735,11 +1712,8 @@ This creates an 'int' array of length 5 containing those values.
 
 
 
-
 8.8 Array Length:
-
 Every array has a 'length' field you can read:
-
 '''java
 int size = numbers.length;
 System.out.println(size);  // Prints: 5
@@ -1749,11 +1723,8 @@ Arrays cannot change size after creation. For dynamic resizing, use collection c
 
 
 
-
 8.9 Sorting an Array:
-
 To sort a primitive or object array in-place, call 'Arrays.sort(...)':
-
 '''java
 import java.util.Arrays;
 
@@ -1765,14 +1736,11 @@ System.out.println(Arrays.toString(numbers));
 
 
 8.10 Key Takeaways:
-
 - Arrays have fixed length and homogeneous element types  
 - Use zero-based indexing to access elements  
 - Default values depend on element type (numeric → 0, boolean → false, references → null)  
 - 'Arrays.toString' and 'Arrays.sort' from 'java.util.Arrays' simplify printing and sorting  
 - For variable-sized collections, prefer classes in the Java Collections Framework  
-
-
 
 
 
@@ -1794,7 +1762,6 @@ public class Main {
 }
 
 
-
 import java.util.Arrays; 
 
 package com.codewithmosh; 
@@ -1807,12 +1774,105 @@ public class Main {
 }
 
 
+
+More About Arrays in Java:
+
+1. Arrays Utility Class ('java.util.Arrays'):
+The 'Arrays' class provides many helpful static methods beyond 'toString' and 'sort'. Some of the most commonly used include:
+
+| Method                              | Description                                                                          | Example |
+|-------------------------------------|--------------------------------------------------------------------------------------|---------|
+| 'Arrays.equals(arr1, arr2)'         | Compares two arrays for equality (same length and elements).                         | 'Arrays.equals(a, b)' |
+| 'Arrays.copyOf(arr, newLength)'     | Copies an array into a new one with specified length.                                | 'int[] copy = Arrays.copyOf(numbers, 10);' |
+| 'Arrays.copyOfRange(arr, from, to)' | Copies a subrange of an array.                                                       | 'int[] sub = Arrays.copyOfRange(numbers, 1, 3);' |
+| 'Arrays.fill(arr, value)'           | Fills all elements with a given value.                                               | 'Arrays.fill(numbers, 7);' |
+| 'Arrays.binarySearch(arr, key)'     | Searches for a value in a sorted array. Returns index or negative if not found.      | 'int idx = Arrays.binarySearch(numbers, 3);' |
+| 'Arrays.stream(arr)'                | Converts an array into a stream for functional operations.                           | 'Arrays.stream(numbers).forEach(System.out::println);' |
+
+
+
+2. Multidimensional Arrays:
+Arrays can have more than one dimension, useful for matrices or grids.
+
+'''java
+int[][] matrix = new int[3][3];
+matrix[0][0] = 1;
+matrix[1][1] = 2;
+matrix[2][2] = 3;
+
+System.out.println(Arrays.deepToString(matrix));
+// Output: [[1, 0, 0], [0, 2, 0], [0, 0, 3]]
+'''
+
+- Use 'Arrays.deepToString(...)' for printing nested arrays.  
+- Indexing works with multiple brackets: 'matrix[row][col]'.
+
+
+
+3. Enhanced For Loop:
+Java provides a cleaner way to iterate through arrays:
+
+'''java
+int[] numbers = {1, 2, 3, 4, 5};
+for (int n : numbers) {
+    System.out.println(n);
+}
+'''
+
+This avoids manual index handling.
+
+
+
+4. Arrays vs. Collections:
+- Arrays are fixed-size and homogeneous.  
+- Collections (like 'ArrayList') are dynamic and more flexible.  
+- Arrays are faster for primitive storage, while collections are more convenient for frequent insertions/removals.
+
+
+
+5. Common Pitfalls:
+- ArrayIndexOutOfBoundsException: Accessing invalid indices.  
+- NullPointerException: Using uninitialized reference arrays.  
+- Fixed size: Cannot expand or shrink after creation.
+
+
+
+Key Additions to Remember:
+- Use 'Arrays.equals', 'Arrays.copyOf', and 'Arrays.fill' for common operations.  
+- For multidimensional arrays, 'Arrays.deepToString' is essential for printing.  
+- Enhanced for-loops simplify iteration.  
+- Arrays are efficient but rigid; collections are flexible but slightly heavier.  
+
+
+
+In Java, arrays and ArrayLists serve similar purposes but differ in important ways. Arrays have a fixed size determined at creation, meaning you cannot grow or shrink them later. By contrast, ArrayLists are dynamic and can expand or contract as elements are added or removed. Arrays can store both primitives (like 'int' or 'char') and objects, while ArrayLists store only objects—so primitives must be wrapped in their corresponding wrapper classes, such as 'Integer' instead of 'int'.  
+
+Arrays are simple and lightweight, with straightforward syntax like 'int[] arr = {1, 2, 3};'. ArrayLists are slightly more verbose, requiring code such as 'ArrayList<Integer> list = new ArrayList<>();'. In terms of performance, arrays are faster when working with primitives because they avoid the overhead of boxing and unboxing, whereas ArrayLists incur some additional cost due to dynamic resizing and object storage.  
+
+When it comes to default values, arrays automatically initialize numeric elements to zero, booleans to 'false', and references to 'null'. ArrayLists, however, have no default values—you must explicitly add elements. Arrays rely on the 'Arrays' utility class for operations like sorting, copying, or converting to strings, while ArrayLists come with rich built-in methods such as 'add', 'remove', 'contains', 'indexOf', and 'clear'.  
+
+Iteration is possible with both structures using standard 'for' loops or enhanced 'for-each' loops, but ArrayLists also support iterators and streams directly. Printing arrays requires 'Arrays.toString(...)' or 'Arrays.deepToString(...)' for nested arrays, whereas printing an ArrayList directly with 'System.out.println(list)' shows its contents.  
+
+Overall, arrays are best suited when the size is known and fixed, offering efficiency and simplicity. ArrayLists are more flexible, ideal for situations where the size changes frequently or when advanced operations are needed.  
+
+
+
+Key Takeaways:
+- Use Arrays when:
+  - You need a fixed-size collection.
+  - You’re working with primitives and want maximum performance.
+  - Memory efficiency is critical.
+
+- Use ArrayList when:
+  - You need dynamic resizing.
+  - You want built-in methods for adding, removing, searching, and managing elements.
+  - You’re working with objects and collections framework features.
+
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 9. Multi-dimensional Arrays: 
 
-9.1 What Are Multi-dimensional Arrays
-
+9.1 What Are Multi-dimensional Arrays:
 Arrays of arrays let you model grids, tables, or higher-dimensional data.  
 A two-dimensional array is a matrix (rows × columns).  
 A three-dimensional array extends this to a “cube” of data (depth × rows × columns).  
@@ -1820,11 +1880,8 @@ They’re common in scientific computations, graphics, and game development.
 
 
 
-
-9.2 Declaring a Two-Dimensional Array
-
+9.2 Declaring a Two-Dimensional Array:
 To declare a 2D 'int' array:
-
 '''java
 int[][] numbers = new int[2][3];
 '''
@@ -1837,9 +1894,7 @@ If you write only one '[]' on one side, you’ll get a compilation error—each 
 
 
 
-
-9.3 Accessing and Modifying Elements
-
+9.3 Accessing and Modifying Elements:
 Use two zero-based indexes: 'numbers[row][column]'.
 
 '''java
@@ -1851,9 +1906,7 @@ Using an out-of-bounds index (e.g., 'numbers[2][0]') throws 'ArrayIndexOutOfBoun
 
 
 
-
-9.4 Visualizing a 2×3 Matrix
-
+9.4 Visualizing a 2×3 Matrix:
 '''
 numbers ──> +------+------+------+
              | [0][0] | [0][1] | [0][2] |   ← Row 0
@@ -1868,18 +1921,14 @@ numbers ──> +------+------+------+
 
 
 
-
-9.5 Printing Multi-dimensional Arrays
-
+9.5 Printing Multi-dimensional Arrays:
 Printing directly still shows a memory address:
-
 '''java
 System.out.println(numbers);
 // e.g., [[I@7e0b241
 '''
 
 Use 'Arrays.deepToString(...)' to see all elements:
-
 '''java
 import java.util.Arrays;
 
@@ -1889,11 +1938,8 @@ System.out.println(Arrays.deepToString(numbers));
 
 
 
-
-9.6 Initializing with Literals
-
+9.6 Initializing with Literals:
 If you know the values in advance, use brace-enclosed lists:
-
 '''java
 int[][] numbers = {
     {1, 2, 3},   // Row 0
@@ -1907,11 +1953,8 @@ Each inner '{…}' defines one row, itself an array.
 
 
 
-
-9.7 Three-Dimensional Arrays
-
+9.7 Three-Dimensional Arrays:
 Add another '[]' and length for the third dimension:
-
 '''java
 int[][][] cube = new int[2][3][4];
 // 2 blocks, each with 3 rows and 4 columns
@@ -1921,9 +1964,7 @@ Access with three indexes: 'cube[block][row][column]'.
 
 
 
-
-9.8 Key Points
-
+9.8 Key Points:
 - Each dimension requires its own '[]' in the declaration.  
 - Multi-dimensional arrays default all values to the type’s default ('0', 'false', or 'null').  
 - Use 'Arrays.deepToString' to print nested arrays.  
@@ -1932,10 +1973,7 @@ Access with three indexes: 'cube[block][row][column]'.
 
 
 
-
-
 Codes and Other Notes Referred in this Discussion: 
-
 
 import java.util.Arrays; 
 
@@ -1952,23 +1990,106 @@ public class Main {
 
 int[][] numbers = {{1, 2, 3}, {4, 5, 6}};
 
+
+
+Extra Information About Multi-dimensional Arrays in Java:
+
+1. Jagged Arrays (Irregular Arrays):
+Not all multi-dimensional arrays need to be perfectly rectangular. In Java, a “multi-dimensional array” is actually an array of arrays, so each row can have a different length. This is called a jagged array.
+
+'''java
+int[][] jagged = new int[3][];
+jagged[0] = new int[2];   // Row 0 has 2 columns
+jagged[1] = new int[4];   // Row 1 has 4 columns
+jagged[2] = new int[3];   // Row 2 has 3 columns
+
+System.out.println(Arrays.deepToString(jagged));
+// Output: [[0, 0], [0, 0, 0, 0], [0, 0, 0]]
+'''
+
+This flexibility is useful when modeling data that doesn’t fit neatly into a grid.
+
+
+
+2. Iterating Through Multi-dimensional Arrays:
+You can use nested loops or the enhanced for-each loop:
+'''java
+int[][] matrix = {{1, 2}, {3, 4}, {5, 6}};
+
+// Nested for loop
+for (int i = 0; i < matrix.length; i++) {
+    for (int j = 0; j < matrix[i].length; j++) {
+        System.out.print(matrix[i][j] + " ");
+    }
+    System.out.println();
+}
+
+// Enhanced for-each
+for (int[] row : matrix) {
+    for (int value : row) {
+        System.out.print(value + " ");
+    }
+    System.out.println();
+}
+'''
+
+
+
+3. Utility Methods:
+The 'Arrays' class provides:
+- 'Arrays.deepEquals(arr1, arr2)' → Compares nested arrays for equality.  
+- 'Arrays.deepHashCode(arr)' → Computes a hash code for nested arrays.  
+- 'Arrays.deepToString(arr)' → Prints nested arrays in a readable format.  
+
+
+
+4. Common Use Cases:
+- Matrices in math/science: storing coefficients, transformations.  
+- Grids in games: chess boards, tic-tac-toe, maps.  
+- Tables in applications: storing tabular data before moving to databases.  
+- Images: pixel values in 2D arrays (rows × columns).  
+
+
+
+5. Performance Considerations:
+- Multi-dimensional arrays are essentially arrays of arrays, so accessing elements involves multiple pointer dereferences.  
+- For large datasets, specialized libraries (like Apache Commons Math or ND4J) provide optimized multi-dimensional structures.  
+- If you need dynamic resizing or more flexibility, consider using 'ArrayList<ArrayList<T>>' instead of raw arrays.
+
+
+
+6. Comparison: Multi-dimensional Arrays vs. Collections:
+- Multi-dimensional arrays:  
+  - Fixed size.  
+  - Faster access.  
+  - Suitable for performance-critical tasks.  
+
+- Collections (e.g., 'List<List<Integer>>'):  
+  - Dynamic resizing.  
+  - Richer methods ('add', 'remove', 'contains').  
+  - Easier to manipulate but slightly slower.  
+
+
+
+Key Additions:
+- Multi-dimensional arrays in Java are really arrays of arrays, which allows jagged structures.  
+- Use 'Arrays.deepToString', 'deepEquals', and 'deepHashCode' for nested arrays.  
+- Iteration can be done with nested loops or enhanced for-each loops.  
+- For dynamic or complex data structures, collections may be more practical than raw arrays.  
+
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 10. Constants: 
 
-10.1 Why Use Constants
-
+10.1 Why Use Constants:
 - Variables in Java can be reassigned any time after initialization.  
 - Certain values—like π, configuration flags, or fixed rates—should remain unchanged once set.  
 - Declaring such values as constants prevents accidental reassignment, enforces intent, and improves code safety.
 
 
 
-
-10.2 Declaring a Constant with 'final'
-
+10.2 Declaring a Constant with 'final':
 Use the 'final' modifier before the type to mark a variable as immutable:
-
 '''java
 final float PI = 3.14F;
 '''
@@ -1978,11 +2099,8 @@ final float PI = 3.14F;
 
 
 
-
-10.3 Reassignment Causes a Compilation Error
-
+10.3 Reassignment Causes a Compilation Error:
 Once initialized, any assignment to a 'final' variable triggers a compile-time error:
-
 '''java
 PI = 1.0F;  
 // Error: cannot assign a value to final variable PI
@@ -2008,7 +2126,6 @@ Flow of events:
 
 
 
-
 10.4 Naming Conventions
 
 | Category         | Naming Style      | Example     |
@@ -2021,25 +2138,14 @@ Flow of events:
 
 
 
-
-10.5 Best Practices
-
+10.5 Best Practices:
 - Group related constants in one class or interface (e.g., 'MathConstants', 'Config').  
 - Prefer 'enum' when representing a fixed set of related constants (days of week, status codes).  
 - Document each constant with a brief comment explaining its purpose.
 
 
 
-
-10.6 Anecdote: Pronouncing π as “P”
-
-In one of Mosh’s earliest courses on C#, he pronounced π as “p.” It became a running joke—learners still tease him about it. This highlights how small quirks can turn into memorable teaching moments.
-
-
-
-
-10.7 Complete Code Example
-
+10.6 Complete Code Example:
 '''java
 package com.codewithmosh;
 
@@ -2056,14 +2162,11 @@ public class Main {
 
 
 
-
-10.8 Key Takeaways
-
+10.7 Key Takeaways:
 - Use 'final' to create constants whose value cannot change.  
 - Include the correct literal suffix ('F' for 'float', 'L' for 'long', etc.).  
 - Follow naming conventions: constants in uppercase with underscores.  
 - Leverage grouping and 'enum' for better organization and readability.
-
 
 
 
@@ -2077,12 +2180,695 @@ public class Main {
 	}
 }
 
+
+
+
+Extra Information About Constants in Java
+
+1. Compile-time vs. Runtime Constants:
+- A 'final' variable becomes a compile-time constant if it is also declared 'static' and initialized with a literal value.  
+  '''java
+  public static final int MAX_USERS = 100;
+  '''
+  This allows the compiler to inline the value wherever it’s used, improving performance.  
+- If a 'final' variable is initialized at runtime (e.g., from a method call), it is still immutable but not a compile-time constant.
+
+
+
+2. Constants in Interfaces:
+In Java, all fields declared in an interface are implicitly 'public static final'. This makes interfaces a convenient place to group constants:
+'''java
+interface Config {
+    int TIMEOUT = 30;   // implicitly public static final
+}
+'''
+However, modern best practice is to use dedicated classes or enums instead of interfaces for constants, to avoid clutter.
+
+
+
+3. Constants with 'static final':
+Most constants are declared as 'static final' so they belong to the class rather than an instance:
+'''java
+class MathConstants {
+    public static final double PI = 3.14159;
+}
+'''
+This way, you can access them as 'MathConstants.PI' without creating an object.
+
+
+
+4. Literal Suffixes:
+When declaring numeric constants, suffixes ensure the correct type:
+- 'F' or 'f' → float  
+- 'L' or 'l' → long  
+- 'D' or 'd' → double (optional, since decimals default to double)  
+
+Example:
+'''java
+final long MAX_SIZE = 100000L;
+'''
+
+
+
+5. Enums for Related Constants:
+When you have a fixed set of related constants, 'enum' is more expressive:
+'''java
+enum Day {
+    MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+}
+'''
+Enums provide type safety and can include methods, unlike plain constants.
+
+
+
+6. Constants vs. Variables (Paragraph Comparison):
+Regular variables in Java can be reassigned freely after initialization, which makes them flexible but also prone to accidental changes. Constants, declared with the 'final' keyword, are immutable once set, ensuring that their values remain stable throughout the program. This immutability enforces intent, improves readability, and prevents bugs caused by unintended reassignment. While variables are useful for dynamic values that change during execution, constants are essential for fixed values such as mathematical constants, configuration parameters, or status codes. In practice, constants are often grouped together in classes or enums for better organization, while variables are scattered throughout methods to handle changing state.
+
+
+
+7. Key Additions:
+- Use 'static final' for true constants accessible without object creation.  
+- Prefer enums for sets of related constants.  
+- Constants in interfaces are implicitly 'public static final'.  
+- Literal suffixes ('F', 'L', 'D') ensure type correctness.  
+- Constants improve safety, readability, and maintainability compared to regular variables.  
+
+
+
+Here’s a clear paragraph-style comparison between constants and enums in Java, so it fits smoothly into your notes:
+Constants and enums both serve the purpose of representing fixed values in Java, but they differ in how they are used and what they offer. A constant declared with 'final' (often combined with 'static') is simply a variable whose value cannot change once assigned. This is ideal for standalone values such as mathematical constants ('PI'), configuration parameters ('TIMEOUT'), or limits ('MAX_SIZE'). Constants are lightweight and straightforward, but they are essentially just immutable variables. Enums, on the other hand, are more powerful because they represent a fixed set of related values grouped under one type. For example, an enum for days of the week ('MONDAY', 'TUESDAY', etc.) ensures type safety, prevents invalid values, and can even include methods and fields for richer behavior. While constants are best for individual values or unrelated settings, enums shine when modeling categories or sets of options that belong together. In practice, constants improve readability and prevent accidental reassignment, while enums provide structure, safety, and extensibility for groups of related constants. Choosing between them depends on whether you need a single fixed value or a well-defined set of values with potential behavior attached.
+
+
+
+Here’s a practical illustration showing the same concept expressed once with 'final static' constants and once with an 'enum':
+
+Using Constants with 'final static':
+'''java
+class StatusCodes {
+    public static final int SUCCESS = 0;
+    public static final int ERROR = 1;
+    public static final int PENDING = 2;
+}
+
+public class Main {
+    public static void main(String[] args) {
+        int currentStatus = StatusCodes.SUCCESS;
+
+        if (currentStatus == StatusCodes.SUCCESS) {
+            System.out.println("Operation completed successfully.");
+        }
+    }
+}
+'''
+Here, each constant is just an immutable integer. It works fine, but there’s no type safety—any integer could be assigned to 'currentStatus', even one that doesn’t represent a valid status.
+
+
+
+Using Enums:
+'''java
+enum Status {
+    SUCCESS,
+    ERROR,
+    PENDING
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Status currentStatus = Status.SUCCESS;
+
+        if (currentStatus == Status.SUCCESS) {
+            System.out.println("Operation completed successfully.");
+        }
+    }
+}
+'''
+With enums, the compiler enforces that 'currentStatus' can only take one of the defined values ('SUCCESS', 'ERROR', or 'PENDING'). This prevents invalid assignments and makes the code more readable. Enums can also hold methods and fields, making them more powerful than plain constants.
+
+
+
+Summary in Paragraph Form:
+Constants declared with 'final static' are simple and efficient for representing standalone values, but they lack type safety and can be misused if arbitrary values are assigned. Enums, by contrast, define a fixed set of valid options under one type, ensuring that only those values can be used. This makes enums safer, more expressive, and better suited for modeling categories or states, while constants remain useful for individual values like mathematical constants or configuration parameters.  
+
+
+
+
+Here’s a practical example showing how enums can go beyond symbolic constants by including fields and methods:
+
+Enums with Fields and Methods:
+'''java
+enum Status {
+    SUCCESS(0, "Operation completed successfully"),
+    ERROR(1, "An error occurred"),
+    PENDING(2, "Operation is still pending");
+
+    private final int code;
+    private final String description;
+
+    // Constructor
+    Status(int code, String description) {
+        this.code = code;
+        this.description = description;
+    }
+
+    // Getter methods
+    public int getCode() {
+        return code;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Status currentStatus = Status.SUCCESS;
+
+        System.out.println("Code: " + currentStatus.getCode());
+        System.out.println("Description: " + currentStatus.getDescription());
+
+        // Example usage in logic
+        if (currentStatus == Status.ERROR) {
+            System.out.println("Handle error case here.");
+        }
+    }
+}
+'''
+
+
+
+Explanation in Paragraph Form:
+Unlike plain constants, enums can encapsulate additional data and behavior. In the example above, each enum constant ('SUCCESS', 'ERROR', 'PENDING') is associated with both a numeric code and a descriptive message. The enum defines fields, a constructor to initialize them, and getter methods to access them. This allows you to treat each constant as a rich object rather than just a symbolic value. When you use 'Status.SUCCESS', you not only identify the state but can also retrieve its code and description, making the code more expressive and self-documenting. This approach is especially useful for modeling states, error codes, or configuration options where each constant carries extra meaning or functionality.  
+
+
+
+
+Here’s a demonstration of how enums can override methods per constant, giving each constant its own custom behavior:
+
+Enums with Constant-specific Behavior:
+'''java
+enum Status {
+    SUCCESS {
+        @Override
+        public String getMessage() {
+            return "Operation completed successfully.";
+        }
+    },
+    ERROR {
+        @Override
+        public String getMessage() {
+            return "An error occurred. Please try again.";
+        }
+    },
+    PENDING {
+        @Override
+        public String getMessage() {
+            return "Operation is still pending.";
+        }
+    };
+
+    // Abstract method to be implemented by each constant
+    public abstract String getMessage();
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Status currentStatus = Status.ERROR;
+
+        System.out.println(currentStatus.getMessage());
+        // Output: An error occurred. Please try again.
+    }
+}
+'''
+
+
+
+Explanation in Paragraph Form:
+Enums in Java can define abstract methods that each constant must implement, allowing every constant to have its own unique behavior. In the example above, the 'Status' enum declares an abstract method 'getMessage()'. Each constant ('SUCCESS', 'ERROR', 'PENDING') overrides this method to provide a different message. This makes enums far more powerful than plain constants, because they can encapsulate not only values but also logic specific to each constant. With this approach, you can model complex state-dependent behavior directly inside the enum, keeping related data and functionality together in a clean, type-safe way. This technique is especially useful for representing states, commands, or modes where each option requires distinct handling.
+
+
+
+
+Here’s a full advanced example showing how enums can store data and behavior together, combining everything we’ve discussed:
+
+Enums with Data and Behavior:
+'''java
+enum Status {
+    SUCCESS(0, "Operation completed successfully") {
+        @Override
+        public void handle() {
+            System.out.println("Logging success and continuing workflow.");
+        }
+    },
+    ERROR(1, "An error occurred") {
+        @Override
+        public void handle() {
+            System.out.println("Logging error and notifying admin.");
+        }
+    },
+    PENDING(2, "Operation is still pending") {
+        @Override
+        public void handle() {
+            System.out.println("Queuing task for later execution.");
+        }
+    };
+
+    private final int code;
+    private final String description;
+
+    // Constructor
+    Status(int code, String description) {
+        this.code = code;
+        this.description = description;
+    }
+
+    // Getters
+    public int getCode() {
+        return code;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    // Abstract method for behavior
+    public abstract void handle();
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Status currentStatus = Status.ERROR;
+
+        System.out.println("Code: " + currentStatus.getCode());
+        System.out.println("Description: " + currentStatus.getDescription());
+        currentStatus.handle();
+        // Output:
+        // Code: 1
+        // Description: An error occurred
+        // Logging error and notifying admin.
+    }
+}
+'''
+
+
+
+Explanation in Paragraph Form:
+This example demonstrates the full power of enums in Java. Each constant ('SUCCESS', 'ERROR', 'PENDING') carries its own data (a numeric code and description) and also defines its own behavior by overriding the abstract 'handle()' method. This means that enums can act like specialized classes, encapsulating both values and logic in one place. When you call 'currentStatus.handle()', the behavior executed depends on which constant is being used. This approach keeps related data and functionality tightly coupled, improves readability, and ensures type safety. It is especially useful for modeling states, commands, or modes where each option has distinct properties and actions. Compared to plain constants, enums provide a structured, extensible, and object-oriented way to represent fixed sets of values with rich semantics.
+
+
+
+
+Here’s a real-world example showing how enums can be used to represent HTTP status codes, combining both data (numeric code and description) and behavior (custom handling):
+
+Example: HTTP Status Codes with Enums:
+'''java
+enum HttpStatus {
+    OK(200, "Request succeeded") {
+        @Override
+        public void handle() {
+            System.out.println("Proceed with normal response.");
+        }
+    },
+    NOT_FOUND(404, "Resource not found") {
+        @Override
+        public void handle() {
+            System.out.println("Return error page or JSON error response.");
+        }
+    },
+    INTERNAL_ERROR(500, "Internal server error") {
+        @Override
+        public void handle() {
+            System.out.println("Log error details and alert developers.");
+        }
+    };
+
+    private final int code;
+    private final String description;
+
+    HttpStatus(int code, String description) {
+        this.code = code;
+        this.description = description;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public abstract void handle();
+}
+
+public class Main {
+    public static void main(String[] args) {
+        HttpStatus status = HttpStatus.NOT_FOUND;
+
+        System.out.println("Code: " + status.getCode());
+        System.out.println("Description: " + status.getDescription());
+        status.handle();
+        // Output:
+        // Code: 404
+        // Description: Resource not found
+        // Return error page or JSON error response.
+    }
+}
+'''
+
+
+
+Explanation in Paragraph Form:
+This example models HTTP status codes using enums. Each constant ('OK', 'NOT_FOUND', 'INTERNAL_ERROR') has its own numeric code and description, making the enum self-documenting and easy to use. In addition, each constant overrides the abstract 'handle()' method to define specific behavior for that status. For instance, 'OK' proceeds with a normal response, 'NOT_FOUND' returns an error page, and 'INTERNAL_ERROR' logs details and alerts developers. By combining data and behavior, enums provide a clean, type-safe way to represent states that carry both meaning and logic. This approach is widely applicable in real-world scenarios such as workflow states, error handling, configuration modes, or command execution, where each option requires distinct properties and actions.
+
+
+
+
+Here’s a workflow states example implemented with enums, showing how each state can carry both data and behavior:
+
+Example: Workflow States with Enums
+'''java
+enum WorkflowState {
+    STARTED("Workflow has started") {
+        @Override
+        public void handle() {
+            System.out.println("Initialize resources and notify stakeholders.");
+        }
+    },
+    IN_PROGRESS("Workflow is in progress") {
+        @Override
+        public void handle() {
+            System.out.println("Continue processing tasks and monitor progress.");
+        }
+    },
+    COMPLETED("Workflow completed successfully") {
+        @Override
+        public void handle() {
+            System.out.println("Release resources and archive results.");
+        }
+    },
+    FAILED("Workflow failed") {
+        @Override
+        public void handle() {
+            System.out.println("Log failure details and trigger recovery actions.");
+        }
+    };
+
+    private final String description;
+
+    WorkflowState(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public abstract void handle();
+}
+
+public class Main {
+    public static void main(String[] args) {
+        WorkflowState state = WorkflowState.IN_PROGRESS;
+
+        System.out.println("Current State: " + state);
+        System.out.println("Description: " + state.getDescription());
+        state.handle();
+        // Output:
+        // Current State: IN_PROGRESS
+        // Description: Workflow is in progress
+        // Continue processing tasks and monitor progress.
+    }
+}
+'''
+
+
+
+Explanation in Paragraph Form:
+This example models a workflow lifecycle using enums. Each state ('STARTED', 'IN_PROGRESS', 'COMPLETED', 'FAILED') has a descriptive message and its own implementation of the 'handle()' method, which defines the actions to take when the workflow is in that state. For instance, 'STARTED' initializes resources, 'IN_PROGRESS' continues processing, 'COMPLETED' releases resources, and 'FAILED' logs errors and triggers recovery. By combining data and behavior, enums provide a clean, type-safe way to represent workflow states, ensuring that only valid states are used and that each state’s responsibilities are clearly defined. This approach is widely applicable in real-world systems such as task management, order processing, or background job execution, where workflows naturally progress through distinct stages with specific actions.
+
+
+
+
+
+Here’s how you can extend the workflow states example into a mini state machine using enums, where each state knows what the next valid transition is:
+
+Example: Workflow States with Transitions:
+'''java
+enum WorkflowState {
+    STARTED("Workflow has started") {
+        @Override
+        public WorkflowState next() {
+            return IN_PROGRESS;
+        }
+        @Override
+        public void handle() {
+            System.out.println("Initialize resources and notify stakeholders.");
+        }
+    },
+    IN_PROGRESS("Workflow is in progress") {
+        @Override
+        public WorkflowState next() {
+            return COMPLETED;
+        }
+        @Override
+        public void handle() {
+            System.out.println("Continue processing tasks and monitor progress.");
+        }
+    },
+    COMPLETED("Workflow completed successfully") {
+        @Override
+        public WorkflowState next() {
+            return null; // No further transition
+        }
+        @Override
+        public void handle() {
+            System.out.println("Release resources and archive results.");
+        }
+    },
+    FAILED("Workflow failed") {
+        @Override
+        public WorkflowState next() {
+            return null; // No further transition
+        }
+        @Override
+        public void handle() {
+            System.out.println("Log failure details and trigger recovery actions.");
+        }
+    };
+
+    private final String description;
+
+    WorkflowState(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    // Abstract methods for behavior and transition
+    public abstract void handle();
+    public abstract WorkflowState next();
+}
+
+public class Main {
+    public static void main(String[] args) {
+        WorkflowState state = WorkflowState.STARTED;
+
+        while (state != null) {
+            System.out.println("Current State: " + state);
+            System.out.println("Description: " + state.getDescription());
+            state.handle();
+            state = state.next();
+        }
+    }
+}
+'''
+
+
+
+Explanation in Paragraph Form:
+This example models workflow states as a simple state machine. Each enum constant ('STARTED', 'IN_PROGRESS', 'COMPLETED', 'FAILED') not only defines its own description and behavior but also specifies its valid transition through the 'next()' method. For example, 'STARTED' transitions to 'IN_PROGRESS', which then transitions to 'COMPLETED'. States like 'COMPLETED' and 'FAILED' return 'null' to indicate the end of the workflow. In the 'main' method, a loop progresses through the states by repeatedly calling 'next()', executing each state’s 'handle()' logic along the way. This design keeps transitions explicit, prevents invalid state changes, and encapsulates both data and behavior directly within the enum. It’s a clean, type-safe way to implement workflows, pipelines, or finite state machines in Java.
+
+
+
+
+Here’s how you can extend the workflow states enum into a branching state machine, where transitions depend on conditions (success vs. failure):
+
+Example: Workflow States with Branching Transitions
+'''java
+enum WorkflowState {
+    STARTED("Workflow has started") {
+        @Override
+        public WorkflowState next(boolean success) {
+            return IN_PROGRESS;
+        }
+        @Override
+        public void handle() {
+            System.out.println("Initialize resources and notify stakeholders.");
+        }
+    },
+    IN_PROGRESS("Workflow is in progress") {
+        @Override
+        public WorkflowState next(boolean success) {
+            return success ? COMPLETED : FAILED;
+        }
+        @Override
+        public void handle() {
+            System.out.println("Continue processing tasks and monitor progress.");
+        }
+    },
+    COMPLETED("Workflow completed successfully") {
+        @Override
+        public WorkflowState next(boolean success) {
+            return null; // End of workflow
+        }
+        @Override
+        public void handle() {
+            System.out.println("Release resources and archive results.");
+        }
+    },
+    FAILED("Workflow failed") {
+        @Override
+        public WorkflowState next(boolean success) {
+            return null; // End of workflow
+        }
+        @Override
+        public void handle() {
+            System.out.println("Log failure details and trigger recovery actions.");
+        }
+    };
+
+    private final String description;
+
+    WorkflowState(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    // Abstract methods for behavior and branching transition
+    public abstract void handle();
+    public abstract WorkflowState next(boolean success);
+}
+
+public class Main {
+    public static void main(String[] args) {
+        WorkflowState state = WorkflowState.STARTED;
+
+        // Simulate workflow with branching outcome
+        boolean success = false; // change to true to simulate success
+
+        while (state != null) {
+            System.out.println("Current State: " + state);
+            System.out.println("Description: " + state.getDescription());
+            state.handle();
+            state = state.next(success);
+        }
+    }
+}
+'''
+
+
+Explanation in Paragraph Form:
+This example shows how enums can model branching transitions in a state machine. Each state defines a 'next(boolean success)' method, which determines the next state based on conditions. For instance, 'IN_PROGRESS' transitions to 'COMPLETED' if the workflow succeeds, or to 'FAILED' if it fails. States like 'COMPLETED' and 'FAILED' return 'null' to indicate the end of the workflow. This design allows you to simulate real-world processes where outcomes depend on decisions or results, such as order processing, background jobs, or approval workflows. By encapsulating both data, behavior, and conditional transitions inside the enum, you get a clean, type-safe, and extensible way to implement finite state machines directly in Java.
+
+
+
+
+Here’s how you can extend the workflow states enum into a branching state machine with recovery transitions, so a failed workflow can retry and loop until success:
+
+Example: Workflow States with Recovery Transitions
+'''java
+enum WorkflowState {
+    STARTED("Workflow has started") {
+        @Override
+        public WorkflowState next(boolean success) {
+            return IN_PROGRESS;
+        }
+        @Override
+        public void handle() {
+            System.out.println("Initialize resources and notify stakeholders.");
+        }
+    },
+    IN_PROGRESS("Workflow is in progress") {
+        @Override
+        public WorkflowState next(boolean success) {
+            return success ? COMPLETED : FAILED;
+        }
+        @Override
+        public void handle() {
+            System.out.println("Continue processing tasks and monitor progress.");
+        }
+    },
+    COMPLETED("Workflow completed successfully") {
+        @Override
+        public WorkflowState next(boolean success) {
+            return null; // End of workflow
+        }
+        @Override
+        public void handle() {
+            System.out.println("Release resources and archive results.");
+        }
+    },
+    FAILED("Workflow failed") {
+        @Override
+        public WorkflowState next(boolean success) {
+            // Recovery transition: retry goes back to IN_PROGRESS
+            return success ? IN_PROGRESS : null;
+        }
+        @Override
+        public void handle() {
+            System.out.println("Log failure details and attempt recovery.");
+        }
+    };
+
+    private final String description;
+
+    WorkflowState(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    // Abstract methods for behavior and branching transition
+    public abstract void handle();
+    public abstract WorkflowState next(boolean success);
+}
+
+public class Main {
+    public static void main(String[] args) {
+        WorkflowState state = WorkflowState.STARTED;
+
+        // Simulate workflow with retries
+        boolean[] outcomes = {false, false, true}; // two failures, then success
+
+        int attempt = 0;
+        while (state != null && attempt < outcomes.length) {
+            System.out.println("Current State: " + state);
+            System.out.println("Description: " + state.getDescription());
+            state.handle();
+            state = state.next(outcomes[attempt]);
+            attempt++;
+        }
+    }
+}
+'''
+
+
+
+Explanation in Paragraph Form:
+This example demonstrates how enums can model recovery transitions in a state machine. Each state defines its own 'next(boolean success)' method, and the 'FAILED' state is special because it can transition back to 'IN_PROGRESS' if a retry succeeds. In the simulation, the workflow fails twice before eventually succeeding, showing how the state machine loops until completion. By encapsulating both data, behavior, and conditional transitions inside the enum, you can build robust workflows that handle retries, failures, and eventual success in a clean, type-safe way. This pattern is especially useful in real-world systems such as job schedulers, transaction processors, or background services, where recovery and retry logic are essential.
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 11. Arithmetic Expressions: 
 
-11.1 Expressions, Operators & Operands
-
+11.1 Expressions, Operators & Operands:
 - Expression: any code fragment that produces a value  
 - Operator: symbol denoting an operation ('+', '-', '*', '/', '%', '++', '--', '+=', etc.)  
 - Operand: the values or variables the operator works on  
@@ -2097,8 +2883,7 @@ int result = 10 + 3;
 
 
 
-
-11.2 Core Arithmetic Operators
+11.2 Core Arithmetic Operators:
 
 | Operator | Meaning            | Example            | Result          |
 |----------|--------------------|--------------------|-----------------|
@@ -2110,10 +2895,8 @@ int result = 10 + 3;
 
 
 
-
-11.3 Integer vs. Floating-Point Division
-
-# Integer Division
+11.3 Integer vs. Floating-Point Division:
+Integer Division:
 - When both operands are integer types, Java performs integer division, discarding any fractional part.
 -  
   '''java
@@ -2122,7 +2905,7 @@ int result = 10 + 3;
   int rem = a % b;       // rem == 1
   '''
 
-# Floating-Point Division
+Floating-Point Division:
 - To preserve decimals, at least one operand must be 'float' or 'double'.
 - Use literal suffixes ('F' for 'float', default is 'double') or cast:
 
@@ -2140,18 +2923,14 @@ Memory Preview (Integer Division)
 
 
 
-
-11.4 Type Promotion Rules
-
+11.4 Type Promotion Rules:
 - Smaller integer types ('byte', 'short', 'char') are promoted to 'int' before arithmetic.  
 - If one operand is 'long', result is 'long'; if one is 'float' or 'double', result is 'float'/'double'.  
 - Casting back to a smaller type may lose data.
 
 
 
-
-11.5 Increment ('++') and Decrement ('--')
-
+11.5 Increment ('++') and Decrement ('--'):
 - Postfix ('x++'): use the current value, then increment  
 - Prefix ('++x'): increment first, then use the new value  
 
@@ -2175,9 +2954,7 @@ Execution Steps (Prefix)
 
 
 
-
-11.6 Compound Assignment Operators
-
+11.6 Compound Assignment Operators:
 Combine an arithmetic operation with assignment in one succinct syntax:
 
 | Shorthand | Equivalent To       |
@@ -2197,8 +2974,7 @@ x *= 4;       // x is now 12
 
 
 
-11.7 Putting It All Together
-
+11.7 Putting It All Together:
 '''java
 public class Main {
     public static void main(String[] args) {
@@ -2229,9 +3005,7 @@ public class Main {
 
 
 
-
-11.8 Common Pitfalls & Tips
-
+11.8 Common Pitfalls & Tips:
 - Integer overflow: adding beyond 'Integer.MAX_VALUE' wraps around to negative.  
 - Mixed types: be explicit with casts to avoid unintended truncation.  
 - Readability: avoid mixing prefix/postfix in complex expressions; split steps if necessary.  
@@ -2243,9 +3017,7 @@ With these tools, you can build, combine, and manipulate numeric expressions con
 
 
 
-
 Codes and Other Notes Referred in this Discussion: 
-
 
 package com.codewithmosh; 
 
@@ -2308,6 +3080,329 @@ public class Main {
 	}
 }
 
+
+
+
+
+
+Extra Information About Arithmetic Expressions in Java:
+1. Operator Precedence and Associativity:
+Operators in Java follow strict precedence rules. For example, multiplication and division have higher precedence than addition and subtraction. Associativity determines evaluation order when operators have the same precedence:
+- '*', '/', '%' → higher precedence than '+', '-'  
+- '=' and compound assignments ('+=', '-=', etc.) → lowest precedence  
+- Most arithmetic operators are left-associative, meaning evaluation proceeds left to right.  
+
+Example:
+'''java
+int result = 10 + 3 * 2; // result = 16, not 26
+'''
+Here, multiplication happens before addition.
+
+
+
+2. Unary Operators:
+Besides '++' and '--', Java supports unary operators:
+- '+x' → positive (usually redundant)  
+- '-x' → negation  
+- '~x' → bitwise NOT (works on integers)  
+- '!x' → logical NOT (works on booleans)  
+
+Example:
+'''java
+int a = 5;
+int b = -a;   // b = -5
+'''
+
+
+
+3. Overflow and Underflow:
+Java does not throw errors on integer overflow. Instead, values wrap around:
+'''java
+int max = Integer.MAX_VALUE;
+System.out.println(max + 1); // wraps to Integer.MIN_VALUE
+'''
+For critical calculations, use 'Math.addExact()', 'Math.subtractExact()', or 'BigInteger' to detect and handle overflow safely.
+
+
+
+4. Math Class Utilities:
+The 'Math' class provides additional arithmetic functions:
+- 'Math.pow(a, b)' → exponentiation  
+- 'Math.sqrt(x)' → square root  
+- 'Math.abs(x)' → absolute value  
+- 'Math.max(a, b)' / 'Math.min(a, b)' → comparisons  
+- 'Math.round(x)', 'Math.floor(x)', 'Math.ceil(x)' → rounding operations  
+
+Example:
+'''java
+double power = Math.pow(2, 3); // 8.0
+'''
+
+
+
+5. Division by Zero:
+- Integer division by zero throws 'ArithmeticException'.  
+- Floating-point division by zero does not throw an exception; instead, it results in 'Infinity' or 'NaN'.  
+
+Example:
+'''java
+int x = 10 / 0;     // Runtime error: ArithmeticException
+double y = 10.0 / 0; // Infinity
+double z = 0.0 / 0;  // NaN
+'''
+
+
+
+6. Constants vs. Expressions (Paragraph Comparison):
+Variables in Java can change during execution, but constants declared with 'final' remain fixed. Arithmetic expressions often combine both: constants provide stability (like 'PI' in calculations), while variables allow dynamic computation. Using constants in arithmetic expressions improves readability and prevents accidental changes, while variables provide flexibility. Together, they balance safety and adaptability in mathematical logic.
+
+
+
+7. Key Additions:
+- Operator precedence and associativity determine evaluation order—always use parentheses for clarity.  
+- Unary operators ('+', '-', '~', '!') extend arithmetic beyond basic math.  
+- Integer overflow silently wraps; use 'Math.addExact()' or 'BigInteger' for safety.  
+- The 'Math' class provides powerful utilities for advanced calculations.  
+- Division by zero behaves differently for integers (exception) and floating-point (Infinity/NaN).  
+
+
+
+
+Perfect, let’s walk through a step-by-step worked example of operator precedence and associativity in Java. This will make the rules crystal clear in your notes:
+
+Example Expression:
+'''java
+int result = 10 + 2 * 5 - 3 / 2;
+'''
+
+
+
+Step-by-Step Evaluation:
+1. Identify operators and precedence  
+   - Multiplication ('*') and division ('/') have higher precedence than addition ('+') and subtraction ('-').  
+   - All arithmetic operators here are left-associative, meaning they are evaluated left to right when precedence is equal.
+
+2. Evaluate multiplication first  
+   - '2 * 5 = 10'  
+   - Expression becomes:  
+     '''java
+     int result = 10 + 10 - 3 / 2;
+     '''
+
+3. Evaluate division next  
+   - '3 / 2 = 1' (integer division discards the fraction)  
+   - Expression becomes:  
+     '''java
+     int result = 10 + 10 - 1;
+     '''
+
+4. Evaluate addition and subtraction left to right  
+   - '10 + 10 = 20'  
+   - '20 - 1 = 19'  
+
+5. Final result  
+   '''java
+   result = 19;
+   '''
+
+
+
+Explanation in Paragraph Form:
+In this example, the multiplication and division operators are evaluated before addition and subtraction because they have higher precedence. The multiplication '2 * 5' is resolved first, followed by the division '3 / 2', which yields '1' due to integer division. After that, the addition and subtraction are evaluated from left to right, resulting in '19'. This demonstrates how precedence and associativity control the order of evaluation in Java. To avoid confusion, it’s always best to use parentheses to make the intended order explicit, for example: 'int result = 10 + (2 * 5) - (3 / 2);'.
+
+
+
+
+
+Here’s the floating-point version of the same precedence example, showing how division changes the outcome when decimals are preserved:
+
+Example Expression (Floating-Point):
+'''java
+double result = 10 + 2 * 5 - 3 / 2.0;
+'''
+
+
+
+Step-by-Step Evaluation:
+1. Identify operators and precedence  
+   - Multiplication ('*') and division ('/') have higher precedence than addition ('+') and subtraction ('-').  
+   - All are left-associative when precedence is equal.
+
+2. Evaluate multiplication first  
+   - '2 * 5 = 10'  
+   - Expression becomes:  
+     '''java
+     double result = 10 + 10 - 3 / 2.0;
+     '''
+
+3. Evaluate division next  
+   - '3 / 2.0 = 1.5' (because one operand is a double, decimals are preserved)  
+   - Expression becomes:  
+     '''java
+     double result = 10 + 10 - 1.5;
+     '''
+
+4. Evaluate addition and subtraction left to right  
+   - '10 + 10 = 20'  
+   - '20 - 1.5 = 18.5'  
+
+5. Final result  
+   '''java
+   result = 18.5;
+   '''
+
+
+
+Explanation in Paragraph Form:
+In the floating-point version, the division '3 / 2.0' produces '1.5' instead of truncating to '1' as in integer division. This changes the final outcome from '19' to '18.5'. The multiplication still happens before addition, and subtraction is evaluated last, but the presence of a floating-point operand ensures that decimals are preserved. This highlights the importance of type choice in arithmetic expressions: integer division discards fractions, while floating-point division keeps them. Using suffixes ('F' for float, '.0' for double) or explicit casting ensures the calculation behaves as intended.
+
+
+
+
+Great choice—mixed-type arithmetic expressions are a perfect way to illustrate Java’s type promotion rules in action. Let’s break it down with a worked example:
+
+Example Expression (Mixed Types):
+'''java
+double result = 10 + 2L * 5.0 - (byte)3 / 2;
+'''
+
+
+
+Step-by-Step Evaluation:
+1. Identify operands and types  
+   - '10' → 'int'  
+   - '2L' → 'long'  
+   - '5.0' → 'double'  
+   - '(byte)3' → 'byte'  
+   - '2' → 'int'  
+
+2. Apply type promotion rules  
+   - Smaller integer types ('byte', 'short', 'char') are promoted to 'int' before arithmetic.  
+   - If one operand is 'long', result is 'long'.  
+   - If one operand is 'float' or 'double', result is promoted to 'float'/'double'.  
+
+3. Evaluate multiplication first  
+   - '2L * 5.0' → 'long' × 'double' → promoted to 'double' → '10.0'  
+   - Expression becomes:  
+     '''java
+     double result = 10 + 10.0 - (byte)3 / 2;
+     '''
+
+4. Evaluate division next  
+   - '(byte)3 / 2' → promoted to 'int / int' → '1'  
+   - Expression becomes:  
+     '''java
+     double result = 10 + 10.0 - 1;
+     '''
+
+5. Evaluate addition and subtraction  
+   - '10 + 10.0' → 'int + double' → promoted to 'double' → '20.0'  
+   - '20.0 - 1' → '19.0'  
+
+6. Final result  
+   '''java
+   result = 19.0;
+   '''
+
+
+
+Explanation in Paragraph Form:
+This example shows how Java automatically promotes types during arithmetic. The multiplication between a 'long' and a 'double' results in a 'double'. The division between a 'byte' and an 'int' promotes both to 'int', yielding '1'. When combined with a 'double', the entire expression is promoted to 'double', ensuring the final result preserves decimals. This demonstrates how Java’s type promotion rules prevent data loss in mixed-type expressions, but also why developers must be mindful of implicit conversions. Explicit casting can be used to control the outcome when needed.
+
+
+
+
+
+Here’s a pitfall example showing how mixing 'int' and 'double' without careful casting can lead to unintended truncation or precision issues:
+
+Example: Mixed Types Without Casting:
+'''java
+public class Main {
+    public static void main(String[] args) {
+        int a = 7;
+        int b = 2;
+
+        // Intended: precise division
+        double result1 = a / b;   // Problem: both operands are int
+        double result2 = (double) a / b; // Correct: cast ensures floating-point division
+
+        System.out.println("result1 = " + result1); // 3.0 (truncated)
+        System.out.println("result2 = " + result2); // 3.5 (precise)
+    }
+}
+'''
+
+
+
+Step-by-Step Explanation:
+1. In 'result1 = a / b;', both operands are integers, so Java performs integer division first ('7 / 2 = 3').  
+   - The result is then promoted to 'double', but the fractional part is already lost → '3.0'.  
+
+2. In 'result2 = (double) a / b;', casting 'a' to 'double' forces floating-point division.  
+   - The calculation preserves the fraction → '3.5'.  
+
+
+
+Real-World Pitfall:
+This kind of bug often appears in calculations like averages:
+'''java
+int sum = 7;
+int count = 2;
+double average = sum / count; // Wrong: 3.0
+'''
+The correct approach is:
+'''java
+double average = (double) sum / count; // Correct: 3.5
+'''
+
+
+
+Key Takeaway:
+Always ensure at least one operand is a floating-point type ('double' or 'float') when you want decimal precision. Otherwise, integer division will silently truncate results, leading to subtle bugs in calculations like averages, ratios, or percentages.
+
+
+
+
+
+Here’s a classic pitfall example with percentage calculations, showing how integer division ruins the result and how casting fixes it:
+
+Example: Percentage Calculation Pitfall
+'''java
+public class Main {
+    public static void main(String[] args) {
+        int obtained = 75;
+        int total = 100;
+
+        // Wrong: both operands are int → integer division
+        double percent1 = obtained / total * 100;
+
+        // Correct: cast one operand to double → floating-point division
+        double percent2 = (double) obtained / total * 100;
+
+        System.out.println("percent1 = " + percent1); // 0.0
+        System.out.println("percent2 = " + percent2); // 75.0
+    }
+}
+'''
+
+
+
+Step-by-Step Explanation:
+1. In 'percent1 = obtained / total * 100;'  
+   - 'obtained / total' → '75 / 100' → 0 (integer division truncates the fraction).  
+   - '0 * 100' → '0.0'.  
+   - Result: '0.0' (wrong).  
+
+2. In 'percent2 = (double) obtained / total * 100;'  
+   - '(double) obtained / total' → '75.0 / 100' → '0.75'.  
+   - '0.75 * 100' → '75.0'.  
+   - Result: '75.0' (correct).  
+
+
+
+Real-World Lesson:
+This pitfall is common in averages, ratios, and percentages. If both operands are integers, Java silently truncates the fraction before promoting to 'double'. Always ensure at least one operand is a floating-point type ('double' or 'float') when precision matters.
+
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 12. Order of Operations: 
@@ -2315,8 +3410,7 @@ Java follows the same precedence rules as standard arithmetic. Understanding the
 
 
 
-12.1 Precedence Rules
-
+12.1 Precedence Rules:
 1. Parentheses '()'  
 2. Multiplication '*' and Division '/'  
 3. Addition '+' and Subtraction '-'  
@@ -2325,9 +3419,7 @@ Operators on the same line are evaluated left to right.
 
 
 
-
-12.2 Example Without Parentheses
-
+12.2 Example Without Parentheses:
 '''java
 public class Main {
     public static void main(String[] args) {
@@ -2337,8 +3429,7 @@ public class Main {
 }
 '''
 
-# Step-by-Step Evaluation
-
+Step-by-Step Evaluation:
 1. Identify sub-expression with highest precedence:  
    - '3 * 2' → '6'  
 2. Rewrite the expression:  
@@ -2356,9 +3447,7 @@ public class Main {
 
 
 
-
-12.3 Using Parentheses to Alter Order
-
+12.3 Using Parentheses to Alter Order:
 Wrap any sub-expression in '()' to force it to evaluate first:
 
 '''java
@@ -2370,8 +3459,7 @@ public class Main {
 }
 '''
 
-# Step-by-Step Evaluation
-
+Step-by-Step Evaluation:
 1. Evaluate parentheses first:  
    '''
    (10 + 3) → 13
@@ -2387,9 +3475,7 @@ public class Main {
 
 
 
-
-12.4 Precedence Chart
-
+12.4 Precedence Chart:
 | Precedence Level | Operators        | Description                      |
 |------------------|------------------|----------------------------------|
 | 1 (highest)      | '()'             | Grouping                        |
@@ -2398,9 +3484,7 @@ public class Main {
 
 
 
-
-12.5 Visualizing with an Evaluation Tree
-
+12.5 Visualizing with an Evaluation Tree:
 Expression: '10 + 3 * 2'
 
 '''
@@ -2429,19 +3513,14 @@ With parentheses: '(10 + 3) * 2'
 
 
 
-
-12.6 Tips & Common Pitfalls
-
+12.6 Tips & Common Pitfalls:
 - Always use parentheses to make complex expressions clear, even if precedence would handle it correctly.  
 - Relying solely on precedence rules can lead to maintenance bugs when others read your code.  
 - In mixed-type expressions, type promotion still follows the same precedence—cast or rewrite to avoid surprises.  
 - When chaining many operators, break the expression into intermediate variables for readability.
 
 
-
 By mastering operator precedence and judicious use of parentheses, you’ll write arithmetic expressions that behave exactly as you intend.
-
-
 
 
 
@@ -2472,7 +3551,6 @@ Order of Operators:
 * /
 + -
 
-
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 13. Casting (Type Conversion):
@@ -2488,8 +3566,7 @@ Casting (type conversion) lets you convert a value from one type to another—au
 
 
 
-
-13.2 Implicit Casting (Widening Conversion)  
+13.2 Implicit Casting (Widening Conversion):  
 Automatic, lossless conversion from a smaller to a larger type.
 
 1. byte → short → int → long → float → double  
@@ -2525,8 +3602,7 @@ Rule of Thumb
 
 
 
-
-13.3 Explicit Casting (Narrowing Conversion)  
+13.3 Explicit Casting (Narrowing Conversion):  
 Manual conversion when moving to a smaller or less precise type—potentially loses data.
 
 '''java
@@ -2542,8 +3618,7 @@ System.out.println(y); // 3
 
 
 
-
-13.4 Numeric Promotion Rules  
+13.4 Numeric Promotion Rules:  
 Before most arithmetic:
 - 'byte', 'short', 'char' → promoted to 'int'
 - If one operand is 'long' → both become 'long'
@@ -2554,8 +3629,7 @@ This is why 'short + short' yields an 'int'.
 
 
 
-
-13.5 Casting Incompatible Types: Parsing Strings  
+13.5 Casting Incompatible Types: Parsing Strings:  
 You cannot cast 'String' → numeric type directly. Instead, use wrapper‐class parsers:
 
 | Primitive | Wrapper Class      | Parse Method                   |
@@ -2579,9 +3653,7 @@ double d = Double.parseDouble(t) + 2;  // 5.14
 
 
 
-
-13.6 Visual Summary
-
+13.6 Visual Summary:
 '''
 Widening Chain (implicit, safe):
 byte → short → int → long → float → double
@@ -2604,22 +3676,18 @@ Stack:
 
 
 
-13.7 Best Practices & Pitfalls  
+13.7 Best Practices & Pitfalls:  
 - Minimize explicit casts—they can hide data loss and lead to bugs.  
 - Use correct suffixes ('F', 'L') for literals when right‐hand side type differs.  
 - Parse user input safely: catch 'NumberFormatException', provide feedback.  
 - For rounding instead of truncation, use methods from 'Math' (e.g., 'Math.round').  
 - Consider 'BigDecimal' for monetary calculations needing high precision.
 
-
-
 Mastering casting ensures your calculations and data transformations behave predictably, keeping both code safety and clarity in check.
 
 
 
 Codes and Other Notes Referred in this Discussion: 
-
-
 
 package com.codewithmosh; 
 
@@ -2686,6 +3754,73 @@ public class Main {
 
 
 
+
+Your notes on Casting (Type Conversion) are already excellent. Let’s enrich them with deeper insights about *how type conversion is chosen under the hood*, and also explain wrapper classes—why they exist and their purpose.
+
+Extra Insights on Casting:
+
+1. How Java Chooses the Target Type:
+When evaluating mixed-type expressions, Java follows numeric promotion rules:
+- Step 1: Smaller integer types ('byte', 'short', 'char') → promoted to 'int'.  
+- Step 2: If one operand is 'long', result is 'long'.  
+- Step 3: If one operand is 'float', result is 'float'.  
+- Step 4: If one operand is 'double', result is 'double'.  
+
+👉 This chain ensures the result type is always the “largest” type involved, preventing silent data loss during widening conversions.  
+Under the hood, the compiler inserts implicit widening conversions before performing arithmetic. For narrowing conversions, you must explicitly cast, because the compiler cannot guarantee safety.
+
+
+
+2. When to Change Types:
+- Widening (safe, automatic):  
+  Use when combining smaller types with larger ones (e.g., adding 'int' to 'double').  
+- Narrowing (manual, risky):  
+  Needed when storing a larger type into a smaller one (e.g., 'double → int'). This may truncate decimals or overflow.  
+- Parsing Strings:  
+  Required when converting text input into numbers. Casting doesn’t work here—you must use wrapper class methods.
+
+
+
+3. Wrapper Classes:
+Each primitive type in Java has a corresponding wrapper class in 'java.lang':
+- 'int' → 'Integer'  
+- 'double' → 'Double'  
+- 'char' → 'Character'  
+- etc.
+
+Why Introduced?
+- Object-Oriented Needs: Collections ('ArrayList', 'HashMap') store objects, not primitives. Wrappers let primitives be treated as objects.  
+- Utility Methods: Wrappers provide parsing ('Integer.parseInt("123")'), conversion, and constants ('Integer.MAX_VALUE').  
+- Autoboxing/Unboxing: Since Java 5, primitives can automatically convert to wrappers and back:
+  '''java
+  Integer obj = 5;   // autoboxing
+  int val = obj;     // unboxing
+  '''
+
+Purpose:
+- Enable primitives to work seamlessly with Java’s object-based APIs.  
+- Provide helper methods for parsing, formatting, and type conversions.  
+- Allow nullability (wrappers can be 'null', primitives cannot).  
+
+
+
+4. Under the Hood:
+- Implicit Casting: The compiler inserts bytecode instructions to widen values (e.g., 'i2d' for int-to-double).  
+- Explicit Casting: The programmer directs the compiler to truncate or reinterpret values (e.g., 'd2i' for double-to-int).  
+- Wrapper Classes: At runtime, autoboxing creates wrapper objects, while unboxing extracts the primitive value.  
+
+
+
+5. Best Practices:
+- Use widening conversions whenever possible—safe and automatic.  
+- Be cautious with narrowing conversions—always check for overflow or truncation.  
+- Prefer wrapper classes when working with collections, parsing, or APIs requiring objects.  
+- For financial calculations, avoid floating-point rounding errors—use 'BigDecimal'.  
+
+
+
+So, casting is chosen based on promotion rules (compiler decides the safest larger type), or explicitly by the programmer when narrowing. Wrapper classes bridge primitives with Java’s object world, providing parsing, constants, and utility methods.
+
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 14. The Math Class:
@@ -2693,22 +3828,18 @@ Java’s 'Math' class (in 'java.lang') provides a suite of static methods for co
 
 
 
-
-14.1 Method Overloading in 'Math'
-
+14.1 Method Overloading in 'Math':
 Many 'Math' methods are overloaded: the same name supports different parameter types.
 
 | Method      | Signatures                             | Return Type   | Purpose                                      |
 |-------------|----------------------------------------|---------------|----------------------------------------------|
 | 'round'     | 'round(float)' → 'int'                 | 'int'         | Rounds a 'float' to nearest whole number     |
 |             | 'round(double)' → 'long'               | 'long'        | Rounds a 'double' to nearest whole number    |
-| 'max', 'min'| 'max(int,int)', 'max(long,long)', etc.| same as args  | Returns larger (or smaller) of two values    |
+| 'max', 'min'| 'max(int,int)', 'max(long,long)', etc. | same as args  | Returns larger (or smaller) of two values    |
 
 
 
-
-14.2 Rounding: 'Math.round()'
-
+14.2 Rounding: 'Math.round()':
 Rounds a floating-point value to the nearest integer, returning the appropriate integral type.
 
 '''java
@@ -2721,22 +3852,18 @@ long r2 = Math.round(1.6);     // uses double version → 2
 
 
 
-
-14.3 Ceiling and Floor
-
-# 'Math.ceil(double)'
-
+14.3 Ceiling and Floor:
+'Math.ceil(double)':
 Returns the smallest integer ≥ the argument, as a 'double'.
 
 '''java
 double d = 1.1;
 int c = (int) Math.ceil(d);   // (double)2.0 cast to int → 2
 '''
-
 - Always returns a whole-number value, but as 'double', so you’ll often cast to 'int' or 'long'.
 
-# 'Math.floor(double)'
 
+'Math.floor(double)':
 Returns the largest integer ≤ the argument, as a 'double'.
 
 '''java
@@ -2745,9 +3872,7 @@ int f = (int) Math.floor(1.9);  // floor(1.9)→1.0 → cast → 1
 
 
 
-
-14.4 Maximum and Minimum
-
+14.4 Maximum and Minimum:
 Find the larger or smaller of two values. Each primitive type has its overload:
 
 '''java
@@ -2757,11 +3882,8 @@ double small = Math.min(2.5, 1.7); // 1.7
 
 
 
-
-14.5 Generating Random Numbers
-
-# 'Math.random()'
-
+14.5 Generating Random Numbers:
+'Math.random()':
 - Returns a 'double' in the range '[0.0, 1.0)' (zero inclusive, one exclusive).
 - No parameters.
 
@@ -2771,36 +3893,29 @@ double r = Math.random();  // e.g., 0.374829365
 
 
 
-14.6 Scaling Random to a Range
-
+14.6 Scaling Random to a Range:
 To get a random number between 0 and N ('0 ≤ value < N'):
-
 '''java
 double scaled = Math.random() * 100;  // 0.0 ≤ scaled < 100.0
 '''
 
 
 
-14.7 Rounding or Casting a Random Value
-
-# Using 'round()' then cast
-
+14.7 Rounding or Casting a Random Value:
+Using 'round()' then cast:
 '''java
 long temp = Math.round(Math.random() * 100);  
 int rnd   = (int) temp;  // safe: 0–100  
 '''
 
-# Direct explicit cast
-
+Direct explicit cast:
 Be careful—casting only the 'random()' call drops the fraction before scaling:
-
 '''java
 int bad = (int) Math.random() * 100;  
 // Evaluates as ((int)Math.random()) * 100 → 0 * 100 → always 0
 '''
 
 Wrap the entire expression in parentheses:
-
 '''java
 int good = (int) (Math.random() * 100);  
 // 0 ≤ good < 100
@@ -2808,9 +3923,7 @@ int good = (int) (Math.random() * 100);
 
 
 
-
-14.8 Pipeline Diagram for Random Integer
-
+14.8 Pipeline Diagram for Random Integer:
 '''
 Math.random() 
      │  returns double in [0,1)
@@ -2822,17 +3935,15 @@ round() → long in [0,100]
 cast to int  → int in [0,100]
 '''
 
-Or, for direct cast:
 
+Or, for direct cast:
 '''
  (int)(Math.random() * 100)
 '''
 
 
 
-
-14.9 Other Useful 'Math' Methods
-
+14.9 Other Useful 'Math' Methods:
 - 'Math.abs(x)'       → absolute value  
 - 'Math.pow(x,y)'     → x raised to the y power  
 - 'Math.sqrt(x)'      → square root of x  
@@ -2841,9 +3952,7 @@ Or, for direct cast:
 
 
 
-
-14.10 Key Takeaways
-
+14.10 Key Takeaways:
 - No import needed for 'Math'—it’s in 'java.lang'.  
 - Understand method return types (e.g., 'round(double)' returns 'long').  
 - Always cast or assign to the correct type to avoid compile errors.  
@@ -2851,7 +3960,6 @@ Or, for direct cast:
 - Explore 'Math' beyond basics for advanced operations (exponents, logarithms, trigonometry).
 
 With these tools, you can perform precise rounding, limit values, compare numbers, and generate random data—all essential for robust Java applications.
-
 
 
 
@@ -2881,38 +3989,24 @@ Formatting raw numbers into human-friendly strings is essential when displaying 
 
 
 
-
-15.1 Why Format Numbers?
-  
+15.1 Why Format Numbers?  
 When you present a price or a ratio to users, raw numeric values often fall short:
-
-  
 - A price of '1234567.891' is hard to read without separators.  
 - A ratio of '0.1' doesn’t immediately scream “10%”.  
-
-  
-Formatting solves these:
-
-  
+ 
+Formatting solves these:  
 - Adds currency symbols and comma separators.  
 - Converts decimals into percent strings.  
 
 
 
-
-15.2 Introducing 'NumberFormat'
-  
+15.2 Introducing 'NumberFormat':
 The 'NumberFormat' class lives in 'java.text'. It is abstract, so you cannot do:
-
-  
 '''java
 NumberFormat nf = new NumberFormat();  // Compilation error: abstract class
 '''
-
   
-Instead, 'NumberFormat' offers factory methods that return ready-to-use instances:
-
-  
+Instead, 'NumberFormat' offers factory methods that return ready-to-use instances:  
 - 'NumberFormat.getCurrencyInstance()'  
 - 'NumberFormat.getPercentInstance()'  
 - 'NumberFormat.getInstance()' (general number formatting)  
@@ -2922,9 +4016,7 @@ These methods hide locale-specific details and produce a 'NumberFormat' object t
 
 
 
-
-15.3 Abstract Classes & Factory Methods
-  
+15.3 Abstract Classes & Factory Methods:  
 Abstract Class Primer:  
 - An abstract class provides structure and contracts but cannot be instantiated directly.  
 - Subclasses supply concrete behavior.  
@@ -2936,37 +4028,33 @@ Factory Method Pattern:
 
 
 
-
-15.4 Formatting Currency
-  
+15.4 Formatting Currency:  
 1. Import and obtain an instance:  
+'''java
+import java.text.NumberFormat;
 
-   '''java
-   import java.text.NumberFormat;
+NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
+'''
 
-   NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
-   '''
 
 2. Format a 'double' or 'long':  
+'''java
+double price = 1234567.891;
+String formatted = currencyFormatter.format(price);
+System.out.println(formatted);  
+// Output (US locale): $1,234,567.89
+'''
 
-   '''java
-   double price = 1234567.891;
-   String formatted = currencyFormatter.format(price);
-   System.out.println(formatted);  
-   // Output (US locale): $1,234,567.89
-   '''
 
 3. Under the hood:  
-
-   | Feature                | Behavior                         |
-   |------------------------|----------------------------------|
-   | Grouping separator     | Inserts commas every three digits |
-   | Decimal precision      | Defaults to two fractional digits |
-   | Currency symbol        | Prepended according to locale     |
+| Feature                | Behavior                         |
+|------------------------|----------------------------------|
+| Grouping separator     | Inserts commas every three digits |
+| Decimal precision      | Defaults to two fractional digits |
+| Currency symbol        | Prepended according to locale     |
 
   
 ASCII illustration of '$1,234,567.89':
-
 '''
  $  1 , 2 3 4 , 5 6 7 . 8 9
 ↑      ↑       ↑     ↑   ↑
@@ -2975,49 +4063,36 @@ Symbol group   group decimal fractions
 
 
 
-
-15.5 Formatting Percentages
-
-  
+15.5 Formatting Percentages:  
 1. Obtain a percent formatter:  
-
-   '''java
-   NumberFormat percentFormatter = NumberFormat.getPercentInstance();
-   '''
+'''java
+NumberFormat percentFormatter = NumberFormat.getPercentInstance();
+'''
 
 2. Format a fractional value:  
-
-   '''java
-   double ratio = 0.1;
-   String pct = percentFormatter.format(ratio);
-   System.out.println(pct);  
-   // Output: 10%
-   '''
+'''java
+double ratio = 0.1;
+String pct = percentFormatter.format(ratio);
+System.out.println(pct);  
+// Output: 10%
+'''
 
 3. The percent formatter multiplies by 100 and appends a '%' symbol, rounding to no decimal places by default.
 
 
 
-
-15.6 Overloaded 'format()' Methods
-
-  
+15.6 Overloaded 'format()' Methods:
 'NumberFormat.format()' is overloaded to accept various numeric types:
-
   
 - 'String format(double number)'  
 - 'String format(long number)'  
 - 'String format(BigInteger number)'  
-
   
 Choose the signature matching your data type to avoid implicit conversions.
 
 
 
-
-15.7 Method Chaining for Conciseness
-
-  
+15.7 Method Chaining for Conciseness:  
 If you only use your formatter once, you can skip the local variable and chain calls directly:
 
 '''java
@@ -3041,29 +4116,19 @@ NumberFormat.getPercentInstance()
 
 
 
-15.8 IDE Tip: Safe Renaming with Refactoring
-
-  
-When you decide to rename a variable like 'currencyFormatter' → 'percentFormatter', avoid manual edits. In IntelliJ IDEA:
-
-  
+15.8 IDE Tip: Safe Renaming with Refactoring:
+When you decide to rename a variable like 'currencyFormatter' → 'percentFormatter', avoid manual edits. In IntelliJ IDEA:  
 1. Place cursor on identifier.  
 2. Press Shift + F6 (Rename refactoring).  
 3. Type new name; all references update instantly.  
 4. Press Enter to confirm.  
-
   
 This preserves code correctness and speeds up renaming across multiple files.
 
 
 
-
-15.9 Beyond Currency & Percent
-
-  
-The 'NumberFormat' family also includes:
-
-  
+15.9 Beyond Currency & Percent:  
+The 'NumberFormat' family also includes:  
 - 'NumberFormat.getIntegerInstance()' for whole numbers only.  
 - Custom minimum/maximum fraction digits:  
   '''java
@@ -3078,10 +4143,7 @@ The 'NumberFormat' family also includes:
 
 
 
-
-Key Takeaways
-
-  
+Key Takeaways:  
 - Import 'java.text.NumberFormat' and use factory methods—never 'new'.  
 - Pick the correct instance: currency, percent, integer, or general number.  
 - Understand overloads of 'format()'.  
@@ -3089,7 +4151,6 @@ Key Takeaways
 - Leverage IDE refactoring to rename safely.  
 
 With these concepts, you can ensure every numeric value in your Java applications is presented clearly, accurately, and in a style your users expect.
-
 
 
 
@@ -3124,7 +4185,6 @@ public class Main {
 	}
 }
 
-
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 16. Reading Input: 
@@ -3132,11 +4192,8 @@ Reading input from the user is fundamental for interactive Java applications. Th
 
 
 
-
 16.1 Overview:
-
 When building a console-based Java program, you typically:
-
 - Import and instantiate a 'Scanner' to read from standard input ('System.in').  
 - Prompt the user with 'System.out.print' or 'println'.  
 - Call 'scanner.nextXxx()' methods to parse input tokens or entire lines.  
@@ -3144,11 +4201,8 @@ When building a console-based Java program, you typically:
 
 
 
-
 16.2 Scanner Class Essentials:
-
-16.2.1 Importing and Instantiating
-
+16.2.1 Importing and Instantiating:
 '''java
 import java.util.Scanner;
 
@@ -3157,19 +4211,16 @@ Scanner scanner = new Scanner(System.in);
 
 You must import 'java.util.Scanner'. Instantiating with 'System.in' ties the scanner to the terminal input stream.
 
- 16.2.2 System.in and System.out
 
+16.2.2 System.in and System.out:
 - 'System.in' is an 'InputStream' representing keyboard input.  
 - 'System.out' is a 'PrintStream' for writing to the terminal.  
 - Use 'print()' vs 'println()' to control line breaks when prompting.
 
 
 
-
 16.3 Reading Primitive Types:
-
 The scanner provides a set of 'nextXxx()' methods, each parsing a different primitive type:
-
 - 'nextByte()', 'nextShort()', 'nextInt()', 'nextLong()'  
 - 'nextFloat()', 'nextDouble()'  
 - 'nextBoolean()'  
@@ -3185,9 +4236,7 @@ System.out.println("You are " + age);
 
 
 
-
 16.4 Prompting the User:
-
 Choosing between 'print()' and 'println()' affects where user input appears:
 
 '''java
@@ -3199,17 +4248,13 @@ Use 'print()' when you want the user’s input cursor to follow the prompt on th
 
 
 
-
 16.5 Handling Parsing Errors:
-
 A mismatched token triggers an exception:
-
 '''
 Exception in thread "main" java.util.InputMismatchException
 '''
 
 Best practices:
-
 - Validate input with 'scanner.hasNextXxx()' before calling 'nextXxx()'.  
 - Catch 'InputMismatchException' and reprompt the user.  
 - Consider reading everything as a string and parsing manually for more control.
@@ -3218,9 +4263,7 @@ Best practices:
 
 
 16.6 Reading Strings:
-
-16.6.1 'next()' vs 'nextLine()'
-
+16.6.1 'next()' vs 'nextLine()':
 - 'next()': reads the next token (delimited by whitespace).  
 - 'nextLine()': reads the entire line, including spaces, up to the newline.
 
@@ -3230,9 +4273,7 @@ String firstName = scanner.next();      // only the first word
 String fullName  = scanner.nextLine();  // rest of the line, possibly empty
 '''
 
-
-16.6.2 Tokens and Delimiters
-
+16.6.2 Tokens and Delimiters:
 Scanner splits input at default delimiters (spaces, tabs, newlines).  
 
 '''
@@ -3244,11 +4285,8 @@ Calling 'next()' twice retrieves both tokens; 'nextLine()' retrieves the whole s
 
 
 
-
-16.7 Trimming Whitespace
-
+16.7 Trimming Whitespace:
 If users accidentally type leading or trailing spaces, use 'String.trim()':
-
 '''java
 String name = scanner.nextLine().trim();
 '''
@@ -3257,11 +4295,8 @@ This removes all whitespace before the first non-space and after the last non-sp
 
 
 
-
-16.8 Method Chaining
-
+16.8 Method Chaining:
 For one-off reads, you can chain factory and parsing calls:
-
 '''java
 String result = new Scanner(System.in)
                     .nextLine()
@@ -3269,7 +4304,6 @@ String result = new Scanner(System.in)
 '''
 
 Diagram of chaining:
-
 '''
 new Scanner(System.in)
        ↓
@@ -3282,16 +4316,13 @@ new Scanner(System.in)
 
 
 
-
-16.9 Best Practices
-
+16.9 Best Practices:
 - Always close your scanner when done: 'scanner.close()'.  
 - Avoid mixing 'nextLine()' with other 'nextXxx()' calls without clearing the newline.  
 - Use 'hasNextXxx()' checks to make your program robust against invalid input.  
 - For complex input flows, consider wrapping prompts and parsing into reusable methods.
 
 With these tools, you can build interactive Java programs that read and validate user input reliably.
-
 
 
 
@@ -3325,9 +4356,569 @@ public class Main {
 String name = scanner.nextLine(); // to get the entire line of the user enters 
 
 
+
+
+
+
+Excellent — your Reading Input section is already comprehensive. Here’s how you can enrich it with deeper insights and practical notes that make it teaching‑ready and technically complete:
+
+
+Extra Information About Reading Input in Java:
+1. How 'Scanner' Works Under the Hood:
+- The 'Scanner' class wraps around an input stream (like 'System.in') and uses an internal buffer to read data token by token.  
+- It uses regular expressions to split input based on delimiters (default: whitespace).  
+- When you call 'nextInt()', 'nextDouble()', etc., the scanner reads the next token, matches it against the expected pattern, and converts it to the requested type.  
+- If the token doesn’t match, it throws an 'InputMismatchException'.  
+
+So, every 'nextXxx()' call advances the scanner’s cursor through the input stream.
+
+
+
+2. Common Input Flow Issues:
+- Mixing 'nextLine()' with other 'nextXxx()' calls:  
+  After reading a number with 'nextInt()', the newline character remains in the buffer.  
+  The next 'nextLine()' call reads that leftover newline instead of waiting for new input.  
+  Fix: consume the newline manually:
+  '''java
+  scanner.nextLine(); // clear buffer before reading a line
+  '''
+- Multiple Scanners on 'System.in':  
+  Avoid creating more than one 'Scanner' on 'System.in' — it can cause unexpected blocking or resource conflicts.
+
+
+
+3. Scanner vs. BufferedReader:
+| Feature           | Scanner                                      | BufferedReader                        |
+|-------------------|----------------------------------------------|---------------------------------------|
+| Ease of use       | Simple, built‑in parsing ('nextInt()', etc.) | Requires manual parsing               |
+| Performance       | Slower (regex overhead)                      | Faster (raw text reading)             |
+| Input granularity | Token‑based                                   | Line‑based                            |
+| Typical use       | Beginner‑friendly console input               | High‑performance or large‑scale input |
+
+Example:
+'''java
+BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+String line = reader.readLine();
+int num = Integer.parseInt(line);
+'''
+
+
+
+4. Input Validation Patterns:
+For robust programs:
+'''java
+System.out.print("Enter age: ");
+while (!scanner.hasNextInt()) {
+    System.out.println("Invalid input. Please enter a number:");
+    scanner.next(); // discard invalid token
+}
+int age = scanner.nextInt();
+'''
+This loop ensures only valid integers are accepted.
+
+
+
+5. Closing the Scanner:
+- Always call 'scanner.close()' when done to release the underlying input stream.  
+- However, do not close 'System.in' if you plan to reuse it later — closing the scanner also closes 'System.in', making further input impossible.
+
+
+
+6. Advanced Input Sources:
+'Scanner' can read from:
+- Files: 'new Scanner(new File("data.txt"))'
+- Strings: 'new Scanner("10 20 30")'
+- Streams: 'new Scanner(System.in)'  
+This flexibility makes it useful for both console and file‑based programs.
+
+
+
+7. Real‑World Tip:
+For interactive applications, combine 'Scanner' with input validation and exception handling to prevent crashes:
+'''java
+try {
+    int age = scanner.nextInt();
+} catch (InputMismatchException e) {
+    System.out.println("Please enter a valid number.");
+}
+'''
+
+
+
+8. Conceptual Analogy:
+Think of 'Scanner' as a token reader that moves through a stream of text, identifying and converting pieces of data into usable Java types. It’s like a parser that reads one word at a time, classifies it, and hands it to your program.
+
+
+Your Reading Input section is already strong, but here are some extra insights you can add to make it even more complete and teaching‑friendly:
+
+Extra Information on Reading Input in Java:
+1. Scanner Internals:
+- 'Scanner' uses regular expressions to tokenize input.  
+- Default delimiter: whitespace ('space', 'tab', 'newline').  
+- You can change delimiters with 'scanner.useDelimiter(",")' to parse CSV‑style input.
+
+
+
+2. Locale Sensitivity:
+- 'Scanner' respects the default locale of the JVM.  
+- For example, decimal separators differ ('3.14' vs '3,14').  
+- Use 'scanner.useLocale(Locale.US)' or 'scanner.useLocale(Locale.FRANCE)' to ensure consistent parsing.
+
+
+
+3. Performance Considerations:
+- 'Scanner' is convenient but slower than 'BufferedReader' because of regex overhead.  
+- For high‑performance input (like competitive programming), prefer 'BufferedReader' + manual parsing.
+
+
+
+4. Common Pitfalls:
+- Mixing 'nextLine()' with 'nextInt()':  
+  After 'nextInt()', the newline remains in the buffer.  
+  Fix: call 'scanner.nextLine()' once to consume it before reading a full line.  
+- Closing 'System.in':  
+  Closing the scanner also closes 'System.in'. If you need multiple reads later, don’t close it too early.
+
+
+
+5. Advanced Usage:
+- Reading multiple tokens at once:
+  '''java
+  while (scanner.hasNextInt()) {
+      int num = scanner.nextInt();
+      System.out.println("Read: " + num);
+  }
+  '''
+- Reading from files:
+  '''java
+  Scanner fileScanner = new Scanner(new File("data.txt"));
+  '''
+- Reading from strings:
+  '''java
+  Scanner strScanner = new Scanner("10 20 30");
+  '''
+
+
+
+6. Best Practices:
+- Always validate input with 'hasNextXxx()' before parsing.  
+- Use 'trim()' on strings to clean up accidental spaces.  
+- Wrap parsing in 'try/catch' to handle 'InputMismatchException'.  
+- For reusable code, encapsulate prompts and parsing in helper methods.
+
+
+
+7. Conceptual Analogy:
+Think of 'Scanner' as a token machine: it reads one piece of input at a time, converts it into the type you ask for, and hands it to your program. If the token doesn’t fit, the machine jams (throws an exception).
+
+
+
+
+Here’s a comparison table you can add to your notes, showing when to use 'Scanner', 'BufferedReader', and 'Console'. This makes the topic more practical and complete:
+
+Comparison: Scanner vs. BufferedReader vs. Console
+
+Scanner:
+Ease of Use: Very beginner-friendly; includes built-in parsing methods like `nextInt()` and `nextDouble()`.
+Performance: Generally slower due to regular expression overhead.
+Input Granularity: Token-based, meaning it splits input by delimiters (like spaces).
+Parsing Support: Features built-in parsing for primitive data types.
+Error Handling: Throws an `InputMismatchException` if the input doesn't match the expected type.
+Typical Use: Ideal for standard console applications, teaching environments, and small programs.
+Advanced Features: Offers support for custom delimiters and specific locales.
+Availability: Always available in the Java environment.
+
+
+
+BufferedReader:
+Ease of Use: Requires manual parsing, such as wrapping input in `Integer.parseInt(reader.readLine())`.
+Performance: Faster and highly efficient for reading lines of text.
+Input Granularity: Line-based, reading the entire line of input at once.
+Parsing Support: All manual parsing must be handled by the developer.
+Error Handling: Throws an `IOException` that must be caught or declared.
+Typical Use: Best suited for high-performance input needs, reading large files, and competitive programming.
+Advanced Features: Optimized for efficient bulk reading operations.
+Availability: Always available in the Java environment.
+
+
+
+Console:
+Ease of Use: Relies on simple, straightforward methods like `readLine()` and `readPassword()`.
+Performance: Performs similarly to `BufferedReader` but is more limited in its overall scope.
+Input Granularity: Strictly line-based reading.
+Parsing Support: Manual parsing is required for anything beyond standard text.
+Error Handling: Throws an `IOException`.
+Typical Use: Specifically designed for secure input (such as passwords) and system-level console applications.
+Advanced Features: Allows for secure password input without echoing the typed characters to the screen.
+Availability: Environmentally dependent; it may return `null` when run inside certain Integrated Development Environments (IDEs).
+
+
+
+Key Takeaways:
+- Use 'Scanner' for beginner programs, quick prototypes, and when you want built‑in parsing of primitives.  
+- Use 'BufferedReader' for performance‑critical applications, large file input, or competitive programming.  
+- Use 'Console' when you need secure input (like passwords) or direct system console interaction.  
+
+
+
+Perfect — here’s a side‑by‑side real‑world example showing how 'Scanner', 'BufferedReader', and 'Console' all read the same input (an integer). This makes the differences very clear for your notes:
+
+Example: Reading an Integer with Different Input Methods
+
+1. Using Scanner:
+'''java
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a number: ");
+        int num = scanner.nextInt();   // built-in parsing
+        System.out.println("You entered: " + num);
+        scanner.close();
+    }
+}
+'''
+- Pros: Simple, beginner‑friendly, built‑in parsing ('nextInt()').  
+- Cons: Slower due to regex overhead.
+
+
+
+2. Using BufferedReader:
+'''java
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Enter a number: ");
+        String line = reader.readLine();       // reads entire line
+        int num = Integer.parseInt(line);      // manual parsing
+        System.out.println("You entered: " + num);
+    }
+}
+'''
+- Pros: Faster, efficient for large input.  
+- Cons: Requires manual parsing ('Integer.parseInt').
+
+
+
+3. Using Console:
+'''java
+public class Main {
+    public static void main(String[] args) {
+        java.io.Console console = System.console();
+        if (console == null) {
+            System.out.println("Console not available in this environment.");
+            return;
+        }
+        String line = console.readLine("Enter a number: ");
+        int num = Integer.parseInt(line);   // manual parsing
+        System.out.println("You entered: " + num);
+    }
+}
+'''
+- Pros: Secure input methods ('readPassword()'), simple line reading.  
+- Cons: Not always available (e.g., some IDEs return 'null').
+
+
+
+Teaching Summary:
+- Scanner → Best for beginners and quick prototypes.  
+- BufferedReader → Best for performance‑critical or large‑scale input.  
+- Console → Best for secure input (like passwords) and direct console apps.  
+
+This side‑by‑side comparison shows students not only the syntax but also the trade‑offs in ease of use vs. performance vs. security.  
+
+
+
+
+
+Here’s a pitfall demo you can add to your notes — it shows the most common mistake when mixing 'nextInt()' with 'nextLine()' in 'Scanner':
+
+⚠Pitfall: Mixing 'nextInt()' and 'nextLine()':
+'''java
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter age: ");
+        int age = scanner.nextInt();   // reads the number, but leaves newline in buffer
+
+        System.out.print("Enter name: ");
+        String name = scanner.nextLine(); // reads leftover newline → empty string!
+
+        System.out.println("Age: " + age);
+        System.out.println("Name: " + name); // prints blank
+    }
+}
+'''
+
+✅ Corrected Version:
+'''java
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter age: ");
+        int age = scanner.nextInt();
+        scanner.nextLine(); // consume leftover newline
+
+        System.out.print("Enter name: ");
+        String name = scanner.nextLine(); // now reads full line correctly
+
+        System.out.println("Age: " + age);
+        System.out.println("Name: " + name);
+    }
+}
+'''
+
+Explanation:
+- 'nextInt()' reads only the integer token, but does not consume the newline character ('\n') after the user presses Enter.  
+- The following 'nextLine()' call immediately reads that leftover newline, resulting in an empty string.  
+- Fix: call an extra 'scanner.nextLine()' after numeric input to clear the buffer before reading a full line.
+
+
+Teaching Tip:
+This is the #1 beginner pitfall with 'Scanner'. Emphasize that:
+- 'nextXxx()' → reads tokens (stops at whitespace).  
+- 'nextLine()' → reads the entire line including spaces.  
+- Always clear the buffer when switching from token‑based input to line‑based input.
+
+
+
+Here’s the expanded explanation of the Scanner pitfall you asked about — no visuals, just clear teaching notes:
+⚠️ Why 'nextInt()' + 'nextLine()' Causes Problems:
+- When you call 'scanner.nextInt()', Java reads only the numeric token (e.g., '25') from the input stream.  
+- However, when the user presses Enter, a newline character ('\n') is also sent into the stream.  
+- 'nextInt()' does not consume that newline — it leaves it behind in the buffer.  
+- The next call to 'scanner.nextLine()' immediately sees that leftover newline and interprets it as an “empty line,” returning an empty string without waiting for new input.
+
+
+
+✅ How to Fix It:
+- After reading a number with 'nextInt()', call an extra 'scanner.nextLine()' to consume the leftover newline before reading a full line:
+  '''java
+  int age = scanner.nextInt();
+  scanner.nextLine(); // clears the newline
+  String name = scanner.nextLine(); // now reads properly
+  '''
+
+
+
+🔎 Teaching Analogy:
+Think of the input stream as a conveyor belt:
+- 'nextInt()' picks up the number token but leaves the newline token behind.  
+- 'nextLine()' then grabs the very next thing on the belt — which is just the leftover newline — so it returns an empty string.  
+- By calling an extra 'nextLine()', you clear the belt before asking for the actual line of text.
+
+
+
+✅ Best Practice:
+- Always clear the buffer when switching from token‑based methods ('nextInt()', 'nextDouble()', etc.) to line‑based methods ('nextLine()').  
+- Alternatively, read everything with 'nextLine()' and parse manually using 'Integer.parseInt()' or 'Double.parseDouble()' — this avoids mixing token and line methods altogether.
+
+
+This explanation makes the pitfall crystal clear: it’s not a bug in Java, but a consequence of how the scanner tokenizes input.  
+
+
+
+
+Here’s the alternative approach you can add to your notes — it avoids the 'nextInt()' + 'nextLine()' pitfall entirely by reading everything as a string and then parsing manually:
+✅ Alternative Approach: Read with 'nextLine()' + Parse
+Instead of mixing token‑based methods ('nextInt()', 'nextDouble()') with line‑based methods ('nextLine()'), you can consistently use 'nextLine()' for all input and then convert the string to the desired type.
+
+'''java
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter age: ");
+        String ageInput = scanner.nextLine();      // read full line
+        int age = Integer.parseInt(ageInput.trim()); // parse to int
+
+        System.out.print("Enter name: ");
+        String name = scanner.nextLine().trim();   // read full line
+
+        System.out.println("Age: " + age);
+        System.out.println("Name: " + name);
+    }
+}
+'''
+
+
+
+🔎 Why This Works
+- 'nextLine()' always consumes the entire line, including the newline character.  
+- By parsing manually ('Integer.parseInt', 'Double.parseDouble'), you avoid the mismatch between token and line methods.  
+- Using '.trim()' cleans up accidental spaces before parsing.  
+
+
+
+⚖️ Trade‑Offs
+- Pros:  
+  - Consistent behavior (no leftover newline issues).  
+  - Easier to validate and sanitize input.  
+  - Flexible — you can parse numbers, booleans, or custom formats.  
+- Cons:  
+  - Slightly more verbose (manual parsing required).  
+  - Must handle 'NumberFormatException' when parsing invalid input.
+
+
+
+✅ Best Practice
+For teaching and small console apps, 'nextInt()' + buffer clearing is fine.  
+For robust, real‑world applications, prefer the read‑everything‑as‑string approach — it gives you full control over parsing and validation.
+
+
+
+This way, you can present both solutions side by side:  
+1. Fix with buffer clearing (quick and simple).  
+2. Alternative approach with 'nextLine()' + parsing (robust and flexible).  
+
+
+
+
+
+Here’s the error‑handling example you can add to your notes — it shows how to gracefully handle invalid input when parsing with 'Integer.parseInt':
+
+⚠️ Handling Invalid Input with Try/Catch:
+'''java
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter age: ");
+        String ageInput = scanner.nextLine().trim();
+
+        try {
+            int age = Integer.parseInt(ageInput); // may throw NumberFormatException
+            System.out.println("You are " + age + " years old.");
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a valid number.");
+        }
+
+        scanner.close();
+    }
+}
+'''
+
+
+
+🔎 Explanation:
+- 'Integer.parseInt()' attempts to convert the string into an integer.  
+- If the string contains non‑numeric characters (e.g., '"abc"' or '"20.5"'), Java throws a 'NumberFormatException'.  
+- Wrapping the parsing in a 'try/catch' block lets you handle the error gracefully instead of crashing the program.  
+- You can reprompt the user, log the error, or provide feedback depending on your application’s needs.
+
+
+
+✅ Best Practice:
+- Always validate or catch exceptions when parsing user input.  
+- For repeated prompts, you can loop until valid input is provided:
+  '''java
+  while (true) {
+      System.out.print("Enter age: ");
+      String input = scanner.nextLine().trim();
+      try {
+          int age = Integer.parseInt(input);
+          System.out.println("Valid age: " + age);
+          break; // exit loop once valid
+      } catch (NumberFormatException e) {
+          System.out.println("Invalid number, try again.");
+      }
+  }
+  '''
+
+
+
+This makes your notes complete: you now cover pitfalls, fixes, alternative approaches, and robust error handling.  
+
+
+
+Here’s the side‑by‑side comparison of the two main strategies for validating numeric input in Java — 'hasNextInt()' vs. 'try/catch' — so your learners can see both styles clearly:
+
+📘 Strategy 1: Using 'hasNextInt()'
+'''java
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter age: ");
+        if (scanner.hasNextInt()) {
+            int age = scanner.nextInt();
+            System.out.println("Valid age: " + age);
+        } else {
+            System.out.println("Invalid input. Please enter a number.");
+        }
+
+        scanner.close();
+    }
+}
+'''
+
+- How it works:  
+  - 'hasNextInt()' checks the next token before consuming it.  
+  - If valid, 'nextInt()' retrieves it.  
+  - If invalid, you can handle gracefully without exceptions.  
+
+- Pros: Prevents exceptions, simple for token‑based input.  
+- Cons: Only works well when reading tokens (not full lines).
+
+
+
+📘 Strategy 2: Using 'try/catch'
+'''java
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter age: ");
+        String input = scanner.nextLine().trim();
+
+        try {
+            int age = Integer.parseInt(input);
+            System.out.println("Valid age: " + age);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a number.");
+        }
+
+        scanner.close();
+    }
+}
+'''
+
+- How it works:  
+  - Reads the entire line as a string.  
+  - Attempts to parse with 'Integer.parseInt()'.  
+  - If parsing fails, catches 'NumberFormatException'.  
+
+- Pros: Works with full lines, flexible, robust for complex input.  
+- Cons: Slightly more verbose, requires exception handling.
+
+
+
+✅ Teaching Summary:
+- Use 'hasNextInt()' when working with token‑based input and you want a quick validity check before consuming.  
+- Use 'try/catch' when reading full lines or when you need more control over parsing and error handling.  
+
+👉 Together, these two strategies give learners a complete toolkit: one for simple console apps, and one for robust real‑world applications.
+
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
 
 17. Project — Mortgage calculator:
 Build a console app that asks for loan details and prints the monthly mortgage payment, neatly formatted as currency. You’ll combine types, input, math, and formatting from this section into one cohesive, real-world program.
@@ -3350,33 +4941,25 @@ Problem statement and inputs:
 
 
 
-
 Mortgage formula explained:
-
 - Symbols:
   - \(P\): Principal (loan amount)
   - \(r\): Monthly interest rate
   - \(n\): Total number of monthly payments
   - \(M\): Monthly payment
-
 - Conversions:
   - Monthly rate: \(r = \dfrac{\text{annualRate}}{100 \cdot 12}\)
   - Payments: \(n = \text{years} \cdot 12\)
-
 - Formula (fixed-rate amortized loan):
   \[
   M = P \cdot \frac{r \cdot (1 + r)^{n}}{(1 + r)^{n} - 1}
   \]
-
 - Zero-interest edge case: If \(r = 0\), then \(\;M = \dfrac{P}{n}\)
-
 - Implementation note: Use 'Math.pow(1 + r, n)' for \((1 + r)^n\).
 
 
 
-
 Worked example (sanity check):
-
 - Given:  
   - Principal: \(P = 100{,}000\)  
   - Annual interest: \(3.92\%\)  
@@ -3393,9 +4976,7 @@ Worked example (sanity check):
 
 
 
-
 Design plan and step-by-step flow:
-
 - Constants:  
   - MONTHS_IN_YEAR = 12  
   - PERCENT = 100
@@ -3414,7 +4995,6 @@ Design plan and step-by-step flow:
  
  
 Data flow diagram:
-
 '''
 User Input ──► principal, annualRate, years
                    │        │          │
@@ -3437,9 +5017,7 @@ User Input ──► principal, annualRate, years
 
 
 
-
 Complete implementation (with validation and formatting):
-
 '''java
 package com.codewithmosh;
 
@@ -3565,20 +5143,16 @@ Mortgage: $472.81
  
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-
 18. Solution — Mortgage Calculator Implementation:
 
 
-
-18.1 Mindset Before Reviewing the Code
+18.1 Mindset Before Reviewing the Code:
 - Different implementations are fine — Code style can vary from developer to developer as long as the logic is correct and the code is clean, readable, and maintainable.
 - The goal here is to review the provided solution, understand every decision made, and identify principles we can apply to our own coding.
 
 
 
-18.2 Avoiding “Magic Numbers” with Constants
-
+18.2 Avoiding “Magic Numbers” with Constants:
 What are “Magic Numbers”?
 - Magic numbers are unexplained numeric literals in code that make it less readable and harder to maintain.
 - Example of a magic number:
@@ -3588,10 +5162,7 @@ What are “Magic Numbers”?
   Here, '100' and '12' are not self-descriptive.
 
 
-
-
-The Fix — Use 'final' constants
-
+The Fix — Use 'final' constants:
 '''java
 final byte MONTHS_IN_YEAR = 12;
 final byte PERCENT = 100;
@@ -3609,9 +5180,7 @@ This is now self-explanatory.
 
 
 
-
-18.3 Choosing Appropriate Data Types
-
+18.3 Choosing Appropriate Data Types:
 When selecting data types:
 - Principal ('int'):  
   - Needs to handle values up to millions.  
@@ -3627,7 +5196,6 @@ Tip: Always use the smallest type sufficient for the range of expected values �
 
 
 
-
 18.4 Variable Naming Best Practices
 - Use meaningful, descriptive names:
   - ✅ 'annualInterest', 'monthlyInterest', 'numberOfPayments'
@@ -3637,9 +5205,7 @@ Tip: Always use the smallest type sufficient for the range of expected values �
 
 
 
-
-18.5 Mortgage Calculation Logic
-
+18.5 Mortgage Calculation Logic:
 Formula:
 \[
 \text{Mortgage} = P \times \frac{r(1+r)^n}{(1+r)^n - 1}
@@ -3658,15 +5224,14 @@ double mortgage = principal
 
 
 
-
-18.6 Using 'Math.pow'
+18.6 Using 'Math.pow':
 - Java's 'Math.pow(base, exponent)' raises a number to a power.
 - Used here to calculate \((1 + r)^n\).
 - Improves accuracy and avoids manual loops.
 
 
 
-18.7 Formatting Output as Currency
+18.7 Formatting Output as Currency:
 - The result of the mortgage formula is a decimal — not user-friendly by default.
 - Solution: Use 'NumberFormat' from 'java.text' to format according to locale.
 
@@ -3680,7 +5245,7 @@ System.out.println("Mortgage: " + mortgageFormatted);
 
 
 
-18.8 Readability vs. Conciseness
+18.8 Readability vs. Conciseness:
 - You could inline the formatting directly into the 'println()':
   '''java
   System.out.println("Mortgage: " + NumberFormat.getCurrencyInstance().format(mortgage));
@@ -3690,8 +5255,7 @@ System.out.println("Mortgage: " + mortgageFormatted);
 
 
 
-18.9 Potential Problems in the Current Implementation
-
+18.9 Potential Problems in the Current Implementation:
 1. No Input Validation
    - If the user enters non-numeric input (e.g., '"abc"'), the program throws an exception.
    - If the user enters negative numbers, the output becomes meaningless.
@@ -3701,8 +5265,7 @@ System.out.println("Mortgage: " + mortgageFormatted);
 
 
 
-18.10 Suggested Improvements
-
+18.10 Suggested Improvements:
 - Add input validation:
   - Ensure principal is within a valid range (e.g., 1,000 – 1,000,000).
   - Ensure annual interest is > 0 and reasonable (e.g., ≤ 30%).
@@ -3718,8 +5281,7 @@ System.out.println("Mortgage: " + mortgageFormatted);
 
 
 
-18.11 Final Code Review (Current Version)
-
+18.11 Final Code Review (Current Version):
 '''java
 package com.codewithmosh;
 
@@ -3756,7 +5318,7 @@ public class Main {
 
 
 
-18.12 Key Takeaways
+18.12 Key Takeaways:
 - Constants eliminate magic numbers and improve clarity.
 - Choose the right data types — not too small, not too big.
 - Meaningful variable names make your code self-documenting.
@@ -3807,20 +5369,15 @@ public class Main {
     }
 }
 
-
-
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
 19. Summary — Variables, Types, Casting, Data Handling, and Input:
-
 This section has been a comprehensive foundation for core Java programming concepts.  
 We explored variables, constants, types, casting, data manipulation, and user input, all of which are fundamental building blocks you'll continue to use throughout your Java journey.
 
 
 
-19.1 Variables and Constants
-
+19.1 Variables and Constants:
 Variables:
 - Definition: Named storage for data in memory.
 - Structure:  
@@ -3848,23 +5405,21 @@ Constants:
 
 
 19.2 Primitive vs. Reference Types:
+Primitive Types:
+Primitive types are utilized for managing simple data, such as numbers, single characters, and boolean flags. Standard examples include 'byte', 'short', 'int', 'long', 'float', 'double', 'char', and 'boolean'. The defining characteristic of primitive types is their storage mechanism: the variable directly holds the actual value within its own memory space. 
 
-| Category     | Examples                           | Storage                            | Purpose                              |
-|------------------|----------------------------------------|-----------------------------------------|------------------------------------------|
-| Primitive    | 'byte', 'short', 'int', 'long', 'float', 'double', 'char', 'boolean' | Store actual values directly in variable memory. | For simple data like numbers, single characters, and boolean flags. |
-| Reference    | 'String', 'Date', arrays, custom objects | Store memory address (reference) pointing to object on the heap. | For complex objects and structures. |
+Reference Types:
+In contrast, reference types are designed for handling complex objects and data structures. Common examples of these include 'String', 'Date', arrays, and custom objects. The key difference in how reference types are stored is that the variable does not contain the object's actual data. Instead, it stores a memory address—or reference—that points to where the actual object is located on the heap.
 
- Key Difference
+Key Difference:
 - Primitive: variable holds the value.
 - Reference: variable holds the *address* of the object.
 
 
 
-19.3 Casting and Type Conversion
-
+19.3 Casting and Type Conversion:
 Two Main Types of Casting:
-
-1. Implicit Casting (Widening)
+1. Implicit Casting (Widening):
    - Automatic conversion from smaller to larger data types.
    - No risk of data loss.
    - Example:  
@@ -3873,7 +5428,7 @@ Two Main Types of Casting:
      double b = a; // int -> double
      '''
 
-2. Explicit Casting (Narrowing)
+2. Explicit Casting (Narrowing):
    - Manual conversion when going from larger to smaller type.
    - May cause data loss.
    - Syntax: '(targetType) value'
@@ -3886,7 +5441,6 @@ Two Main Types of Casting:
 
 
 19.4 Working with Numbers:
-
 - Arithmetic operators: '+', '-', '*', '/', '%'
 - Increment/Decrement: '++', '--' (prefix & postfix usage differ)
 - Compound assignment: '+=', '-=', '*=', '/='
@@ -3895,7 +5449,6 @@ Two Main Types of Casting:
 
 
 19.5 Working with Strings:
-
 - Immutable: Once created, a string cannot be changed; modifications return a new string.
 - Key methods:
   - 'length()', 'indexOf()', 'startsWith()', 'endsWith()',  
@@ -3904,9 +5457,7 @@ Two Main Types of Casting:
 
 
 
-
-19.6 Working with Arrays
-
+19.6 Working with Arrays:
 - Definition: Fixed-size collection of elements of the same type.
 - Declaration & Initialization:
   '''java
@@ -3921,8 +5472,7 @@ Two Main Types of Casting:
 
 
 
-19.7 Reading User Input with Scanner
-
+19.7 Reading User Input with Scanner:
 - Import:  
   '''java
   import java.util.Scanner;
@@ -3939,15 +5489,14 @@ Two Main Types of Casting:
 
 
 
-
-19.8 Complete Flow Learned in This Section
- Memory Map
+19.8 Complete Flow Learned in This Section:
+Memory Map:
 '''
 [ Primitive Variable ] → stores value directly
 [ Reference Variable ] → stores address → [ Object in Heap ]
 '''
 
- Data Handling Steps in Practice
+Data Handling Steps in Practice:
 1. Declare and initialize variables / constants.
 2. Read values from the user using 'Scanner'.
 3. Apply casting when types need to be converted.
@@ -3956,8 +5505,7 @@ Two Main Types of Casting:
 
 
 
-19.9 Why This Section Matters
-
+19.9 Why This Section Matters:
 These concepts are the foundation for:
 - Processing data in real-world programs.
 - Writing clear, maintainable, and efficient code.
@@ -3965,7 +5513,7 @@ These concepts are the foundation for:
 
 
 
-19.10 Key Takeaways
+19.10 Key Takeaways:
 - Use constants to replace magic numbers.
 - Understand memory behavior of primitive vs reference types.
 - Know when and how to apply implicit vs explicit casting.
@@ -3973,56 +5521,37 @@ These concepts are the foundation for:
 - The 'Scanner' class is your go-to for reading terminal input, but requires proper type-specific methods.
 
 
-
 ✅ Next Steps:  
 We now move to conditional statements — enabling logic that controls the flow of our programs based on different conditions.
 
-
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
 Control Flow: 
-
 1. Introduction: 
-
 In this section, we're going to look at control flow, or controlling the flow of execution of our programs. We're going to start off by talking about comparison operators for comparing values, then we're going to talk about logical operators, like the logical and, logical or, and logical not. We use these operators for implementing real world rules. And then we're going to talk about three different types of control flow statements. We're going to talk about conditional statements for making decisions in our programs.
 
 Then we're going to talk about loops for executing code repeatedly, and finally we're going to revisit our mortgage calculator and add error handling to it. So if the user enters an invalid value, we keep asking them to try again. Alright, now let's jump in and get started.
 
 
 
-
-
-1. Introduction to Control Flow in Java
-
-
-
+1. Introduction to Control Flow in Java:
 1.1 What is Control Flow?
-
 Control flow determines the order in which individual statements, instructions, or function calls are executed or evaluated in a Java program.
 
 In simple terms:  
 It’s how you tell your program what to do, when to do it, and how many times to repeat it based on certain conditions or rules.
-
 Without control flow, programs would execute line by line from top to bottom without any decision-making or repetition — which means they couldn’t react to different inputs or dynamic situations.
 
 
-
-
-1.2 The Three Core Pillars of Control Flow
-
+1.2 The Three Core Pillars of Control Flow:
 In this section, we will explore three main building blocks of controlling a program’s execution in Java.
 
-
-
-1.2.1 Comparison Operators
+1.2.1 Comparison Operators:
 - Used to compare values (e.g., is this number greater than another?).
 - Result of comparison: boolean ('true' or 'false').
 - Foundation for decision-making in code.
 
-
-
-1.2.2 Logical Operators
+1.2.2 Logical Operators:
 - Combine or manipulate multiple boolean conditions.
 - Examples:
   - Logical AND ('&&')
@@ -4033,7 +5562,7 @@ In this section, we will explore three main building blocks of controlling a pro
 
 
 
-1.2.3 Control Flow Statements
+1.2.3 Control Flow Statements:
 Control flow statements direct which code executes based on conditions or how many times a block of code repeats.
 
 We’ll dive deep into:
@@ -4051,9 +5580,7 @@ We’ll dive deep into:
 
 
 
-
-1.3 Why Control Flow is Important
-
+1.3 Why Control Flow is Important:
 Without control flow, your program:
 - Can’t branch based on dynamic conditions.
 - Can’t repeat actions without manually writing duplicate code.
@@ -4066,8 +5593,7 @@ With control flow, your program can:
 
 
 
-1.4 Real-World Analogy
-
+1.4 Real-World Analogy:
 Think of control flow like traffic management in a city:
 - Traffic lights → Conditional statements that decide whether you stop or go.  
 - Roundabouts or intersections → Logical operators combining different rules (e.g., give way AND look for a safe gap).  
@@ -4077,9 +5603,7 @@ Without these controls, chaos would occur — just like in code without control 
 
 
 
-
-1.5 Applying Control Flow to Our Mortgage Calculator
-
+1.5 Applying Control Flow to Our Mortgage Calculator:
 At the end of this section:
 - We’ll revisit our Mortgage Calculator project.
 - We’ll add input validation using conditional statements, so:
@@ -4089,11 +5613,8 @@ At the end of this section:
 
 
 
-
-1.6 Section Roadmap
-
+1.6 Section Roadmap:
 Here’s the flow of topics we’ll cover:
-
 1. Comparison Operators → Building blocks for conditions.
 2. Logical Operators → Combining multiple conditions.
 3. If Statements → Making binary (yes/no) decisions.
@@ -4114,7 +5635,6 @@ Control flow is how you teach your program to think, decide, and repeat tasks �
 
 
 
-
 Codes and Other Notes Referred in this Discussion:
 
 Comparison Operators
@@ -4122,13 +5642,11 @@ Logical Operators
 Conditional Statements
 Loops 
 
-
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 2. Comparison Operators:
 
 2.1 What Are Comparison Operators?
-
 Comparison operators are used in Java to compare two values (usually *primitive types*) and determine the relationship between them.  
 The result of a comparison is always a boolean value:  
 - 'true' → the comparison condition is satisfied  
@@ -4179,8 +5697,7 @@ System.out.println(x != y); // false → because both are equal
 
 
 
-
-2.5 Relational Operators
+2.5 Relational Operators:
 Used to compare magnitude (size) of numbers.
 
 | Operator | Meaning                              | Example ('x=1', 'y=2') | Result  |
@@ -4192,8 +5709,7 @@ Used to compare magnitude (size) of numbers.
 
 
 
-
-2.6 Boolean Expressions
+2.6 Boolean Expressions:
 - Any comparison operation produces a boolean value ('true' or 'false').
 - Definition:  
   An expression is a piece of code that produces a value.  
@@ -4208,9 +5724,7 @@ boolean result = x <= y;  // result = true
 
 
 
-
-2.7 Visual Representation
-
+2.7 Visual Representation:
 Example: 'x <= y'  
 '''
 x: 1
@@ -4226,8 +5740,7 @@ Flow:
 
 
 
-
-2.8 Complete Example Code
+2.8 Complete Example Code:
 '''java
 package com.codewithmosh;
 
@@ -4254,14 +5767,11 @@ public class Main {
 
 
 
-
-2.9 Key Takeaways
+2.9 Key Takeaways:
 - Always remember: '==' is for equality, '=' is for assignment.
 - All comparison operators return a boolean result.
 - Comparisons are fundamental for conditional statements and loops.
 - You can chain or combine comparisons using logical operators (next topic).
-
-
 
 
 
@@ -4278,12 +5788,10 @@ public class Main {
 	}
 }
 
-
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 3. Logical Operators: 
 
-3.1 Overview
-
+3.1 Overview:
 In Java, logical operators are used to combine or manipulate boolean expressions (expressions that evaluate to 'true' or 'false').  
 They allow you to implement complex decision-making rules by joining multiple conditions together.
 
@@ -4291,21 +5799,18 @@ Logical operators are evaluated in the context of short-circuit evaluation, mean
 
 
 
-
-3.2 The Three Main Logical Operators
+3.2 The Three Main Logical Operators: 
 
 | Operator | Name               | Symbol | Meaning                                                                 |
 |----------|--------------------|--------|-------------------------------------------------------------------------|
-| AND      | Logical AND        | '&&'   | Returns 'true' only if *both* operands are 'true'.                  |
+| AND      | Logical AND        | '&&'   | Returns 'true' only if *both* operands are 'true'.                      |
 | OR       | Logical OR         | '\|\|' | Returns 'true' if *at least one* operand is 'true'.                     |
 | NOT      | Logical NOT        | '!'    | Reverses ('negates') the value of a boolean ('true' → 'false', etc.).   |
 
 
 
-
-3.3 Logical AND ('&&')
-
-Definition
+3.3 Logical AND ('&&'):
+Definition:
 The logical AND operator returns 'true' only when both conditions are 'true'.  
 If either condition is 'false', the whole expression becomes 'false'.
 
@@ -4339,15 +5844,12 @@ Truth Table for '&&'
 
 
 
-3.4 Logical OR ('||')
-
+3.4 Logical OR ('||'):
 Definition:
 The logical OR operator returns 'true' if at least one of the conditions is 'true'.  
 If the first condition is 'true', Java skips evaluating the second (short-circuit).
 
-
-
-Example 2 — Loan Eligibility (Basic)
+Example 2 — Loan Eligibility (Basic):
 '''java
 boolean hasHighIncome = true;
 boolean hasGoodCredit = true;
@@ -4360,9 +5862,9 @@ System.out.println(isEligible); // true
 
 
 
-Truth Table for '||'
+Truth Table for '||':
 
-| A     | B     | A \|\| B |
+| A     | B     | A || B   |
 |-------|-------|----------|
 | true  | true  | true     |
 | true  | false | true     |
@@ -4371,19 +5873,13 @@ Truth Table for '||'
 
 
 
-
-3.5 Logical NOT ('!')
-
-Definition
-
+3.5 Logical NOT ('!'):
+Definition:
 The logical NOT operator reverses the value of a boolean:
 - '!true' → 'false'
 - '!false' → 'true'
 
-
-
-Example 3 — Loan Eligibility with Criminal Record Check
-
+Example 3 — Loan Eligibility with Criminal Record Check:
 '''java
 boolean hasHighIncome = true;
 boolean hasGoodCredit = true;
@@ -4406,8 +5902,7 @@ Rule Implemented:
 
 
 
-3.6 Operator Precedence
-
+3.6 Operator Precedence:
 Order of evaluation for logical operators:
 1. '!' (NOT)
 2. '&&' (AND)
@@ -4417,8 +5912,7 @@ Tip: Use parentheses '()' to make conditions clear and override precedence when 
 
 
 
-3.7 Visual Representation — Example 3
-
+3.7 Visual Representation — Example 3:
 '''
 [hasHighIncome]---- true ----\
                                >--- OR --- true ----\
@@ -4429,8 +5923,7 @@ Tip: Use parentheses '()' to make conditions clear and override precedence when 
 
 
 
-3.8 Short-Circuit Behavior
-
+3.8 Short-Circuit Behavior:
 - For '&&':
   - If the first condition is 'false', Java skips evaluating the second.
 - For '||':
@@ -4442,9 +5935,7 @@ Why?
 
 
 
-
-3.9 Common Use Cases
-
+3.9 Common Use Cases:
 - Validating input:
   '''java
   if (age > 18 && age < 65) { ... }
@@ -4460,8 +5951,7 @@ Why?
 
 
 
-3.10 Complete Code Demo
-
+3.10 Complete Code Demo:
 '''java
 package com.codewithmosh;
 
@@ -4488,8 +5978,7 @@ public class Main {
 
 
 
-3.11 Key Takeaways
-
+3.11 Key Takeaways:
 - '&&' (AND) → All conditions must be true.  
 - '||' (OR) → At least one condition must be true.  
 - '!' (NOT) → Reverses boolean value.  
@@ -4498,12 +5987,7 @@ public class Main {
 
 
 
-
-
-
-
 Codes and Other Notes Referred in this Discussion:
-
 
 package com.codewithmosh; 
 
@@ -4544,9 +6028,7 @@ public class Main {
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 4. If Statements:
-
 4.1 What Is an If Statement?
-
 An if statement is a conditional control flow statement in Java that allows your program to make decisions.  
 It executes one block of code only if a specific boolean expression evaluates to 'true'.
 
@@ -4555,10 +6037,8 @@ Key Idea:
 
 
 
-
-4.2 The Basic Structure of an If Statement
-
-# Syntax
+4.2 The Basic Structure of an If Statement:
+Syntax:
 '''java
 if (booleanExpression) {
     // code block runs if condition is true
@@ -4571,9 +6051,7 @@ if (booleanExpression) {
 
 
 
-
-4.3 Extending If Statements — Else If & Else
-
+4.3 Extending If Statements — Else If & Else:
 To handle multiple possible outcomes, we extend the 'if' statement:
 
 # General Form:
@@ -4589,9 +6067,7 @@ if (condition1) {
 
 
 
-
-4.4 Practical Example — Temperature Messages
-
+4.4 Practical Example — Temperature Messages:
 Problem:  
 Write a program that:
 - If temperature > 30 → display:
@@ -4618,9 +6094,7 @@ if (temp > 30) {
 
 
 
-
-4.5 Code Execution Flow
-
+4.5 Code Execution Flow:
 Example with 'temp = 32':
 1. 'temp > 30'? → true  
    Runs block:  
@@ -4633,9 +6107,7 @@ Example with 'temp = 32':
 
 
 
-
-4.6 Boolean Expression Simplification
-
+4.6 Boolean Expression Simplification:
 Original 'else if':
 '''java
 else if (temp > 20 && temp <= 30)
@@ -4651,9 +6123,7 @@ else if (temp > 20)
 
 
 
-
-4.7 Braces — When to Use Them
-
+4.7 Braces — When to Use Them:
 - Mandatory when you have multiple statements in the block.
 - Optional for single statements — but:
   - Pros of omitting: Less visual noise, cleaner look.
@@ -4675,9 +6145,7 @@ if (temp > 20) {
 
 
 
-
-4.8 Formatting for Readability
-
+4.8 Formatting for Readability:
 Formatting influences code symmetry and readability:
 - Option 1: Inline style
   '''java
@@ -4705,9 +6173,7 @@ Formatting influences code symmetry and readability:
 
 
 
-
-4.9 Flowchart — If-Else Logic
-
+4.9 Flowchart — If-Else Logic:
 '''
        ┌──────────────────────┐
        │ temp > 30 ?          │
@@ -4719,7 +6185,7 @@ Formatting influences code symmetry and readability:
              [End]
                │No
                ▼
-     ┌────────────────────────┐
+     ┌───────────────────────-─┐
      │ temp > 20 ?             │
      └─────────┬───────────────┘
                │Yes
@@ -4734,8 +6200,7 @@ Formatting influences code symmetry and readability:
 
 
 
-
-4.10 Common Pitfalls
+4.10 Common Pitfalls:
 1. Using '=' instead of '==' in conditions.
 2. Omitting braces and later adding multiple lines → logical errors.
 3. Overcomplicating conditions that can be simplified with logical reasoning.
@@ -4743,16 +6208,12 @@ Formatting influences code symmetry and readability:
 
 
 
-
-4.11 Key Takeaways
+4.11 Key Takeaways:
 - If statements let you branch program execution based on boolean conditions.
 - Use else if for multiple conditions, else for a default catch-all.
 - Always format code for readability and consistency.
 - Simplify boolean expressions where possible.
 - Consider always using braces to avoid mistakes.
-
-
-
 
 
 
@@ -4774,21 +6235,16 @@ public class Main {
 	}
 }
 
-
-
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 5. Simplifying If Statements: 
 
-
-5.1 The Context
-
+5.1 The Context:
 When writing 'if' statements, beginners often use verbose patterns that can be condensed into cleaner, more expressive code.  
 This tutorial shows step-by-step improvements to transform a basic 'if-else' into an elegant single-line boolean assignment.
 
 
 
-5.2 The Initial Problem
-
+5.2 The Initial Problem:
 Example:
 '''java
 int income = 120_000; // underscore for readability
@@ -4800,10 +6256,7 @@ else
     hasHighIncome = false;
 '''
 
-
-
-Issues with the Initial Code
-
+Issues with the Initial Code:
 1. Scoping Problem:  
    - If the variable 'hasHighIncome' is declared *inside* the 'if' block:  
      '''java
@@ -4821,9 +6274,7 @@ Issues with the Initial Code
 
 
 
-
-5.3 Step 1 — Declare Variable Outside and Assign Inside
-
+5.3 Step 1 — Declare Variable Outside and Assign Inside:
 '''java
 int income = 120_000;
 boolean hasHighIncome;
@@ -4839,11 +6290,8 @@ else
 
 
 
-
-5.4 Step 2 — Initialize with a Default Value
-
+5.4 Step 2 — Initialize with a Default Value:
 Instead of using an 'else' to assign 'false', set the variable to 'false' initially, then update it to 'true' if condition passes.
-
 '''java
 int income = 120_000;
 boolean hasHighIncome = false;
@@ -4857,9 +6305,7 @@ if (income > 100_000)
 
 
 
-
-5.5 Step 3 — Directly Assign the Boolean Expression
-
+5.5 Step 3 — Directly Assign the Boolean Expression:
 Since '(income > 100_000)' already evaluates to a boolean value:
 - If the expression is 'true', assign 'true'.
 - If it’s 'false', assign 'false'.
@@ -4878,11 +6324,8 @@ Why this is better:
 
 
 
-
-5.6 Step 4 — Adding Parentheses for Clarity (Optional)
-
+5.6 Step 4 — Adding Parentheses for Clarity (Optional):
 Even though parentheses are not required (due to operator precedence), they can improve readability by making it clear that the right-hand side is one boolean expression:
-
 '''java
 int income = 120_000;
 boolean hasHighIncome = (income > 100_000);
@@ -4890,9 +6333,7 @@ boolean hasHighIncome = (income > 100_000);
 
 
 
-
-5.7 Visual Breakdown of the Final Code
-
+5.7 Visual Breakdown of the Final Code:
 '''
 [ income > 100_000 ] → evaluates to true/false
             │
@@ -4903,9 +6344,7 @@ boolean hasHighIncome = (income > 100_000);
 
 
 
-
-5.8 Best Practices
-
+5.8 Best Practices:
 - Prefer concise boolean assignments when no extra logic is needed.
 - Use meaningful variable names ('hasHighIncome', not 'hhi').
 - Parentheses can be added when they make the expression’s intent clearer.
@@ -4913,8 +6352,7 @@ boolean hasHighIncome = (income > 100_000);
 
 
 
-5.9 Final Clean Version
-
+5.9 Final Clean Version:
 '''java
 package com.codewithmosh;
 
@@ -4929,14 +6367,11 @@ public class Main {
 
 
 
-5.10 Key Takeaways
-
+5.10 Key Takeaways:
 1. Boolean expressions ('x > y', 'a == b', etc.) already produce 'true'/'false' values — no need to wrap in verbose 'if-else' assignments.
 2. This technique reduces lines of code while improving clarity.
 3. Parentheses are optional but encouraged for readability in complex statements.
 4. This is the professional, idiomatic way to handle simple boolean assignments.
-
-
 
 
 
